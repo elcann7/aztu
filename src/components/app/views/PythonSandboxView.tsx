@@ -17,6 +17,37 @@ import './PythonSandboxView.css';
 
 const LAB_TEMPLATES = [
   {
+    id: 'ayxan_types',
+    title: 'Müəl. Ayxan Həsənov: int, float & Tiplər (Dünənki seminar)',
+    code: `# AzTU 6326A2 — Proqramlaşdırmanın əsasları-1 (Seminar)
+# Seminar müəllimi: Müəl. Ayxan Həsənov (Dünən keçirilən mövzu)
+# Mövzu: int, float, str tipləri, tip çevrilmələri və riyazi operatorlar
+
+print("=== Seminar Praktikası: Tiplər və Çevrilmələr ===")
+# input() funksiyası konsoldan həmişə string (str) qəbul edir.
+# Riyazi əməliyyat aparmaq üçün int() və ya float() ilə çeviririk:
+tam_eded = int(input("Bir tam ədəd daxil edin (int): "))
+kesr_eded = float(input("Bir kəsrlik ədəd daxil edin (float): "))
+
+cem = tam_eded + kesr_eded
+ferq = tam_eded - kesr_eded
+hasil = tam_eded * kesr_eded
+tam_bolme = tam_eded // 2
+qaliq = tam_eded % 2
+quvvet = tam_eded ** 2
+
+print("\n--- Nəticələr və Dəyişən Tipləri ---")
+print(f"Daxil edilən tam ədəd tipi: {type(tam_eded)} -> Dəyər: {tam_eded}")
+print(f"Daxil edilən kəsr ədəd tipi: {type(kesr_eded)} -> Dəyər: {kesr_eded}")
+print(f"Cəm ({tam_eded} + {kesr_eded}): {cem} (Avtomatik çevrilən tip: {type(cem)})")
+print(f"Fərq ({tam_eded} - {kesr_eded}): {ferq:.2f}")
+print(f"Hasil ({tam_eded} * {kesr_eded}): {hasil:.2f}")
+print(f"{tam_eded} // 2 (Tam hissə bölməsi): {tam_bolme}")
+print(f"{tam_eded} % 2 (Bölünmədən qalıq): {qaliq}")
+print(f"{tam_eded} ** 2 (Kvadratı): {quvvet}")
+`,
+  },
+  {
     id: 'intro',
     title: 'Giriş: print() və input()',
     code: `# AzTU 6326A2 — Proqramlaşdırmanın əsasları-1
@@ -141,10 +172,44 @@ neticeler = fibonacci(say)
 print(f"İlk {say} Fibonaççi ədədi:", neticeler)
 `,
   },
+  {
+    id: 'lab6',
+    title: 'Müəl. Şəbnəm İsgəndərli: Pandas, Series & DataFrame',
+    code: `# AzTU CS-101 — Laboratoriya: Pandas Kitabxanası
+# Müəl. Şəbnəm İsgəndərli: Verilənlərin Təhlili və DataFrame
+# Qeyd: Brauzerdə Pyodide WebAssembly mühiti avtomatik Pandas və NumPy yükləyir!
+
+import pandas as pd
+
+# 6326A2 Qrupunun Nümunəvi Fənn Nəticələri
+cedvel = {
+    'Ad': ['Elcan', 'Murad', 'Nigar', 'Rəşad', 'Aytac', 'Fərid'],
+    'Proqramlaşdırma': [95, 88, 92, 75, 85, 90],
+    'Riyazi_analiz': [90, 82, 89, 70, 80, 86],
+    'Xətti_cəbr': [92, 85, 94, 78, 88, 91],
+}
+
+df = pd.DataFrame(cedvel)
+# Orta qiymət sütunu hesablayaq
+df['Orta_Bal'] = ((df['Proqramlaşdırma'] + df['Riyazi_analiz'] + df['Xətti_cəbr']) / 3).round(1)
+
+print("=== 6326A2 Qrup Nəticələri (Pandas DataFrame) ===")
+print(df)
+
+print("\n=== Əsas Statistik Göstəricilər ===")
+print(f"Proqramlaşdırma üzrə qrup ortalaması: {df['Proqramlaşdırma'].mean():.1f}")
+print(f"Ən yüksək ümumi orta bal: {df['Orta_Bal'].max():.1f}")
+
+# Şərtlə süzgəcdən keçirmə (Filtering)
+elacilar = df[df['Orta_Bal'] >= 85]
+print("\n=== Yüksək Göstəricili Tələbələr (Orta bal >= 85) ===")
+print(elacilar[['Ad', 'Proqramlaşdırma', 'Orta_Bal']])
+`,
+  },
 ];
 
 export const PythonSandboxView: React.FC = () => {
-  const [selectedTemplateId, setSelectedTemplateId] = useState<string>('intro');
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>(LAB_TEMPLATES[0].id);
   const [code, setCode] = useState<string>(LAB_TEMPLATES[0].code);
   const [isRunning, setIsRunning] = useState(false);
   const [result, setResult] = useState<PythonExecutionResult | null>(null);

@@ -127,6 +127,16 @@ export async function executePythonCode(
         },
       });
 
+      // Auto-load official Pyodide packages if detected
+      if (py.loadPackage && /import\s+(pandas|numpy)|from\s+(pandas|numpy)/.test(code)) {
+        try {
+          callbacks?.onStdout?.('[Sistem]: Pandas və NumPy paketləri yüklənir...\n');
+          await py.loadPackage(['pandas', 'numpy']);
+        } catch {
+          // continue
+        }
+      }
+
       // Inject high-level browser input hook
       await py.runPythonAsync(PYODIDE_INPUT_SETUP);
 

@@ -4,13 +4,29 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.8.2] — 2026-09-22
+
+### 🐼 Müəl. Şəbnəm İsgəndərli (Pandas & Data Science) və Müəl. Ayxan Həsənov (Tiplər & Əməllər) İnteqrasiyası
+- **Müəllim Tələblərinin Dəqiq Əks Etdirilməsi**:
+  - **Müəl. Şəbnəm İsgəndərli (Laboratoriya)**: Tələbələrə elan etdiyi **Pandas** kitabxanası (Series, DataFrame, CSV oxuma, süzgəcləmə və statistika) 13-15-ci həftələrin laboratoriya sillabusuna və Pyodide şablonlarına əlavə edildi.
+  - **Müəl. Ayxan Həsənov (Seminar)**: Dünənki seminarda keçilən `int`, `float`, `str`, tip çevrilmələri (`int()`, `float()`), riyazi operatorlar (`//`, `%`, `**`) Sandbox şablonu və mühazirə qeydi olaraq rəsmiləşdirildi.
+- **Pyodide WebAssembly Mühitində Avtomatik Pandas & NumPy Dəstəyi**:
+  - `pythonRunner.ts` mühərriki yeniləndi: Kod daxilində `import pandas` və ya `import numpy` aşkar edildikdə, Pyodide v0.26.2 WebAssembly pre-compiled paketləri avtomatik yükləyir və dərhal icra edir.
+- **Python Sandbox Şablonlarının Genişləndirilməsi**:
+  - `Müəl. Ayxan Həsənov: int, float & Tiplər (Dünənki seminar)` — Terminaldan `int()` və `float()` oxuma, bütün riyazi operatorların nümayişi.
+  - `Müəl. Şəbnəm İsgəndərli: Pandas, Series & DataFrame` — 6326A2 qrupunun fənn balları ilə DataFrame qurulması, `describe()`, ortalama və `[df['Orta_Bal'] >= 85]` süzgəcləməsi.
+- **Müəllim Sitatları (`GROUP_REMARKS`)**:
+  - Müəl. Şəbnəm İsgəndərli və Müəl. Ayxan Həsənovun aktual tövsiyələri birbaşa portala və ana səhifəyə daxil edildi.
+
+---
+
 ## [1.8.1] — 2026-09-22
 
 ### 🐍 Kompüter Elmləri Proqramlaşdırma Fənninin Tamamilə Python 3 Əsasında Yenilənməsi
 - **100% Python Tədrisinə Keçid**: AzTU Kompüter Elmləri / Kompüter Mühəndisliyi 1-ci semestr rəsmi tədris planına əsasən C++ qalıqları təmizləndi və `CS-101: Proqramlaşdırmanın əsasları-1` fənni tamamilə **Python 3** proqramına uyğunlaşdırıldı.
 - **15 Həftəlik Rəsmi Python Sillabusu (`COURSE_SYLLABUS.prog`)**:
   - Həftə 1: Python sintaksisi, icra mühiti, `print()` və `input()`.
-  - Həftə 2 (Cari): Dəyişənlər, əsas tiplər (`int`, `float`, `str`, `bool`), tip çevrilmələri və riyazi operatorlar.
+  - Həftə 2 (Cari): Dəyişənlər, əsas tiplər (`int`, `float`, `str`, `bool`), tip çevrilmələri və riyazi operatorlar. (Seminar: Müəl. Ayxan Həsənov / Lab: Müəl. Şəbnəm İsgəndərli).
   - Həftə 3: Budaqlanan alqoritmlər (`if`, `elif`, `else`), məntiqi operatorlar (`and`, `or`, `not`).
   - Həftə 4: Dövri alqoritmlər (`while`, `break`, `continue`).
   - Həftə 5: `for` dövrü, `range()`, daxili dövrlər və cəm/hasil alqoritmləri.
@@ -21,21 +37,15 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
   - Həftə 10: Kortejlər (`tuple`) və Çoxluqlar (`set`).
   - Həftə 11: II Kollokvium və Lüğətlər (`dict`, key-value cütlükləri, metodlar).
   - Həftə 12: İstifadəçi funksiyaları (`def`, `*args`, `**kwargs`, `return`, `scope`).
-  - Həftə 13: Rekursiya, lambda, `map()` və `filter()`.
-  - Həftə 14: III Kollokvium və Fayllarla iş (`open`, `read`, `write`, `with context manager`).
-  - Həftə 15: İstisnaların idarəsi (`try-except`) və Semestr Yekun İmtahana Hazırlıq.
+  - Həftə 13: Fayllarla iş və Pandas kitabxanasına giriş (Series və DataFrame strukturları).
+  - Həftə 14: III Kollokvium və Pandas ilə verilənlərin oxunması (`read_csv`), cədvəllərin təhlili.
+  - Həftə 15: Pandas statistik təhlil layihəsi, istisnaların idarəsi (`try-except`) və Semestr Yekun İmtahana Hazırlıq.
 - **Python Sandbox üçün AzTU CS-101 Laboratoriya Şablonları**:
-  - `PythonSandboxView.tsx` studiyasına laboratoriya işlərini bir kliklə redaktora yükləyən şablon seçicisi inteqrasiya edildi:
-    - *Giriş*: `print()` və `input()`
-    - *Lab 1*: Riyazi Əməllər və `math` Modulu
-    - *Lab 2*: Budaqlanma (`if/elif/else`) və Kvadrat Tənliyin Həlli
-    - *Lab 3*: Dövrlər (`for/while`) və Faktorial/Rəqəm Cəmi
-    - *Lab 4*: Siyahılar (`list`), Axtarış və Statistika
-    - *Lab 5*: İstifadəçi Funksiyaları (`def`) və Fibonaççi
+  - `PythonSandboxView.tsx` studiyasına laboratoriya işlərini bir kliklə redaktora yükləyən şablon seçicisi inteqrasiya edildi.
 - **Tapşırıqlar, Sorğular və Qeydlərin Uyğunlaşdırılması**:
   - `ASSIGNMENTS`: `Laboratoriya işi №1: Python Budaqlanma (if/elif/else)`
   - `GROUP_POLL`: `Python laboratoriyalarını hansı mühitdə yazaq?` (VS Code, PyCharm, Jupyter)
-  - `GROUP_REMARKS`: Dos. Fizuli Əzimovun Python indentasiyası və məntiqi operatorlar haqqında rəsmi tövsiyəsi.
+  - `GROUP_REMARKS`: Dos. Fizuli Əzimov, Müəl. Şəbnəm İsgəndərli və Müəl. Ayxan Həsənovun tövsiyələri.
 
 ---
 

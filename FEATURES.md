@@ -158,14 +158,17 @@ Hər bir fənn portalında:
 ## 11. Python Sandbox (Laboratoriya Mühiti)
 - Xüsusilə **CS-101 (Proqramlaşdırmanın əsasları-1)** fənni üçün yaradılmış brauzerdaxili tam funksional Python 3 mühiti.
 - **WebAssembly Pyodide CPython**: Heç bir serverdən asılı olmadan, real Python 3.12 interpretatoru birbaşa tələbənin brauzerində icra olunur.
+- **Pandas və NumPy Avtomatik Yükləməsi**: Müəl. Şəbnəm İsgəndərlinin proqramına uyğun olaraq, `import pandas` yazıldıqda sistem avtomatik olaraq WebAssembly Pandas və NumPy paketlərini yükləyir və tələbəyə Data Science mühiti təqdim edir.
 - **İnteraktiv Daxili Terminal**: `input()` əmrini birbaşa terminal sətirindən qəbul edən, daxiletmə və nəticəni real vaxtda göstərən konsol.
-- **AzTU CS-101 Hazır Laboratoriya Şablonları**:
+- **AzTU CS-101 Hazır Laboratoriya və Seminar Şablonları**:
+  - *Müəl. Ayxan Həsənov*: `int`, `float`, `str` tipləri, tip çevrilmələri və riyazi operatorlar (`//`, `%`, `**`) — Dünənki seminar praktikası.
   - *Giriş*: `print()` və `input()` nümunələri
   - *Lab 1*: Riyazi hesablamalar və `math` modulu
   - *Lab 2*: `if/elif/else` budaqlanma məntiqi və kvadrat tənlik
   - *Lab 3*: `for` və `while` dövrləri, faktorial və rəqəmlərin cəmi
   - *Lab 4*: Siyahılar (`list`), axtarış və statistik hesablamalar
   - *Lab 5*: İstifadəçi funksiyaları (`def`) və Fibonaççi ardıcıllığı
+  - *Müəl. Şəbnəm İsgəndərli*: Pandas ilə Verilənlər Analizi (`pd.DataFrame`, sütun hesablamaları, `describe()`, filtrləmə).
 - Təmizləmə, icra müddəti (ms) və xətaların (Traceback) anlaşıqlı təsviri.
 
 ---
