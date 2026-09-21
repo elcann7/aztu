@@ -25,14 +25,31 @@ graph LR
 ## 1. 30 Tələbə Kvota Baryeri (`MAX_STUDENTS_LIMIT`)
 
 - **Məqsəd**: Qrup daxili məlumatların (mühazirə qeydləri, imtahan hazırlıqları, daxili sorğular) kənar şəxslər, digər qruplar və ya botlar tərəfindən oxunmasının qarşısını almaq.
-- **İcra**: `AuthContext.tsx` daxilində qeydiyyatdan keçmiş hesabların sayı daimi yoxlanılır:
-  ```typescript
-  export const MAX_STUDENTS_LIMIT = 30;
+- **İkili Müdafiə Səviyyəsi (Dual-Layer Defense)**:
+  1. **Brauzer və Müştəri Səviyyəsi (`AuthContext.tsx`)**: Qeydiyyatdan keçmiş hesabların sayı və Supabase `profiles` sayı real-vaxt rejimində yoxlanılır (`MAX_STUDENTS_LIMIT = 30`). Say 30-a çatdıqda qeydiyyat düymələri dərhal bloklanır.
+  2. **Verilənlər Bazası Səviyyəsi (PostgreSQL Trigger)**: Canlı Supabase bazasında `BEFORE INSERT` tətikçisi aktivdir. Hər hansı kənar API manipulyasiyası ilə bazaya 31-ci tələbə daxil edilməyə cəhd edilsə belə, PostgreSQL birbaşa xəta qaytararaq əməliyyatı ləğv edir:
+  ```sql
+  CREATE OR REPLACE FUNCTION check_max_students_limit()
+  RETURNS TRIGGER AS $$
+  DECLARE
+    current_count INTEGER;
+  BEGIN
+    SELECT COUNT(*) INTO current_count FROM profiles;
+    IF current_count >= 30 THEN
+      RAISE EXCEPTION 'AzTU 6326A2 XƏTASI: Qrupda maksimum 30 nəfərlik kvota dolmuşdur!';
+    END IF;
+    RETURN NEW;
+  END;
+  $$ LANGUAGE plpgsql;
+
+  CREATE TRIGGER enforce_30_students_limit
+  BEFORE INSERT ON profiles
+  FOR EACH ROW
+  EXECUTE FUNCTION check_max_students_limit();
   ```
 - **Davranış**:
-  - Əgər qeydiyyatdan keçmiş tələbələrin sayı 30-a çatarsa, `isRegistrationLocked = true` olur.
-  - Həm ənənəvi qeydiyyat formu (`RegisterPage.tsx`), həm də Google ilə yeni hesab yaratma cəhdi dərhal rədd edilir və istifadəçiyə bildiriş göstərilir:
-    > *"Qrupda maksimum 30 nəfərlik tələbə limiti dolmuşdur. Kənar şəxslərin qeydiyyatına icazə verilmir."*
+  - Həm ənənəvi qeydiyyat formu (`RegisterPage.tsx`), həm də Google ilə yeni hesab yaratma cəhdi 30 nəfərdən sonra dərhal rədd edilir:
+    > *"6326A2 qrupu üçün ayrılmış 30 nəfərlik qeydiyyat limiti tamamlanmışdır. Kənar şəxslərin daxil olmasına icazə verilmir."*
 
 ---
 

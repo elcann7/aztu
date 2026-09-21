@@ -42,8 +42,8 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 ### 3. Vəziyyət İdarəetməsi (`src/context/`)
 | Fayl | Məsuliyyəti |
 | :--- | :--- |
-| [`src/context/AuthContext.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/context/AuthContext.tsx) | **Tələbə Girişi və Təhlükəsizlik**: 30 tələbə kvotası, `6326A2` qrup kodu, Web Crypto SHA-256 + Salt heşləmə, Google GIS login, dondurulmuş şəxsiyyət sahələri (`firstName`, `lastName`, `group`). |
-| [`src/context/DatabaseContext.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/context/DatabaseContext.tsx) | **Verilənlər Bazasının İdarə Edilməsi**: Fənlər, qeydlər, sual-cavablar, sorğular, materiallar və deadline-lar üçün CRUD metodları. |
+| [`src/context/AuthContext.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/context/AuthContext.tsx) | **Tələbə Girişi və Təhlükəsizlik**: 30 tələbə kvotası (həm brauzerdə, həm canlı Supabase triggerində), `6326A2` qrup kodu, Web Crypto SHA-256 + Salt heşləmə, Google GIS login, dondurulmuş şəxsiyyət sahələri (`firstName`, `lastName`, `group`), Supabase `profiles` cədvəli ilə ikiistiqamətli sinxronizasiya. |
+| [`src/context/DatabaseContext.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/context/DatabaseContext.tsx) | **Verilənlər Bazasının İdarə Edilməsi**: Canlı Supabase PostgreSQL və Realtime (`supabase.channel('public:aztu_realtime_workspace')`) inteqrasiyası, akademik materiallar üçün Supabase Storage bulud fayl saxlancı, qeydlər, sual-cavablar, sorğular, səslər və deadline-lar üçün CRUD metodları, şəbəkə kəsildikdə dərhal yerli IndexedDB/LocalStorage ehtiyat nüsxəsinə keçid. |
 | [`src/context/RouterContext.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/context/RouterContext.tsx) | **Xüsusi SPA Router**: `window.history.pushState` və `popstate` əsaslı yüngül marşrutlaşdırıcı, `useRouter` hook-u və `<Link>` komponenti. |
 
 ---

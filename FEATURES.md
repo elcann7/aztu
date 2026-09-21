@@ -119,11 +119,13 @@ Hər bir fənn portalında:
 
 ---
 
-## 9. Akademik Materiallar (File Browser)
+## 9. Akademik Materiallar (File Browser & Cloud Storage)
 - Dərsliklər, PDF təqdimatlar, laboratoriya rəhbərlikləri və keçmiş imtahan sualları.
+- **Supabase Storage Bulud İnteqrasiyası**: Yüklənən fayllar birbaşa `materials` bulud qovluğuna ötürülür və bütün qrup tələbələri üçün ictimai URL vasitəsilə dərhal əlçatan olur.
 - **Fayl Tipləri**: PDF, DOCX, ZIP, PPTX və Kod faylları.
 - Fənlər və material tipləri üzrə təmiz filtrasiya.
 - Birbaşa yükləmə (Download) və fayl ölçüsü göstəricisi.
+- **Offline Ehtiyat**: Şəbəkə olmadıqda yerli IndexedDB yaddaşı işləməyə davam edir.
 
 ---
 
@@ -151,3 +153,13 @@ Hər bir fənn portalında:
 - **Mobil Rejim**: Kiçik ekranlarda yuxarı menyu düyməsi (Hamburger) ilə açılan mobil çekməce.
 - **Qlobal Axtarış UI**: Yuxarı paneldə mühazirə, qeyd və tapşırıqlar üçün axtarış sahəsi (`⌘K` / `Ctrl+K`).
 - **Bir Toxunuşla Profil**: TopBar-ın sağ küncündəki avatar klikləndikdə Tələbə Profili dərhal açılır.
+
+---
+
+## 13. Canlı Çoxistifadəçili Real-vaxt Sinxronizasiyası (Supabase Realtime)
+- **Avtomatik WebSocket Əlaqəsi**: Bütün 30 tələbə platformaya daxil olduqda `public:aztu_realtime_workspace` kanalına qoşulur.
+- **Səhifəni Yeniləmədən Canlı Yenilənmə**:
+  - Hər hansı tələbə yeni qeyd və ya mühazirə ipucu əlavə etdikdə digər tələbələrin lövhəsində anında görünür.
+  - Sorğularda verilən hər bir səs qrafikləri digər tələbələrin ekranında canlı olaraq dəyişir.
+  - Yeni tapşırıq və ya sual-cavab yazıldıqda bütün qrup xəbərdar olur.
+- **Hibrid Dözümlülük (Fault Tolerance)**: Əgər şəbəkə kəsilərsə və ya bulud əlaqəsi dayanarsa, sistem heç bir xəta vermədən yerli LocalStorage / IndexedDB ilə işləməyə davam edir və internet bərpa olunduqda yenidən qoşulur.

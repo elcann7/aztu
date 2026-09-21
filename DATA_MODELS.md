@@ -235,3 +235,32 @@ erDiagram
     POLL ||--|{ POLL_OPTION : "ibarətdir"
     POLL ||--o{ VOTE : "toplayır"
 ```
+
+---
+
+## 10. Canlı Supabase PostgreSQL Bulud Sxemi (Cloud Persistence)
+
+Layihə canlı Supabase PostgreSQL layihəsinə (`wcjdduxtssltkjkslyit`) bağlıdır. Cədvəllər brauzer modelləri ilə 100% uyğunlaşdırılmışdır:
+
+| Cədvəl | İlkin Açar (PK) | Əsas Sahələr | Təhlükəsizlik / Qaydalar |
+| :--- | :--- | :--- | :--- |
+| `profiles` | `id (UUID)` | `first_name, last_name, email, password_hash, group_name, bio, student_id_number, specialty, telegram, phone, github, avatar_url, avatar_initials, auth_provider` | `check_max_students_limit()` triggeri (Maks 30 tələbə) |
+| `courses` | `id (UUID)` | `name, code, slug, lecturer, department, credits` | Universitet fənnləri |
+| `notes` | `id (TEXT)` | `course_id, content, category, author_id, author_name, created_at, updated_at` | RLS aktiv, Realtime yayım |
+| `questions` | `id (TEXT)` | `title, details, course_id, accepted_answer_id, author_id, author_name, created_at, updated_at` | RLS aktiv, Realtime yayım |
+| `answers` | `id (TEXT)` | `question_id (FK), content, is_accepted, author_id, author_name, created_at` | `questions(id)` silindikdə kaskad silinmə |
+| `polls` | `id (TEXT)` | `question, course_id, author_id, author_name, is_closed, created_at` | RLS aktiv, Realtime yayım |
+| `poll_options`| `id (TEXT)` | `poll_id (FK), text` | `polls(id)` silindikdə kaskad silinmə |
+| `poll_votes` | `id (TEXT)` | `poll_id (FK), option_id (FK), user_id, created_at` | `UNIQUE(poll_id, user_id)` (1 tələbə 1 səs) |
+| `materials` | `id (TEXT)` | `title, course_id, type, description, file_name, file_size, file_mime, link_url, author_id, author_name, created_at, updated_at` | RLS aktiv, Realtime yayım |
+| `deadlines` | `id (TEXT)` | `title, course_id, description, due_date, due_time, points, is_completed, author_id, author_name, created_at, updated_at` | RLS aktiv, Realtime yayım |
+
+### Bulud Fayl Saxlanması (Supabase Storage)
+- **Bucket Adı**: `materials` (İctimai / Public)
+- **RLS**: Anonim və autentifikasiyalı istifadəçilər fayl yükləyə (`INSERT`), baxa (`SELECT`) və silə (`DELETE`) bilər.
+- **İnteqrasiya**: Yüklənən faylların ictimai URL ünvanı avtomatik `materials.link_url` sahəsinə yazılır və 30 tələbənin hamısı üçün ani əlçatan olur.
+
+### Real-vaxt Yayım Kanalı (Realtime Broadcast)
+- **Kanal adı**: `public:aztu_realtime_workspace`
+- **Tədbir növü**: `postgres_changes (*)`
+- **Əhatə etdiyi cədvəllər**: `notes`, `materials`, `deadlines`, `questions`, `answers`, `polls`, `poll_options`, `poll_votes`.

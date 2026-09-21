@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
+import { isSupabaseConfigured, supabase } from '../services/supabase';
 
 export interface User {
   id: string;
@@ -71,12 +72,22 @@ async function hashPassword(password: string): Promise<string> {
   return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
+function generateUserId(): string {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [registeredCount, setRegisteredCount] = useState<number>(0);
 
-  // Initialize storage & cleanup legacy test accounts
+  // Initialize storage & sync with Supabase profiles
   useEffect(() => {
     const initializeAuth = async () => {
       try {
@@ -86,7 +97,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (storedUsersRaw) {
           try {
             accounts = JSON.parse(storedUsersRaw);
-            // Clean up any legacy demo test user (hesen.m@aztu.edu.az)
             accounts = accounts.filter(
               (acc) => acc.user.id !== 'usr_6326a2_hesen' && acc.user.email !== 'hesen.m@aztu.edu.az'
             );
@@ -96,19 +106,60 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           }
         }
 
-        setRegisteredCount(accounts.length);
+        let totalCount = accounts.length;
+
+        // Sync count with Supabase cloud database
+        if (isSupabaseConfigured() && supabase) {
+          try {
+            const { count, error } = await supabase.from('profiles').select('*', { count: 'exact', head: true });
+            if (!error && typeof count === 'number') {
+              totalCount = Math.max(totalCount, count);
+            }
+          } catch (err) {
+            console.warn('Could not query Supabase profiles count:', err);
+          }
+        }
+
+        setRegisteredCount(totalCount);
 
         // Restore active session
         const sessionRaw = localStorage.getItem(SESSION_STORAGE_KEY);
         if (sessionRaw) {
           try {
-            const sessionUser = JSON.parse(sessionRaw);
-            // If session was old demo user, clear it
+            const sessionUser: User = JSON.parse(sessionRaw);
             if (sessionUser.email === 'hesen.m@aztu.edu.az' || sessionUser.id === 'usr_6326a2_hesen') {
               localStorage.removeItem(SESSION_STORAGE_KEY);
               setUser(null);
             } else {
               setUser(sessionUser);
+
+              // Background refresh from Supabase to sync latest profile changes
+              if (isSupabaseConfigured() && supabase) {
+                Promise.resolve(
+                  supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', sessionUser.id)
+                    .maybeSingle()
+                )
+                  .then(({ data: p }) => {
+                    if (p) {
+                      const refreshed: User = {
+                        ...sessionUser,
+                        avatarUrl: p.avatar_url || sessionUser.avatarUrl,
+                        bio: p.bio || sessionUser.bio,
+                        studentIdNumber: p.student_id_number || sessionUser.studentIdNumber,
+                        specialty: p.specialty || sessionUser.specialty,
+                        telegram: p.telegram || sessionUser.telegram,
+                        phone: p.phone || sessionUser.phone,
+                        github: p.github || sessionUser.github,
+                      };
+                      setUser(refreshed);
+                      localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(refreshed));
+                    }
+                  })
+                  .catch(() => {});
+              }
             }
           } catch {
             localStorage.removeItem(SESSION_STORAGE_KEY);
@@ -131,9 +182,61 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     try {
+      const inputHash = await hashPassword(password);
+
+      // Check local storage first
       const storedUsersRaw = localStorage.getItem(USERS_STORAGE_KEY);
       const accounts: StoredAccount[] = storedUsersRaw ? JSON.parse(storedUsersRaw) : [];
-      const account = accounts.find((acc) => acc.user.email.toLowerCase() === normalizedEmail);
+      let account = accounts.find((acc) => acc.user.email.toLowerCase() === normalizedEmail);
+
+      // If not in local storage and Supabase is configured, check Supabase
+      if (!account && isSupabaseConfigured() && supabase) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('email', normalizedEmail)
+          .maybeSingle();
+
+        if (profile) {
+          if (profile.auth_provider === 'google' && !profile.password_hash) {
+            return {
+              success: false,
+              error: 'Bu hesab Google ilə qeydiyyatdan keçib. Zəhmət olmasa "Google ilə daxil ol" düyməsindən istifadə edin.',
+            };
+          }
+
+          if (profile.password_hash && inputHash !== profile.password_hash) {
+            return { success: false, error: 'Daxil edilən şifrə yanlışdır.' };
+          }
+
+          const nameParts = (profile.full_name || '').split(' ');
+          const userFromCloud: User = {
+            id: profile.id,
+            firstName: profile.first_name || nameParts[0] || 'Tələbə',
+            lastName: profile.last_name || nameParts.slice(1).join(' ') || 'AzTU',
+            email: profile.email || normalizedEmail,
+            group: profile.group_name || '6326A2',
+            avatarInitials: profile.avatar_initials || 'AZ',
+            avatarUrl: profile.avatar_url || undefined,
+            bio: profile.bio || undefined,
+            studentIdNumber: profile.student_id_number || undefined,
+            specialty: profile.specialty || 'Kompüter Mühəndisliyi',
+            telegram: profile.telegram || undefined,
+            phone: profile.phone || undefined,
+            github: profile.github || undefined,
+            createdAt: profile.created_at || new Date().toISOString(),
+            authProvider: profile.auth_provider || 'password',
+          };
+
+          // Cache locally
+          accounts.push({ user: userFromCloud, passwordHash: profile.password_hash });
+          localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(accounts));
+
+          setUser(userFromCloud);
+          localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(userFromCloud));
+          return { success: true };
+        }
+      }
 
       if (!account) {
         return { success: false, error: 'Bu e-poçt ilə qeydiyyatdan keçmiş hesab tapılmadı.' };
@@ -146,7 +249,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
       }
 
-      const inputHash = await hashPassword(password);
       if (inputHash !== account.passwordHash) {
         return { success: false, error: 'Daxil edilən şifrə yanlışdır.' };
       }
@@ -181,7 +283,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         if (existingIndex !== -1) {
           const existing = accounts[existingIndex];
-          // If existing user doesn't have avatar but Google provided one, update it
           if (pictureUrl && !existing.user.avatarUrl) {
             existing.user.avatarUrl = pictureUrl;
             accounts[existingIndex] = existing;
@@ -192,8 +293,51 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           return { success: true };
         }
 
+        // Check if student exists in Supabase
+        if (isSupabaseConfigured() && supabase) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('email', cleanEmail)
+            .maybeSingle();
+
+          if (profile) {
+            const nameParts = (profile.full_name || cleanName).split(' ');
+            const existingCloudUser: User = {
+              id: profile.id,
+              firstName: profile.first_name || nameParts[0] || 'Tələbə',
+              lastName: profile.last_name || nameParts.slice(1).join(' ') || 'AzTU',
+              email: profile.email || cleanEmail,
+              group: profile.group_name || '6326A2',
+              avatarInitials: profile.avatar_initials || `${nameParts[0]?.[0] || 'A'}${nameParts[1]?.[0] || 'Z'}`.toUpperCase(),
+              avatarUrl: pictureUrl || profile.avatar_url || undefined,
+              bio: profile.bio || undefined,
+              studentIdNumber: profile.student_id_number || undefined,
+              specialty: profile.specialty || 'Kompüter Mühəndisliyi',
+              telegram: profile.telegram || undefined,
+              phone: profile.phone || undefined,
+              github: profile.github || undefined,
+              createdAt: profile.created_at || new Date().toISOString(),
+              authProvider: 'google',
+            };
+
+            accounts.push({ user: existingCloudUser });
+            localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(accounts));
+
+            setUser(existingCloudUser);
+            localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(existingCloudUser));
+            return { success: true };
+          }
+        }
+
         // New student registration via Google: Check group limit
-        if (accounts.length >= MAX_STUDENTS_LIMIT) {
+        let currentCount = accounts.length;
+        if (isSupabaseConfigured() && supabase) {
+          const { count } = await supabase.from('profiles').select('*', { count: 'exact', head: true });
+          if (typeof count === 'number') currentCount = Math.max(currentCount, count);
+        }
+
+        if (currentCount >= MAX_STUDENTS_LIMIT) {
           return {
             success: false,
             error: `6326A2 qrupu üçün ayrılmış ${MAX_STUDENTS_LIMIT} nəfərlik qeydiyyat limiti tamamlanmışdır. Kənar şəxslərin daxil olmasına icazə verilmir.`,
@@ -216,7 +360,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
 
         const newUser: User = {
-          id: `usr_g_${Date.now()}`,
+          id: generateUserId(),
           firstName,
           lastName,
           email: cleanEmail,
@@ -226,6 +370,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           createdAt: new Date().toISOString(),
           authProvider: 'google',
         };
+
+        // Persist to Supabase
+        if (isSupabaseConfigured() && supabase) {
+          const { error: insErr } = await supabase.from('profiles').insert({
+            id: newUser.id,
+            first_name: newUser.firstName,
+            last_name: newUser.lastName,
+            full_name: `${newUser.firstName} ${newUser.lastName}`,
+            email: newUser.email,
+            group_name: '6326A2',
+            avatar_url: newUser.avatarUrl,
+            avatar_initials: newUser.avatarInitials,
+            auth_provider: 'google',
+            global_role: 'student',
+          });
+          if (insErr) {
+            console.error('Failed to insert google user to Supabase:', insErr);
+          }
+        }
 
         accounts.push({ user: newUser });
         localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(accounts));
@@ -277,8 +440,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const storedUsersRaw = localStorage.getItem(USERS_STORAGE_KEY);
         const accounts: StoredAccount[] = storedUsersRaw ? JSON.parse(storedUsersRaw) : [];
 
-        // Security check: Max 30 students quota
-        if (accounts.length >= MAX_STUDENTS_LIMIT) {
+        // Security check: Max 30 students quota (checks both local and live cloud database)
+        let currentCount = accounts.length;
+        if (isSupabaseConfigured() && supabase) {
+          const { count } = await supabase.from('profiles').select('*', { count: 'exact', head: true });
+          if (typeof count === 'number') currentCount = Math.max(currentCount, count);
+        }
+
+        if (currentCount >= MAX_STUDENTS_LIMIT) {
           return {
             success: false,
             error: `6326A2 qrupu üçün ayrılmış ${MAX_STUDENTS_LIMIT} nəfərlik qeydiyyat limiti tamamlanmışdır. Kənar şəxslərin qeydiyyatına icazə verilmir.`,
@@ -290,19 +459,53 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           return { success: false, error: 'Bu e-poçt ünvanı ilə artıq hesab mövcuddur.' };
         }
 
+        // Also check Supabase for existing email
+        if (isSupabaseConfigured() && supabase) {
+          const { data: cloudExisting } = await supabase
+            .from('profiles')
+            .select('id')
+            .eq('email', cleanEmail)
+            .maybeSingle();
+          if (cloudExisting) {
+            return { success: false, error: 'Bu e-poçt ünvanı ilə artıq qeydiyyatdan keçilib.' };
+          }
+        }
+
         const passwordHash = await hashPassword(password);
         const initials = `${cleanFirst.charAt(0)}${cleanLast.charAt(0)}`.toUpperCase();
 
         const newUser: User = {
-          id: `usr_${Date.now()}`,
-          firstName,
-          lastName,
+          id: generateUserId(),
+          firstName: cleanFirst,
+          lastName: cleanLast,
           email: cleanEmail,
           group: '6326A2',
           avatarInitials: initials,
           createdAt: new Date().toISOString(),
           authProvider: 'password',
         };
+
+        // Persist to Supabase cloud database
+        if (isSupabaseConfigured() && supabase) {
+          const { error: insErr } = await supabase.from('profiles').insert({
+            id: newUser.id,
+            first_name: newUser.firstName,
+            last_name: newUser.lastName,
+            full_name: `${newUser.firstName} ${newUser.lastName}`,
+            email: newUser.email,
+            group_name: '6326A2',
+            avatar_initials: newUser.avatarInitials,
+            password_hash: passwordHash,
+            auth_provider: 'password',
+            global_role: 'student',
+          });
+          if (insErr) {
+            console.error('Supabase profile registration error:', insErr);
+            if (insErr.message?.includes('30')) {
+              return { success: false, error: '6326A2 qrupunda 30 nəfərlik kvota tamamlanmışdır!' };
+            }
+          }
+        }
 
         const newAccount: StoredAccount = {
           user: newUser,
@@ -356,6 +559,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         setUser(updatedUser);
         localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(updatedUser));
+
+        // Sync updates to Supabase
+        if (isSupabaseConfigured() && supabase) {
+          supabase
+            .from('profiles')
+            .update({
+              avatar_url: updatedUser.avatarUrl,
+              bio: updatedUser.bio,
+              student_id_number: updatedUser.studentIdNumber,
+              specialty: updatedUser.specialty,
+              telegram: updatedUser.telegram,
+              phone: updatedUser.phone,
+              github: updatedUser.github,
+              updated_at: new Date().toISOString(),
+            })
+            .eq('id', user.id)
+            .then(({ error }) => {
+              if (error) console.error('Supabase profile update error:', error);
+            });
+        }
 
         return { success: true };
       } catch (err) {
