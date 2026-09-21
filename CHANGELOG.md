@@ -1,0 +1,73 @@
+# AzTU 6326A2 — Dəyişikliklər Tarixçəsi (Changelog)
+
+Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya inkişafını, əlavə edilmiş funksiyaları və xəta düzəlişlərini xronoloji ardıcıllıqla qeyd edir.
+
+---
+
+## [1.5.0] — 2026-09-22
+
+### 📚 Tam Sənədləşmə Paketi
+- **README.md**: Layihənin rəsmi təqdimatı, canlı linklər, xüsusiyyətlər və sürətli başlanğıc bələdçisi.
+- **ARCHITECTURE.md**: Client-Side SPA arxitekturası, React Context vəziyyət idarəetməsi və React Portal dialoq sistemi.
+- **FEATURES.md**: Platformadakı bütün 12 modulun funksional izahatı.
+- **DATA_MODELS.md**: Bütün TypeScript interfeysləri, ER diaqramı və localStorage yaddaş açarları.
+- **SECURITY.md**: 30 tələbəlik kvota sistemi, SHA-256 duzlanmış heşləmə və tələbə şəxsiyyətinin toxunulmazlığı.
+- **DEPLOYMENT.md**: Vercel SPA rewrite konfiqurasiyası və Google Cloud Console sazlamaları.
+- **CONTRIBUTING.md**: Qrup tələbələri üçün kodlaşdırma və commit standartları.
+
+---
+
+## [1.4.0] — 2026-09-22
+
+### 🐛 Xəta Həlli (Bugfix)
+- **React Portal İnteqrasiyası**: `Modal.tsx` və `ProfileModal.tsx` komponentləri birbaşa `document.body`-yə mount olunan `ReactDOM.createPortal` ilə yeniləndi.
+- **Containing Block Probleminin Aradan Qaldırılması**: `.view-content-flow` konteynerindəki animasiya və `transform` xüsusiyyətlərinin modalları ortadakı 1080px qutuya sıxması aradan qaldırıldı.
+- **Flexbox Mərkəzləmə Təhlükəsizliyi**: `Modal.css` və `ProfileModal.css` daxilində `margin: auto` tətbiq edildi; kiçik ekranlarda modal başlığının və `X` düyməsinin ekranın yuxarısından kəsilməsi (top clipping) tamamilə həll olundu.
+- **Bütöv Ekran Örtüyü (Backdrop)**: Qaranlıq fon (`rgba(15, 23, 42, 0.55)` + blur) bütün pəncərəni (Sidebar və TopBar daxil olmaqla) bərabər şəkildə örtür.
+- **Sabit Profil Alt Paneli**: Tələbə profili modalında "Bağla" və "Yadda saxla" düymələri pəncərənin altında daimi görünən və əlçatan şəkildə sabitləndi.
+
+---
+
+## [1.3.0] — 2026-09-22
+
+### ✨ Yeni Xüsusiyyətlər
+- **Tələbə Profili Modalı (`ProfileModal.tsx`)**:
+  - Şəkil yükləmə (`image/*`) və Base64 saxlanması.
+  - Hazır akademik emoji avatarları (👨‍💻, 👩‍💻, 🧑‍🎓, 🚀, ⚡, 🎓).
+  - Google hesabı ilə daxil olduqda profil şəklinin avtomatik tətbiqi.
+  - Bio/Status, Tələbə bilet nömrəsi, İxtisas, Telegram, Telefon və GitHub linklərinin idarəsi.
+- **Tələbə Şəxsiyyətinin Toxunulmazlığı**:
+  - Ad, Soyad və Qrup sahələri rəsmi olaraq kilidləndi (`LOCKED`). Tələbə tərəfindən saxtalaşdırıla bilməz.
+
+---
+
+## [1.2.0] — 2026-09-21
+
+### 🔒 Təhlükəsizlik və Kvota
+- **30 Tələbə Limiti**: Qrup tələbələrinin sayı 30-a çatdıqda qeydiyyatın avtomatik bağlanması mexanizmi quruldu.
+- **Qrup Təhlükəsizlik Kodu**: Qeydiyyat və Google ilə ilk girişdə `6326A2` kodunun yoxlanılması təmin edildi.
+- **SPA 404 Rewrite**: `vercel.json` faylı yaradılaraq birbaşa URL daxiletmələrində və yenilənmələrdə (F5) 404 xətası aradan qaldırıldı.
+
+---
+
+## [1.1.0] — 2026-09-21
+
+### 🔑 Autentifikasiya Yenilənməsi
+- **Google Identity Services (GIS)**: Rəsmi Google düyməsi və One-Tap giriş imkanı əlavə edildi (`src/services/googleAuth.ts`).
+- **Test Hesablarının Təmizlənməsi**: Giriş səhifəsindəki köhnə demo qeydiyyat qutusu silindi, real tələbə qeydiyyat axını quruldu.
+
+---
+
+## [1.0.0] — 2026-09-21
+
+### 🚀 İlkin Buraxılış (Initial Release)
+- Əsas təqdimat səhifəsi (Landing Page) və akademik brendinq.
+- Vahid iş sahəsi şeli (`AppShell.tsx`, `Sidebar.tsx`, `TopBar.tsx`).
+- 4 əsas fənn üçün ixtisaslaşmış səhifələr (Riyazi analiz, Fizika, Proqramlaşdırma, İngilis dili).
+- Mühazirə qeydləri zaman xətti (`NotesView.tsx`).
+- Sual-Cavab forumu (`QAView.tsx`).
+- Demokratik qrup sorğuları (`PollsView.tsx`).
+- Akademik dərs materialları kataloqu (`MaterialsView.tsx`).
+- Deadline və tapşırıq sayğacı (`DeadlinesView.tsx`).
+- Brauzerdaxili Python laboratoriya mühiti (`PythonSandboxView.tsx`).
+- GitHub repozitoriyası (`elcann7/aztu`) və Vercel istehsalat yerləşdirilməsi.
