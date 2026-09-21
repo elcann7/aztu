@@ -22,7 +22,12 @@ import {
   ChevronDown,
   ChevronUp,
   ArrowRight,
+  Calendar,
+  MapPin,
+  BookOpen,
+  Sparkles,
 } from 'lucide-react';
+import { COURSE_SYLLABUS, WEEKLY_SCHEDULE, SEMESTER_CONFIG } from '../../data/mockData';
 import { CreateMaterialModal } from './modals/CreateMaterialModal';
 import { CreateNoteModal } from './modals/CreateNoteModal';
 import { CreateDeadlineModal } from './modals/CreateDeadlineModal';
@@ -52,7 +57,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
   } = useDatabase();
   const { user } = useAuth();
 
-  const [activeTab, setActiveTab] = useState<'overview' | 'materials' | 'notes' | 'assignments' | 'qa'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'syllabus' | 'materials' | 'notes' | 'assignments' | 'qa'>('overview');
   const [modalType, setModalType] = useState<'material' | 'note' | 'deadline' | 'question' | null>(null);
 
   // QA expanded & answer state
@@ -62,9 +67,11 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
 
   const slugMap: Record<string, string> = {
     'math-analysis': 'math',
+    'linear-algebra': 'algebra',
     physics: 'phys',
     programming: 'prog',
     english: 'eng',
+    azerbaijani: 'aze',
   };
 
   const targetId = slugMap[courseSlug] || courseSlug;
@@ -85,9 +92,12 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
   const courseNotes = notes.filter((n) => n.courseId === course.id);
   const courseDeadlines = deadlines.filter((d) => d.courseId === course.id);
   const courseQuestions = questions.filter((q) => q.courseId === course.id);
+  const courseSchedule = WEEKLY_SCHEDULE.filter(s => s.courseId === targetId || s.courseId === course.id);
+  const courseSyllabus = COURSE_SYLLABUS[targetId] || COURSE_SYLLABUS[course.id] || [];
 
   const tabs = [
     { id: 'overview', label: 'Ümumi', icon: Layers },
+    { id: 'syllabus', label: '15 Həftəlik Plan', icon: BookOpen },
     { id: 'materials', label: `Materiallar (${courseMaterials.length})`, icon: FolderOpen },
     { id: 'notes', label: `Qrup qeydləri (${courseNotes.length})`, icon: MessageSquareQuote },
     { id: 'assignments', label: `Tapşırıqlar (${courseDeadlines.length})`, icon: Clock },
@@ -228,6 +238,112 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
             </div>
           </div>
 
+          {/* Fənn Dərs Cədvəli və Auditoriyalar */}
+          <div className="view-table-card">
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'space-between',
+              padding: '0.75rem 1rem',
+              borderBottom: '1px solid var(--border-subtle)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <Calendar size={14} color="var(--text-muted)" />
+                <span style={{ fontSize: '0.76rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-muted)' }}>
+                  Rəsmi Dərs Cədvəli & Auditoriyalar
+                </span>
+              </div>
+              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>6326A2 Qrupu</span>
+            </div>
+
+            {courseSchedule.length === 0 ? (
+              <div style={{ padding: '1.25rem', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.8rem' }}>
+                Bu fənn üçün təyin edilmiş dərs cədvəli tapılmadı.
+              </div>
+            ) : (
+              <div className="course-schedule-grid">
+                {courseSchedule.map((cs) => (
+                  <div key={cs.id} className="course-schedule-slot-card">
+                    <div className="slot-day-time">
+                      <span className="slot-day-name">{cs.day}</span>
+                      <span className="slot-time-text">{cs.time}</span>
+                    </div>
+                    <div className="slot-type-lecturer">
+                      <div className="slot-type-row">
+                        <span className={`dash-lesson-type-badge ${cs.typeCode}`}>{cs.typeCode}</span>
+                        <span className="slot-type-name">{cs.type}</span>
+                        {cs.subgroup && <span className="dash-subgroup-pill">{cs.subgroup}</span>}
+                      </div>
+                      <span className="slot-lecturer-name">{cs.lecturer}</span>
+                    </div>
+                    <div className="slot-room-badge">
+                      <MapPin size={12} />
+                      <span>Aud. {cs.room}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* 15 Həftəlik Tədris Proqramı Xülasəsi */}
+          <div className="view-table-card">
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'space-between',
+              padding: '0.75rem 1rem',
+              borderBottom: '1px solid var(--border-subtle)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <BookOpen size={14} color="var(--text-muted)" />
+                <span style={{ fontSize: '0.76rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-muted)' }}>
+                  15 Həftəlik Tədris Planı (Cari: 2-ci Həftə)
+                </span>
+              </div>
+              <button 
+                type="button" 
+                onClick={() => setActiveTab('syllabus')}
+                className="row-action-btn"
+              >
+                <span>Bütün 15 həftəyə bax</span>
+                <ArrowRight size={11} />
+              </button>
+            </div>
+
+            <div className="course-syllabus-list">
+              {courseSyllabus.slice(0, 4).map((week) => {
+                const isCompleted = week.status === 'completed';
+                const isInProgress = week.status === 'in_progress';
+                const isColloquium = week.type === 'colloquium';
+
+                return (
+                  <div 
+                    key={week.week} 
+                    className={`syllabus-week-row ${isInProgress ? 'is-current' : ''}`}
+                  >
+                    <div className="syllabus-week-meta">
+                      <span className="syllabus-week-num">{week.week}-ci həftə</span>
+                      <span className="syllabus-week-dates">{week.dates}</span>
+                    </div>
+
+                    <div className="syllabus-week-content">
+                      <div className="syllabus-week-title-row">
+                        <span className="syllabus-week-title">{week.title}</span>
+                        {isCompleted && <span className="syllabus-status-pill completed">✓ Keçildi</span>}
+                        {isInProgress && <span className="syllabus-status-pill current">● Cari həftə</span>}
+                        {isColloquium && <span className="syllabus-status-pill colloquium">★ Kollokvium</span>}
+                      </div>
+                      {week.description && (
+                        <p className="syllabus-week-desc">{week.description}</p>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Active Deadlines Section */}
           <div className="view-table-card">
             <div style={{ 
@@ -345,6 +461,110 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                 ))}
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================
+          TAB: 15 HƏFTƏLİK PLAN VƏ SİLLABUS
+          ======================================================== */}
+      {activeTab === 'syllabus' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          {/* Syllabus Banner */}
+          <div className="dash-semester-card">
+            <div className="dash-sem-top">
+              <div>
+                <div className="dash-sem-badge-row">
+                  <span className="dash-sem-badge">
+                    <Sparkles size={12} />
+                    {course.code} Tədris Planı
+                  </span>
+                  <span className="dash-sem-date-note">
+                    15 Sentyabr – 26 Dekabr · <strong>Hazırda: 2-ci Həftə</strong>
+                  </span>
+                </div>
+                <h3 className="dash-sem-title">Semestr İmtahanına Qədər Həftəlik Mövzu Bölgüsü</h3>
+              </div>
+              <div className="dash-sem-countdown-pill">
+                <Clock size={14} />
+                <span>İmtahan sessiyası: <strong>5 Yanvar 2027</strong></span>
+              </div>
+            </div>
+
+            <div className="syllabus-milestones-summary">
+              <div className="syllabus-milestone-box">
+                <span className="milestone-box-tag">1–5-ci Mövzular</span>
+                <span className="milestone-box-name">I Kollokvium</span>
+                <span className="milestone-box-date">{SEMESTER_CONFIG.colloquium1Date}</span>
+              </div>
+              <div className="syllabus-milestone-box">
+                <span className="milestone-box-tag">6–10-cu Mövzular</span>
+                <span className="milestone-box-name">II Kollokvium</span>
+                <span className="milestone-box-date">{SEMESTER_CONFIG.colloquium2Date}</span>
+              </div>
+              <div className="syllabus-milestone-box">
+                <span className="milestone-box-tag">11–15-ci Mövzular</span>
+                <span className="milestone-box-name">III Kol. & Yekun</span>
+                <span className="milestone-box-date">{SEMESTER_CONFIG.colloquium3Date}</span>
+              </div>
+              <div className="syllabus-milestone-box exam">
+                <span className="milestone-box-tag">Semestr İmtahanı</span>
+                <span className="milestone-box-name">Qış Sessiyası</span>
+                <span className="milestone-box-date">5–31 Yanvar 2027</span>
+              </div>
+            </div>
+          </div>
+
+          {/* All 15 Weeks List */}
+          <div className="view-table-card">
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'space-between',
+              padding: '0.75rem 1rem',
+              borderBottom: '1px solid var(--border-subtle)'
+            }}>
+              <span style={{ fontSize: '0.76rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-muted)' }}>
+                Bütün 15 Həftənin Mövzuları və Tarixləri
+              </span>
+              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
+                Ümumi: {courseSyllabus.length} həftəlik proqram
+              </span>
+            </div>
+
+            <div className="course-syllabus-list">
+              {courseSyllabus.map((week) => {
+                const isCompleted = week.status === 'completed';
+                const isInProgress = week.status === 'in_progress';
+                const isColloquium = week.type === 'colloquium';
+                const isExam = week.type === 'exam';
+
+                return (
+                  <div 
+                    key={week.week} 
+                    className={`syllabus-week-row ${isInProgress ? 'is-current' : ''} ${isColloquium ? 'is-colloquium' : ''} ${isExam ? 'is-exam' : ''}`}
+                  >
+                    <div className="syllabus-week-meta">
+                      <span className="syllabus-week-num">{week.week}-ci həftə</span>
+                      <span className="syllabus-week-dates">{week.dates}</span>
+                    </div>
+
+                    <div className="syllabus-week-content">
+                      <div className="syllabus-week-title-row">
+                        <span className="syllabus-week-title">{week.title}</span>
+                        {isCompleted && <span className="syllabus-status-pill completed">✓ Keçildi</span>}
+                        {isInProgress && <span className="syllabus-status-pill current">● Cari həftə</span>}
+                        {isColloquium && <span className="syllabus-status-pill colloquium">★ Kollokvium</span>}
+                        {isExam && <span className="syllabus-status-pill exam">🏁 İmtahan</span>}
+                      </div>
+                      {week.description && (
+                        <p className="syllabus-week-desc">{week.description}</p>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}

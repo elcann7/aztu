@@ -101,6 +101,471 @@
 }
 
 /* ==========================================================================
+   SEMESTER PROGRESS TRACKER & EXAM COUNTDOWN
+   ========================================================================== */
+.dash-semester-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.25rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+.dash-sem-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.dash-sem-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.dash-sem-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #f1f5f9;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.dash-sem-date-note {
+  font-size: 0.77rem;
+  color: #64748b;
+}
+
+.dash-sem-date-note strong {
+  color: #0f172a;
+}
+
+.dash-sem-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.dash-sem-countdown-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: #f8fafc;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.dash-sem-countdown-pill strong {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.dash-sem-progress-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.dash-sem-progress-bar-bg {
+  width: 100%;
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.dash-sem-progress-bar-fill {
+  height: 100%;
+  background: #0f172a;
+  border-radius: 999px;
+  transition: width 400ms ease;
+}
+
+.dash-sem-progress-labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: #64748b;
+}
+
+.dash-sem-current-step {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.dash-sem-milestones-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.dash-sem-milestone-card {
+  background: #fafbfc;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+  padding: 0.85rem 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  transition: all 150ms ease;
+}
+
+.dash-sem-milestone-card.active {
+  background: #ffffff;
+  border-color: #0f172a;
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.06);
+}
+
+.dash-milestone-header {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.milestone-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #94a3b8;
+}
+
+.milestone-status-dot.pulse {
+  background: #0f172a;
+  box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.15);
+}
+
+.milestone-status-dot.upcoming {
+  background: #64748b;
+}
+
+.milestone-status-dot.exam {
+  background: #475569;
+}
+
+.milestone-tag {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #64748b;
+}
+
+.dash-sem-milestone-card.active .milestone-tag {
+  color: #0f172a;
+}
+
+.milestone-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+.milestone-detail {
+  font-size: 0.72rem;
+  color: #64748b;
+  line-height: 1.35;
+  margin: 0;
+  flex: 1;
+}
+
+.milestone-timeline {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #475569;
+  margin-top: 0.2rem;
+}
+
+/* ==========================================================================
+   OFFICIAL WEEKLY SCHEDULE & TIMETABLE SECTION
+   ========================================================================== */
+.dash-schedule-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.dash-schedule-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.dash-schedule-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.dash-schedule-badge {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+}
+
+.dash-schedule-sub {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.dash-schedule-days-tabs {
+  display: flex;
+  align-items: center;
+  background: #f1f5f9;
+  padding: 3px;
+  border-radius: 9px;
+  gap: 2px;
+  border: 1px solid #e2e8f0;
+}
+
+.dash-day-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 7px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.dash-day-tab:hover {
+  color: #0f172a;
+}
+
+.dash-day-tab.is-active {
+  background: #ffffff;
+  color: #0f172a;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.dash-today-pill {
+  font-size: 0.625rem;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.dash-schedule-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.dash-schedule-empty {
+  background: #ffffff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  font-size: 0.82rem;
+  color: #64748b;
+}
+
+.dash-schedule-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.85rem 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+  transition: all 150ms ease;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+}
+
+.dash-schedule-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.06);
+  transform: translateY(-0.5px);
+}
+
+.dash-sched-time-col {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+.dash-sched-clock-icon {
+  color: #64748b;
+}
+
+.dash-sched-time {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}
+
+.dash-sched-type-badge-col {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+.dash-lesson-type-badge {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.dash-lesson-type-badge.M {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+.dash-lesson-type-badge.S {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.dash-lesson-type-badge.L {
+  background: #faf5ff;
+  color: #7e22ce;
+  border: 1px solid #e9d5ff;
+}
+
+.dash-lesson-type-name {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #475569;
+}
+
+.dash-sched-main-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.dash-sched-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.dash-sched-subject {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dash-subgroup-pill {
+  font-size: 0.65rem;
+  font-weight: 500;
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+.dash-sched-teacher-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dash-sched-teacher {
+  font-size: 0.77rem;
+  color: #64748b;
+}
+
+.dash-sched-room-col {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.dash-room-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.dash-sched-goto-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: transparent;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.dash-sched-goto-btn:hover {
+  background: #0f172a;
+  border-color: #0f172a;
+  color: #ffffff;
+}
+
+/* ==========================================================================
    2. ACADEMIC COURSES GRID (Clean 21st.dev Style)
    ========================================================================== */
 .dash-courses-section {
@@ -713,6 +1178,27 @@
   .dash-bento-grid {
     grid-template-columns: 1fr;
   }
+
+  .dash-sem-milestones-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .dash-schedule-card {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .dash-sched-time-col,
+  .dash-sched-type-badge-col {
+    min-width: auto;
+  }
+
+  .dash-sched-room-col {
+    width: 100%;
+    justify-content: space-between;
+  }
 }
 
 @media (max-width: 600px) {
@@ -722,5 +1208,24 @@
 
   .dash-courses-grid {
     grid-template-columns: 1fr;
+  }
+
+  .dash-sem-milestones-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-schedule-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dash-schedule-days-tabs {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .dash-day-tab {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.72rem;
   }
 }

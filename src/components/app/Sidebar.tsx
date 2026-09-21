@@ -31,10 +31,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenProfile
   };
 
   const courses = [
-    { name: 'Riyazi analiz', path: '/app/courses/math-analysis', code: 'MATH-101' },
-    { name: 'Fizika', path: '/app/courses/physics', code: 'PHYS-102' },
-    { name: 'Proqramlaşdırma', path: '/app/courses/programming', code: 'CS-101' },
-    { name: 'İngilis dili', path: '/app/courses/english', code: 'ENG-101' },
+    { name: 'Riyazi analiz-1', path: '/app/courses/math-analysis', code: 'MATH-101' },
+    { name: 'Xətti cəbr', path: '/app/courses/linear-algebra', code: 'MATH-102' },
+    { name: 'Fizika', path: '/app/courses/physics', code: 'PHYS-101' },
+    { name: 'Proqramlaşdırma-1', path: '/app/courses/programming', code: 'CS-101' },
+    { name: 'Xarici dildə işgüzar kom. -1', path: '/app/courses/english', code: 'ENG-101' },
+    { name: 'Azərbaycan dildə işgüzar kom.', path: '/app/courses/azerbaijani', code: 'AZE-101' },
   ];
 
   const navSections = [

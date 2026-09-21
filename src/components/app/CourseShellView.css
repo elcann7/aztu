@@ -169,8 +169,268 @@
   color: var(--text-primary);
 }
 
+/* ==========================================================================
+   COURSE SCHEDULE & AUDITORIUMS
+   ========================================================================== */
+.course-schedule-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.course-schedule-slot-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0.85rem 1.15rem;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 150ms ease;
+}
+
+.course-schedule-slot-card:last-child {
+  border-bottom: none;
+}
+
+.course-schedule-slot-card:hover {
+  background: #fafbfc;
+}
+
+.slot-day-time {
+  display: flex;
+  flex-direction: column;
+  min-width: 130px;
+  flex-shrink: 0;
+}
+
+.slot-day-name {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.slot-time-text {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.slot-type-lecturer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.slot-type-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.slot-type-name {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.slot-lecturer-name {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.slot-room-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   15-WEEK SYLLABUS ROADMAP
+   ========================================================================== */
+.course-syllabus-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.syllabus-week-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 0.85rem 1.15rem;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 150ms ease;
+}
+
+.syllabus-week-row:last-child {
+  border-bottom: none;
+}
+
+.syllabus-week-row:hover {
+  background: #fafbfc;
+}
+
+.syllabus-week-row.is-current {
+  background: #f8fafc;
+  border-left: 3px solid #0f172a;
+}
+
+.syllabus-week-row.is-colloquium {
+  background: #fffbeb;
+  border-left: 3px solid #d97706;
+}
+
+.syllabus-week-row.is-exam {
+  background: #f1f5f9;
+  border-left: 3px solid #475569;
+}
+
+.syllabus-week-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 105px;
+  flex-shrink: 0;
+}
+
+.syllabus-week-num {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.syllabus-week-dates {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.syllabus-week-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.syllabus-week-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.syllabus-week-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.syllabus-week-desc {
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.syllabus-status-pill {
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+.syllabus-status-pill.completed {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.syllabus-status-pill.current {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.syllabus-status-pill.colloquium {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.syllabus-status-pill.exam {
+  background: #f1f5f9;
+  color: #1e293b;
+  border: 1px solid #cbd5e1;
+}
+
+/* Syllabus Milestones Summary Box (top of Syllabus tab) */
+.syllabus-milestones-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.syllabus-milestone-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.75rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.syllabus-milestone-box.exam {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+
+.milestone-box-tag {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #64748b;
+  letter-spacing: 0.02em;
+}
+
+.milestone-box-name {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.milestone-box-date {
+  font-size: 0.7rem;
+  color: #64748b;
+}
+
 @media (max-width: 768px) {
   .course-shell-flow {
     padding: var(--space-4) var(--space-4) var(--space-12);
+  }
+
+  .course-schedule-slot-card {
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .syllabus-milestones-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .syllabus-week-row {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .syllabus-milestones-summary {
+    grid-template-columns: 1fr;
   }
 }

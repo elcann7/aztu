@@ -61,29 +61,44 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasındakı bütü
 ---
 
 ## 4. Əsas İş Lövhəsi (Dashboard)
-- **Tələbəyə Fərdi Salamlama**: Giriş etmiş tələbənin adı və qrup məlumatı.
-- **Statistika Kartları**:
-  - Aktiv qrup qeydlərinin sayı.
+- **Tələbəyə Fərdi Salamlama**: Giriş etmiş tələbənin adı və qrup məlumatı (6326A2 · Kompüter Mühəndisliyi).
+- **Semestr İrəliləyişi və Qış İmtahan Hədəfi (Semester Tracker)**:
+  - Dərslərin başlanğıcı (15 Sentyabr 2026) və cari tədris statusu (2-ci həftə, 2-ci gün).
+  - 15 həftəlik tərəqqi şkalası (13.3% tamamlanıb).
+  - İmtahan sessiyasına (5 Yanvar 2027) 105 günlük canlı geri sayım.
+  - 3 Əsas Kollokvium Mərhələsi: I Kollokvium (Həftə 6: 20-24 Okt), II Kollokvium (Həftə 11: 24-28 Noy), III Kollokvium / Yekun (Həftə 14: 15-19 Dek).
+- **İnteraktiv Həftəlik Dərs Cədvəli (Auditoriyalar və Dərslər)**:
+  - 5 günlük tablar (Bazar ertəsi, Çərşənbə axşamı, Çərşənbə, Cümə axşamı, Cümə).
+  - Cari gün (Çərşənbə axşamı) "Bugün" nişanı ilə avtomatik seçilir.
+  - Dərs vaxtı (09:00 - 10:20, 10:30 - 11:50, 12:00 - 13:20), dərs növü nişanı (`M` Mühazirə, `S` Seminar, `L` Laboratoriya), fənn adı, tədris edən rəsmi müəllim, yarımqrup məlumatı və auditoriya nömrəsi (Aud. 6-504, 1-506, 6-408, 5-205, 5-312 və s.).
+  - Birbaşa fənn səhifəsinə keçid düyməsi.
+- **Akademik Fənlər Şəbəkəsi**: 6 fənnin hər biri üçün kredit, müəllim, material və tapşırıq sayğacları.
+- **Bento İş Mühiti Paneli**:
   - Yaxınlaşan təcili deadline-lar.
-  - Cavab gözləyən suallar.
-  - Əlçatan dərs materialları.
-- **Günün Dərs Cədvəli**: Günün mühazirə və laboratoriya saatları, auditoriya və müəllim məlumatları.
-- **Təcili Elanlar**: Növbədənkənar dərslər və ya universitet xəbərləri.
+  - Son qrup qeydləri ("Müəllim dedi", "İmtahan/Kollokvium", "Seminar").
+  - Canlı qrup sorğusu və səsvermə faizləri.
+  - Sual-Cavab forumu və qəbul edilmiş cavablar.
+  - Son paylaşılan fayllar və endirmə imkanı.
 
 ---
 
 ## 5. Fənn Portalları (Course Shells)
-Platforma 4 əsas fənn üçün ixtisaslaşmış səhifələrə malikdir:
-1. **Riyazi analiz (MATH-101)** — 6 kredit
-2. **Fizika (PHYS-102)** — 6 kredit
-3. **Proqramlaşdırma (CS-101)** — 6 kredit
-4. **İngilis dili (ENG-101)** — 4 kredit
+Platforma 6 rəsmi universitet fənni üçün tam ixtisaslaşmış iş sahələrinə malikdir:
+1. **Riyazi analiz-1 (`MATH-101`)** — 6 kredit (Dos. Nizami Şıxəliyev / Müəl. Şamil Talıblı)
+2. **Xətti cəbr (`MATH-102`)** — 5 kredit (Dos. Rəna Əmirova)
+3. **Fizika (`PHYS-101`)** — 5 kredit (Dos. Sürəyya Məmmədova)
+4. **Proqramlaşdırmanın əsasları-1 (`CS-101`)** — 6 kredit (Dos. Fizuli Əzimov / Müəl. Şəbnəm İsgəndərli / Müəl. Ayxan Həsənov)
+5. **Xarici dildə işgüzar və akademik kommunikasiya -1 (`ENG-101`)** — 4 kredit (Müəl. Dilarə Həmidova)
+6. **Azərbaycan dilində işgüzar və akademik kommunikasiya (`AZE-101`)** — 4 kredit (Müəl. Nərmin İsayeva)
 
 Hər bir fənn portalında:
-- Fənnin kodu, kredit sayı və rəsmi adı.
-- Müəllimin adı və əlaqə e-poçtu.
-- **Həftəlik Mühazirə Modulları**: Hər həftənin mövzusu, təqdimatları və laboratoriya təlimatları.
-- Fənnə aid qeydlər, deadline-lar və materiallar arasında sürətli keçid.
+- Fənnin kodu, kredit sayı, kafedrası və rəsmi müəllim heyəti.
+- **Fənn Dərs Cədvəli və Auditoriyalar**: Dərsin keçirildiyi günlər, saatlar, növü və otaqlar.
+- **15 Həftəlik Tədris Proqramı və Sillabus**: Hər həftənin konkret mövzusu, tarixləri, kollokviumlar və imtahan hədəfləri.
+- **Materiallar**: Mühazirə slaydları, kitablar və fayllar (Supabase Storage).
+- **Qrup Qeydləri**: Fənnə aid müəllim tövsiyələri və qeydlər.
+- **Tapşırıqlar**: Fənn üzrə laboratoriya və ev tapşırıqlarının izlənməsi.
+- **Sual-Cavab**: Tələbələr arasında sual mübadiləsi.
 
 ---
 

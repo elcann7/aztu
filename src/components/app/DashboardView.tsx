@@ -17,7 +17,11 @@ import {
   Plus,
   Terminal,
   ExternalLink,
+  Clock,
+  MapPin,
+  Sparkles,
 } from 'lucide-react';
+import { SEMESTER_CONFIG, WEEKLY_SCHEDULE } from '../../data/mockData';
 import { CreateDeadlineModal } from './modals/CreateDeadlineModal';
 import { CreateNoteModal } from './modals/CreateNoteModal';
 import { CreateMaterialModal } from './modals/CreateMaterialModal';
@@ -44,6 +48,20 @@ export const DashboardView: React.FC = () => {
 
   // Modals state
   const [modalType, setModalType] = useState<'deadline' | 'note' | 'material' | 'poll' | 'question' | null>(null);
+
+  // Timetable selected day (defaults to today: 2 = Çərşənbə axşamı)
+  const [selectedDayIndex, setSelectedDayIndex] = useState<number>(SEMESTER_CONFIG.todayDayIndex);
+
+  const weekDays = [
+    { index: 1, name: 'B.e.', fullName: 'Bazar ertəsi' },
+    { index: 2, name: 'Ç.a.', fullName: 'Çərşənbə axşamı', isToday: true },
+    { index: 3, name: 'Çərş.', fullName: 'Çərşənbə' },
+    { index: 4, name: 'C.a.', fullName: 'Cümə axşamı' },
+    { index: 5, name: 'Cümə', fullName: 'Cümə' },
+  ];
+
+  const filteredSchedule = WEEKLY_SCHEDULE.filter(s => s.dayIndex === selectedDayIndex);
+  const currentProgressPercent = Math.round((SEMESTER_CONFIG.currentWeek / SEMESTER_CONFIG.totalWeeks) * 100);
 
   // Top 3 upcoming non-completed deadlines (sorted by nearest dueDate)
   const activeDeadlines = [...deadlines]
@@ -116,10 +134,176 @@ export const DashboardView: React.FC = () => {
         </div>
       </div>
 
-      {/* 2. Academic Courses Grid (Clean 21st.dev Style) */}
+      {/* 2. Semestr İrəliləyişi və İmtahan Hədəfi */}
+      <div className="dash-semester-card">
+        <div className="dash-sem-top">
+          <div className="dash-sem-info">
+            <div className="dash-sem-badge-row">
+              <span className="dash-sem-badge">
+                <Sparkles size={12} />
+                I Semestr (2026/2027)
+              </span>
+              <span className="dash-sem-date-note">
+                15 Sentyabr başlayıb · <strong>{SEMESTER_CONFIG.currentWeek}-ci Həftə, 2-ci Gün (Çərşənbə axşamı)</strong>
+              </span>
+            </div>
+            <h3 className="dash-sem-title">Semestr İrəliləyişi və İmtahan Hədəfi</h3>
+          </div>
+          <div className="dash-sem-countdown-pill">
+            <Clock size={14} />
+            <span>İmtahanlara <strong>{SEMESTER_CONFIG.daysToExam} gün</strong> qaldı</span>
+          </div>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="dash-sem-progress-wrap">
+          <div className="dash-sem-progress-bar-bg">
+            <div 
+              className="dash-sem-progress-bar-fill" 
+              style={{ width: `${currentProgressPercent}%` }} 
+            />
+          </div>
+          <div className="dash-sem-progress-labels">
+            <span>Həftə 1 (15 Sent)</span>
+            <span className="dash-sem-current-step">Hazırda: Həftə {SEMESTER_CONFIG.currentWeek} ({currentProgressPercent}%)</span>
+            <span>Həftə 15 (26 Dek) · İmtahan: 5 Yanvar</span>
+          </div>
+        </div>
+
+        {/* 4 Milestones */}
+        <div className="dash-sem-milestones-grid">
+          <div className="dash-sem-milestone-card active">
+            <div className="dash-milestone-header">
+              <span className="milestone-status-dot pulse" />
+              <span className="milestone-tag">Cari Mərhələ</span>
+            </div>
+            <h4 className="milestone-name">2-ci Həftə Tədrisi</h4>
+            <p className="milestone-detail">Mühazirə və laboratoriya dərsləri davam edir.</p>
+            <span className="milestone-timeline">15 - 26 Sentyabr</span>
+          </div>
+
+          <div className="dash-sem-milestone-card">
+            <div className="dash-milestone-header">
+              <span className="milestone-status-dot upcoming" />
+              <span className="milestone-tag">6-cı Həftə</span>
+            </div>
+            <h4 className="milestone-name">I Kollokvium</h4>
+            <p className="milestone-detail">Bütün fənlər üzrə 1–5-ci mövzuların qiymətləndirilməsi.</p>
+            <span className="milestone-timeline">{SEMESTER_CONFIG.colloquium1Date}</span>
+          </div>
+
+          <div className="dash-sem-milestone-card">
+            <div className="dash-milestone-header">
+              <span className="milestone-status-dot upcoming" />
+              <span className="milestone-tag">11-ci Həftə</span>
+            </div>
+            <h4 className="milestone-name">II Kollokvium</h4>
+            <p className="milestone-detail">6–10-cu mövzular üzrə aralıq yoxlama.</p>
+            <span className="milestone-timeline">{SEMESTER_CONFIG.colloquium2Date}</span>
+          </div>
+
+          <div className="dash-sem-milestone-card">
+            <div className="dash-milestone-header">
+              <span className="milestone-status-dot exam" />
+              <span className="milestone-tag">14-cü Həftə & İmtahan</span>
+            </div>
+            <h4 className="milestone-name">III Kol. & Qış İmtahanı</h4>
+            <p className="milestone-detail">11–15-ci mövzular, giriş balları və sessiya.</p>
+            <span className="milestone-timeline">15 Dek – 31 Yanvar</span>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Həftəlik Rəsmi Dərs Cədvəli (Auditoriyalar və Dərslər) */}
+      <div className="dash-schedule-section">
+        <div className="dash-schedule-header">
+          <div>
+            <div className="dash-schedule-badge-row">
+              <span className="dash-schedule-badge">AzTU 6326A2</span>
+              <span className="dash-schedule-sub">Rəsmi Dərs Cədvəli</span>
+            </div>
+            <h3 className="dash-section-heading">Həftəlik Dərs Cədvəli və Auditoriyalar</h3>
+          </div>
+
+          {/* Days Tabs */}
+          <div className="dash-schedule-days-tabs">
+            {weekDays.map(d => (
+              <button
+                key={d.index}
+                type="button"
+                className={`dash-day-tab ${selectedDayIndex === d.index ? 'is-active' : ''}`}
+                onClick={() => setSelectedDayIndex(d.index)}
+              >
+                <span>{d.name}</span>
+                {d.isToday && <span className="dash-today-pill">Bugün</span>}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Selected Day Timetable List */}
+        <div className="dash-schedule-cards-list">
+          {filteredSchedule.length === 0 ? (
+            <div className="dash-schedule-empty">
+              <p>Bu gün üçün cədvəldə dərs yoxdur (Sərbəst hazırlıq günü).</p>
+            </div>
+          ) : (
+            filteredSchedule.map(item => {
+              const matchedCourse = courses.find(c => c.id === item.courseId || c.slug === item.courseId);
+              return (
+                <div key={item.id} className="dash-schedule-card">
+                  <div className="dash-sched-time-col">
+                    <Clock size={13} className="dash-sched-clock-icon" />
+                    <span className="dash-sched-time">{item.time}</span>
+                  </div>
+
+                  <div className="dash-sched-type-badge-col">
+                    <span className={`dash-lesson-type-badge ${item.typeCode}`}>
+                      {item.typeCode}
+                    </span>
+                    <span className="dash-lesson-type-name">{item.type}</span>
+                  </div>
+
+                  <div className="dash-sched-main-col">
+                    <div className="dash-sched-title-row">
+                      <h4 className="dash-sched-subject">{item.subject}</h4>
+                      {item.subgroup && (
+                        <span className="dash-subgroup-pill">{item.subgroup}</span>
+                      )}
+                    </div>
+                    <div className="dash-sched-teacher-row">
+                      <span className="dash-sched-teacher">{item.lecturer}</span>
+                    </div>
+                  </div>
+
+                  <div className="dash-sched-room-col">
+                    <div className="dash-room-badge">
+                      <MapPin size={12} />
+                      <span>Aud. {item.room}</span>
+                    </div>
+                    {matchedCourse && (
+                      <button
+                        type="button"
+                        onClick={() => navigate(`/app/courses/${matchedCourse.slug}`)}
+                        className="dash-sched-goto-btn"
+                        title="Fənnə keç"
+                      >
+                        <span>Materiallar</span>
+                        <ArrowRight size={11} />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
+      </div>
+
+      {/* 4. Academic Courses Grid (Clean 21st.dev Style) */}
       <div className="dash-courses-section">
         <div className="dash-section-meta-row">
-          <h3 className="dash-section-heading">Fənlər və İş Sahələri</h3>
+          <h3 className="dash-section-heading">Fənlər və Tədris Sahələri</h3>
           <span className="dash-heading-link" onClick={() => navigate('/app/courses/math-analysis')}>
             Bütün fənlər →
           </span>

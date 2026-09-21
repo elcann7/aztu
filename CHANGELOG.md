@@ -4,6 +4,45 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.8.0] — 2026-09-22
+
+### 🎓 AzTU 6326A2 Rəsmi Dərs Cədvəli, Real Müəllimlər və 15 Həftəlik İmtahan Yol Xəritəsi
+- **Bütün Saxta və Yeritutucu Müəllim Adlarının Əvəzlənməsi**: Tələbənin təqdim etdiyi rəsmi universitet cədvəli şəkli piksel-piksel oxundu və deşifrə edildi. Platformadakı bütün 6 fənn, kafedralar, kreditlər, müəllim heyəti və auditoriyalar 100% real məlumatlarla əvəz olundu.
+- **Rəsmi 6 Fənn və Müəllim Heyəti**:
+  - **Riyazi analiz-1** (`MATH-101`, 6 kredit, Ali Riyaziyyat kafedrası):
+    - *Mühazirə*: Dos. Nizami Şıxəliyev (Bazar ertəsi 12:00 Aud. 1-506, Çərşənbə axşamı 12:00 Aud. 6-408)
+    - *Seminar*: Müəl. Şamil Talıblı (Cümə 12:00 Aud. 6-408)
+  - **Xətti cəbr** (`MATH-102`, 5 kredit, Ali Riyaziyyat kafedrası):
+    - *Mühazirə*: Dos. Rəna Əmirova (Cümə axşamı 10:30 Aud. 3-308)
+    - *Seminar*: Dos. Rəna Əmirova (Çərşənbə 10:30 Aud. 1-422)
+  - **Fizika** (`PHYS-101`, 5 kredit, Mühəndislik fizikası və elektronika kafedrası):
+    - *Mühazirə*: Dos. Sürəyya Məmmədova (Çərşənbə axşamı 12:00 Aud. 5-312)
+    - *Laboratoriya*: Dos. Sürəyya Məmmədova (Bazar ertəsi 09:00 Aud. 5-205)
+  - **Proqramlaşdırmanın əsasları-1** (`CS-101`, 6 kredit, Kompüter Mühəndisliyi kafedrası):
+    - *Mühazirə*: Dos. Fizuli Əzimov (Çərşənbə 12:00 Aud. 6-408)
+    - *Laboratoriya*: Müəl. Şəbnəm İsgəndərli (Çərşənbə axşamı 10:30 Aud. 6-504)
+    - *Seminar*: Müəl. Ayxan Həsənov (Bazar ertəsi 09:00 Aud. 6-508)
+  - **Xarici dildə işgüzar və akademik kommunikasiya -1** (`ENG-101`, 4 kredit, Xarici dillər kafedrası):
+    - *Seminar*: Müəl. Dilarə Həmidova (Bazar ertəsi 10:30 Aud. 6-506, Cümə 10:30 Aud. 6-506)
+  - **Azərbaycan dilində işgüzar və akademik kommunikasiya** (`AZE-101`, 4 kredit, Azərbaycan dili kafedrası):
+    - *Mühazirə / Seminar*: Müəl. Nərmin İsayeva (Çərşənbə 10:30 Aud. 1-422, Cümə axşamı 12:00 Aud. 6-512)
+- **Semestr İrəliləyişi və Qış İmtahan Hədəfi (Semester Tracker)**:
+  - 15 Sentyabr 2026 dərslərin başlanğıcı və 22 Sentyabr 2026 (Çərşənbə axşamı — 2-ci Həftə, 2-ci Gün) dəqiq təqvim hesablama modeli quruldu.
+  - 15 həftəlik tərəqqi şkalası (Hazırda: 13.3% tamamlanıb) və imtahan sessiyasına (5 Yanvar 2027) 105 günlük canlı geri sayım əlavə edildi.
+  - 3 Əsas Kollokvium Mərhələsi xəritələndi:
+    - *I Kollokvium*: 6-cı həftə (20–24 Oktyabr 2026) — 1–5-ci mövzular
+    - *II Kollokvium*: 11-ci həftə (24–28 Noyabr 2026) — 6–10-cu mövzular
+    - *III Kollokvium / Yekun Hesabat*: 14-cü həftə (15–19 Dekabr 2026) — 11–15-ci mövzular
+- **İnteraktiv Həftəlik Dərs Cədvəli Vidceti (`DashboardView.tsx`)**:
+  - Həftənin 5 günü (B.e., Ç.a., Çərş., C.a., Cümə) üçün interaktiv tablar yaradıldı; cari gün (Çərşənbə axşamı) "Bugün" işarəsi ilə avtomatik seçilir.
+  - Dərs saatları (09:00 - 10:20, 10:30 - 11:50, 12:00 - 13:20), dərs növü vizual nişanları (`M`, `S`, `L`), fənn adı, tədris edən müəllim, yarımqrup məlumatı və auditoriya nömrəsi nümayiş olunur.
+- **Fənn Portallarında 15 Həftəlik Tədris Proqramı və Auditoriyalar (`CourseShellView.tsx`)**:
+  - Hər fənn üçün xüsusi həftəlik dərs qrafiki və auditoriyalar kartı əlavə edildi.
+  - Yeni "15 Həftəlik Plan" tabı və hər fənn üçün həftəbəhəftə mövzular, kollokviumlar və imtahan hazırlıq planı inteqrasiya edildi.
+- **Supabase Bulud Cədvəllərinin Sinxronizasiyası**: `courses` cədvəlindəki bütün köhnə saxta sətirlər silinib rəsmi 6 fənn və müəllim məlumatları ilə yeniləndi.
+
+---
+
 ## [1.7.0] — 2026-09-22
 
 ### 🚀 Canlı Supabase Bulud Verilənlər Bazası və Real-vaxt Sinxronizasiyası

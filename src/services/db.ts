@@ -104,43 +104,61 @@ export interface Vote {
   createdAt: string;
 }
 
-// 4 Real University Courses for 6326A2
+// 6 Real University Courses for 6326A2 (1-ci Semestr)
 export const REAL_COURSES: Course[] = [
   {
     id: 'math',
     code: 'MATH-101',
-    name: 'Riyazi analiz',
+    name: 'Riyazi analiz-1',
     slug: 'math-analysis',
-    lecturer: 'Dos. Əlövsət Məmmədov',
+    lecturer: 'Dos. Nizami Şıxəliyev / Müəl. Şamil Talıblı',
     department: 'Ali Riyaziyyat kafedrası',
     credits: 6,
   },
   {
+    id: 'algebra',
+    code: 'MATH-102',
+    name: 'Xətti cəbr',
+    slug: 'linear-algebra',
+    lecturer: 'Dos. Rəna Əmirova',
+    department: 'Ali Riyaziyyat kafedrası',
+    credits: 5,
+  },
+  {
     id: 'phys',
-    code: 'PHYS-102',
+    code: 'PHYS-101',
     name: 'Fizika',
     slug: 'physics',
-    lecturer: 'Prof. Şakir Rüstəmov',
-    department: 'Ümumi və Tətbiqi Fizika kafedrası',
+    lecturer: 'Dos. Sürəyya Məmmədova',
+    department: 'Mühəndislik fizikası və elektronika kafedrası',
     credits: 5,
   },
   {
     id: 'prog',
     code: 'CS-101',
-    name: 'Proqramlaşdırma',
+    name: 'Proqramlaşdırmanın əsasları-1',
     slug: 'programming',
-    lecturer: 'B/müəl. Rəşad Qasımov',
+    lecturer: 'Dos. Fizuli Əzimov / Müəl. Şəbnəm İsgəndərli / Müəl. Ayxan Həsənov',
     department: 'Kompüter Mühəndisliyi kafedrası',
     credits: 6,
   },
   {
     id: 'eng',
     code: 'ENG-101',
-    name: 'İngilis dili',
+    name: 'Xarici dildə işgüzar və akademik kommunikasiya -1',
     slug: 'english',
-    lecturer: 'B/müəl. Leyla Həsənova',
-    department: 'Xarici Dillər kafedrası',
-    credits: 3,
+    lecturer: 'Müəl. Dilarə Həmidova',
+    department: 'Xarici dillər kafedrası',
+    credits: 4,
+  },
+  {
+    id: 'aze',
+    code: 'AZE-101',
+    name: 'Azərbaycan dilində işgüzar və akademik kommunikasiya',
+    slug: 'azerbaijani',
+    lecturer: 'Müəl. Nərmin İsayeva',
+    department: 'Azərbaycan dili və pedaqogika kafedrası',
+    credits: 4,
   },
 ];
 

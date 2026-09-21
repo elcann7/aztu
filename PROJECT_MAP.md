@@ -110,5 +110,5 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`src/services/supabase.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/supabase.ts) | **Supabase Klienti**: Realtime və PostgreSQL bulud əlaqəsi, oflayn ehtiyat mexanizmi |
 | [`src/services/db.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/db.ts) | Bütün məlumat strukturlarının saxlanması, oxunması və tip definisiyaları |
 | [`src/services/pythonRunner.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/pythonRunner.ts) | Python kodlarının brauzerdə təhlili və icra simulyatoru |
-| [`src/data/mockData.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/data/mockData.ts) | İlkin universitet fənləri və nümunəvi dərs məlumatları |
+| [`src/data/mockData.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/data/mockData.ts) | **Rəsmi Dərs Cədvəli və Təqvim**: Rəsmi AzTU 6326A2 həftəlik cədvəli (`WEEKLY_SCHEDULE`), semestr təqvimi və geri sayım (`SEMESTER_CONFIG`), 15 həftəlik fənn sillabusları (`COURSE_SYLLABUS`) və real müəllim məlumatları |
 | [`src/styles/global.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/styles/global.css) | Qlobal CSS dəyişənləri (rənglər, şriftlər, spacing, radiuslar, animasiyalar) |
