@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './LoginPage.css';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter, Link } from '../../context/RouterContext';
-import { Bookmark, ArrowRight, AlertCircle, ArrowLeft, X, ShieldCheck } from 'lucide-react';
+import { Bookmark, ArrowRight, AlertCircle, ArrowLeft, X, ShieldCheck, Key } from 'lucide-react';
+import { parseGoogleJwt, GOOGLE_CLIENT_ID } from '../../services/googleAuth';
 
 export const LoginPage: React.FC = () => {
   const { login, loginWithGoogle, isRegistrationLocked } = useAuth();
@@ -13,13 +14,108 @@ export const LoginPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Google Modal State
+  // Google GIS & Modal State
+  const [customClientId, setCustomClientId] = useState<string>(() => {
+    return localStorage.getItem('aztu_google_client_id') || GOOGLE_CLIENT_ID || '';
+  });
   const [showGoogleModal, setShowGoogleModal] = useState(false);
+  const [showClientIdConfig, setShowClientIdConfig] = useState(false);
   const [googleEmail, setGoogleEmail] = useState('');
   const [googleName, setGoogleName] = useState('');
-  const [googleGroupCode, setGoogleGroupCode] = useState('');
+  const [googleGroupCode, setGoogleGroupCode] = useState('6326A2');
   const [googleError, setGoogleError] = useState<string | null>(null);
   const [isGoogleSubmitting, setIsGoogleSubmitting] = useState(false);
+
+  const googleBtnContainerRef = useRef<HTMLDivElement>(null);
+
+  // Initialize official Google Identity Services if client ID exists
+  useEffect(() => {
+    const activeClientId = customClientId.trim();
+    if (!activeClientId) return;
+
+    const initGsi = () => {
+      if (!window.google?.accounts?.id) return;
+
+      try {
+        window.google.accounts.id.initialize({
+          client_id: activeClientId,
+          callback: async (response: { credential: string }) => {
+            const payload = parseGoogleJwt(response.credential);
+            if (!payload) {
+              setError('Google məlumatları oxunmadı.');
+              return;
+            }
+
+            const res = await loginWithGoogle(payload.email, payload.name, '6326A2');
+            if (res.success) {
+              navigate('/app');
+            } else if (res.requiresGroupCode) {
+              setGoogleEmail(payload.email);
+              setGoogleName(payload.name);
+              setShowGoogleModal(true);
+            } else {
+              setError(res.error || 'Google ilə daxil olmaq mümkün olmadı.');
+            }
+          },
+          auto_select: false,
+          cancel_on_tap_outside: true,
+        });
+
+        if (googleBtnContainerRef.current) {
+          googleBtnContainerRef.current.innerHTML = '';
+          window.google.accounts.id.renderButton(googleBtnContainerRef.current, {
+            type: 'standard',
+            theme: 'outline',
+            size: 'large',
+            text: 'continue_with',
+            shape: 'rectangular',
+            width: '350',
+            logo_alignment: 'left',
+          });
+        }
+      } catch (err) {
+        console.error('GIS initialization error:', err);
+      }
+    };
+
+    // Wait if GIS script is still loading
+    if (window.google?.accounts?.id) {
+      initGsi();
+    } else {
+      const timer = setInterval(() => {
+        if (window.google?.accounts?.id) {
+          clearInterval(timer);
+          initGsi();
+        }
+      }, 300);
+      return () => clearInterval(timer);
+    }
+  }, [customClientId, loginWithGoogle, navigate]);
+
+  const handleGoogleBtnClick = () => {
+    const activeId = customClientId.trim();
+    if (!activeId) {
+      setShowClientIdConfig(true);
+      return;
+    }
+
+    if (window.google?.accounts?.id) {
+      window.google.accounts.id.prompt();
+    } else {
+      setShowGoogleModal(true);
+    }
+  };
+
+  const saveClientId = (id: string) => {
+    const cleanId = id.trim();
+    setCustomClientId(cleanId);
+    if (cleanId) {
+      localStorage.setItem('aztu_google_client_id', cleanId);
+    } else {
+      localStorage.removeItem('aztu_google_client_id');
+    }
+    setShowClientIdConfig(false);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,36 +178,42 @@ export const LoginPage: React.FC = () => {
           </div>
         )}
 
-        {/* Google Sign In Button */}
-        <button
-          type="button"
-          onClick={() => {
-            setGoogleError(null);
-            setShowGoogleModal(true);
-          }}
-          className="google-auth-btn"
-          id="google-login-btn"
-        >
-          <svg className="google-icon" viewBox="0 0 24 24" width="18" height="18">
-            <path
-              fill="#4285F4"
-              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-            />
-            <path
-              fill="#34A853"
-              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-            />
-            <path
-              fill="#FBBC05"
-              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
-            />
-            <path
-              fill="#EA4335"
-              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
-            />
-          </svg>
-          <span>Google ilə daxil ol</span>
-        </button>
+        {/* Real Google GIS Button or Custom Trigger */}
+        <div className="google-auth-container">
+          <div
+            ref={googleBtnContainerRef}
+            className="google-gis-rendered"
+            style={{ display: customClientId ? 'flex' : 'none', justifyContent: 'center' }}
+          />
+          {!customClientId && (
+            <button
+              type="button"
+              onClick={handleGoogleBtnClick}
+              className="google-auth-btn"
+              id="google-login-btn"
+            >
+              <svg className="google-icon" viewBox="0 0 24 24" width="18" height="18">
+                <path
+                  fill="#4285F4"
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                />
+                <path
+                  fill="#34A853"
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                />
+                <path
+                  fill="#FBBC05"
+                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+                />
+                <path
+                  fill="#EA4335"
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                />
+              </svg>
+              <span>Google ilə daxil ol</span>
+            </button>
+          )}
+        </div>
 
         {/* Divider */}
         <div className="auth-divider">
@@ -296,6 +398,60 @@ export const LoginPage: React.FC = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+      {showClientIdConfig && (
+        <div className="google-modal-backdrop" onClick={() => setShowClientIdConfig(false)}>
+          <div className="google-modal-card" onClick={(e) => e.stopPropagation()}>
+            <div className="google-modal-header">
+              <div className="google-modal-brand">
+                <Key size={22} color="#1a73e8" />
+                <div className="google-modal-titles">
+                  <h3>Google OAuth Client ID</h3>
+                  <p>Rəsmi Google pəncərəsi üçün tələb olunur</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="google-modal-close"
+                onClick={() => setShowClientIdConfig(false)}
+                aria-label="Bağla"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <p className="input-hint" style={{ fontSize: '0.78rem', marginBottom: '0.85rem', lineHeight: 1.5 }}>
+              Birbaşa Google-un öz rəsmi pəncərəsi ilə tələbə hesabını seçmək üçün Google Cloud Console-dan aldığınız <strong>Client ID</strong>-ni bura daxil edin.
+            </p>
+            <div className="form-group" style={{ marginBottom: '1rem' }}>
+              <input
+                type="text"
+                value={customClientId}
+                onChange={(e) => setCustomClientId(e.target.value)}
+                placeholder="məsələn: 123456...apps.googleusercontent.com"
+                className="form-input"
+              />
+            </div>
+            <div className="google-modal-actions">
+              <button
+                type="button"
+                className="btn-cancel"
+                onClick={() => {
+                  setShowClientIdConfig(false);
+                  setShowGoogleModal(true);
+                }}
+              >
+                Sürətli Giriş
+              </button>
+              <button
+                type="button"
+                className="btn-google-confirm"
+                onClick={() => saveClientId(customClientId)}
+              >
+                Yadda saxla və Qoş
+              </button>
+            </div>
           </div>
         </div>
       )}
