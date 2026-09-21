@@ -1,0 +1,117 @@
+.app-topbar {
+  height: 52px;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-6);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.mobile-menu-trigger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-default);
+  background: #ffffff;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.mobile-menu-trigger:hover {
+  background: var(--bg-surface-hover);
+  color: var(--text-primary);
+}
+
+.topbar-page-title {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.topbar-search-box {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: #f8fafc;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xs);
+  padding: 0.35rem 0.65rem;
+  width: 260px;
+  cursor: pointer;
+  transition: all var(--duration-hover) var(--ease-out-snappy);
+}
+
+.topbar-search-box:hover {
+  background: #ffffff;
+  border-color: var(--border-hover);
+}
+
+.search-icon {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.search-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.78rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-shortcut {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  padding: 0.08rem 0.3rem;
+  border-radius: 3px;
+  line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .app-topbar {
+    padding: 0 var(--space-4);
+  }
+
+  .mobile-menu-trigger {
+    display: flex;
+  }
+
+  .topbar-search-box {
+    width: auto;
+    padding: 0.35rem 0.5rem;
+  }
+
+  .search-input {
+    display: none;
+  }
+}

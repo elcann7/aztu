@@ -1,0 +1,134 @@
+/* ==========================================================================
+   6326A2 Design System Tokens — LIGHT THEME
+   Primary Reference: Linear (~70%) — layout precision, spacing, compact density, motion restraint
+   Secondary Reference: Notion (~20%) — calm academic documents, notes, compact rows
+   Interaction Polish: Rauno / Vercel Guidelines — physically grounded, no harsh hover jumps
+   ========================================================================== */
+
+:root {
+  /* Color Scheme */
+  color-scheme: light;
+
+  /* Base Backgrounds (Clean white, soft neutral grays) */
+  --bg-app: #fcfcfd;
+  --bg-canvas: #ffffff;
+  --bg-subtle: #f8f9fa;
+  --bg-surface: #ffffff;
+  --bg-surface-hover: #f7f8f9;
+  --bg-surface-active: #f1f3f5;
+  --bg-sidebar: #f8f9fa;
+  --bg-elevated: #ffffff;
+
+  /* Subtle Borders (Neutral grays) */
+  --border-subtle: #edf0f3;
+  --border-default: #e2e5e9;
+  --border-hover: #cbd0d8;
+  --border-strong: #9ca3af;
+  --border-dark: #111418;
+
+  /* Typography Colors (High contrast, highly legible, calm) */
+  --text-primary: #111418;
+  --text-secondary: #4b525d;
+  --text-muted: #6e7683;
+  --text-disabled: #9ca3af;
+  --text-inverse: #ffffff;
+
+  /* Restrained Functional Status (Muted & Academic) */
+  --status-urgent-text: #991b1b;
+  --status-urgent-bg: #fef2f2;
+  --status-urgent-border: #fecaca;
+
+  --status-warning-text: #854d0e;
+  --status-warning-bg: #fefce8;
+  --status-warning-border: #fef08a;
+
+  --status-success-text: #166534;
+  --status-success-bg: #f0fdf4;
+  --status-success-border: #bbf7d0;
+
+  --status-info-text: #1e40af;
+  --status-info-bg: #eff6ff;
+  --status-info-border: #bfdbfe;
+
+  /* Buttons */
+  --btn-primary-bg: #111418;
+  --btn-primary-text: #ffffff;
+  --btn-primary-hover: #22262e;
+
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-hover: #f8f9fa;
+  --btn-secondary-border: #d1d5db;
+  --btn-secondary-text: #111418;
+
+  /* Typography System (Geist as primary, Inter as fallback) */
+  --font-sans: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'Geist Mono', 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Font Sizes */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.8125rem;  /* 13px */
+  --text-base: 0.875rem; /* 14px */
+  --text-md: 0.9375rem;  /* 15px */
+  --text-lg: 1.0625rem;  /* 17px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.5rem;    /* 24px */
+  --text-3xl: 1.875rem;  /* 30px */
+  --text-4xl: 2.375rem;  /* 38px */
+  --text-5xl: 3.25rem;   /* 52px */
+
+  /* Spacing Grid */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+
+  /* Border Radius */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 9999px;
+
+  /* Shadows (Subtle, soft, never harsh) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 3px 8px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-window: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 20px 48px -12px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0, 0, 0, 0.03);
+  --shadow-glow: 0 0 28px -4px rgba(99, 102, 241, 0.12);
+
+  /* Ambient Lighting & Sheen (Remotion / 21st.dev Style) */
+  --ambient-mesh-glow: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.07), rgba(244, 245, 248, 0) 70%);
+  --border-sheen: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.35), rgba(168, 85, 247, 0.35), transparent);
+
+  /* Physical Motion Tokens (Linear / Rauno / Vercel Standards) */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);      /* Smooth deceleration, natural landing */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);    /* Soft entrance */
+  --ease-out-snappy: cubic-bezier(0.2, 0.8, 0.2, 1);   /* Fast, tactile UI response */
+  --ease-press: cubic-bezier(0.25, 1, 0.5, 1);         /* Mechanical tactile press */
+  --ease-in-out-smooth: cubic-bezier(0.4, 0, 0.2, 1);  /* Continuous breathing loop */
+  --ease-linear: cubic-bezier(0.16, 1, 0.3, 1);        /* Backward compatibility */
+
+  --duration-instant: 80ms;   /* Active press response */
+  --duration-hover: 140ms;    /* Hover feedback, borders, colors */
+  --duration-fast: 160ms;     /* Micro-movements, icon nudges */
+  --duration-normal: 220ms;   /* Component state transitions */
+  --duration-reveal: 360ms;   /* Scroll entrance reveals */
+  --duration-window: 420ms;   /* Main workspace mockup entrance */
+  --duration-fill: 680ms;     /* Progress bar animation */
+
+  /* Layout */
+  --container-max: 1120px;
+  --container-narrow: 840px;
+  --header-height: 56px;
+
+  /* Scrollbar */
+  --scrollbar-thumb: #d1d5db;
+  --scrollbar-track: #f9fafb;
+}
