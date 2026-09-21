@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import './Modal.css';
 import { X } from 'lucide-react';
 
@@ -35,7 +36,7 @@ export const Modal: React.FC<ModalProps> = ({
 
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div className="modal-backdrop-layer" onClick={onClose} aria-modal="true" role="dialog">
       <div
         className="modal-window-card"
@@ -56,6 +57,8 @@ export const Modal: React.FC<ModalProps> = ({
 
         <div className="modal-body-content">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
+

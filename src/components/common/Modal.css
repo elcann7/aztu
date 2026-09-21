@@ -1,14 +1,21 @@
 .modal-backdrop-layer {
   position: fixed;
-  inset: 0;
-  background: rgba(17, 20, 24, 0.4);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-4);
-  z-index: 1000;
+  padding: 1.5rem 1rem;
+  z-index: 99999;
+  overflow-y: auto;
+  box-sizing: border-box;
   animation: modal-fade-in 180ms var(--ease-out-expo);
 }
 
@@ -23,19 +30,25 @@
 
 .modal-window-card {
   width: 100%;
+  max-height: calc(100vh - 3rem);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
   background: #ffffff;
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
-  box-shadow: 0 16px 40px -8px rgba(15, 23, 42, 0.12),
-              0 2px 6px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 24px 48px -12px rgba(15, 23, 42, 0.22),
+              0 4px 12px rgba(15, 23, 42, 0.08);
   overflow: hidden;
   animation: modal-slide-in 220ms var(--ease-out-expo);
+  flex-shrink: 0;
+  position: relative;
 }
 
 @keyframes modal-slide-in {
   from {
     opacity: 0;
-    transform: translateY(8px) scale(0.985);
+    transform: translateY(10px) scale(0.985);
   }
   to {
     opacity: 1;
@@ -44,6 +57,7 @@
 }
 
 .modal-top-bar {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -64,11 +78,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   border-radius: var(--radius-xs);
   color: var(--text-muted);
   cursor: pointer;
+  background: transparent;
+  border: none;
   transition: all var(--duration-hover) var(--ease-out-snappy);
 }
 
@@ -78,9 +94,10 @@
 }
 
 .modal-body-content {
+  flex: 1;
   padding: var(--space-5);
-  max-height: 80vh;
   overflow-y: auto;
+  min-height: 0;
 }
 
 /* Modal Form Styles */

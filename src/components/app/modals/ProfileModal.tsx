@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import './ProfileModal.css';
 import { useAuth } from '../../../context/AuthContext';
 import {
@@ -112,8 +113,8 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) =
     }
   };
 
-  return (
-    <div className="google-modal-backdrop" onClick={onClose}>
+  return createPortal(
+    <div className="profile-backdrop-layer" onClick={onClose} aria-modal="true" role="dialog">
       <div className="profile-modal-card" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="profile-modal-header">
@@ -136,8 +137,9 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) =
           </button>
         </div>
 
-        {/* Body */}
-        <form onSubmit={handleSave} className="profile-modal-body">
+        {/* Form with pinned footer */}
+        <form onSubmit={handleSave} className="profile-modal-form">
+          <div className="profile-modal-scrollable-body">
           {error && (
             <div className="auth-error-box" role="alert">
               <span>{error}</span>
@@ -367,9 +369,10 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) =
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Footer Actions */}
-          <div className="profile-modal-footer">
+        {/* Footer Actions */}
+        <div className="profile-modal-footer">
             <div>
               {saveSuccess && (
                 <div className="save-status-msg">
@@ -399,6 +402,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) =
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
