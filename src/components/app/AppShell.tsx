@@ -11,10 +11,12 @@ import { DeadlinesView } from './views/DeadlinesView';
 import { PollsView } from './views/PollsView';
 import { QAView } from './views/QAView';
 import { PythonSandboxView } from './views/PythonSandboxView';
+import { ProfileModal } from './modals/ProfileModal';
 
 export const AppShell: React.FC = () => {
   const { currentPath } = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   // Compute active page title & view
   let pageTitle = 'Əsas';
@@ -56,6 +58,7 @@ export const AppShell: React.FC = () => {
       <Sidebar
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
+        onOpenProfile={() => setIsProfileOpen(true)}
       />
 
       {/* 2. Main Work Area */}
@@ -64,6 +67,7 @@ export const AppShell: React.FC = () => {
         <TopBar
           title={pageTitle}
           onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          onOpenProfile={() => setIsProfileOpen(true)}
         />
 
         {/* Scrollable View Content */}
@@ -71,6 +75,12 @@ export const AppShell: React.FC = () => {
           {activeContent}
         </main>
       </div>
+
+      {/* 3. Student Profile Modal */}
+      <ProfileModal
+        isOpen={isProfileOpen}
+        onClose={() => setIsProfileOpen(false)}
+      />
     </div>
   );
 };

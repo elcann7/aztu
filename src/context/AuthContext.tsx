@@ -2,11 +2,18 @@ import React, { createContext, useContext, useState, useEffect, useCallback, use
 
 export interface User {
   id: string;
-  firstName: string;
-  lastName: string;
+  firstName: string; // LOCKED: Cannot be changed by student
+  lastName: string;  // LOCKED: Cannot be changed by student
   email: string;
-  group: string;
+  group: string;     // LOCKED: 6326A2
   avatarInitials: string;
+  avatarUrl?: string; // Profile photo (upload or Google avatar)
+  bio?: string;       // Custom student status or bio
+  studentIdNumber?: string; // Tələbə bilet nömrəsi
+  specialty?: string; // İxtisas
+  telegram?: string;  // Telegram username
+  phone?: string;     // Əlaqə nömrəsi
+  github?: string;    // GitHub linki
   createdAt: string;
   authProvider?: 'password' | 'google';
 }
@@ -19,6 +26,16 @@ interface StoredAccount {
 export const MAX_STUDENTS_LIMIT = 30;
 export const GROUP_SECURITY_CODE = '6326A2';
 
+export interface ProfileUpdateData {
+  avatarUrl?: string;
+  bio?: string;
+  studentIdNumber?: string;
+  specialty?: string;
+  telegram?: string;
+  phone?: string;
+  github?: string;
+}
+
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
@@ -27,7 +44,7 @@ interface AuthContextType {
   maxLimit: number;
   isRegistrationLocked: boolean;
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
-  loginWithGoogle: (email: string, fullName: string, groupCode?: string) => Promise<{ success: boolean; error?: string; requiresGroupCode?: boolean }>;
+  loginWithGoogle: (email: string, fullName: string, groupCode?: string, pictureUrl?: string) => Promise<{ success: boolean; error?: string; requiresGroupCode?: boolean }>;
   register: (
     firstName: string,
     lastName: string,
@@ -35,6 +52,7 @@ interface AuthContextType {
     password: string,
     groupCode: string
   ) => Promise<{ success: boolean; error?: string }>;
+  updateProfile: (updates: ProfileUpdateData) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
 }
 
@@ -146,7 +164,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     async (
       email: string,
       fullName: string,
-      groupCode?: string
+      groupCode?: string,
+      pictureUrl?: string
     ): Promise<{ success: boolean; error?: string; requiresGroupCode?: boolean }> => {
       const cleanEmail = email.trim().toLowerCase();
       const cleanName = fullName.trim() || 'Tələbə';
@@ -158,10 +177,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       try {
         const storedUsersRaw = localStorage.getItem(USERS_STORAGE_KEY);
         const accounts: StoredAccount[] = storedUsersRaw ? JSON.parse(storedUsersRaw) : [];
-        const existing = accounts.find((acc) => acc.user.email.toLowerCase() === cleanEmail);
+        const existingIndex = accounts.findIndex((acc) => acc.user.email.toLowerCase() === cleanEmail);
 
-        if (existing) {
-          // Existing user, sign in directly
+        if (existingIndex !== -1) {
+          const existing = accounts[existingIndex];
+          // If existing user doesn't have avatar but Google provided one, update it
+          if (pictureUrl && !existing.user.avatarUrl) {
+            existing.user.avatarUrl = pictureUrl;
+            accounts[existingIndex] = existing;
+            localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(accounts));
+          }
           setUser(existing.user);
           localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(existing.user));
           return { success: true };
@@ -197,6 +222,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           email: cleanEmail,
           group: '6326A2',
           avatarInitials: initials,
+          avatarUrl: pictureUrl || undefined,
           createdAt: new Date().toISOString(),
           authProvider: 'google',
         };
@@ -300,6 +326,46 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     []
   );
 
+  const updateProfile = useCallback(
+    async (updates: ProfileUpdateData): Promise<{ success: boolean; error?: string }> => {
+      if (!user) {
+        return { success: false, error: 'İstifadəçi daxil olmayıb.' };
+      }
+
+      try {
+        const storedUsersRaw = localStorage.getItem(USERS_STORAGE_KEY);
+        const accounts: StoredAccount[] = storedUsersRaw ? JSON.parse(storedUsersRaw) : [];
+        const accountIndex = accounts.findIndex((acc) => acc.user.id === user.id);
+
+        // Preserve strictly locked fields (firstName, lastName, group)
+        const updatedUser: User = {
+          ...user,
+          avatarUrl: updates.avatarUrl !== undefined ? updates.avatarUrl : user.avatarUrl,
+          bio: updates.bio !== undefined ? updates.bio : user.bio,
+          studentIdNumber: updates.studentIdNumber !== undefined ? updates.studentIdNumber : user.studentIdNumber,
+          specialty: updates.specialty !== undefined ? updates.specialty : user.specialty,
+          telegram: updates.telegram !== undefined ? updates.telegram : user.telegram,
+          phone: updates.phone !== undefined ? updates.phone : user.phone,
+          github: updates.github !== undefined ? updates.github : user.github,
+        };
+
+        if (accountIndex !== -1) {
+          accounts[accountIndex].user = updatedUser;
+          localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(accounts));
+        }
+
+        setUser(updatedUser);
+        localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(updatedUser));
+
+        return { success: true };
+      } catch (err) {
+        console.error('Update profile error:', err);
+        return { success: false, error: 'Profil məlumatlarını yeniləmək mümkün olmadı.' };
+      }
+    },
+    [user]
+  );
+
   const logout = useCallback(() => {
     setUser(null);
     localStorage.removeItem(SESSION_STORAGE_KEY);
@@ -318,9 +384,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       login,
       loginWithGoogle,
       register,
+      updateProfile,
       logout,
     }),
-    [user, isLoading, registeredCount, isRegistrationLocked, login, loginWithGoogle, register, logout]
+    [user, isLoading, registeredCount, isRegistrationLocked, login, loginWithGoogle, register, updateProfile, logout]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -55,7 +55,7 @@ export const RegisterPage: React.FC = () => {
               return;
             }
 
-            const res = await loginWithGoogle(payload.email, payload.name, '6326A2');
+            const res = await loginWithGoogle(payload.email, payload.name, '6326A2', payload.picture);
             if (res.success) {
               navigate('/app');
             } else if (res.requiresGroupCode) {

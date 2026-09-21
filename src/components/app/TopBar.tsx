@@ -1,13 +1,17 @@
 import React from 'react';
 import './TopBar.css';
 import { Search, Menu } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 interface TopBarProps {
   title: string;
   onToggleMobileMenu?: () => void;
+  onOpenProfile?: () => void;
 }
 
-export const TopBar: React.FC<TopBarProps> = ({ title, onToggleMobileMenu }) => {
+export const TopBar: React.FC<TopBarProps> = ({ title, onToggleMobileMenu, onOpenProfile }) => {
+  const { user } = useAuth();
+
   return (
     <header className="app-topbar">
       <div className="topbar-left">
@@ -36,6 +40,25 @@ export const TopBar: React.FC<TopBarProps> = ({ title, onToggleMobileMenu }) => 
           />
           <kbd className="search-shortcut">⌘K</kbd>
         </div>
+
+        {/* User Profile Avatar Trigger */}
+        <button
+          type="button"
+          onClick={onOpenProfile}
+          className="topbar-profile-btn"
+          title="Tələbə Profilini aç"
+          aria-label="Profil"
+        >
+          {user?.avatarUrl ? (
+            user.avatarUrl.startsWith('data:') || user.avatarUrl.startsWith('http') ? (
+              <img src={user.avatarUrl} alt={user.firstName} className="topbar-avatar-img" />
+            ) : (
+              <span>{user.avatarUrl}</span>
+            )
+          ) : (
+            <span>{user?.avatarInitials || 'TL'}</span>
+          )}
+        </button>
       </div>
     </header>
   );

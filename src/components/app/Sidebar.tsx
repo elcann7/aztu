@@ -18,9 +18,10 @@ import {
 interface SidebarProps {
   isOpen?: boolean;
   onClose?: () => void;
+  onOpenProfile?: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenProfile }) => {
   const { currentPath, navigate } = useRouter();
   const { user, logout } = useAuth();
 
@@ -158,9 +159,23 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
         {/* User Profile & Logout Bottom Bar */}
         <div className="sidebar-footer">
-          <div className="user-profile-badge">
+          <div
+            className="user-profile-badge"
+            onClick={onOpenProfile}
+            role="button"
+            tabIndex={0}
+            title="Tələbə profilini aç"
+          >
             <div className="user-avatar-circle">
-              <span>{user?.avatarInitials || 'TL'}</span>
+              {user?.avatarUrl ? (
+                user.avatarUrl.startsWith('data:') || user.avatarUrl.startsWith('http') ? (
+                  <img src={user.avatarUrl} alt={user.firstName} className="sidebar-avatar-img" />
+                ) : (
+                  <span>{user.avatarUrl}</span>
+                )
+              ) : (
+                <span>{user?.avatarInitials || 'TL'}</span>
+              )}
             </div>
             <div className="user-text-col">
               <span className="user-full-name">
