@@ -25,6 +25,7 @@ export function parseGoogleJwt(token: string): GoogleUserPayload | null {
   }
 }
 
-// Client ID can come from environment variable or fallback
+// User's official Google OAuth Client ID
 export const GOOGLE_CLIENT_ID =
-  (import.meta.env.VITE_GOOGLE_CLIENT_ID as string) || '';
+  (import.meta.env.VITE_GOOGLE_CLIENT_ID as string) ||
+  '1094028904596-62m7kvd52j3ajbvhn6pl25lord2tqo74.apps.googleusercontent.com';
