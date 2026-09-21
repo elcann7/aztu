@@ -8,8 +8,95 @@
   gap: var(--space-3);
 }
 
+/* Quota Status Pill */
+.quota-status-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+  border-radius: var(--radius-xs);
+  padding: 0.5rem 0.75rem;
+  margin-bottom: var(--space-4);
+  font-size: var(--text-xs);
+  transition: all var(--duration-fast);
+}
+
+.quota-status-pill.quota-locked {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #991b1b;
+}
+
+.quota-pill-left {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.quota-pill-slots {
+  font-weight: 600;
+  font-size: 0.72rem;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  border: 1px solid currentColor;
+}
+
+/* Locked Container */
+.registration-locked-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-6) var(--space-4);
+  background: #fafafa;
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-4);
+}
+
+.locked-icon-wrapper {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-3);
+}
+
+.registration-locked-box h3 {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+
+.registration-locked-box p {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: var(--space-5);
+  max-width: 320px;
+}
+
+.locked-login-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  text-decoration: none;
+  padding: 0.6rem 1.25rem;
+  font-size: var(--text-sm);
+}
+
 @media (max-width: 480px) {
   .form-row-2col {
     grid-template-columns: 1fr;
   }
 }
+

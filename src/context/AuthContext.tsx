@@ -8,19 +8,33 @@ export interface User {
   group: string;
   avatarInitials: string;
   createdAt: string;
+  authProvider?: 'password' | 'google';
 }
 
 interface StoredAccount {
   user: User;
-  passwordHash: string;
+  passwordHash?: string;
 }
+
+export const MAX_STUDENTS_LIMIT = 30;
+export const GROUP_SECURITY_CODE = '6326A2';
 
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+  registeredCount: number;
+  maxLimit: number;
+  isRegistrationLocked: boolean;
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
-  register: (firstName: string, lastName: string, email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  loginWithGoogle: (email: string, fullName: string, groupCode?: string) => Promise<{ success: boolean; error?: string; requiresGroupCode?: boolean }>;
+  register: (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    groupCode: string
+  ) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
 }
 
@@ -30,7 +44,7 @@ const SALT = '6326A2_WORKSPACE_SECURE_SALT_v1';
 const USERS_STORAGE_KEY = 'aztu_6326a2_users';
 const SESSION_STORAGE_KEY = 'aztu_6326a2_session';
 
-// SHA-256 password hash using standard Web Crypto API (never store plain-text passwords)
+// SHA-256 password hash using standard Web Crypto API
 async function hashPassword(password: string): Promise<string> {
   const encoder = new TextEncoder();
   const data = encoder.encode(password + SALT);
@@ -42,8 +56,9 @@ async function hashPassword(password: string): Promise<string> {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [registeredCount, setRegisteredCount] = useState<number>(0);
 
-  // Initialize storage & seed default user
+  // Initialize storage & cleanup legacy test accounts
   useEffect(() => {
     const initializeAuth = async () => {
       try {
@@ -53,36 +68,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (storedUsersRaw) {
           try {
             accounts = JSON.parse(storedUsersRaw);
+            // Clean up any legacy demo test user (hesen.m@aztu.edu.az)
+            accounts = accounts.filter(
+              (acc) => acc.user.id !== 'usr_6326a2_hesen' && acc.user.email !== 'hesen.m@aztu.edu.az'
+            );
+            localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(accounts));
           } catch {
             accounts = [];
           }
         }
 
-        // Seed default 6326A2 student account if empty
-        if (accounts.length === 0) {
-          const defaultPasswordHash = await hashPassword('123456');
-          const defaultStudent: StoredAccount = {
-            user: {
-              id: 'usr_6326a2_hesen',
-              firstName: 'Həsən',
-              lastName: 'Məmmədov',
-              email: 'hesen.m@aztu.edu.az',
-              group: '6326A2',
-              avatarInitials: 'HM',
-              createdAt: '2026-09-01T00:00:00Z',
-            },
-            passwordHash: defaultPasswordHash,
-          };
-          accounts = [defaultStudent];
-          localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(accounts));
-        }
+        setRegisteredCount(accounts.length);
 
         // Restore active session
         const sessionRaw = localStorage.getItem(SESSION_STORAGE_KEY);
         if (sessionRaw) {
           try {
             const sessionUser = JSON.parse(sessionRaw);
-            setUser(sessionUser);
+            // If session was old demo user, clear it
+            if (sessionUser.email === 'hesen.m@aztu.edu.az' || sessionUser.id === 'usr_6326a2_hesen') {
+              localStorage.removeItem(SESSION_STORAGE_KEY);
+              setUser(null);
+            } else {
+              setUser(sessionUser);
+            }
           } catch {
             localStorage.removeItem(SESSION_STORAGE_KEY);
           }
@@ -112,6 +121,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { success: false, error: 'Bu e-poçt ilə qeydiyyatdan keçmiş hesab tapılmadı.' };
       }
 
+      if (account.user.authProvider === 'google' && !account.passwordHash) {
+        return {
+          success: false,
+          error: 'Bu hesab Google ilə qeydiyyatdan keçib. Zəhmət olmasa "Google ilə daxil ol" düyməsindən istifadə edin.',
+        };
+      }
+
       const inputHash = await hashPassword(password);
       if (inputHash !== account.passwordHash) {
         return { success: false, error: 'Daxil edilən şifrə yanlışdır.' };
@@ -126,16 +142,92 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
+  const loginWithGoogle = useCallback(
+    async (
+      email: string,
+      fullName: string,
+      groupCode?: string
+    ): Promise<{ success: boolean; error?: string; requiresGroupCode?: boolean }> => {
+      const cleanEmail = email.trim().toLowerCase();
+      const cleanName = fullName.trim() || 'Tələbə';
+
+      if (!cleanEmail || !cleanEmail.includes('@')) {
+        return { success: false, error: 'Düzgün Google e-poçt ünvanı daxil edilməlidir.' };
+      }
+
+      try {
+        const storedUsersRaw = localStorage.getItem(USERS_STORAGE_KEY);
+        const accounts: StoredAccount[] = storedUsersRaw ? JSON.parse(storedUsersRaw) : [];
+        const existing = accounts.find((acc) => acc.user.email.toLowerCase() === cleanEmail);
+
+        if (existing) {
+          // Existing user, sign in directly
+          setUser(existing.user);
+          localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(existing.user));
+          return { success: true };
+        }
+
+        // New student registration via Google: Check group limit
+        if (accounts.length >= MAX_STUDENTS_LIMIT) {
+          return {
+            success: false,
+            error: `6326A2 qrupu üçün ayrılmış ${MAX_STUDENTS_LIMIT} nəfərlik qeydiyyat limiti tamamlanmışdır. Kənar şəxslərin daxil olmasına icazə verilmir.`,
+          };
+        }
+
+        // Check group security code for new registrations
+        const normalizedCode = (groupCode || '').trim().toUpperCase();
+        if (normalizedCode !== GROUP_SECURITY_CODE) {
+          return {
+            success: false,
+            requiresGroupCode: true,
+            error: 'Qrupa ilk dəfə qoşulmaq üçün 6326A2 qrup təsdiq kodunu daxil edin.',
+          };
+        }
+
+        const nameParts = cleanName.split(' ');
+        const firstName = nameParts[0] || 'Tələbə';
+        const lastName = nameParts.slice(1).join(' ') || 'AzTU';
+        const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+
+        const newUser: User = {
+          id: `usr_g_${Date.now()}`,
+          firstName,
+          lastName,
+          email: cleanEmail,
+          group: '6326A2',
+          avatarInitials: initials,
+          createdAt: new Date().toISOString(),
+          authProvider: 'google',
+        };
+
+        accounts.push({ user: newUser });
+        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(accounts));
+        setRegisteredCount(accounts.length);
+
+        setUser(newUser);
+        localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(newUser));
+        return { success: true };
+      } catch (err) {
+        console.error('Google login error:', err);
+        return { success: false, error: 'Google ilə daxil olma zamanı xəta baş verdi.' };
+      }
+    },
+    []
+  );
+
   const register = useCallback(
     async (
       firstName: string,
       lastName: string,
       email: string,
-      password: string
+      password: string,
+      groupCode: string
     ): Promise<{ success: boolean; error?: string }> => {
       const cleanFirst = firstName.trim();
       const cleanLast = lastName.trim();
       const cleanEmail = email.trim().toLowerCase();
+      const cleanCode = groupCode.trim().toUpperCase();
 
       if (!cleanFirst || !cleanLast) {
         return { success: false, error: 'Ad və soyad daxil edilməlidir.' };
@@ -147,9 +239,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { success: false, error: 'Şifrə minimum 6 simvoldan ibarət olmalıdır.' };
       }
 
+      // Security check: Only 6326A2 group members with code
+      if (cleanCode !== GROUP_SECURITY_CODE) {
+        return {
+          success: false,
+          error: 'Qrup təsdiq kodu yanlışdır! Yalnız 6326A2 qrup tələbələri qeydiyyatdan keçə bilər.',
+        };
+      }
+
       try {
         const storedUsersRaw = localStorage.getItem(USERS_STORAGE_KEY);
         const accounts: StoredAccount[] = storedUsersRaw ? JSON.parse(storedUsersRaw) : [];
+
+        // Security check: Max 30 students quota
+        if (accounts.length >= MAX_STUDENTS_LIMIT) {
+          return {
+            success: false,
+            error: `6326A2 qrupu üçün ayrılmış ${MAX_STUDENTS_LIMIT} nəfərlik qeydiyyat limiti tamamlanmışdır. Kənar şəxslərin qeydiyyatına icazə verilmir.`,
+          };
+        }
 
         const exists = accounts.some((acc) => acc.user.email.toLowerCase() === cleanEmail);
         if (exists) {
@@ -161,12 +269,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         const newUser: User = {
           id: `usr_${Date.now()}`,
-          firstName: cleanFirst,
-          lastName: cleanLast,
+          firstName,
+          lastName,
           email: cleanEmail,
           group: '6326A2',
           avatarInitials: initials,
           createdAt: new Date().toISOString(),
+          authProvider: 'password',
         };
 
         const newAccount: StoredAccount = {
@@ -176,6 +285,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         accounts.push(newAccount);
         localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(accounts));
+        setRegisteredCount(accounts.length);
 
         // Auto login newly registered student
         setUser(newUser);
@@ -195,16 +305,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem(SESSION_STORAGE_KEY);
   }, []);
 
+  const isRegistrationLocked = registeredCount >= MAX_STUDENTS_LIMIT;
+
   const value = useMemo(
     () => ({
       user,
       isAuthenticated: !!user,
       isLoading,
+      registeredCount,
+      maxLimit: MAX_STUDENTS_LIMIT,
+      isRegistrationLocked,
       login,
+      loginWithGoogle,
       register,
       logout,
     }),
-    [user, isLoading, login, register, logout]
+    [user, isLoading, registeredCount, isRegistrationLocked, login, loginWithGoogle, register, logout]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
