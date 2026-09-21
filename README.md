@@ -159,8 +159,10 @@ npm run build
 
 ## 📚 Ətraflı Sənədləşmə
 
-Layihənin hər bir hissəsini dərindən anlamaq üçün aşağıdakı sənədlərə baxın:
+Layihənin hər bir hissəsini dərindən anlamaq və işləmək üçün aşağıdakı sənədlərə baxın:
 
+- ⚡ [**AI və Tərtibatçı Qaydaları (AGENTS.md)**](./AGENTS.md) — **MƏCBURİ**: Kodu oxumaq əvəzinə MD-ləri oxumaq və hər işi MD-yə qeyd etmək qaydaları
+- 🗺️ [**Kod Bazası Xəritəsi (PROJECT_MAP.md)**](./PROJECT_MAP.md) — Bütün fayl və komponentlərin 1-ə 1 dəqiq yerləşməsi və məqsədi
 - 🏛️ [**Memarlıq Sənədi (ARCHITECTURE.md)**](./ARCHITECTURE.md) — Komponentlər, Vəziyyət İdarəetməsi və Portal Sistemi
 - 🎯 [**Funksional Bələdçi (FEATURES.md)**](./FEATURES.md) — Bütün modulların tam xüsusiyyətlər siyahısı
 - 🗄️ [**Verilənlər Modelləri (DATA_MODELS.md)**](./DATA_MODELS.md) — Bütün TypeScript interfeysləri və saxlanma sxemləri
