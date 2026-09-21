@@ -21,6 +21,7 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`CONTRIBUTING.md`](./CONTRIBUTING.md) | Markdown | Qrup tələbələri üçün kodlaşdırma və commit standartları |
 | [`CHANGELOG.md`](./CHANGELOG.md) | Markdown | Layihənin bütün inkişaf addımları və versiya tarixçəsi |
 | [`PROJECT_MAP.md`](./PROJECT_MAP.md) | Markdown | **Bu sənəd** — Kod bazasının tam xəritəsi |
+| [`supabase/schema.sql`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/supabase/schema.sql) | SQL | **Supabase PostgreSQL Sxemi**: Cədvəllər, 30 nəfərlik limit tətikçisi, RLS qaydaları və Realtime yayımı |
 | [`vercel.json`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/vercel.json) | JSON | Vercel SPA 404 rewrite qaydası (`/(.*) -> /index.html`) |
 | [`.env`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/.env) | Env | `VITE_GOOGLE_CLIENT_ID` Google OAuth Client ID |
 | [`index.html`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/index.html) | HTML | Əsas HTML sənədi, Google Identity Services script teqi |
@@ -106,6 +107,7 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | Fayl | Təsviri |
 | :--- | :--- |
 | [`src/services/googleAuth.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/googleAuth.ts) | Google Identity Services API klient skripti, Client ID idarəsi və JWT deşifrələyici |
+| [`src/services/supabase.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/supabase.ts) | **Supabase Klienti**: Realtime və PostgreSQL bulud əlaqəsi, oflayn ehtiyat mexanizmi |
 | [`src/services/db.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/db.ts) | Bütün məlumat strukturlarının saxlanması, oxunması və tip definisiyaları |
 | [`src/services/pythonRunner.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/pythonRunner.ts) | Python kodlarının brauzerdə təhlili və icra simulyatoru |
 | [`src/data/mockData.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/data/mockData.ts) | İlkin universitet fənləri və nümunəvi dərs məlumatları |

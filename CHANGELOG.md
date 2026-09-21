@@ -4,6 +4,15 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.6.0] — 2026-09-22
+
+### ⚡ Supabase və Real-vaxt Əlaqəsinin Hazırlanması
+- **`@supabase/supabase-js`**: Rəsmi Supabase müştəri kitabxanası layihəyə quraşdırıldı.
+- **`src/services/supabase.ts`**: Bulud açarları mövcud olduqda aktivləşən, açarlar olmadıqda isə LocalStorage ilə işləməyə davam edən (Zero-downtime fallback) xidmət quruldu.
+- **`supabase/schema.sql`**: Bütün 10 cədvəl (`courses`, `users_profiles`, `notes`, `questions`, `answers`, `polls`, `poll_options`, `poll_votes`, `materials`, `deadlines`), 30 nəfərlik sərt kvota tətikçisi (`enforce_30_students_limit`), RLS təhlükəsizlik qaydaları və Realtime yayım konfiqurasiyası yazıldı.
+
+---
+
 ## [1.5.0] — 2026-09-22
 
 ### 📚 Tam Sənədləşmə və Qaydalar Paketi
