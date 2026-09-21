@@ -15,16 +15,137 @@ import {
 } from '../../../services/pythonRunner';
 import './PythonSandboxView.css';
 
-const DEFAULT_CODE = `# 6326A2 İnteraktiv Python Nümunəsi
+const LAB_TEMPLATES = [
+  {
+    id: 'intro',
+    title: 'Giriş: print() və input()',
+    code: `# AzTU 6326A2 — Proqramlaşdırmanın əsasları-1
+# Mövzu: Standart daxiletmə və çıxış
 ad = input("Adınızı daxil edin: ")
 yas = int(input("Yaşınızı daxil edin: "))
 
-print(f"Xoş gəldin, {ad}!")
+print(f"Salam, {ad}!")
 print(f"5 ildən sonra yaşınız: {yas + 5}")
-`;
+`,
+  },
+  {
+    id: 'lab1',
+    title: 'Lab 1: Riyazi Əməllər və math Modulu',
+    code: `# AzTU CS-101 — Laboratoriya 1: Dairənin Sahəsi və Həcmi
+import math
+
+print("=== Dairə və Sferanın Hesablanması ===")
+radius = float(input("Radiusu daxil edin (sm): "))
+
+sahe = math.pi * (radius ** 2)
+uzunluq = 2 * math.pi * radius
+hecm = (4/3) * math.pi * (radius ** 3)
+
+print(f"Dairənin sahəsi: {sahe:.2f} kv.sm")
+print(f"Çevrənin uzunluğu: {uzunluq:.2f} sm")
+print(f"Sferanın həcmi: {hecm:.2f} kub.sm")
+`,
+  },
+  {
+    id: 'lab2',
+    title: 'Lab 2: Budaqlanma (if/elif/else) & Kvadrat Tənlik',
+    code: `# AzTU CS-101 — Laboratoriya 2: Kvadrat Tənliyin Həlli (ax^2 + bx + c = 0)
+import math
+
+print("=== Kvadrat Tənlik Kalkulyatoru ===")
+a = float(input("a əmsalını daxil edin: "))
+b = float(input("b əmsalını daxil edin: "))
+c = float(input("c əmsalını daxil edin: "))
+
+if a == 0:
+    if b == 0:
+        print("Tənliyin həlli yoxdur və ya sonsuz sayda həll var.")
+    else:
+        x = -c / b
+        print(f"Xətti tənlik: x = {x:.2f}")
+else:
+    D = b**2 - 4*a*c
+    print(f"Diskriminant: D = {D:.2f}")
+    if D > 0:
+        x1 = (-b + math.sqrt(D)) / (2*a)
+        x2 = (-b - math.sqrt(D)) / (2*a)
+        print(f"İki həqiqi kök: x1 = {x1:.2f}, x2 = {x2:.2f}")
+    elif D == 0:
+        x = -b / (2*a)
+        print(f"Bərabər iki kök: x = {x:.2f}")
+    else:
+        print("Həqiqi köklər yoxdur (kompleks köklər var).")
+`,
+  },
+  {
+    id: 'lab3',
+    title: 'Lab 3: Dövrlər (for/while) və Faktorial',
+    code: `# AzTU CS-101 — Laboratoriya 3: Faktorial və Rəqəmlərin Cəmi
+n = int(input("Müsbət tam ədəd daxil edin: "))
+
+# for dövrü ilə faktorial
+faktorial = 1
+for i in range(1, n + 1):
+    faktorial *= i
+
+# while dövrü ilə rəqəmlərin cəmi
+reqem_cemi = 0
+temp = n
+while temp > 0:
+    reqem_cemi += temp % 10
+    temp //= 10
+
+print(f"{n}! = {faktorial}")
+print(f"{n} ədədinin rəqəmlərinin cəmi = {reqem_cemi}")
+`,
+  },
+  {
+    id: 'lab4',
+    title: 'Lab 4: Siyahılar (Lists) və Xətti Axtarış',
+    code: `# AzTU CS-101 — Laboratoriya 4: Tələbə Balları və Axtarış
+ballar = [78, 92, 65, 88, 100, 54, 82, 91]
+print("6326A2 qrupunun nümunəvi balları:", ballar)
+
+orta = sum(ballar) / len(ballar)
+maks = max(ballar)
+minimum = min(ballar)
+
+print(f"Tələbə sayı: {len(ballar)}")
+print(f"Orta bal: {orta:.1f}")
+print(f"Ən yüksək bal: {maks}")
+print(f"Ən aşağı bal: {minimum}")
+
+axtarilan = int(input("Axtarmaq istədiyiniz balı daxil edin: "))
+if axtarilan in ballar:
+    idx = ballar.index(axtarilan)
+    print(f"Tapıldı! {axtarilan} balı siyahıda {idx + 1}-ci yerdədir.")
+else:
+    print(f"{axtarilan} balı siyahıda tapılmadı.")
+`,
+  },
+  {
+    id: 'lab5',
+    title: 'Lab 5: Funksiyalar (def) və Fibonaççi',
+    code: `# AzTU CS-101 — Laboratoriya 5: İstifadəçi Funksiyaları
+def fibonacci(limit):
+    """Verilmiş saya qədər Fibonaççi ardıcıllığını hesablayır"""
+    ardicilliq = []
+    a, b = 0, 1
+    while len(ardicilliq) < limit:
+        ardicilliq.append(a)
+        a, b = b, a + b
+    return ardicilliq
+
+say = int(input("Neçə Fibonaççi ədədi hesablansın? "))
+neticeler = fibonacci(say)
+print(f"İlk {say} Fibonaççi ədədi:", neticeler)
+`,
+  },
+];
 
 export const PythonSandboxView: React.FC = () => {
-  const [code, setCode] = useState<string>(DEFAULT_CODE);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>('intro');
+  const [code, setCode] = useState<string>(LAB_TEMPLATES[0].code);
   const [isRunning, setIsRunning] = useState(false);
   const [result, setResult] = useState<PythonExecutionResult | null>(null);
   const [terminalOutput, setTerminalOutput] = useState<string>('');
@@ -36,6 +157,18 @@ export const PythonSandboxView: React.FC = () => {
 
   const terminalBodyRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleSelectTemplate = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const id = e.target.value;
+    setSelectedTemplateId(id);
+    const found = LAB_TEMPLATES.find((t) => t.id === id);
+    if (found) {
+      setCode(found.code);
+      setTerminalOutput('');
+      setResult(null);
+      setActivePrompt(null);
+    }
+  };
 
   useEffect(() => {
     if (terminalBodyRef.current) {
@@ -148,9 +281,27 @@ export const PythonSandboxView: React.FC = () => {
       <div className="sandbox-studio-card">
         {/* Toolbar */}
         <div className="sandbox-toolbar">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#475569', fontSize: '0.8125rem', fontWeight: 500 }}>
-            <Cpu size={14} color="#6366f1" />
-            <span>Python 3.12 Interaktiv Terminalı</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', color: '#0f172a', fontSize: '0.8125rem', fontWeight: 600 }}>
+              <Cpu size={14} color="#6366f1" />
+              <span>Python 3.12 (AzTU CS-101)</span>
+            </div>
+
+            <div className="sandbox-template-selector">
+              <label htmlFor="lab-select" className="sandbox-select-label">Lab Şablonu:</label>
+              <select
+                id="lab-select"
+                className="sandbox-select-input"
+                value={selectedTemplateId}
+                onChange={handleSelectTemplate}
+              >
+                {LAB_TEMPLATES.map((tpl) => (
+                  <option key={tpl.id} value={tpl.id}>
+                    {tpl.title}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
           <div className="sandbox-actions-row">

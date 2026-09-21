@@ -4,6 +4,41 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.8.1] — 2026-09-22
+
+### 🐍 Kompüter Elmləri Proqramlaşdırma Fənninin Tamamilə Python 3 Əsasında Yenilənməsi
+- **100% Python Tədrisinə Keçid**: AzTU Kompüter Elmləri / Kompüter Mühəndisliyi 1-ci semestr rəsmi tədris planına əsasən C++ qalıqları təmizləndi və `CS-101: Proqramlaşdırmanın əsasları-1` fənni tamamilə **Python 3** proqramına uyğunlaşdırıldı.
+- **15 Həftəlik Rəsmi Python Sillabusu (`COURSE_SYLLABUS.prog`)**:
+  - Həftə 1: Python sintaksisi, icra mühiti, `print()` və `input()`.
+  - Həftə 2 (Cari): Dəyişənlər, əsas tiplər (`int`, `float`, `str`, `bool`), tip çevrilmələri və riyazi operatorlar.
+  - Həftə 3: Budaqlanan alqoritmlər (`if`, `elif`, `else`), məntiqi operatorlar (`and`, `or`, `not`).
+  - Həftə 4: Dövri alqoritmlər (`while`, `break`, `continue`).
+  - Həftə 5: `for` dövrü, `range()`, daxili dövrlər və cəm/hasil alqoritmləri.
+  - Həftə 6: I Kollokvium və Sətirlər (`str`) nəzəriyyəsi.
+  - Həftə 7: Sətirlərlə iş (indeksləmə, slicing, sətir metodları və f-string).
+  - Həftə 8: Siyahılar (`list`, append, extend, insert, pop, remove).
+  - Həftə 9: Siyahı alqoritmləri (xətti axtarış, min/max, Bubble sort, sort).
+  - Həftə 10: Kortejlər (`tuple`) və Çoxluqlar (`set`).
+  - Həftə 11: II Kollokvium və Lüğətlər (`dict`, key-value cütlükləri, metodlar).
+  - Həftə 12: İstifadəçi funksiyaları (`def`, `*args`, `**kwargs`, `return`, `scope`).
+  - Həftə 13: Rekursiya, lambda, `map()` və `filter()`.
+  - Həftə 14: III Kollokvium və Fayllarla iş (`open`, `read`, `write`, `with context manager`).
+  - Həftə 15: İstisnaların idarəsi (`try-except`) və Semestr Yekun İmtahana Hazırlıq.
+- **Python Sandbox üçün AzTU CS-101 Laboratoriya Şablonları**:
+  - `PythonSandboxView.tsx` studiyasına laboratoriya işlərini bir kliklə redaktora yükləyən şablon seçicisi inteqrasiya edildi:
+    - *Giriş*: `print()` və `input()`
+    - *Lab 1*: Riyazi Əməllər və `math` Modulu
+    - *Lab 2*: Budaqlanma (`if/elif/else`) və Kvadrat Tənliyin Həlli
+    - *Lab 3*: Dövrlər (`for/while`) və Faktorial/Rəqəm Cəmi
+    - *Lab 4*: Siyahılar (`list`), Axtarış və Statistika
+    - *Lab 5*: İstifadəçi Funksiyaları (`def`) və Fibonaççi
+- **Tapşırıqlar, Sorğular və Qeydlərin Uyğunlaşdırılması**:
+  - `ASSIGNMENTS`: `Laboratoriya işi №1: Python Budaqlanma (if/elif/else)`
+  - `GROUP_POLL`: `Python laboratoriyalarını hansı mühitdə yazaq?` (VS Code, PyCharm, Jupyter)
+  - `GROUP_REMARKS`: Dos. Fizuli Əzimovun Python indentasiyası və məntiqi operatorlar haqqında rəsmi tövsiyəsi.
+
+---
+
 ## [1.8.0] — 2026-09-22
 
 ### 🎓 AzTU 6326A2 Rəsmi Dərs Cədvəli, Real Müəllimlər və 15 Həftəlik İmtahan Yol Xəritəsi

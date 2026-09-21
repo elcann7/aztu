@@ -156,10 +156,17 @@ Hər bir fənn portalında:
 ---
 
 ## 11. Python Sandbox (Laboratoriya Mühiti)
-- Xüsusilə **CS-101 (Proqramlaşdırma)** fənni üçün yaradılmış brauzerdaxili Python redaktoru.
-- Tələbə kodu yazır və birbaşa brauzerdə icra edir.
-- Çıxış konsolu (Stdout / Stderr) vasitəsilə nəticə və xətaların izlənilməsi.
-- Hazır nümunə kodlar (Alqoritmlər, riyazi hesablamalar).
+- Xüsusilə **CS-101 (Proqramlaşdırmanın əsasları-1)** fənni üçün yaradılmış brauzerdaxili tam funksional Python 3 mühiti.
+- **WebAssembly Pyodide CPython**: Heç bir serverdən asılı olmadan, real Python 3.12 interpretatoru birbaşa tələbənin brauzerində icra olunur.
+- **İnteraktiv Daxili Terminal**: `input()` əmrini birbaşa terminal sətirindən qəbul edən, daxiletmə və nəticəni real vaxtda göstərən konsol.
+- **AzTU CS-101 Hazır Laboratoriya Şablonları**:
+  - *Giriş*: `print()` və `input()` nümunələri
+  - *Lab 1*: Riyazi hesablamalar və `math` modulu
+  - *Lab 2*: `if/elif/else` budaqlanma məntiqi və kvadrat tənlik
+  - *Lab 3*: `for` və `while` dövrləri, faktorial və rəqəmlərin cəmi
+  - *Lab 4*: Siyahılar (`list`), axtarış və statistik hesablamalar
+  - *Lab 5*: İstifadəçi funksiyaları (`def`) və Fibonaççi ardıcıllığı
+- Təmizləmə, icra müddəti (ms) və xətaların (Traceback) anlaşıqlı təsviri.
 
 ---
 
