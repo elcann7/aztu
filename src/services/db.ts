@@ -282,6 +282,7 @@ export const dbService = {
   },
 
   async createMaterial(params: {
+    id?: string;
     title: string;
     courseId: string;
     type: 'file' | 'link';
@@ -299,7 +300,7 @@ export const dbService = {
       throw new Error('Fənn seçilməlidir.');
     }
 
-    const id = `mat_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    const id = params.id || `mat_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
     let fileName: string | undefined;
     let fileSize: string | undefined;
     let fileMime: string | undefined;
@@ -326,9 +327,10 @@ export const dbService = {
         throw new Error('Link ünvanı daxil edilməlidir.');
       }
       try {
-        new URL(cleanLink);
+        const url = new URL(cleanLink);
+        if (!['https:', 'http:'].includes(url.protocol)) throw new Error('unsupported protocol');
       } catch {
-        throw new Error('Düzgün URL ünvanı daxil edin (məs: https://...).');
+        throw new Error('Düzgün http və ya https linki daxil edin.');
       }
     }
 
@@ -385,6 +387,7 @@ export const dbService = {
   },
 
   createNote(params: {
+    id?: string;
     courseId: string;
     content: string;
     category: NoteCategory;
@@ -399,7 +402,7 @@ export const dbService = {
       throw new Error('Fənn seçilməlidir.');
     }
 
-    const id = `note_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    const id = params.id || `note_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
     const note: GroupNote = {
       id,
       courseId: params.courseId,
@@ -636,6 +639,7 @@ export const dbService = {
   },
 
   createQuestion(params: {
+    id?: string;
     title: string;
     details?: string;
     courseId: string;
@@ -650,7 +654,7 @@ export const dbService = {
       throw new Error('Fənn seçilməlidir.');
     }
 
-    const id = `q_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    const id = params.id || `q_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
     const question: Question = {
       id,
       title: cleanTitle,
@@ -668,6 +672,7 @@ export const dbService = {
   },
 
   createAnswer(params: {
+    id?: string;
     questionId: string;
     content: string;
     authorId: string;
@@ -678,7 +683,7 @@ export const dbService = {
       throw new Error('Cavab mətni daxil edilməlidir.');
     }
 
-    const id = `ans_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    const id = params.id || `ans_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
     const answer: Answer = {
       id,
       questionId: params.questionId,

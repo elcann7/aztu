@@ -78,6 +78,8 @@ Layihədə xarici ağır vəziyyət idarəetmə kitabxanaları (məsələn, Redu
 - **Məsuliyyəti**: Fənlər, qeydlər, sual-cavablar, sorğular, materiallar və deadline-ların vahid CRUD əməliyyatları.
 - **Davamlılıq (Persistence)**: Bütün dəyişikliklər avtomatik olaraq brauzerin `localStorage` yaddaşına yazılır və səhifə yeniləndikdə dərhal bərpa olunur.
 - **İlkin verilənlər (Seeding)**: Sistem ilk dəfə açıldıqda 4 əsas fənn, nümunəvi qeydlər və tapşırıqlar avtomatik yüklənir.
+- **Paylaşım Müzakirəsi**: Qeyd/materiala aid müzakirə mövcud `questions` və `answers` cədvəllərində deterministik mövzu ID-si ilə saxlanır. Qəbul edilmiş qeyd düzəlişləri əlavə cavab kimi tarixçəyə yazılır; ilkin mətn qorunur.
+- **ID uyğunluğu**: Yeni material, qeyd, sual və cavabın bir ID-si həm yerli saxlamaya, həm bulud yazısına ötürülür.
 
 ---
 

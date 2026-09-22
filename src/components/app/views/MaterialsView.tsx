@@ -1,8 +1,11 @@
-import React, { useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import './ViewsCommon.css';
 import { useDatabase } from '../../../context/DatabaseContext';
 import { useAuth } from '../../../context/AuthContext';
 import { CreateMaterialModal } from '../modals/CreateMaterialModal';
+import { DiscussionPanel } from '../DiscussionPanel';
+import { useBookmarks } from '../../../hooks/useBookmarks';
+import { useSearchFocus } from '../../../hooks/useSearchFocus';
 import {
   FileText,
   Link2,
@@ -15,18 +18,21 @@ import {
   Filter,
   FileCode,
   FileArchive,
-  FileSpreadsheet
+  FileSpreadsheet,
+  MessageCircle,
+  Bookmark,
 } from 'lucide-react';
 
 export const MaterialsView: React.FC = () => {
   const { materials, courses, deleteMaterial, downloadMaterialFile } = useDatabase();
   const { user } = useAuth();
+  const bookmarks = useBookmarks(user?.id);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<string>('all');
   const [selectedType, setSelectedType] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
-
+  const [openDiscussionId, setOpenDiscussionId] = useState<string | null>(null);
   const filteredMaterials = useMemo(() => {
     return materials.filter((m) => {
       if (selectedCourse !== 'all' && m.courseId !== selectedCourse) return false;
@@ -43,6 +49,24 @@ export const MaterialsView: React.FC = () => {
       return true;
     });
   }, [materials, courses, selectedCourse, selectedType, searchQuery]);
+  const materialIds = useMemo(() => filteredMaterials.map((item) => item.id), [filteredMaterials]);
+  useSearchFocus('material', materialIds);
+
+  useEffect(() => {
+    const clearFilters = () => {
+      const raw = sessionStorage.getItem('aztu_search_focus');
+      if (!raw) return;
+      try {
+        if ((JSON.parse(raw) as { kind: string }).kind !== 'material') return;
+        setSelectedCourse('all');
+        setSelectedType('all');
+        setSearchQuery('');
+      } catch { /* Invalid focus data is cleared by useSearchFocus. */ }
+    };
+    window.addEventListener('aztu-search-focus', clearFilters);
+    clearFilters();
+    return () => window.removeEventListener('aztu-search-focus', clearFilters);
+  }, []);
 
   const handleDelete = async (id: string, title: string) => {
     if (window.confirm(`"${title}" materialını silmək istədiyinizə əminsiniz?`)) {
@@ -187,7 +211,8 @@ export const MaterialsView: React.FC = () => {
               });
 
               return (
-                <div key={mat.id} className="materials-table-row">
+                <React.Fragment key={mat.id}>
+                <div id={`search-material-${mat.id}`} className="materials-table-row">
                   <div className="mat-td mat-col-name">
                     <div className="mat-icon-wrapper">
                       {getFileIcon(mat.title, mat.type)}
@@ -219,6 +244,16 @@ export const MaterialsView: React.FC = () => {
                   </div>
 
                   <div className="mat-td mat-col-actions">
+                    <button type="button" className="mat-action-btn" title={bookmarks.isSaved('material', mat.id) ? 'Yadda saxlanılanlardan çıxar' : 'Yadda saxla'}
+                      aria-label={bookmarks.isSaved('material', mat.id) ? 'Yadda saxlanılanlardan çıxar' : 'Yadda saxla'}
+                      aria-pressed={bookmarks.isSaved('material', mat.id)} onClick={() => bookmarks.toggle('material', mat.id)}>
+                      <Bookmark size={13} fill={bookmarks.isSaved('material', mat.id) ? 'currentColor' : 'none'} />
+                    </button>
+                    <button type="button" className="mat-action-btn" title="Müzakirəni aç"
+                      aria-expanded={openDiscussionId === mat.id}
+                      onClick={() => setOpenDiscussionId(openDiscussionId === mat.id ? null : mat.id)}>
+                      <MessageCircle size={13} /><span>Müzakirə</span>
+                    </button>
                     {mat.type === 'file' ? (
                       <button
                         type="button"
@@ -254,6 +289,10 @@ export const MaterialsView: React.FC = () => {
                     )}
                   </div>
                 </div>
+                {openDiscussionId === mat.id && <DiscussionPanel targetType="material" targetId={mat.id}
+                  targetTitle={mat.title} courseId={mat.courseId}
+                  ownerId={mat.authorId} ownerName={mat.authorName} />}
+                </React.Fragment>
               );
             })}
           </div>

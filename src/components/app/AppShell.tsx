@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './AppShell.css';
 import { useRouter } from '../../context/RouterContext';
 import { Sidebar } from './Sidebar';
@@ -13,11 +13,30 @@ import { QAView } from './views/QAView';
 import { PythonSandboxView } from './views/PythonSandboxView';
 import { WaterSimulationView } from './views/WaterSimulationView';
 import { ProfileModal } from './modals/ProfileModal';
+import { Modal } from '../common/Modal';
+import { GlobalSearch } from './GlobalSearch';
+import { CreateNoteModal } from './modals/CreateNoteModal';
+import { CreateMaterialModal } from './modals/CreateMaterialModal';
+import { CreateQuestionModal } from './modals/CreateQuestionModal';
 
 export const AppShell: React.FC = () => {
   const { currentPath } = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isQuickShareOpen, setIsQuickShareOpen] = useState(false);
+  const [shareType, setShareType] = useState<'note' | 'material' | 'question' | null>(null);
+
+  useEffect(() => {
+    const handleShortcut = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        setIsSearchOpen(true);
+      }
+    };
+    window.addEventListener('keydown', handleShortcut);
+    return () => window.removeEventListener('keydown', handleShortcut);
+  }, []);
 
   // Compute active page title & view
   let pageTitle = 'Əsas';
@@ -72,6 +91,8 @@ export const AppShell: React.FC = () => {
           title={pageTitle}
           onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           onOpenProfile={() => setIsProfileOpen(true)}
+          onOpenSearch={() => setIsSearchOpen(true)}
+          onOpenQuickShare={() => setIsQuickShareOpen(true)}
         />
 
         {/* Scrollable View Content */}
@@ -85,6 +106,23 @@ export const AppShell: React.FC = () => {
         isOpen={isProfileOpen}
         onClose={() => setIsProfileOpen(false)}
       />
+      <GlobalSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      <Modal isOpen={isQuickShareOpen} onClose={() => setIsQuickShareOpen(false)} title="Qrupla paylaş">
+        <div className="quick-share-options">
+          {[
+            ['note', 'Qeyd yaz', 'Dərsdə öyrəndiyinizi paylaşın'],
+            ['material', 'Fayl və ya şəkil paylaş', 'Telefondan şəkil, PDF və ya link əlavə edin'],
+            ['question', 'Sual ver', 'Qrup yoldaşlarınızdan kömək istəyin'],
+          ].map(([type, title, description]) => (
+            <button key={type} type="button" onClick={() => { setIsQuickShareOpen(false); setShareType(type as 'note' | 'material' | 'question'); }}>
+              <strong>{title}</strong><span>{description}</span>
+            </button>
+          ))}
+        </div>
+      </Modal>
+      <CreateNoteModal isOpen={shareType === 'note'} onClose={() => setShareType(null)} />
+      <CreateMaterialModal isOpen={shareType === 'material'} onClose={() => setShareType(null)} />
+      <CreateQuestionModal isOpen={shareType === 'question'} onClose={() => setShareType(null)} />
     </div>
   );
 };

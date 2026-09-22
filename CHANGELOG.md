@@ -4,6 +4,23 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.9.1] — 2026-09-23
+
+### Qrup yoldaşları üçün paylaşım və müzakirə
+- TopBar-a mobil telefonda da görünən sürətli **Paylaş** düyməsi əlavə edildi: qeyd, fayl/şəkil/link və sual axınları bir yerdən açılır.
+- Ümumi axtarış qeydlər, materiallar və suallar üzrə işləyir; növə görə filtr, `Ctrl/Cmd+K`, saxlanmış paylaşımlar və nəticəyə keçid var.
+- Qeyd və materialların altında mövzuya bağlı müzakirə əlavə edildi. Müzakirə mövcud `questions` və `answers` cədvəllərində ayrıca işarələnir.
+- Qeydə düzəliş təklif etmək və qeyd müəllifinin təklifi qəbul etməsi əlavə edildi. Qəbul edilmiş mətn və ilkin mətn tarixçədə görünür.
+- Qeyd, material və sualları tələbəyə məxsus brauzer yaddaşında saxlamaq mümkündür.
+- Python kod bloku olan cavabı bir kliklə Sandbox-da açmaq mümkündür.
+- Cavab sahəsi çoxsətirli mətn və Python kod şablonu dəstəkləyir; axtarış nəticəsinə keçid aktiv filtrləri təmizləyir.
+- Link materialları üçün yalnız düzgün `http`/`https` ünvanları buluda yazılmazdan əvvəl yoxlanılır.
+- Yeni material, qeyd, sual və cavab üçün yerli və bulud ID-ləri eyniləşdirildi.
+- Yeni qeyd, sual, cavab və material paylaşımı bulud cavabını gözləyir; yazı alınmadıqda uğur mesajı göstərilmir. Google ilə ilk qeydiyyatda qrup kodunun avtomatik ötürülməsi dayandırıldı.
+- `npm run build` uğurludur. Canlı Supabase layihəsinə giriş olmadığı üçün məxfilik qaydaları və canlı mühit ayrıca yoxlanmalıdır.
+
+---
+
 ## [1.9.0] — 2026-09-23
 
 ### 🌊 İnteraktiv Su Simulyasiyası

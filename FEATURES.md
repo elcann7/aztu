@@ -176,7 +176,8 @@ Hər bir fənn portalında:
 ## 12. Naviqasiya və Qlobal Axtarış
 - **Masaüstü Rejimi**: Sol tərəfdə 240px genişliyində daimi görünən naviqasiya paneli (Sidebar).
 - **Mobil Rejim**: Kiçik ekranlarda yuxarı menyu düyməsi (Hamburger) ilə açılan mobil çekməce.
-- **Qlobal Axtarış UI**: Yuxarı paneldə mühazirə, qeyd və tapşırıqlar üçün axtarış sahəsi (`⌘K` / `Ctrl+K`).
+- **İşlək Qlobal Axtarış**: Qeyd, sual və material üzrə axtarış; növə görə filtr; nəticəyə keçid; `Ctrl+K` / `Cmd+K`.
+- **Sürətli Paylaşım**: Yuxarı paneldəki düymə qeyd, şəkil/fayl/link və sual formalarını açır.
 - **Bir Toxunuşla Profil**: TopBar-ın sağ küncündəki avatar klikləndikdə Tələbə Profili dərhal açılır.
 
 ---
@@ -187,7 +188,16 @@ Hər bir fənn portalında:
   - Hər hansı tələbə yeni qeyd və ya mühazirə ipucu əlavə etdikdə digər tələbələrin lövhəsində anında görünür.
   - Sorğularda verilən hər bir səs qrafikləri digər tələbələrin ekranında canlı olaraq dəyişir.
   - Yeni tapşırıq və ya sual-cavab yazıldıqda bütün qrup xəbərdar olur.
-- **Hibrid Dözümlülük (Fault Tolerance)**: Əgər şəbəkə kəsilərsə və ya bulud əlaqəsi dayanarsa, sistem heç bir xəta vermədən yerli LocalStorage / IndexedDB ilə işləməyə davam edir və internet bərpa olunduqda yenidən qoşulur.
+- **Yerli Saxlama**: Lokal rejimdə LocalStorage / IndexedDB işləyir. Bulud konfiqurasiya olunubsa, yeni qeyd, sual, cavab və material yazısı server tərəfindən təsdiqlənəndən sonra uğurlu sayılır. Offline dəyişiklikləri avtomatik növbəyə alıb yenidən göndərmək hələ ayrıca işdir.
+
+---
+
+## 15. Paylaşım Altı Müzakirə və Birgə Qeydlər
+- Qeyd və materialların altında həmin paylaşıma aid şərhlər yazılır; müzakirə adi sual siyahısını qarışdırmır.
+- Tələbə qeydə düzəliş təklif edə bilər. Qeydi paylaşan şəxs təklifi qəbul etdikdə yeni mətn göstərilir, ilkin mətn və qəbul edilmiş düzəlişlər qalır.
+- Qeyd, material və suallar `Yadda saxla` ilə cari tələbənin brauzerində ayrıca saxlanır və ümumi axtarışdan tapılır.
+- Sual-cavabın çoxsətirli cavab sahəsində Python kod şablonu əlavə etmək və kodu Sandbox-a ötürmək olur.
+- Bulud mövcud olduqda müzakirə əməliyyatı server cavabını gözləyir və xəta olduqda istifadəçiyə bildirir. Mövcud auth/RLS arxitekturasının məxfilik məhdudiyyəti ayrıca həll edilməlidir.
 
 ---
 

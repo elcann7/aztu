@@ -63,6 +63,8 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | :--- | :--- |
 | [`src/components/app/AppShell.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/AppShell.tsx) | Vahid iş sahəsinin əsas şeli: `Sidebar`, `TopBar`, dinamik görünüş və `ProfileModal` |
 | [`src/components/app/AppShell.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/AppShell.css) | İş mühitinin flexbox və viewport hündürlük stilləri |
+| `src/components/app/GlobalSearch.tsx` & `.css` | Qeyd, material və sual üzrə ümumi axtarış, filtr və nəticəyə keçid |
+| `src/components/app/DiscussionPanel.tsx` & `.css` | Qeyd və material altında şərh, düzəliş təklifi və qəbul edilmiş versiyalar |
 | [`src/components/app/Sidebar.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/Sidebar.tsx) | Sol naviqasiya paneli: 4 fənn keçidi, 5 iş modulu, çıxış düyməsi və tələbə kartı |
 | [`src/components/app/Sidebar.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/Sidebar.css) | Sidebar stilləri və mobil çekməce (drawer) media sorğuları (`<= 768px`) |
 | [`src/components/app/TopBar.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/TopBar.tsx) | Yuxarı panel: Səhifə başlığı, qlobal axtarış sahəsi (`⌘K`), mobil menyu açarı və profil avatarı |
@@ -111,6 +113,9 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`src/services/googleAuth.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/googleAuth.ts) | Google Identity Services API klient skripti, Client ID idarəsi və JWT deşifrələyici |
 | [`src/services/supabase.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/supabase.ts) | **Supabase Klienti**: Realtime və PostgreSQL bulud əlaqəsi, oflayn ehtiyat mexanizmi |
 | [`src/services/db.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/db.ts) | Bütün məlumat strukturlarının saxlanması, oxunması və tip definisiyaları |
+| `src/services/discussion.ts` | Müzakirə mövzusu ID-si və düzəliş/versiya işarələri |
+| `src/hooks/useBookmarks.ts` | Tələbənin brauzerdə saxladığı paylaşımların idarəsi |
+| `src/hooks/useSearchFocus.ts` | Ümumi axtarışdan konkret paylaşım kartına keçid |
 | [`src/services/pythonRunner.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/pythonRunner.ts) | Python kodlarının brauzerdə təhlili və icra simulyatoru |
 | [`src/services/waterSimulation.ts`](./src/services/waterSimulation.ts) | 2D sönümlü dalğa sahəsi, əks etdirən maneələr, damla impulsları və Canvas səth işıqlandırması |
 | [`src/data/mockData.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/data/mockData.ts) | **Rəsmi Dərs Cədvəli və Təqvim**: Rəsmi AzTU 6326A2 həftəlik cədvəli (`WEEKLY_SCHEDULE`), semestr təqvimi və geri sayım (`SEMESTER_CONFIG`), 15 həftəlik fənn sillabusları (`COURSE_SYLLABUS`) və real müəllim məlumatları |

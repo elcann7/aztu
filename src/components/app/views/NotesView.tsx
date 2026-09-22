@@ -1,18 +1,23 @@
-import React, { useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import './ViewsCommon.css';
 import { useDatabase } from '../../../context/DatabaseContext';
 import { useAuth } from '../../../context/AuthContext';
 import { CreateNoteModal } from '../modals/CreateNoteModal';
-import { MessageSquareQuote, Plus, Trash2, Clock, User, Filter } from 'lucide-react';
+import { DiscussionPanel } from '../DiscussionPanel';
+import { useBookmarks } from '../../../hooks/useBookmarks';
+import { parseRevision } from '../../../services/discussion';
+import { useSearchFocus } from '../../../hooks/useSearchFocus';
+import { MessageSquareQuote, Plus, Trash2, Clock, User, Filter, MessageCircle, Bookmark } from 'lucide-react';
 
 export const NotesView: React.FC = () => {
-  const { notes, courses, deleteNote } = useDatabase();
+  const { notes, courses, deleteNote, getDiscussionComments } = useDatabase();
   const { user } = useAuth();
+  const bookmarks = useBookmarks(user?.id);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<string>('all');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-
+  const [openDiscussionId, setOpenDiscussionId] = useState<string | null>(null);
   const filteredNotes = useMemo(() => {
     return [...notes]
       .filter((n) => {
@@ -22,6 +27,23 @@ export const NotesView: React.FC = () => {
       })
       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }, [notes, selectedCourse, selectedCategory]);
+  const noteIds = useMemo(() => filteredNotes.map((note) => note.id), [filteredNotes]);
+  useSearchFocus('note', noteIds);
+
+  useEffect(() => {
+    const clearFilters = () => {
+      const raw = sessionStorage.getItem('aztu_search_focus');
+      if (!raw) return;
+      try {
+        if ((JSON.parse(raw) as { kind: string }).kind !== 'note') return;
+        setSelectedCourse('all');
+        setSelectedCategory('all');
+      } catch { /* Invalid focus data is cleared by useSearchFocus. */ }
+    };
+    window.addEventListener('aztu-search-focus', clearFilters);
+    clearFilters();
+    return () => window.removeEventListener('aztu-search-focus', clearFilters);
+  }, []);
 
   const categories = [
     { id: 'all', label: 'Bütün qeydlər' },
@@ -176,13 +198,16 @@ export const NotesView: React.FC = () => {
                 {groupNotes.map((note) => {
                   const course = courses.find((c) => c.id === note.courseId);
                   const isOwner = user?.id === note.authorId;
+                  const revisions = getDiscussionComments('note', note.id)
+                    .map((item) => parseRevision(item.content)).filter((item) => item !== null);
+                  const currentContent = revisions.at(-1)?.content || note.content;
                   const timeFormatted = new Date(note.createdAt).toLocaleTimeString('az-AZ', {
                     hour: '2-digit',
                     minute: '2-digit',
                   });
 
                   return (
-                    <div key={note.id} className="timeline-note-card">
+                    <div key={note.id} id={`search-note-${note.id}`} className="timeline-note-card">
                       <div className={`note-indicator-bar ${note.category}`} />
                       
                       <div className="note-card-inner">
@@ -193,6 +218,11 @@ export const NotesView: React.FC = () => {
                           </span>
                           
                           <div className="note-meta-right">
+                            <button type="button" className="note-delete-btn" title={bookmarks.isSaved('note', note.id) ? 'Yadda saxlanılanlardan çıxar' : 'Yadda saxla'}
+                              aria-label={bookmarks.isSaved('note', note.id) ? 'Yadda saxlanılanlardan çıxar' : 'Yadda saxla'}
+                              aria-pressed={bookmarks.isSaved('note', note.id)} onClick={() => bookmarks.toggle('note', note.id)}>
+                              <Bookmark size={12} fill={bookmarks.isSaved('note', note.id) ? 'currentColor' : 'none'} />
+                            </button>
                             <span className="note-time-text">
                               <Clock size={11} />
                               {timeFormatted}
@@ -211,16 +241,28 @@ export const NotesView: React.FC = () => {
                         </div>
 
                         <blockquote className="note-quote-content">
-                          "{note.content}"
+                          "{currentContent}"
                         </blockquote>
+
+                        {revisions.length > 0 && <details className="note-history">
+                          <summary>{revisions.length} qəbul edilmiş düzəliş · İlkin mətni göstər</summary>
+                          <p>{note.content}</p>
+                        </details>}
 
                         <div className="note-footer-meta">
                           <span className="note-author-name">
                             <User size={11} />
                             {note.authorName}
                           </span>
+                          <button type="button" className="discussion-toggle" aria-expanded={openDiscussionId === note.id}
+                            onClick={() => setOpenDiscussionId(openDiscussionId === note.id ? null : note.id)}>
+                            <MessageCircle size={13} /> Müzakirə
+                          </button>
                         </div>
                       </div>
+                      {openDiscussionId === note.id && <DiscussionPanel targetType="note" targetId={note.id}
+                        targetTitle={note.content.slice(0, 65)} courseId={note.courseId}
+                        ownerId={note.authorId} ownerName={note.authorName} />}
                     </div>
                   );
                 })}

@@ -19,16 +19,19 @@ export const CreateQuestionModal: React.FC<CreateQuestionModalProps> = ({
   const [courseId, setCourseId] = useState(defaultCourseId || courses[0]?.id || 'math');
   const [details, setDetails] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setIsSubmitting(true);
 
-    const res = createQuestion({
+    const res = await createQuestion({
       title,
       courseId,
       details: details || undefined,
     });
+    setIsSubmitting(false);
 
     if (res.success) {
       setTitle('');
@@ -89,8 +92,8 @@ export const CreateQuestionModal: React.FC<CreateQuestionModalProps> = ({
           <button type="button" onClick={onClose} className="btn-ghost">
             Ləğv et
           </button>
-          <button type="submit" className="btn-primary">
-            Sualı paylaş
+          <button type="submit" className="btn-primary" disabled={isSubmitting}>
+            {isSubmitting ? 'Göndərilir...' : 'Sualı paylaş'}
           </button>
         </div>
       </form>

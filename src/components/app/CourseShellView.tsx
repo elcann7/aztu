@@ -115,7 +115,8 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
 
     try {
       setSubmittingAnsId(qId);
-      await createAnswer(qId, text);
+      const result = await createAnswer(qId, text);
+      if (!result.success) throw new Error(result.error || 'Cavab göndərilə bilmədi.');
       setAnswerInputs(prev => ({ ...prev, [qId]: '' }));
       setExpandedQuestions(prev => ({ ...prev, [qId]: true }));
     } catch (err: any) {

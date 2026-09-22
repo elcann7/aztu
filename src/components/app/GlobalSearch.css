@@ -1,0 +1,12 @@
+.global-search { display: grid; gap: 0.75rem; }
+.global-search-filters { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.global-search-filters button { border: 1px solid var(--border-default); background: #fff; border-radius: 999px; padding: 0.35rem 0.65rem; cursor: pointer; }
+.global-search-filters button.is-active { background: #111418; color: #fff; border-color: #111418; }
+.global-search-results { max-height: min(55vh, 430px); overflow-y: auto; display: grid; gap: 0.4rem; }
+.global-search-results > p { margin: 0.8rem 0; color: var(--text-muted); }
+.global-search-results > button { text-align: left; display: grid; gap: 0.15rem; border: 1px solid var(--border-default); background: #fff; border-radius: 8px; padding: 0.7rem; cursor: pointer; }
+.global-search-results > button:hover, .global-search-results > button:focus-visible { border-color: #64748b; background: #f8fafc; }
+.global-search-results strong { font-size: 0.85rem; font-weight: 600; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.global-search-results small { color: var(--text-muted); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.global-search-kind { color: #475569; font-size: 0.65rem; text-transform: uppercase; font-weight: 700; }
+.global-search-saved { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; }

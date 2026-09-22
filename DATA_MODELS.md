@@ -20,6 +20,9 @@ Bütün verilənlər brauzerin yerli yaddaşında xüsusi prefikslərlə təhlü
 | `aztu_6326a2_votes` | `Vote[]` | Sorğularda verilmiş tələbə səsləri |
 | `aztu_6326a2_materials` | `Material[]` | Yüklənmiş dərs materialları və təqdimatlar |
 | `aztu_6326a2_deadlines` | `Deadline[]` | Kolloqvium və tapşırıq tarixləri |
+| `aztu_6326a2_bookmarks_<userId>` | `string[]` | Hər tələbənin bu brauzerdə saxladığı qeyd, material və sual ID-ləri |
+| `aztu_search_focus` | `{kind,id}` | Axtarış nəticəsindən paylaşım kartına bir dəfəlik keçid |
+| `aztu_sandbox_shared_code` | `string` | Sual-cavabdakı Python kodunu Sandbox-a bir dəfəlik ötürmə |
 
 ---
 
@@ -134,6 +137,9 @@ export interface Answer {
   createdAt: string;
 }
 ```
+
+### 5.3. Paylaşım müzakirələri və qeyd düzəlişləri
+Müzakirə yeni baza cədvəli yaratmadan mövcud `Question`/`Answer` modelləri ilə saxlanır. Müzakirə sualının ID-si `discussion_<note|material>_<targetId>` formatındadır və `details` sahəsi `__aztu_discussion__:` prefiksi ilə başlayır. Belə suallar adi Q&A siyahısından gizlədilir. Cavab mətnində `__aztu_suggestion__` prefiksi düzəliş təklifini, `__aztu_revision__` prefiksi qəbul edilmiş versiyanı göstərir. Qeydin ilkin mətni dəyişdirilmir; göstərilən cari mətn son qəbul edilmiş versiyadan götürülür.
 
 ---
 

@@ -115,6 +115,7 @@ export const CreateMaterialModal: React.FC<CreateMaterialModalProps> = ({
             <label className="form-label">Fayl seçin * (Maks. 25 MB)</label>
             <input
               type="file"
+              accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.zip,.py,.txt"
               onChange={(e) => setFile(e.target.files?.[0] || null)}
               required
               className="form-input"

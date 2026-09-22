@@ -16,6 +16,7 @@ import {
 } from '../services/db';
 import { useAuth } from './AuthContext';
 import { isSupabaseConfigured, supabase } from '../services/supabase';
+import { discussionThreadId, SUGGESTION_PREFIX, REVISION_PREFIX } from '../services/discussion';
 
 interface DatabaseContextType {
   courses: Course[];
@@ -43,7 +44,7 @@ interface DatabaseContextType {
     courseId: string;
     content: string;
     category: NoteCategory;
-  }) => { success: boolean; error?: string };
+  }) => Promise<{ success: boolean; error?: string }>;
   deleteNote: (id: string) => { success: boolean; error?: string };
 
   // Deadlines
@@ -74,15 +75,21 @@ interface DatabaseContextType {
     title: string;
     details?: string;
     courseId: string;
-  }) => { success: boolean; error?: string };
+  }) => Promise<{ success: boolean; error?: string }>;
   deleteQuestion: (id: string) => { success: boolean; error?: string };
   getAnswersForQuestion: (questionId: string) => Answer[];
   createAnswer: (
     paramsOrQuestionId: { questionId: string; content: string } | string,
     maybeContent?: string
-  ) => { success: boolean; error?: string };
+  ) => Promise<{ success: boolean; error?: string }>;
   toggleAcceptedAnswer: (answerId: string, questionId?: string) => { success: boolean; error?: string };
   deleteAnswer: (id: string) => { success: boolean; error?: string };
+  getDiscussionComments: (targetType: 'note' | 'material', targetId: string) => Answer[];
+  createDiscussionComment: (params: {
+    targetType: 'note' | 'material'; targetId: string; targetTitle: string;
+    courseId: string; ownerId: string; ownerName: string; content: string;
+    kind?: 'comment' | 'suggestion' | 'revision'; relatedId?: string;
+  }) => Promise<{ success: boolean; error?: string }>;
 }
 
 const DatabaseContext = createContext<DatabaseContextType | null>(null);
@@ -347,8 +354,23 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }) => {
       if (!user) return { success: false, error: 'Daxil olmamısınız.' };
       try {
+        if (!params.title.trim() || !params.courseId) {
+          return { success: false, error: 'Başlıq və fənn daxil edilməlidir.' };
+        }
+        if (params.type === 'file' && (!params.file || params.file.size > 25 * 1024 * 1024)) {
+          return { success: false, error: 'Fayl seçin (maksimum 25 MB).' };
+        }
+        if (params.type === 'link') {
+          try {
+            const url = new URL(params.linkUrl?.trim() || '');
+            if (!['https:', 'http:'].includes(url.protocol)) throw new Error('unsupported protocol');
+          } catch {
+            return { success: false, error: 'Düzgün http və ya https linki daxil edin.' };
+          }
+        }
         const materialId = `mat_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
         let publicFileUrl: string | undefined = params.linkUrl;
+        let uploadedStoragePath: string | null = null;
 
         // If file upload and Supabase is configured, upload to Supabase Storage bucket 'materials'
         if (params.type === 'file' && params.file && isSupabaseConfigured() && supabase) {
@@ -360,14 +382,15 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           if (!uploadError) {
             const { data: urlData } = supabase.storage.from('materials').getPublicUrl(safeName);
             publicFileUrl = urlData.publicUrl;
+            uploadedStoragePath = safeName;
           } else {
-            console.warn('Supabase storage upload error:', uploadError);
+            throw uploadError;
           }
         }
 
         // Write to Supabase table
         if (isSupabaseConfigured() && supabase) {
-          await supabase.from('materials').insert({
+          const { error: insertError } = await supabase.from('materials').insert({
             id: materialId,
             title: params.title,
             course_id: params.courseId,
@@ -380,11 +403,16 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             author_id: user.id,
             author_name: `${user.firstName} ${user.lastName}`,
           });
+          if (insertError) {
+            if (uploadedStoragePath) await supabase.storage.from('materials').remove([uploadedStoragePath]);
+            throw insertError;
+          }
         }
 
         // Also save locally in IndexedDB/LocalStorage for offline resilience
         await dbService.createMaterial({
           ...params,
+          id: materialId,
           linkUrl: publicFileUrl,
           authorId: user.id,
           authorName: `${user.firstName} ${user.lastName}`,
@@ -449,26 +477,26 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   // Notes methods
   const createNote = useCallback(
-    (params: { courseId: string; content: string; category: NoteCategory }) => {
+    async (params: { courseId: string; content: string; category: NoteCategory }) => {
       if (!user) return { success: false, error: 'Daxil olmamısınız.' };
       try {
         const noteId = `note_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
 
         if (isSupabaseConfigured() && supabase) {
-          Promise.resolve(
-            supabase.from('notes').insert({
+          const { error } = await supabase.from('notes').insert({
               id: noteId,
               course_id: params.courseId,
               content: params.content,
               category: params.category,
               author_id: user.id,
               author_name: `${user.firstName} ${user.lastName}`,
-            })
-          ).catch((err) => console.error('Cloud note sync error:', err));
+            });
+          if (error) throw error;
         }
 
         dbService.createNote({
           ...params,
+          id: noteId,
           authorId: user.id,
           authorName: `${user.firstName} ${user.lastName}`,
         });
@@ -705,26 +733,26 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   // Q&A methods
   const createQuestion = useCallback(
-    (params: { title: string; details?: string; courseId: string }) => {
+    async (params: { title: string; details?: string; courseId: string }) => {
       if (!user) return { success: false, error: 'Daxil olmamısınız.' };
       try {
         const qId = `q_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
 
         if (isSupabaseConfigured() && supabase) {
-          Promise.resolve(
-            supabase.from('questions').insert({
+          const { error } = await supabase.from('questions').insert({
               id: qId,
               title: params.title,
               details: params.details || null,
               course_id: params.courseId,
               author_id: user.id,
               author_name: `${user.firstName} ${user.lastName}`,
-            })
-          ).catch((err) => console.error('Cloud question sync error:', err));
+            });
+          if (error) throw error;
         }
 
         dbService.createQuestion({
           ...params,
+          id: qId,
           authorId: user.id,
           authorName: `${user.firstName} ${user.lastName}`,
         });
@@ -771,7 +799,7 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   );
 
   const createAnswer = useCallback(
-    (
+    async (
       paramsOrQuestionId: { questionId: string; content: string } | string,
       maybeContent?: string
     ) => {
@@ -782,19 +810,19 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         const ansId = `ans_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
 
         if (isSupabaseConfigured() && supabase) {
-          Promise.resolve(
-            supabase.from('answers').insert({
+          const { error } = await supabase.from('answers').insert({
               id: ansId,
               question_id: questionId,
               content,
               is_accepted: false,
               author_id: user.id,
               author_name: `${user.firstName} ${user.lastName}`,
-            })
-          ).catch((err) => console.error('Cloud answer sync error:', err));
+            });
+          if (error) throw error;
         }
 
         dbService.createAnswer({
+          id: ansId,
           questionId,
           content,
           authorId: user.id,
@@ -872,6 +900,81 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     [user, refreshData]
   );
 
+  const getDiscussionComments = useCallback((targetType: 'note' | 'material', targetId: string) => {
+    void version;
+    const threadId = discussionThreadId(targetType, targetId);
+    const combined = [...dbService.getAnswers(threadId), ...answers.filter((a) => a.questionId === threadId)];
+    return [...new Map(combined.map((item) => [item.id, item])).values()]
+      .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+  }, [answers, version]);
+
+  const createDiscussionComment = useCallback(async (params: {
+    targetType: 'note' | 'material'; targetId: string; targetTitle: string;
+    courseId: string; ownerId: string; ownerName: string; content: string;
+    kind?: 'comment' | 'suggestion' | 'revision'; relatedId?: string;
+  }) => {
+    if (!user) return { success: false, error: 'Daxil olmamısınız.' };
+    const target = params.targetType === 'note'
+      ? notes.find((item) => item.id === params.targetId)
+      : materials.find((item) => item.id === params.targetId);
+    if (!target) return { success: false, error: 'Paylaşım artıq mövcud deyil.' };
+    if (params.kind === 'revision' && (params.targetType !== 'note' || user.id !== target.authorId)) {
+      return { success: false, error: 'Düzəlişi yalnız qeydi paylaşan tələbə qəbul edə bilər.' };
+    }
+    let content = params.content.trim();
+    if (params.kind === 'revision') {
+      const comments = getDiscussionComments(params.targetType, params.targetId);
+      const suggestion = comments.find((item) => item.id === params.relatedId && item.content.startsWith(SUGGESTION_PREFIX));
+      if (!suggestion) return { success: false, error: 'Düzəliş təklifi tapılmadı.' };
+      if (comments.some((item) => item.content.startsWith(`${REVISION_PREFIX}${suggestion.id}\n`))) {
+        return { success: false, error: 'Bu düzəliş artıq qəbul edilib.' };
+      }
+      content = suggestion.content.slice(SUGGESTION_PREFIX.length).trim();
+    }
+    if (!content) return { success: false, error: 'Mətn daxil edin.' };
+    const threadId = discussionThreadId(params.targetType, params.targetId);
+    const answerId = `ans_${crypto.randomUUID()}`;
+    const answerContent = params.kind === 'suggestion' ? `${SUGGESTION_PREFIX}${content}`
+      : params.kind === 'revision' ? `${REVISION_PREFIX}${params.relatedId || ''}\n${content}` : content;
+    try {
+      if (isSupabaseConfigured() && supabase) {
+        const { error: threadError } = await supabase.from('questions').insert({
+          id: threadId,
+          title: `Müzakirə: ${'title' in target ? target.title : target.content.slice(0, 65)}`,
+          details: `__aztu_discussion__:${params.targetType}:${params.targetId}`,
+          course_id: target.courseId,
+          author_id: target.authorId,
+          author_name: target.authorName,
+        });
+        if (threadError && threadError.code !== '23505') throw threadError;
+        const { error: answerError } = await supabase.from('answers').insert({
+          id: answerId,
+          question_id: threadId,
+          content: answerContent,
+          author_id: user.id,
+          author_name: `${user.firstName} ${user.lastName}`,
+          is_accepted: false,
+        });
+        if (answerError) throw answerError;
+      }
+      if (!dbService.getQuestions().some((item) => item.id === threadId)) {
+        dbService.createQuestion({
+          id: threadId, title: `Müzakirə: ${'title' in target ? target.title : target.content.slice(0, 65)}`,
+          details: `__aztu_discussion__:${params.targetType}:${params.targetId}`,
+          courseId: target.courseId, authorId: target.authorId, authorName: target.authorName,
+        });
+      }
+      dbService.createAnswer({
+        id: answerId, questionId: threadId, content: answerContent,
+        authorId: user.id, authorName: `${user.firstName} ${user.lastName}`,
+      });
+      refreshData();
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: error instanceof Error ? error.message : 'Müzakirə göndərilə bilmədi.' };
+    }
+  }, [user, notes, materials, getDiscussionComments, refreshData]);
+
   const value = useMemo(
     () => ({
       courses,
@@ -900,6 +1003,8 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       createAnswer,
       toggleAcceptedAnswer,
       deleteAnswer,
+      getDiscussionComments,
+      createDiscussionComment,
     }),
     [
       courses,
@@ -928,6 +1033,8 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       createAnswer,
       toggleAcceptedAnswer,
       deleteAnswer,
+      getDiscussionComments,
+      createDiscussionComment,
     ]
   );
 

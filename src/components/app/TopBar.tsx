@@ -1,15 +1,17 @@
 import React from 'react';
 import './TopBar.css';
-import { Search, Menu } from 'lucide-react';
+import { Search, Menu, Plus } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 interface TopBarProps {
   title: string;
   onToggleMobileMenu?: () => void;
   onOpenProfile?: () => void;
+  onOpenSearch?: () => void;
+  onOpenQuickShare?: () => void;
 }
 
-export const TopBar: React.FC<TopBarProps> = ({ title, onToggleMobileMenu, onOpenProfile }) => {
+export const TopBar: React.FC<TopBarProps> = ({ title, onToggleMobileMenu, onOpenProfile, onOpenSearch, onOpenQuickShare }) => {
   const { user } = useAuth();
 
   return (
@@ -29,17 +31,15 @@ export const TopBar: React.FC<TopBarProps> = ({ title, onToggleMobileMenu, onOpe
       </div>
 
       <div className="topbar-right">
-        {/* Global Search Visual UI */}
-        <div className="topbar-search-box">
+        <button type="button" className="topbar-search-box" onClick={onOpenSearch} aria-label="Qrupda axtar">
           <Search size={14} className="search-icon" />
-          <input
-            type="text"
-            placeholder="Axtarış... (Mühazirə, tapşırıq, qeyd)"
-            className="search-input"
-            readOnly
-          />
-          <kbd className="search-shortcut">⌘K</kbd>
-        </div>
+          <span className="search-input">Qeyd, sual və material axtar...</span>
+          <kbd className="search-shortcut">Ctrl K</kbd>
+        </button>
+        <button type="button" className="topbar-share-btn" onClick={onOpenQuickShare} aria-label="Qrupla paylaş">
+          <Plus size={15} />
+          <span>Paylaş</span>
+        </button>
 
         {/* User Profile Avatar Trigger */}
         <button

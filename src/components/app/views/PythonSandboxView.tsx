@@ -209,8 +209,13 @@ print(elacilar[['Ad', 'Proqramlaşdırma', 'Orta_Bal']])
 ];
 
 export const PythonSandboxView: React.FC = () => {
-  const [selectedTemplateId, setSelectedTemplateId] = useState<string>(LAB_TEMPLATES[0].id);
-  const [code, setCode] = useState<string>(LAB_TEMPLATES[0].code);
+  const [sharedCode] = useState(() => {
+    const value = sessionStorage.getItem('aztu_sandbox_shared_code');
+    sessionStorage.removeItem('aztu_sandbox_shared_code');
+    return value;
+  });
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>(sharedCode ? 'shared' : LAB_TEMPLATES[0].id);
+  const [code, setCode] = useState<string>(sharedCode || LAB_TEMPLATES[0].code);
   const [isRunning, setIsRunning] = useState(false);
   const [result, setResult] = useState<PythonExecutionResult | null>(null);
   const [terminalOutput, setTerminalOutput] = useState<string>('');
@@ -360,6 +365,7 @@ export const PythonSandboxView: React.FC = () => {
                 value={selectedTemplateId}
                 onChange={handleSelectTemplate}
               >
+                {selectedTemplateId === 'shared' && <option value="shared">Sual-cavabdan açılan kod</option>}
                 {LAB_TEMPLATES.map((tpl) => (
                   <option key={tpl.id} value={tpl.id}>
                     {tpl.title}

@@ -753,13 +753,16 @@
 
 .qa-answer-form {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: 0.25rem;
 }
 
 .qa-answer-input {
   flex: 1;
+  min-width: min(100%, 220px);
+  resize: vertical;
   background: #ffffff;
   border: 1px solid #cbd5e1;
   border-radius: 7px;
@@ -1487,3 +1490,9 @@
     justify-content: flex-start;
   }
 }
+.discussion-toggle { display: inline-flex; align-items: center; gap: 0.25rem; margin-left: auto; border: 0; background: none; color: #475569; font: inherit; font-size: 0.72rem; cursor: pointer; }
+.discussion-toggle:hover { color: #0f172a; text-decoration: underline; }
+.qa-code-snippet { overflow-x: auto; white-space: pre; border-radius: 6px; padding: 0.65rem; background: #0f172a; color: #e2e8f0; font-size: 0.76rem; }
+.qa-open-code { display: inline-flex; align-items: center; gap: 0.3rem; margin-top: 0.4rem; border: 1px solid var(--border-default); border-radius: 6px; background: #fff; padding: 0.35rem 0.55rem; cursor: pointer; }
+.qa-code-template { display: inline-flex; align-items: center; gap: 0.3rem; border: 1px solid var(--border-default); border-radius: 6px; background: #fff; padding: 0.45rem 0.55rem; cursor: pointer; }
+.search-focus-target { outline: 3px solid #60a5fa; outline-offset: 3px; transition: outline-color 1.8s ease; }

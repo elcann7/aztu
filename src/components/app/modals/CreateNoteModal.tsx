@@ -20,16 +20,19 @@ export const CreateNoteModal: React.FC<CreateNoteModalProps> = ({
   const [content, setContent] = useState('');
   const [category, setCategory] = useState<NoteCategory>('teacher_said');
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setIsSubmitting(true);
 
-    const res = createNote({
+    const res = await createNote({
       courseId,
       content,
       category,
     });
+    setIsSubmitting(false);
 
     if (res.success) {
       setContent('');
@@ -93,8 +96,8 @@ export const CreateNoteModal: React.FC<CreateNoteModalProps> = ({
           <button type="button" onClick={onClose} className="btn-ghost">
             Ləğv et
           </button>
-          <button type="submit" className="btn-primary">
-            Qeydi paylaş
+          <button type="submit" className="btn-primary" disabled={isSubmitting}>
+            {isSubmitting ? 'Göndərilir...' : 'Qeydi paylaş'}
           </button>
         </div>
       </form>

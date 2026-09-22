@@ -60,6 +60,8 @@
   width: 260px;
   cursor: pointer;
   transition: all var(--duration-hover) var(--ease-out-snappy);
+  font-family: inherit;
+  text-align: left;
 }
 
 .topbar-search-box:hover {
@@ -82,6 +84,23 @@
   cursor: pointer;
   font-family: inherit;
 }
+
+.topbar-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid #111418;
+  border-radius: var(--radius-xs);
+  background: #111418;
+  color: #fff;
+  padding: 0.38rem 0.65rem;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.topbar-share-btn:hover { background: #30343a; }
 
 .search-input::placeholder {
   color: var(--text-muted);
@@ -114,6 +133,8 @@
   .search-input {
     display: none;
   }
+
+  .topbar-share-btn span { display: none; }
 }
 
 /* TopBar Profile Avatar Button */

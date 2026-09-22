@@ -2,6 +2,8 @@
 
 Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının təhlükəsizlik memarlığını, qoruma mexanizmlərini, 30 nəfərlik kvota baryerini və məxfilik qaydalarını müəyyən edir.
 
+> **2026-09-23 yoxlama qeydi:** İlk Google qeydiyyatında qrup kodunun formdan tələb olunması bərpa edilib. Bununla belə, qrup kodu klient kodunda saxlanır, Google JWT hazırda yalnız klientdə oxunur və repozitoriyadakı Supabase RLS siyasətləri `anon` roluna geniş giriş verir. Buna görə aşağıdakı müştəri səviyyəli qaydalar hələ məxfi qrup məlumatlarının server səviyyəsində qorunduğunu sübut etmir. Canlı layihədə təsdiqlənmiş autentifikasiya və sahiblik əsasında RLS keçidi tələb olunur; 30 nəfər limiti, qrup kodu, kilidli profil sahələri və portal modallar saxlanmalıdır.
+
 ---
 
 ## 🛡️ Təhlükəsizlik Prinsipləri
@@ -85,7 +87,7 @@ Platformada heç bir şifrə açıq mətn (plain-text) şəklində saxlanılmır
 - Tələbə platformaya qeydiyyatdan keçdikdən sonra onun **Adı**, **Soyadı** və **Qrup nömrəsi** dondurulur:
   - Tələbə profil redaktə pəncərəsində (`ProfileModal.tsx`) ad və soyad sahələri `disabled` rejimində göstərilir və `Lock` nişanı ilə təchiz olunur.
   - Profil yeniləmə funksiyası (`updateProfile`) yalnız əlavə məlumatları (avatar, bio, ixtisas, əlaqə linkləri) qəbul edir. Tələbənin rəsmi adını dəyişmək üçün ötürülən cəhdlər proqram təminatı səviyyəsində rədd edilir.
-- Bu qayda qrup daxilində başqa şəxsin adından qeyd yazılmasının və anonim təxribatların qarşısını 100% alır.
+- Klient səviyyəsində bu qayda səhvən profil məlumatlarının redaktəsini məhdudlaşdırır. Serverdə sahiblik əsasında RLS tətbiq edilənə qədər başqa şəxsin adından yazılmanın qarşısını tam almır.
 
 ---
 

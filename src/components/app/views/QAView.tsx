@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { 
   HelpCircle, 
   Plus, 
@@ -11,12 +11,17 @@ import {
   ChevronDown,
   ChevronUp,
   User,
-  Clock
+  Clock,
+  Bookmark,
+  Code2,
 } from 'lucide-react';
 import { useDatabase } from '../../../context/DatabaseContext';
 import { useAuth } from '../../../context/AuthContext';
 import { CreateQuestionModal } from '../modals/CreateQuestionModal';
 import './ViewsCommon.css';
+import { useBookmarks } from '../../../hooks/useBookmarks';
+import { useRouter } from '../../../context/RouterContext';
+import { useSearchFocus } from '../../../hooks/useSearchFocus';
 
 export const QAView: React.FC = () => {
   const { 
@@ -29,6 +34,8 @@ export const QAView: React.FC = () => {
     getAnswersForQuestion
   } = useDatabase();
   const { user } = useAuth();
+  const bookmarks = useBookmarks(user?.id);
+  const { navigate } = useRouter();
 
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<string>('all');
@@ -40,7 +47,8 @@ export const QAView: React.FC = () => {
   const [answerInputs, setAnswerInputs] = useState<Record<string, string>>({});
   const [submittingId, setSubmittingId] = useState<string | null>(null);
 
-  const filteredQuestions = questions.filter(q => {
+  const filteredQuestions = useMemo(() => questions.filter(q => {
+    if (q.details?.startsWith('__aztu_discussion__:')) return false;
     if (selectedCourse !== 'all' && q.courseId !== selectedCourse) return false;
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
@@ -51,7 +59,24 @@ export const QAView: React.FC = () => {
       if (!matchTitle && !matchDetails && !matchCourse) return false;
     }
     return true;
-  });
+  }), [questions, selectedCourse, searchQuery, courses]);
+  const questionIds = useMemo(() => filteredQuestions.map((item) => item.id), [filteredQuestions]);
+  useSearchFocus('question', questionIds);
+
+  useEffect(() => {
+    const clearFilters = () => {
+      const raw = sessionStorage.getItem('aztu_search_focus');
+      if (!raw) return;
+      try {
+        if ((JSON.parse(raw) as { kind: string }).kind !== 'question') return;
+        setSelectedCourse('all');
+        setSearchQuery('');
+      } catch { /* Invalid focus data is cleared by useSearchFocus. */ }
+    };
+    window.addEventListener('aztu-search-focus', clearFilters);
+    clearFilters();
+    return () => window.removeEventListener('aztu-search-focus', clearFilters);
+  }, []);
 
   const toggleExpand = (questionId: string) => {
     setExpandedIds(prev => ({ ...prev, [questionId]: !prev[questionId] }));
@@ -64,7 +89,8 @@ export const QAView: React.FC = () => {
 
     try {
       setSubmittingId(questionId);
-      await createAnswer(questionId, text);
+      const result = await createAnswer(questionId, text);
+      if (!result.success) throw new Error(result.error || 'Cavab göndərilə bilmədi.');
       setAnswerInputs(prev => ({ ...prev, [questionId]: '' }));
       setExpandedIds(prev => ({ ...prev, [questionId]: true }));
     } catch (err: any) {
@@ -193,7 +219,7 @@ export const QAView: React.FC = () => {
             });
 
             return (
-              <div key={q.id} className="qa-board-card">
+              <div key={q.id} id={`search-question-${q.id}`} className="qa-board-card">
                 {/* Question Row */}
                 <div className="qa-board-row">
                   {/* Status Indicator Column */}
@@ -238,6 +264,11 @@ export const QAView: React.FC = () => {
                       </span>
 
                       <div className="qa-footer-actions">
+                        <button type="button" className="qa-btn-toggle" title={bookmarks.isSaved('question', q.id) ? 'Yadda saxlanılanlardan çıxar' : 'Yadda saxla'}
+                          aria-pressed={bookmarks.isSaved('question', q.id)} onClick={() => bookmarks.toggle('question', q.id)}>
+                          <Bookmark size={12} fill={bookmarks.isSaved('question', q.id) ? 'currentColor' : 'none'} />
+                          <span>Yadda saxla</span>
+                        </button>
                         <button
                           type="button"
                           onClick={() => toggleExpand(q.id)}
@@ -324,7 +355,19 @@ export const QAView: React.FC = () => {
                               </div>
 
                               <div className="qa-ans-body">
-                                {ans.content}
+                                {(() => {
+                                  const match = ans.content.match(/```(?:python|py)?\s*\n([\s\S]*?)```/i);
+                                  if (!match) return ans.content;
+                                  return <>
+                                    {ans.content.slice(0, match.index)}
+                                    <pre className="qa-code-snippet"><code>{match[1]}</code></pre>
+                                    <button type="button" className="qa-open-code" onClick={() => {
+                                      sessionStorage.setItem('aztu_sandbox_shared_code', match[1]);
+                                      navigate('/app/sandbox');
+                                    }}><Code2 size={12} /> Sandbox-da aç</button>
+                                    {ans.content.slice((match.index || 0) + match[0].length)}
+                                  </>;
+                                })()}
                               </div>
                             </div>
                           );
@@ -334,13 +377,16 @@ export const QAView: React.FC = () => {
 
                     {/* Inline Answer Input Box */}
                     <form onSubmit={(e) => handleAddAnswer(q.id, e)} className="qa-answer-form">
-                      <input
-                        type="text"
-                        placeholder="Cavabınızı yazın..."
+                      <textarea
+                        rows={3}
+                        placeholder="Cavabınızı yazın. Python kodu üçün aşağıdakı düymədən istifadə edin..."
                         value={answerInputs[q.id] || ''}
                         onChange={(e) => setAnswerInputs(prev => ({ ...prev, [q.id]: e.target.value }))}
                         className="qa-answer-input"
                       />
+                      <button type="button" className="qa-code-template" onClick={() => setAnswerInputs(prev => ({
+                        ...prev, [q.id]: `${prev[q.id] || ''}${prev[q.id] ? '\n' : ''}\`\`\`python\n\n\`\`\``,
+                      }))}><Code2 size={12} /> Kod əlavə et</button>
                       <button
                         type="submit"
                         disabled={submittingId === q.id || !(answerInputs[q.id] || '').trim()}

@@ -55,7 +55,7 @@ export const RegisterPage: React.FC = () => {
               return;
             }
 
-            const res = await loginWithGoogle(payload.email, payload.name, '6326A2', payload.picture);
+            const res = await loginWithGoogle(payload.email, payload.name, undefined, payload.picture);
             if (res.success) {
               navigate('/app');
             } else if (res.requiresGroupCode) {
@@ -286,7 +286,7 @@ export const RegisterPage: React.FC = () => {
                     type="text"
                     value={groupCode}
                     onChange={(e) => setGroupCode(e.target.value)}
-                    placeholder="Qrup kodunu daxil edin (məsələn: 6326A2)"
+                    placeholder="Qrup təsdiq kodunu daxil edin"
                     required
                     className="form-input pl-input-icon"
                   />
@@ -438,7 +438,7 @@ export const RegisterPage: React.FC = () => {
                     type="text"
                     value={googleGroupCode}
                     onChange={(e) => setGoogleGroupCode(e.target.value)}
-                    placeholder="Məsələn: 6326A2"
+                    placeholder="Qrup təsdiq kodu"
                     required
                     className="form-input pl-input-icon"
                   />
