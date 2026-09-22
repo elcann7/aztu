@@ -4,6 +4,17 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.9.0] — 2026-09-23
+
+### 🌊 İnteraktiv Su Simulyasiyası
+- Fizika dərsi üçün `/app/water` laboratoriyası və sol menyu keçidi əlavə edildi.
+- Sönümlü 2D dalğa modeli, maneələrdən əks olunma, damla və silgi alətləri yaradıldı.
+- Durgun, yağış və fırtına rejimləri, fizika sürgüləri, pauza, sıfırlama və PNG ixracı əlavə edildi.
+- Responsiv idarəetmə paneli, canlı FPS göstəricisi və Canvas səth işıqlandırması hazırlandı.
+- Lokal brauzer yoxlamalarının `.playwright-cli/` çıxışları Git izlənməsindən çıxarıldı.
+
+---
+
 ## [1.8.2] — 2026-09-22
 
 ### 🐼 Müəl. Şəbnəm İsgəndərli (Pandas & Data Science) və Müəl. Ayxan Həsənov (Tiplər & Əməllər) İnteqrasiyası

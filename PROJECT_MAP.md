@@ -84,6 +84,8 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`src/components/app/views/PollsView.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/views/PollsView.tsx) | **Qrup Sorğuları**: Qrupdaxili demokratik səsvermə və real-vaxt faiz qrafikləri |
 | [`src/components/app/views/PythonSandboxView.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/views/PythonSandboxView.tsx) | **Python Sandbox**: Brauzerdaxili Python kod redaktoru, icra konsolu və nümunələr |
 | [`src/components/app/views/PythonSandboxView.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/views/PythonSandboxView.css) | Python Sandbox stilləri və konsol tərtibatı |
+| [`src/components/app/views/WaterSimulationView.tsx`](./src/components/app/views/WaterSimulationView.tsx) | İnteraktiv su laboratoriyası: dalğa səthi, damla/engel/silgi alətləri, hava rejimləri, fizika sürgüləri, pauza və PNG ixracı |
+| [`src/components/app/views/WaterSimulationView.css`](./src/components/app/views/WaterSimulationView.css) | Su laboratoriyasının responsiv səhnə və idarəetmə paneli stilləri |
 | [`src/components/app/views/ViewsCommon.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/views/ViewsCommon.css) | Qeydlər, Materiallar, Deadline, QA və Sorğu modulları üçün vahid akademik dizayn sistemi |
 
 ---
@@ -110,5 +112,6 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`src/services/supabase.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/supabase.ts) | **Supabase Klienti**: Realtime və PostgreSQL bulud əlaqəsi, oflayn ehtiyat mexanizmi |
 | [`src/services/db.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/db.ts) | Bütün məlumat strukturlarının saxlanması, oxunması və tip definisiyaları |
 | [`src/services/pythonRunner.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/pythonRunner.ts) | Python kodlarının brauzerdə təhlili və icra simulyatoru |
+| [`src/services/waterSimulation.ts`](./src/services/waterSimulation.ts) | 2D sönümlü dalğa sahəsi, əks etdirən maneələr, damla impulsları və Canvas səth işıqlandırması |
 | [`src/data/mockData.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/data/mockData.ts) | **Rəsmi Dərs Cədvəli və Təqvim**: Rəsmi AzTU 6326A2 həftəlik cədvəli (`WEEKLY_SCHEDULE`), semestr təqvimi və geri sayım (`SEMESTER_CONFIG`), 15 həftəlik fənn sillabusları (`COURSE_SYLLABUS`) və real müəllim məlumatları |
 | [`src/styles/global.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/styles/global.css) | Qlobal CSS dəyişənləri (rənglər, şriftlər, spacing, radiuslar, animasiyalar) |

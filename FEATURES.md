@@ -188,3 +188,12 @@ Hər bir fənn portalında:
   - Sorğularda verilən hər bir səs qrafikləri digər tələbələrin ekranında canlı olaraq dəyişir.
   - Yeni tapşırıq və ya sual-cavab yazıldıqda bütün qrup xəbərdar olur.
 - **Hibrid Dözümlülük (Fault Tolerance)**: Əgər şəbəkə kəsilərsə və ya bulud əlaqəsi dayanarsa, sistem heç bir xəta vermədən yerli LocalStorage / IndexedDB ilə işləməyə davam edir və internet bərpa olunduqda yenidən qoşulur.
+
+---
+
+## 14. Su Simulyasiyası (Fizika Laboratoriyası)
+- `/app/water` marşrutunda 2D sönümlü dalğa tənliyi ilə real vaxtda su səthi işləyir; dalğalar çəkilən maneələrdən əks olunur və tədricən sönür.
+- Damla, maneə çəkmə və silgi alətləri siçan və toxunma ilə istifadə olunur.
+- Durgun, yağışlı və fırtınalı hazır rejimlər; dalğa sürəti, sönümləmə, fırça ölçüsü və yağış sıxlığı üçün sürgülər.
+- Pauza/davam, səhnəni sıfırlama, FPS göstəricisi və PNG ixracı mövcuddur.
+- Hesab məlumatı və verilənlər bazası ilə əlaqəsi yoxdur; laboratoriya vəziyyəti yalnız aktiv səhifənin yaddaşında saxlanılır.

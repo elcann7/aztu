@@ -11,6 +11,7 @@ import { DeadlinesView } from './views/DeadlinesView';
 import { PollsView } from './views/PollsView';
 import { QAView } from './views/QAView';
 import { PythonSandboxView } from './views/PythonSandboxView';
+import { WaterSimulationView } from './views/WaterSimulationView';
 import { ProfileModal } from './modals/ProfileModal';
 
 export const AppShell: React.FC = () => {
@@ -25,6 +26,9 @@ export const AppShell: React.FC = () => {
   if (currentPath === '/app/sandbox') {
     pageTitle = 'Python Sandbox';
     activeContent = <PythonSandboxView />;
+  } else if (currentPath === '/app/water') {
+    pageTitle = 'Su Simülasyonu';
+    activeContent = <WaterSimulationView />;
   } else if (currentPath.startsWith('/app/courses/')) {
     const slug = currentPath.replace('/app/courses/', '');
     const titles: Record<string, string> = {

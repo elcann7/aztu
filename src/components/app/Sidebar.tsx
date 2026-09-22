@@ -6,6 +6,7 @@ import {
   Bookmark,
   Home,
   Terminal,
+  Waves,
   MessageSquareQuote,
   HelpCircle,
   Vote,
@@ -109,6 +110,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenProfile
             }}>
               CPython
             </span>
+          </Link>
+
+          <Link
+            to="/app/water"
+            className={`nav-entry ${currentPath === '/app/water' ? 'is-active' : ''}`}
+            onClick={onClose}
+          >
+            <Waves size={15} className="nav-icon" style={{ color: '#168f94' }} />
+            <span className="nav-label" style={{ fontWeight: 600 }}>Su Simülasyonu</span>
+            <span className="course-code-tag">FİZİK</span>
           </Link>
 
           <div className="nav-divider" />

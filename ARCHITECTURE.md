@@ -27,6 +27,7 @@ graph TD
     ActiveView --> PollsView[Sorğular]
     ActiveView --> CourseView[Fənn Portalları]
     ActiveView --> SandboxView[Python Sandbox]
+    ActiveView --> WaterView[Su Simulyasiyası]
     
     AppShell --> Modals[React Portal Modalları -> document.body]
     
@@ -64,6 +65,7 @@ Layihədə xarici ağır vəziyyət idarəetmə kitabxanaları (məsələn, Redu
   - `/app/materials` — Materiallar
   - `/app/deadlines` — Tələbə tapşırıq və imtahan tarixləri
   - `/app/sandbox` — Python icra mühiti
+  - `/app/water` — Su dalğaları üzrə interaktiv fizika laboratoriyası
   - `/app/courses/:slug` — Fənn portalları (`math-analysis`, `physics`, `programming`, `english`)
 
 ### 2.2. AuthContext (`src/context/AuthContext.tsx`)

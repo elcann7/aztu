@@ -69,6 +69,8 @@ Platforma **Linear** və **21st.dev** dizayn fəlsəfəsindən ilhamlanaraq müa
     - Proqramlaşdırma fənni üçün brauzerdaxili Python kod redaktoru və icra mühiti.
 11. **React Portal Modalları**:
     - Bütün modallar birbaşa `document.body`-yə mount olunur, ekran ölçüsündən asılı olmayaraq başlıq və idarəetmə düymələri heç vaxt kəsilmir.
+12. **İnteraktiv Su Simulyasiyası**:
+    - Fizika laboratoriyasında damlalarla dalğa yaratmaq, maneə çəkmək, yağış/fırtına rejimlərini sınamaq və nəticəni PNG olaraq saxlamaq.
 
 ---
 
