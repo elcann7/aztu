@@ -1,4 +1,4 @@
-import { getMathLesson } from '../src/data/mathLessons';
+import { getMathLesson } from '../src/data/mathLessons.js';
 
 type HistoryItem = { role: 'user' | 'model'; text: string };
 type RequestBody = { lessonId?: unknown; message?: unknown; history?: unknown };
@@ -79,7 +79,8 @@ export async function POST(request: Request) {
     || request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
   if (!allowRequest(ip)) return json({ error: 'Bir az gözləyib yenidən cəhd edin.' }, 429);
 
-  const apiKey = process.env.GEMINI_API_KEY?.trim();
+  const apiKey = (globalThis as unknown as { process?: { env?: { GEMINI_API_KEY?: string } } })
+    .process?.env?.GEMINI_API_KEY?.trim();
   if (!apiKey) return json({ error: 'AI xidməti hələ konfiqurasiya olunmayıb.' }, 503);
 
   const lessonFacts = lesson.rules.map((rule) => `${rule.title}: ${rule.explanation} ${rule.formula || ''} ${rule.example || ''}`).join('\n');
