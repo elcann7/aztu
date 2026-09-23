@@ -101,29 +101,39 @@ export async function POST(request: Request) {
     { role: 'user', parts: [{ text: message }] },
   ];
 
-  try {
-    const upstream = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: systemInstruction }] },
-        contents,
-        generationConfig: { temperature: 0.25, maxOutputTokens: 1200 },
-      }),
-      signal: AbortSignal.timeout(20_000),
-    });
-    if (!upstream.ok) {
-      return json({ error: upstream.status === 429 ? 'AI limiti dolub. Bir az sonra yenidən yoxlayın.' : 'AI xidməti hazırda cavab vermir.' }, 502);
+  const payload = JSON.stringify({
+    systemInstruction: { parts: [{ text: systemInstruction }] },
+    contents,
+    generationConfig: { temperature: 0.25, maxOutputTokens: 1200 },
+  });
+
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      const upstream = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
+        body: payload,
+        signal: AbortSignal.timeout(12_000),
+      });
+      if (!upstream.ok) {
+        if (upstream.status >= 500 && attempt === 0) {
+          await new Promise((resolve) => setTimeout(resolve, 350));
+          continue;
+        }
+        return json({ error: upstream.status === 429 ? 'AI limiti dolub. Bir az sonra yenidən yoxlayın.' : 'AI xidməti hazırda cavab vermir.' }, 502);
+      }
+      const data = await upstream.json() as {
+        candidates?: { content?: { parts?: { text?: string }[] } }[];
+      };
+      const reply = cleanReply(data.candidates?.[0]?.content?.parts?.map((part) => part.text || '').join('') || '');
+      if (!reply) return json({ error: 'AI boş cavab qaytardı. Sualı başqa cür yazın.' }, 502);
+      return json({ reply });
+    } catch {
+      if (attempt === 1) return json({ error: 'AI ilə əlaqə kəsildi. Yenidən cəhd edin.' }, 502);
+      await new Promise((resolve) => setTimeout(resolve, 350));
     }
-    const data = await upstream.json() as {
-      candidates?: { content?: { parts?: { text?: string }[] } }[];
-    };
-    const reply = cleanReply(data.candidates?.[0]?.content?.parts?.map((part) => part.text || '').join('') || '');
-    if (!reply) return json({ error: 'AI boş cavab qaytardı. Sualı başqa cür yazın.' }, 502);
-    return json({ reply });
-  } catch {
-    return json({ error: 'AI ilə əlaqə kəsildi. Yenidən cəhd edin.' }, 502);
   }
+  return json({ error: 'AI xidməti hazırda cavab vermir.' }, 502);
 }
 
 export function GET() {

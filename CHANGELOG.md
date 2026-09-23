@@ -13,6 +13,7 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 - Hər mühazirənin altında mövzu ilə məhdud AI söhbəti yaradıldı. `gemini-3.1-flash-lite` Vercel funksiyası vasitəsilə çağırılır; API açarı yalnız server mühitində saxlanır.
 - Riyazi analiz üçün cari həftə planı istifadəçinin bildirdiyi mövzulara uyğunlaşdırıldı. `npm run build` həm frontend, həm API TypeScript yoxlamasını əhatə edir.
 - Vercel-in ayrıca API kompilyasiyası üçün modul importu və server mühiti tipi uyğunlaşdırıldı; `vercel build --target production` funksiyanı da uğurla yığır.
+- Gemini bağlantısında müvəqqəti server xətası və ya əlaqə kəsilməsi zamanı API bir dəfə qısa fasilədən sonra sorğunu təkrarlayır.
 
 ---
 
