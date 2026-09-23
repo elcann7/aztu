@@ -176,7 +176,7 @@ Platforma daxilindəki Python icra mühiti (`PythonSandboxView.tsx`) tələbəl�
 
 ## 6. Xülasə
 
-Riyazi analiz portalına `MathLearningView` ilə statik mühazirələr, `MathPractice` ilə testlər, `MathProofChallenge` ilə isbat məşqləri və `MathLabs` ilə üç klient laboratoriyası əlavə olunub. `MathTutorChat` seçilmiş mühazirə ID-sini və son dörd mesajı `/api/lecture-chat` funksiyasına göndərir; son 20 mesaj yalnız tabın `sessionStorage` yaddaşında saxlanır. Funksiya mühazirə məzmununu serverdə ID üzrə seçir, Gemini açarını `GEMINI_API_KEY` server mühitindən oxuyur və sorğu ölçüsü ilə sürətini məhdudlaşdırır. Klientə API açarı ötürülmür.
+Riyazi analiz portalı `CourseShellView` daxilində birbaşa dərs siyahısı ilə açılır. `MathLearningView` mühazirəni seçdirir və həmin mühazirənin qaydalar, praktika, laboratoriya və AI bölmələrini göstərir. Bölmələr görünüş dəyişəndə mount vəziyyətini saxlayır; test cavabları itmir. `MathPractice` testləri, `MathProofChallenge` isbat məşqini, `MathLessonLab` isə mühazirə ID-sinə uyğun olan üç klient laboratoriyasından birini göstərir. `AppShell` fənn slug-u dəyişəndə `CourseShellView`-u yenidən mount edir ki, yeni fənn öz ilkin tabı ilə açılsın. `MathTutorChat` seçilmiş mühazirə ID-sini və son dörd mesajı `/api/lecture-chat` funksiyasına göndərir; son 20 mesaj yalnız tabın `sessionStorage` yaddaşında saxlanır. Funksiya mühazirə məzmununu serverdə ID üzrə seçir, Gemini açarını `GEMINI_API_KEY` server mühitindən oxuyur və sorğu ölçüsü ilə sürətini məhdudlaşdırır. Klientə API açarı ötürülmür.
 
 
 AzTU 6326A2 memarlığı yüksək etibarlılıq, tələbə məlumatlarının tam qorunması, istənilən cihazda (mobil, planşet, noutbuk) qüsursuz işləməsi və sıfır xəta prinsipləri üzərində qurulmuşdur.

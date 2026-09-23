@@ -212,7 +212,11 @@ Hər bir fənn portalında:
 ---
 
 ## 16. Riyazi Analiz Mühazirələri, Praktika və AI
+- Riyazi analiz portalı birbaşa “Dərslər” bölməsində açılır. “Mühazirə 1 — mövzu adı” formatında siyahıdan dərs seçilir; yeni mövzular eyni quruluşa əlavə edilir.
+- Seçilən dərsin daxilində dörd bölmə var: **Qaydalar**, **Praktika**, **Laboratoriya**, **AI köməkçi**. Geri və növbəti mühazirə keçidləri var; bölmələrarası keçiddə yarımçıq test cavabları qorunur.
+- Laboratoriyalar dərslərə görə ayrılıb: çoxluqlar üçün Ven diaqramı, həqiqi ədədlər üçün ε-qonşuluğu, supremum/infimum üçün sərhəd simulyasiyası.
+- Riyazi analiz üçün təsdiqlənməmiş 15 həftəlik plan və ümumi laboratoriya tabı göstərilmir; dəqiq mövzular universitet kabinetindən alındıqca dərslərə əlavə oluna bilər.
 - `Riyazi analiz-1` portalında üç ilkin mövzu: çoxluqlar və kvantorlar, həqiqi ədədlər və intervallar, supremum/infimum və tamlıq. Yalnız tələbənin keçildiyini bildirdiyi mövzular üçün köməkçi xülasədir.
 - Hər mövzuda təriflər, formulalar, işlənmiş nümunə, altı izahlı test sualı və yazılı isbat məşqi var. Test nəticəsi istifadəçinin brauzerində saxlanır.
 - İnteraktiv laboratoriyalar: sonlu çoxluqlarla Ven diaqramı, açıq/qapalı/ardıcıllıq çoxluğunun sərhədləri, həqiqi ədəd oxunda ε-qonşuluğu.
-- Hər mühazirənin altında həmin mövzuya bağlanan AI söhbəti var. Cavablar Vercel `/api/lecture-chat` funksiyası ilə `gemini-3.1-flash-lite` modelindən alınır. Son mesajlar bu tabın yaddaşında saxlanır və tələbə söhbəti təmizləyə bilir. AI cavabları köməkçi izahdır və müəllim qeydi deyil.
+- Hər mühazirənin AI bölməsi yalnız həmin mövzuya bağlanan söhbətdir. Cavablar Vercel `/api/lecture-chat` funksiyası ilə `gemini-3.1-flash-lite` modelindən alınır. Son mesajlar bu tabın yaddaşında saxlanır və tələbə söhbəti təmizləyə bilir. AI cavabları köməkçi izahdır və müəllim qeydi deyil.

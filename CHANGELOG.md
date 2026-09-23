@@ -4,6 +4,17 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.10.1] — 2026-09-23
+
+### Riyazi analiz dərslərinin rahat seçimi
+- Riyazi analiz portalı açılan kimi nömrələnmiş mühazirə siyahısı göstərilir; hər yeni mövzu siyahıya ayrıca dərs kimi əlavə oluna bilər.
+- Hər mühazirədə qaydalar, praktika, mövzuya uyğun laboratoriya və AI köməkçi ayrı, aydın bölmələrdə yerləşdirildi.
+- Mühazirələrə geri və növbəti dərsə keçid əlavə olundu. Bölmə dəyişəndə səhifə həmin bölmənin əvvəlinə gətirilir, yarımçıq test cavabları itmir.
+- Riyazi analizdə ayrıca laboratoriya və təsdiqlənməmiş 15 həftəlik plan naviqasiyadan çıxarıldı; digər fənnlərin planı saxlanıldı.
+- Masaüstü və mobil ölçülərdə dərs seçimi və mövzuya uyğun laboratoriyalar yoxlandı; `npm run build` uğurludur.
+
+---
+
 ## [1.10.0] — 2026-09-23
 
 ### Riyazi analiz mühazirələri və interaktiv öyrənmə

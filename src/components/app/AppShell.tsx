@@ -57,7 +57,7 @@ export const AppShell: React.FC = () => {
       english: 'İngilis dili',
     };
     pageTitle = titles[slug] || 'Fənn';
-    activeContent = <CourseShellView courseSlug={slug} />;
+    activeContent = <CourseShellView key={slug} courseSlug={slug} />;
   } else if (currentPath === '/app/notes') {
     pageTitle = 'Qrup qeydləri';
     activeContent = <NotesView />;

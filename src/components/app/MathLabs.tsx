@@ -32,7 +32,7 @@ const VennLab = () => {
   const symbols: Record<Operation, string> = { union: 'A ∪ B', intersection: 'A ∩ B', difference: 'A ∖ B', complement: 'Aᶜ' };
 
   return <section className="math-lab-card">
-    <div className="math-section-heading"><div><span className="math-eyebrow">Laboratoriya 01</span><h3>Çoxluq emalatxanası</h3></div></div>
+    <div className="math-section-heading"><div><span className="math-eyebrow">Bu mühazirənin laboratoriyası</span><h3>Çoxluq emalatxanası</h3></div></div>
     <p>U={formatSet(universe)}. Hər ədədin A və B-yə daxil olmasını dəyiş, əməliyyatın nəticəsini izlə.</p>
     <div className="math-lab-controls"><label>Əməliyyat <select value={operation} onChange={(event) => setOperation(event.target.value as Operation)}>
       <option value="union">A ∪ B — birləşmə</option><option value="intersection">A ∩ B — kəsişmə</option>
@@ -73,7 +73,7 @@ const BoundLab = () => {
   const n = Math.floor(1 / epsilon) + 1;
 
   return <section className="math-lab-card">
-    <div className="math-section-heading"><div><span className="math-eyebrow">Laboratoriya 02</span><h3>Sərhədi tap</h3></div></div>
+    <div className="math-section-heading"><div><span className="math-eyebrow">Bu mühazirənin laboratoriyası</span><h3>Sərhədi tap</h3></div></div>
     <p>Fərqli çoxluqlarda eyni sup/inf dəyərlərinin maksimum/minimumla necə fərqləndiyini araşdır.</p>
     <div className="math-lab-controls"><label>Çoxluq <select value={preset} onChange={(event) => setPreset(event.target.value as Preset)}>
       <option value="open">A=(0,1)</option><option value="closed">A=[0,1]</option><option value="sequence">A={'{1−1/n : n≥1}'}</option>
@@ -106,7 +106,7 @@ const RealLineLab = () => {
   const rational = Math.round((center + epsilon / 2) * 100) / 100;
 
   return <section className="math-lab-card">
-    <div className="math-section-heading"><div><span className="math-eyebrow">Laboratoriya 03</span><h3>Həqiqi ədəd oxu və ε-qonşuluğu</h3></div></div>
+    <div className="math-section-heading"><div><span className="math-eyebrow">Bu mühazirənin laboratoriyası</span><h3>Həqiqi ədəd oxu və ε-qonşuluğu</h3></div></div>
     <p>Mərkəzi, ε radiusunu və y nöqtəsini dəyiş. Modul bərabərsizliyinin intervala necə çevrildiyini gör.</p>
     <div className="math-lab-controls math-three-sliders">
       <label>Mərkəz a = {center.toFixed(2)}<input type="range" min="-2" max="2" step="0.05" value={center} onChange={(event) => setCenter(Number(event.target.value))} /></label>
@@ -125,8 +125,9 @@ const RealLineLab = () => {
   </section>;
 };
 
-export const MathLabs = () => <div className="math-learning">
-  <div className="math-learning-intro"><span className="math-eyebrow">İnteraktiv laboratoriyalar</span><h2>Qaydanı hərəkətdə gör</h2>
-    <p>Çoxluqları dəyiş, sərhədləri sına və ε-qonşuluğunu ədəd oxunda araşdır. Nəticələr dərhal yenilənir.</p></div>
-  <VennLab /><BoundLab /><RealLineLab />
-</div>;
+export const MathLessonLab = ({ lessonId }: { lessonId: string }) => {
+  if (lessonId === 'sets-and-logic') return <VennLab />;
+  if (lessonId === 'real-numbers') return <RealLineLab />;
+  if (lessonId === 'supremum-infimum') return <BoundLab />;
+  return <p className="math-muted">Bu mühazirə üçün laboratoriya hazırlanır.</p>;
+};
