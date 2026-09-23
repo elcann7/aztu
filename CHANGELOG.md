@@ -4,6 +4,17 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.13.0] — 2026-09-23
+
+### Fizika dərslərinin PDF-siz oxunması
+- Dörd müəllim təqdimatı mövzu-mövzu yenidən tutuşduruldu; ilk dörd mühazirəyə Nyuton məsələləri, toqquşmalar, fırlanma və enerji, qaz prosesləri və real qaz, dielektrik və kondensator, qaz boşalması, vakuum cərəyanı, qarşılıqlı induksiya və digər çatışmayan anlayışlar üzrə geniş mətn və düsturlar əlavə edildi.
+- Müəllim təqdimatı hələ verilməyən 5–8-ci LMS mövzuları üçün müstəqil öyrənmə mətni hazırlandı; sayt bunun müəllim materialı olmadığını açıq göstərir.
+- Verilən 2–7-ci laboratoriya və əlavə nixrom təlimatı üçün nəzəri əsas, konkret ölçmə ardıcıllığı və nəticə hesablamaları yazıldı. 1-ci laboratoriyanın təlimatı olmadığı açıq qalır.
+- Dərs mətni və laboratoriya hesablamaları PDF keçidindən əvvəl göstərilir; PDF istəyə görə əlavə mənbə kimi açılır.
+- `npm run build` uğurla tamamlandı.
+
+---
+
 ## [1.12.0] — 2026-09-23
 
 ### Fizika təqdimatlarının PDF-ləri və geniş konspektlər

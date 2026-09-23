@@ -1,3 +1,7 @@
+import { PHYSICS_LESSON_DETAILS } from './physicsLessonDetails';
+import type { PhysicsExplanation } from './physicsLessonDetails';
+import { PHYSICS_LAB_DETAILS } from './physicsLabDetails';
+
 export interface PhysicsTopic {
   id: string;
   title: string;
@@ -5,7 +9,7 @@ export interface PhysicsTopic {
   sourceFile?: string;
   pdfUrl?: string;
   presentationNumber?: number;
-  explanations?: { title: string; text: string; formula?: string }[];
+  explanations?: PhysicsExplanation[];
   checkQuestions?: string[];
 }
 
@@ -18,12 +22,16 @@ export interface PhysicsLab {
   equipment?: string;
   steps?: string[];
   result?: string;
+  theory?: PhysicsExplanation[];
+  detailedSteps?: string[];
+  calculations?: string[];
 }
 
 const PHYSICS_PDF_BASE_URL = 'https://pub-40bab608394d42c2883a3de1b69e3d1f.r2.dev/aztu/physics';
 
 // Order and titles come from the student's current LMS screenshots (September 2026).
-// Explanations summarize only the attached teacher presentations and lab manuals.
+// Topics 1–4 follow the attached teacher presentations. Topics 5–8 use only the
+// LMS outline and are clearly identified as independent study notes in the UI.
 export const PHYSICS_TOPICS: PhysicsTopic[] = [
   {
     id: 'mechanics',
@@ -192,3 +200,13 @@ export const PHYSICS_EXTRA_LAB: PhysicsLab = {
   equipment: 'Nixrom naqil, müqavimət ölçmə qurğusu, ştangenpərgar və mikrometr.',
   steps: ['Məftilin diametrini bir neçə nöqtədə ölçərək en kəsiyinin bircinsliyini yoxla.', 'Müxtəlif uzunluqlarda gərginlik və cərəyanı ölçərək müqaviməti hesabla.', 'R ilə uzunluq qrafikindən xüsusi müqaviməti və ölçmə xətasını təyin et.'],
 };
+
+for (const topic of PHYSICS_TOPICS) {
+  const details = PHYSICS_LESSON_DETAILS[topic.id];
+  if (details) topic.explanations = [...(topic.explanations ?? []), ...details];
+}
+
+for (const lab of [...PHYSICS_LABS, PHYSICS_EXTRA_LAB]) {
+  const details = PHYSICS_LAB_DETAILS[lab.id];
+  if (details) Object.assign(lab, details);
+}

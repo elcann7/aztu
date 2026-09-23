@@ -58,8 +58,7 @@ const TopicDetail = ({ topic }: { topic: PhysicsTopic }) => {
   const [openSection, setOpenSection] = useState(0);
   return <article className="physics-detail">
     <header><span className="physics-eyebrow">LMS mövzusu {number} / {PHYSICS_TOPICS.length}</span><h2>{topic.title}</h2>
-      <p>{topic.sourceFile ? 'Müəllimin təqdimatı əsasında geniş konspekt. Hissələri bir-bir açıb oxuya bilərsən.' : 'Bu mövzu LMS siyahısından götürülüb; ona aid müəllim təqdimatı hələ verilməyib.'}</p></header>
-    {topic.pdfUrl && <PdfDocument url={topic.pdfUrl} title={`${topic.title} — müəllimin təqdimatı`} />}
+      <p>{topic.sourceFile ? 'Müəllimin təqdimatı əsasında mövzu-mövzu dərs mətni. Hissələri ardıcıllıqla açıb oxu; düsturların şərtləri və nümunələr mətnin içindədir.' : 'Bu mövzu LMS planına əsaslanan müstəqil dərs mətnidir. Müəllimin təqdimatı hələ paylaşılmayıb.'}</p></header>
     {topic.explanations && <section><h3>Mövzu izahı · {topic.explanations.length} hissə</h3><div className="physics-explanations">
       {topic.explanations.map((part, index) => <div key={part.title} className={openSection === index ? 'is-open' : ''}>
         <button type="button" aria-expanded={openSection === index} onClick={() => setOpenSection(openSection === index ? -1 : index)}>{part.title}<span>{openSection === index ? '−' : '+'}</span></button>
@@ -68,6 +67,7 @@ const TopicDetail = ({ topic }: { topic: PhysicsTopic }) => {
     </div></section>}
     <details className="physics-detail-more"><summary>Mövzunun tam planı</summary><ul>{topic.outline.map((part) => <li key={part}>{part}</li>)}</ul></details>
     {topic.checkQuestions && <section><h3>Özünü yoxla</h3><ol>{topic.checkQuestions.map((question) => <li key={question}>{question}</li>)}</ol></section>}
+    {topic.pdfUrl && <PdfDocument url={topic.pdfUrl} title={`${topic.title} — müəllimin təqdimatı`} />}
     <details className="physics-detail-more"><summary>Mənbə haqqında</summary>{topic.sourceFile ? <p>Müəllimin təqdimatı: {topic.sourceFile}. Təqdimatda “Mühazirə {topic.presentationNumber}” yazılıb.
       {topic.presentationNumber !== number && ' LMS mövzu nömrəsi ilə təqdimatın nömrəsi fərqlidir; məzmun mövzu adına görə uyğunlaşdırılıb.'}</p>
       : <p>Mənbə: LMS mövzu siyahısı. Ayrıca təqdimat verilməyib.</p>}</details>
@@ -78,13 +78,15 @@ const LabDetail = ({ lab, extra }: { lab: PhysicsLab; extra: boolean }) => {
   const number = PHYSICS_LABS.indexOf(lab) + 1;
   return <article className="physics-detail">
     <header><span className="physics-eyebrow">{extra ? 'Əlavə müəllim faylı' : `LMS laboratoriyası ${number} / ${PHYSICS_LABS.length}`}</span>
-      <h2>{lab.title}</h2><p>{lab.sourceFile ? 'Müəllimin laboratoriya təlimatından hazırlanmış qısa iş bələdçisi.' : 'Bu iş LMS siyahısında var, lakin verilən fayllarda ayrıca təlimatı yoxdur.'}</p></header>
-    {lab.pdfUrl && <PdfDocument url={lab.pdfUrl} title={`${lab.title} — laboratoriya təlimatı`} />}
+      <h2>{lab.title}</h2><p>{lab.sourceFile ? 'Müəllimin laboratoriya təlimatı əsasında nəzəriyyə, ölçmə addımları və hesablamalar.' : 'Bu iş LMS siyahısında var, lakin verilən fayllarda ayrıca təlimatı yoxdur.'}</p></header>
     {lab.objective ? <section><h3>İşin məqsədi</h3><p>{lab.objective}</p></section>
       : <section><h3>Mövcud məlumat</h3><p>İmpulsun saxlanması mövzusu birinci mühazirə təqdimatında izah olunur. Təcrübənin qurğusu, ölçmə addımları və təhvil tələbi haqqında ayrıca müəllim təlimatı paylaşılmayıb.</p></section>}
     {lab.equipment && <section><h3>Ləvazimat</h3><p>{lab.equipment}</p></section>}
-    {lab.steps && <section><h3>Təlimatda göstərilən iş ardıcıllığı</h3><ol>{lab.steps.map((step) => <li key={step}>{step}</li>)}</ol></section>}
+    {lab.theory && <section><h3>İşi başa düşmək üçün</h3><div className="physics-explanations">{lab.theory.map((part) => <div key={part.title} className="is-open"><div className="physics-lab-theory"><h4>{part.title}</h4><p>{part.text}</p>{part.formula && <code>{part.formula}</code>}</div></div>)}</div></section>}
+    {(lab.detailedSteps ?? lab.steps) && <section><h3>Təlimatda göstərilən iş ardıcıllığı</h3><ol>{(lab.detailedSteps ?? lab.steps)?.map((step) => <li key={step}>{step}</li>)}</ol></section>}
+    {lab.calculations && <section><h3>Ölçmələrdən nəticəyə</h3><ol>{lab.calculations.map((step) => <li key={step}>{step}</li>)}</ol></section>}
     {lab.result && <section><h3>Hesabatda göstərəcəklərin</h3><p>{lab.result}</p></section>}
+    {lab.pdfUrl && <PdfDocument url={lab.pdfUrl} title={`${lab.title} — laboratoriya təlimatı`} />}
     <details className="physics-detail-more"><summary>Mənbə haqqında</summary><p>{lab.sourceFile ? `Müəllimin ${lab.sourceFile} təlimatı.` : 'LMS laboratoriya siyahısı; ayrıca təlimat verilməyib.'}</p></details>
   </article>;
 };

@@ -207,11 +207,11 @@ Hər bir fənn portalında:
 - Fizika səhifəsi yığcam dərs seçimi ilə açılır; “Qrup” altında materiallar, qeydlər, tapşırıqlar və suallar, “Fənn haqqında” altında isə müəllim və kredit məlumatı yerləşir.
 - Siyahıda yalnız işin nömrəsi və adı görünür. Dərs daxilində müəllim izahı önə çəkilir; tam plan, əlavə təlimat və mənbə qeydləri açılan hissələrdə saxlanır.
 - Fizika portalı LMS-in 8 mühazirə mövzusunu və 7 laboratoriyasını nömrələnmiş seçim siyahısında açır. Mühazirə və laboratoriya arasında bir toxunuşla keçmək olur.
-- İlk 4 mövzuda müəllimin təqdimatlarından hazırlanmış qısa izah, mövzu planı və özünü yoxlama sualları var. Qalan 4 mövzuda təqdimat verilmədiyi açıq göstərilir.
-- 2–7-ci laboratoriyaların verilən Word təlimatları məqsəd, avadanlıq, ölçmə ardıcıllığı və nəticə bölmələri ilə xülasə edilib. 1-ci laboratoriyanın ayrıca təlimatı yoxdur.
+- İlk 4 mövzuda müəllimin təqdimatlarından hazırlanmış geniş dərs mətni, düsturların tətbiq şərtləri, hesab nümunələri, mövzu planı və özünü yoxlama sualları var. Qalan 4 mövzuda LMS planına əsaslanan müstəqil dərs mətni göstərilir və müəllim təqdimatının verilmədiyi açıq yazılır.
+- 2–7-ci laboratoriyaların verilən Word təlimatları məqsəd, avadanlıq, nəzəri əsas, addım-addım ölçmə, hesablamalar və hesabat bölmələri ilə izah edilir. 1-ci laboratoriyanın ayrıca təlimatı yoxdur.
 - Nixrom məftil üzrə əlavə müəllim təlimatı LMS-in hazırkı laboratoriya siyahısından kənarda göstərilir. Elektrostatika təqdimatındakı “Mühazirə 5” başlığı ilə LMS-dəki 3-cü mövzu fərqi qeyd olunur.
 - PPTX və DOCX orijinalları qrup materialları bazasına yüklənmir; PDF çevrilmələri Novcept-in mövcud Cloudflare R2 saxlanmasında `aztu/physics/` altında yerləşir və hazırlanmış bələdçidən açılır.
-- Verilən 4 təqdimat və 7 laboratoriya təlimatının tam məzmunu PDF.js ilə mövzu/laboratoriya içində səhifə-səhifə oxunur və ayrıca pəncərədə də açıla bilir. 1-ci mühazirədə 10, təqdimatı olan digər mövzularda 7–8 geniş konspekt hissəsi var; hissələr bir-bir açılır.
+- PDF-lər mətnin sonunda əlavə mənbə kimi açılır. Verilən 4 təqdimat və 7 laboratoriya təlimatı PDF.js ilə səhifə-səhifə oxunur və ayrıca pəncərədə də açıla bilir. İlk dörd mühazirənin mətnləri 15–18 açılan hissədən ibarətdir; 5–8-ci mövzuların standart fizika bələdçisi müəllimin gələcək təqdimatını əvəz edən rəsmi mənbə kimi göstərilmir.
 
 İş sahəsinin sol menyusunda fənlər birbaşa görünür; qeydlər, suallar, sorğular, materiallar, son tarixlər və simulyatorlar “Qrup və alətlər” bölməsindən açılır.
 

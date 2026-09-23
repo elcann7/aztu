@@ -36,6 +36,8 @@
 .physics-explanations button:focus-visible, .physics-pdf-panel summary:focus-visible, .physics-pdf-content a:focus-visible { outline: 3px solid #93c5fd; outline-offset: 2px; }
 .physics-explanation-body { padding: 0 1rem 1rem; }
 .physics-explanation-body p { line-height: 1.75; }
+.physics-lab-theory { padding: 1rem; }
+.physics-lab-theory p { line-height: 1.75; }
 .physics-explanations code { display: block; width: fit-content; max-width: 100%; overflow-x: auto; margin-top: .7rem; padding: .4rem .6rem; border-radius: 6px; background: #eaf2ff; color: #1e3a8a; font-size: .8rem; }
 .physics-detail .physics-source { border-top: 1px solid #e2e8f0; padding-top: .85rem; color: #64748b; font-size: .73rem; overflow-wrap: anywhere; }
 .physics-pdf-panel { min-width: 0; border: 1px solid #bfdbfe; border-radius: 9px; background: #eff6ff; overflow: hidden; }
