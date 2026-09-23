@@ -76,6 +76,7 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`src/components/app/CourseShellView.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/CourseShellView.css) | Fənn portalı stilləri |
 | `src/components/app/MathLearningView.tsx` & `MathLearning.css` | Nömrələnmiş mühazirə siyahısı, dərs seçimi, dörd daxili bölmə və geri/növbəti keçidləri |
 | `src/components/app/PhysicsLearningView.tsx` & `PhysicsLearning.css` | Yığcam fizika dərs seçimi, müəllim izahları və istəyə görə açılan plan/mənbə qeydləri |
+| `src/components/app/PhysicsPdfViewer.tsx` | R2-dəki PDF-i PDF.js ilə saytın içində səhifə-səhifə göstərən oxuyucu |
 | `src/components/app/MathPractice.tsx` | Mövzu testləri və brauzerdə ən yaxşı nəticə |
 | `src/components/app/MathProofChallenge.tsx` | Yazılı isbat cəhdi, ipucu və nümunə həll |
 | `src/components/app/MathLabs.tsx` | Seçilmiş dərsə uyğun Ven, ε-qonşuluğu və ya sərhəd simulyasiyası |

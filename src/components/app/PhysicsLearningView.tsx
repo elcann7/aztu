@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, BookOpen, FileText, FlaskConical } from 'lucide-react';
 import { PHYSICS_EXTRA_LAB, PHYSICS_LABS, PHYSICS_TOPICS } from '../../data/physicsContent';
 import type { PhysicsLab, PhysicsTopic } from '../../data/physicsContent';
+import { PhysicsPdfViewer } from './PhysicsPdfViewer';
 import './PhysicsLearning.css';
 
 type Mode = 'topics' | 'labs';
@@ -88,10 +89,13 @@ const LabDetail = ({ lab, extra }: { lab: PhysicsLab; extra: boolean }) => {
   </article>;
 };
 
-const PdfDocument = ({ url, title }: { url: string; title: string }) => <details className="physics-pdf-panel">
-  <summary><FileText size={18} aria-hidden="true" /> Müəllimin PDF-ini burada oxu <span aria-hidden="true">⌄</span></summary>
-  <div className="physics-pdf-content">
-    <iframe src={url} title={title} loading="lazy" />
-    <a href={url} target="_blank" rel="noopener noreferrer">PDF-i ayrıca pəncərədə aç <ArrowRight size={15} aria-hidden="true" /></a>
-  </div>
-</details>;
+const PdfDocument = ({ url, title }: { url: string; title: string }) => {
+  const [open, setOpen] = useState(false);
+  return <details className="physics-pdf-panel" onToggle={(event) => setOpen(event.currentTarget.open)}>
+    <summary><FileText size={18} aria-hidden="true" /> Müəllimin PDF-ini burada oxu <span aria-hidden="true">⌄</span></summary>
+    {open && <div className="physics-pdf-content">
+      <PhysicsPdfViewer url={url} title={title} />
+      <a href={url} target="_blank" rel="noopener noreferrer">PDF-i ayrıca pəncərədə aç <ArrowRight size={15} aria-hidden="true" /></a>
+    </div>}
+  </details>;
+};

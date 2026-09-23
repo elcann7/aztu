@@ -211,7 +211,7 @@ Hər bir fənn portalında:
 - 2–7-ci laboratoriyaların verilən Word təlimatları məqsəd, avadanlıq, ölçmə ardıcıllığı və nəticə bölmələri ilə xülasə edilib. 1-ci laboratoriyanın ayrıca təlimatı yoxdur.
 - Nixrom məftil üzrə əlavə müəllim təlimatı LMS-in hazırkı laboratoriya siyahısından kənarda göstərilir. Elektrostatika təqdimatındakı “Mühazirə 5” başlığı ilə LMS-dəki 3-cü mövzu fərqi qeyd olunur.
 - PPTX və DOCX orijinalları qrup materialları bazasına yüklənmir; PDF çevrilmələri Novcept-in mövcud Cloudflare R2 saxlanmasında `aztu/physics/` altında yerləşir və hazırlanmış bələdçidən açılır.
-- Verilən 4 təqdimat və 7 laboratoriya təlimatının tam məzmunu PDF kimi mövzu/laboratoriya içində oxunur və ayrıca pəncərədə də açıla bilir. 1-ci mühazirədə 10, təqdimatı olan digər mövzularda 7–8 geniş konspekt hissəsi var; hissələr bir-bir açılır.
+- Verilən 4 təqdimat və 7 laboratoriya təlimatının tam məzmunu PDF.js ilə mövzu/laboratoriya içində səhifə-səhifə oxunur və ayrıca pəncərədə də açıla bilir. 1-ci mühazirədə 10, təqdimatı olan digər mövzularda 7–8 geniş konspekt hissəsi var; hissələr bir-bir açılır.
 
 İş sahəsinin sol menyusunda fənlər birbaşa görünür; qeydlər, suallar, sorğular, materiallar, son tarixlər və simulyatorlar “Qrup və alətlər” bölməsindən açılır.
 

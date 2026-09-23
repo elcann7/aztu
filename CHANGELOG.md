@@ -11,6 +11,7 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 - Birinci mühazirənin konspekti inersial sistem, Nyuton qanunları, qüvvələr, impuls, fırlanma kəmiyyətləri, qüvvə və ətalət momenti, impuls momenti, iş, enerji və saxlanma qanunu üzrə 10 geniş hissəyə bölündü. Digər 3 müəllim təqdimatı da mövzu planına uyğun genişləndirildi.
 - Hissələr açılıb bağlanan oxu görünüşündədir; PDF-lər mövzu və laboratoriya daxilində oxunur, ayrıca pəncərədə açmaq seçimi də var. Təqdimatdakı impuls momenti düsturunun mətn xətası konspektdə düzgün ifadə ilə göstərilir.
 - PDF səhifə sayları və nümunə səhifələr vizual yoxlandı; `npm run build` və `npm run lint` ilə kod yoxlandı.
+- Daxili brauzerdə PDF iframe-i qara göründüyü üçün açılan panel PDF.js oxuyucusuna keçirildi; səhifə keçidləri və ayrıca açmaq keçidi əlavə olundu.
 
 ---
 

@@ -45,7 +45,14 @@
 .physics-pdf-panel summary span { margin-left: auto; font-size: 1rem; }
 .physics-pdf-panel[open] summary span { transform: rotate(180deg); }
 .physics-pdf-content { display: grid; gap: .65rem; padding: 0 .7rem .7rem; }
-.physics-pdf-content iframe { display: block; width: 100%; height: min(72vh, 800px); min-height: 340px; border: 1px solid #cbd5e1; border-radius: 5px; background: #fff; }
+.physics-pdf-viewer { min-width: 0; }
+.physics-pdf-toolbar { display: flex; align-items: center; justify-content: center; gap: 1rem; padding: .5rem; background: #e2e8f0; border-radius: 5px 5px 0 0; color: #334155; font-size: .8rem; font-weight: 700; }
+.physics-pdf-toolbar button { border: 1px solid #cbd5e1; border-radius: 5px; background: #fff; color: #1d4ed8; padding: .35rem .6rem; font: inherit; font-size: .76rem; cursor: pointer; }
+.physics-pdf-toolbar button:disabled { color: #94a3b8; cursor: default; }
+.physics-pdf-toolbar button:focus-visible { outline: 3px solid #93c5fd; outline-offset: 2px; }
+.physics-pdf-page { display: grid; justify-items: center; min-height: 180px; border: 1px solid #cbd5e1; border-radius: 0 0 5px 5px; background: #e2e8f0; }
+.physics-pdf-page canvas { display: block; max-width: 100%; background: #fff; box-shadow: 0 1px 8px #0f172a22; }
+.physics-pdf-page p { align-self: center; padding: 1rem; color: #475569; text-align: center; }
 .physics-pdf-content a { display: inline-flex; align-items: center; gap: .35rem; width: fit-content; color: #1d4ed8; font-size: .78rem; font-weight: 600; text-decoration: none; }
 .physics-pdf-content a:hover { text-decoration: underline; }
 .physics-extra { border: 1px solid #dbe3ee; border-radius: 10px; background: #f8fafc; padding: 1rem 1.1rem; }
