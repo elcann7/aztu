@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Sidebar.css';
 import { useRouter, Link } from '../../context/RouterContext';
 import { useAuth } from '../../context/AuthContext';
@@ -12,6 +12,7 @@ import {
   Vote,
   FolderOpen,
   Calendar,
+  ChevronDown,
   LogOut,
   X,
 } from 'lucide-react';
@@ -25,6 +26,7 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenProfile }) => {
   const { currentPath, navigate } = useRouter();
   const { user, logout } = useAuth();
+  const [toolsMenuState, setToolsMenuState] = useState<{ path: string; open: boolean } | null>(null);
 
   const handleLogout = () => {
     logout();
@@ -47,6 +49,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenProfile
     { name: 'Materiallar', path: '/app/materials', icon: FolderOpen },
     { name: 'Deadline-lar', path: '/app/deadlines', icon: Calendar },
   ];
+  const toolsActive = ['/app/sandbox', '/app/water', ...navSections.map((section) => section.path)].includes(currentPath);
+  const showTools = toolsMenuState?.path === currentPath ? toolsMenuState.open : toolsActive;
 
   return (
     <>
@@ -90,38 +94,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenProfile
             <span className="nav-label">Əsas</span>
           </Link>
 
-          {/* 1.1 Python Sandbox (ElevenLabs featured tool) */}
-          <Link
-            to="/app/sandbox"
-            className={`nav-entry ${currentPath === '/app/sandbox' ? 'is-active' : ''}`}
-            onClick={onClose}
-          >
-            <Terminal size={15} className="nav-icon" style={{ color: '#0284c7' }} />
-            <span className="nav-label" style={{ fontWeight: 600 }}>Python Sandbox</span>
-            <span style={{
-              fontSize: '0.62rem',
-              fontWeight: 600,
-              padding: '0.1rem 0.4rem',
-              borderRadius: '4px',
-              background: '#ecfdf5',
-              color: '#065f46',
-              border: '1px solid #a7f3d0',
-              marginLeft: 'auto'
-            }}>
-              CPython
-            </span>
-          </Link>
-
-          <Link
-            to="/app/water"
-            className={`nav-entry ${currentPath === '/app/water' ? 'is-active' : ''}`}
-            onClick={onClose}
-          >
-            <Waves size={15} className="nav-icon" style={{ color: '#168f94' }} />
-            <span className="nav-label" style={{ fontWeight: 600 }}>Su Simülasyonu</span>
-            <span className="course-code-tag">FİZİK</span>
-          </Link>
-
           <div className="nav-divider" />
 
           {/* 2. Courses Group */}
@@ -139,7 +111,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenProfile
                   >
                     <span className="course-dot" />
                     <span className="nav-label">{c.name}</span>
-                    <span className="course-code-tag">{c.code}</span>
                   </Link>
                 );
               })}
@@ -148,9 +119,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenProfile
 
           <div className="nav-divider" />
 
-          {/* 3. Group Resources Sections */}
-          <div className="nav-group">
-            <div className="nav-group-items">
+          {/* 3. Secondary tools stay available behind one disclosure. */}
+          <div className={`sidebar-tools ${showTools ? 'is-open' : ''}`}>
+            <button type="button" className="sidebar-tools-toggle" aria-expanded={showTools} onClick={() => setToolsMenuState({ path: currentPath, open: !showTools })}>
+              <span>Qrup və alətlər</span><ChevronDown size={15} aria-hidden="true" />
+            </button>
+            {showTools && <div className="nav-group-items">
+              <Link to="/app/sandbox" className={`nav-entry ${currentPath === '/app/sandbox' ? 'is-active' : ''}`} onClick={onClose}>
+                <Terminal size={15} className="nav-icon" /><span className="nav-label">Python Sandbox</span>
+              </Link>
+              <Link to="/app/water" className={`nav-entry ${currentPath === '/app/water' ? 'is-active' : ''}`} onClick={onClose}>
+                <Waves size={15} className="nav-icon" /><span className="nav-label">Su simulyasiyası</span>
+              </Link>
               {navSections.map((sec) => {
                 const isActive = currentPath === sec.path;
                 const Icon = sec.icon;
@@ -166,7 +146,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenProfile
                   </Link>
                 );
               })}
-            </div>
+            </div>}
           </div>
         </nav>
 

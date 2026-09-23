@@ -66,7 +66,7 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`src/components/app/AppShell.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/AppShell.css) | İş mühitinin flexbox və viewport hündürlük stilləri |
 | `src/components/app/GlobalSearch.tsx` & `.css` | Qeyd, material və sual üzrə ümumi axtarış, filtr və nəticəyə keçid |
 | `src/components/app/DiscussionPanel.tsx` & `.css` | Qeyd və material altında şərh, düzəliş təklifi və qəbul edilmiş versiyalar |
-| [`src/components/app/Sidebar.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/Sidebar.tsx) | Sol naviqasiya paneli: 4 fənn keçidi, 5 iş modulu, çıxış düyməsi və tələbə kartı |
+| [`src/components/app/Sidebar.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/Sidebar.tsx) | Sol naviqasiya paneli: 6 fənn keçidi, açılan “Qrup və alətlər” bölməsi, çıxış düyməsi və tələbə kartı |
 | [`src/components/app/Sidebar.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/Sidebar.css) | Sidebar stilləri və mobil çekməce (drawer) media sorğuları (`<= 768px`) |
 | [`src/components/app/TopBar.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/TopBar.tsx) | Yuxarı panel: Səhifə başlığı, qlobal axtarış sahəsi (`⌘K`), mobil menyu açarı və profil avatarı |
 | [`src/components/app/TopBar.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/TopBar.css) | TopBar stilləri |

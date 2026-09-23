@@ -150,6 +150,13 @@
   gap: 2px;
 }
 
+.sidebar-tools { margin: 0 .25rem; }
+.sidebar-tools-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: .55rem .65rem; border: 0; border-radius: var(--radius-xs); background: transparent; color: var(--text-secondary); font: inherit; font-size: .8rem; font-weight: 600; cursor: pointer; }
+.sidebar-tools-toggle:hover { background: var(--bg-surface-hover); }
+.sidebar-tools-toggle svg { transition: transform .2s ease; }
+.sidebar-tools.is-open .sidebar-tools-toggle svg { transform: rotate(180deg); }
+.sidebar-tools .nav-group-items { padding-top: .3rem; }
+
 .nav-course-entry {
   position: relative;
 }

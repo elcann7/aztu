@@ -10,6 +10,7 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 - Fizika səhifəsində təkrarlanan fənn başlığı və məlumat blokları yığışdırıldı; ilkin görünüşdə yalnız mühazirə və laboratoriya seçimi göstərilir.
 - Qrup materialları, qeydlər, tapşırıqlar və suallar bir “Qrup” bölməsində toplandı. Fənn məlumatları ayrıca qısa görünüşə keçirildi.
 - Mövzu və laboratoriya siyahılarındakı uzun alt mətnlər çıxarıldı. Dərs daxilində müəllim izahı önə çəkildi; tam plan, əlavə təlimat və mənbə qeydləri istəyə görə açılır.
+- Bütün iş sahəsində sol menyunun ikincil resursları “Qrup və alətlər” açılan bölməsinə yığıldı; fənn kodları menyu siyahısından çıxarıldı.
 - `npm run build` və `npm run lint` uğurludur (lintdə əvvəlki əlaqəsiz xəbərdarlıqlar qalır).
 
 ---

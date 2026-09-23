@@ -212,6 +212,8 @@ Hər bir fənn portalında:
 - Nixrom məftil üzrə əlavə müəllim təlimatı LMS-in hazırkı laboratoriya siyahısından kənarda göstərilir. Elektrostatika təqdimatındakı “Mühazirə 5” başlığı ilə LMS-dəki 3-cü mövzu fərqi qeyd olunur.
 - Mənbə fayllarının orijinalları portalda yüklənən qrup materialları deyil; burada onlardan hazırlanmış bələdçi göstərilir.
 
+İş sahəsinin sol menyusunda fənlər birbaşa görünür; qeydlər, suallar, sorğular, materiallar, son tarixlər və simulyatorlar “Qrup və alətlər” bölməsindən açılır.
+
 ## 15. Su Simulyasiyası (Fizika Laboratoriyası)
 - `/app/water` marşrutunda 2D sönümlü dalğa tənliyi ilə real vaxtda su səthi işləyir; dalğalar çəkilən maneələrdən əks olunur və tədricən sönür.
 - Damla, maneə çəkmə və silgi alətləri siçan və toxunma ilə istifadə olunur.
