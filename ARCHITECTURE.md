@@ -53,7 +53,7 @@ Layihədə xarici ağır vəziyyət idarəetmə kitabxanaları (məsələn, Redu
 
 ### 2.1. RouterContext (`src/context/RouterContext.tsx`)
 - **İş prinsipi**: Brauzerin `window.history.pushState` və `popstate` hadisələrinə əsaslanan xüsusi, yüngül marşrutlaşdırıcı.
-- **SPA Rewrites**: Vercel serverində `vercel.json` vasitəsilə bütün sorğular (`/(.*)`) `index.html`-ə yönləndirilir, beləliklə səhifə yeniləndikdə və ya birbaşa URL daxil edildikdə 404 xətası yaranmır.
+- **SPA Rewrites**: Vercel serverində `vercel.json` əvvəl `/api/:path*` funksiyalarını qoruyur, qalan SPA marşrutlarını `index.html`-ə yönləndirir.
 - **Marşrutlar**:
   - `/` — Əsas təqdimat (Landing) səhifəsi
   - `/login` — Giriş səhifəsi
@@ -175,5 +175,8 @@ Platforma daxilindəki Python icra mühiti (`PythonSandboxView.tsx`) tələbəl�
 ---
 
 ## 6. Xülasə
+
+Riyazi analiz portalına `MathLearningView` ilə statik mühazirələr, `MathPractice` ilə testlər, `MathProofChallenge` ilə isbat məşqləri və `MathLabs` ilə üç klient laboratoriyası əlavə olunub. `MathTutorChat` seçilmiş mühazirə ID-sini və son dörd mesajı `/api/lecture-chat` funksiyasına göndərir; son 20 mesaj yalnız tabın `sessionStorage` yaddaşında saxlanır. Funksiya mühazirə məzmununu serverdə ID üzrə seçir, Gemini açarını `GEMINI_API_KEY` server mühitindən oxuyur və sorğu ölçüsü ilə sürətini məhdudlaşdırır. Klientə API açarı ötürülmür.
+
 
 AzTU 6326A2 memarlığı yüksək etibarlılıq, tələbə məlumatlarının tam qorunması, istənilən cihazda (mobil, planşet, noutbuk) qüsursuz işləməsi və sıfır xəta prinsipləri üzərində qurulmuşdur.

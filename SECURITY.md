@@ -4,6 +4,8 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının təhlük
 
 > **2026-09-23 yoxlama qeydi:** İlk Google qeydiyyatında qrup kodunun formdan tələb olunması bərpa edilib. Bununla belə, qrup kodu klient kodunda saxlanır, Google JWT hazırda yalnız klientdə oxunur və repozitoriyadakı Supabase RLS siyasətləri `anon` roluna geniş giriş verir. Buna görə aşağıdakı müştəri səviyyəli qaydalar hələ məxfi qrup məlumatlarının server səviyyəsində qorunduğunu sübut etmir. Canlı layihədə təsdiqlənmiş autentifikasiya və sahiblik əsasında RLS keçidi tələb olunur; 30 nəfər limiti, qrup kodu, kilidli profil sahələri və portal modallar saxlanmalıdır.
 
+> **AI əlavə qeydi:** `GEMINI_API_KEY` yalnız Vercel server funksiyasında oxunur. `/api/lecture-chat` mühazirə ID-sini serverdə yoxlayır, mətn və tarixçə ölçüsünü məhdudlaşdırır, hər instansiya üçün IP əsaslı qısa müddətli limit tətbiq edir. Mövcud klient əsaslı giriş sistemi server səviyyəsində tələbə şəxsiyyətini təsdiqləmədiyi üçün bu limit tam sui-istifadə müdafiəsi sayılmır.
+
 ---
 
 ## 🛡️ Təhlükəsizlik Prinsipləri

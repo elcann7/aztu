@@ -32,6 +32,7 @@ import { CreateMaterialModal } from './modals/CreateMaterialModal';
 import { CreateNoteModal } from './modals/CreateNoteModal';
 import { CreateDeadlineModal } from './modals/CreateDeadlineModal';
 import { CreateQuestionModal } from './modals/CreateQuestionModal';
+import { MathLearningView } from './MathLearningView';
 
 interface CourseShellViewProps {
   courseSlug: string;
@@ -57,7 +58,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
   } = useDatabase();
   const { user } = useAuth();
 
-  const [activeTab, setActiveTab] = useState<'overview' | 'syllabus' | 'materials' | 'notes' | 'assignments' | 'qa'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'syllabus' | 'lessons' | 'labs' | 'materials' | 'notes' | 'assignments' | 'qa'>('overview');
   const [modalType, setModalType] = useState<'material' | 'note' | 'deadline' | 'question' | null>(null);
 
   // QA expanded & answer state
@@ -98,6 +99,10 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
   const tabs = [
     { id: 'overview', label: 'Ümumi', icon: Layers },
     { id: 'syllabus', label: '15 Həftəlik Plan', icon: BookOpen },
+    ...(course.id === 'math' ? [
+      { id: 'lessons', label: 'Mühazirələr və praktika', icon: BookOpen },
+      { id: 'labs', label: 'Riyaziyyat laboratoriyaları', icon: Sparkles },
+    ] : []),
     { id: 'materials', label: `Materiallar (${courseMaterials.length})`, icon: FolderOpen },
     { id: 'notes', label: `Qrup qeydləri (${courseNotes.length})`, icon: MessageSquareQuote },
     { id: 'assignments', label: `Tapşırıqlar (${courseDeadlines.length})`, icon: Clock },
@@ -569,6 +574,9 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
           </div>
         </div>
       )}
+
+      {course.id === 'math' && activeTab === 'lessons' && <MathLearningView mode="lessons" />}
+      {course.id === 'math' && activeTab === 'labs' && <MathLearningView mode="labs" />}
 
       {/* ========================================================
           TAB 2: MATERİALLAR

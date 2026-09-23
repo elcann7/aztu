@@ -4,6 +4,17 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.10.0] — 2026-09-23
+
+### Riyazi analiz mühazirələri və interaktiv öyrənmə
+- Tələbənin bildirdiyi keçilmiş mövzular əsasında çoxluqlar və məntiq, həqiqi ədədlər, sup/inf haqqında üç universitet səviyyəli mühazirə xülasəsi əlavə edildi. Bunlar müəllimin rəsmi konspekti kimi təqdim edilmir.
+- Hər mühazirədə qaydalar, işlənmiş nümunə, altı cavabı izahlı sual və yazılı isbat məşqi var; ən yaxşı test nəticəsi həmin tələbənin brauzerində saxlanır.
+- Çoxluq əməliyyatları, dəqiq sərhədlər və ε-qonşuluğu üçün üç interaktiv riyaziyyat laboratoriyası əlavə edildi.
+- Hər mühazirənin altında mövzu ilə məhdud AI söhbəti yaradıldı. `gemini-3.1-flash-lite` Vercel funksiyası vasitəsilə çağırılır; API açarı yalnız server mühitində saxlanır.
+- Riyazi analiz üçün cari həftə planı istifadəçinin bildirdiyi mövzulara uyğunlaşdırıldı. `npm run build` həm frontend, həm API TypeScript yoxlamasını əhatə edir.
+
+---
+
 ## [1.9.1] — 2026-09-23
 
 ### Qrup yoldaşları üçün paylaşım və müzakirə

@@ -9,6 +9,7 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının **Vercel
 - **Canlı İstehsalat URL-i**: [https://aztu-ebon.vercel.app](https://aztu-ebon.vercel.app)
 - **GitHub Repozitoriyası**: [https://github.com/elcann7/aztu](https://github.com/elcann7/aztu)
 - **Əsas İstehsalat Qolu**: `main`
+- **AI server açarı**: `GEMINI_API_KEY` yalnız Vercel Production mühitində Secret kimi saxlanır; `VITE_` prefiksi ilə istifadə edilməməlidir.
 
 ---
 
@@ -16,11 +17,12 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının **Vercel
 
 Vite ilə yaradılan Single Page Application (SPA) arxitekturasında istifadəçi birbaşa daxili səhifəyə daxil olduqda (məsələn: `https://aztu-ebon.vercel.app/app/notes`) və ya səhifəni yenilədikdə (F5), veb-server həmin faylı tapmadığı üçün `404 Not Found` xətası qaytara bilər.
 
-Bunun qarşısını almaq üçün kök qovluqda [`vercel.json`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/vercel.json) faylı tətbiq olunmuşdur:
+Bunun qarşısını almaq və AI API funksiyasını SPA yönləndirməsindən ayırmaq üçün kök qovluqda [`vercel.json`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/vercel.json) faylı tətbiq olunmuşdur:
 
 ```json
 {
   "rewrites": [
+    { "source": "/api/:path*", "destination": "/api/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
@@ -37,6 +39,9 @@ Platformanın işləməsi üçün aşağıdakı dəyişən tələb olunur:
 | Dəyişən Adı | Məqsədi | Nümunə Dəyər |
 | :--- | :--- | :--- |
 | `VITE_GOOGLE_CLIENT_ID` | Google Identity Services OAuth 2.0 Client ID | `1094028904596-...apps.googleusercontent.com` |
+| `GEMINI_API_KEY` | Riyaziyyat mühazirələrinin AI söhbəti üçün server açarı | Vercel Secret; klient bundle-a daxil edilmir |
+
+Lokal AI yoxlaması üçün `vercel dev --listen 3000` serverini açarla başladın və ayrıca Vite serverini `AZTU_API_PROXY=http://localhost:3000` dəyişəni ilə başladın. Vite `/api` sorğularını Vercel funksiyasına ötürür; açar heç vaxt `VITE_` prefiksli dəyişəndə saxlanmır.
 
 ### Vercel Panelində Əlavə Edilməsi:
 1. [Vercel Dashboard](https://vercel.com)-a daxil olun.

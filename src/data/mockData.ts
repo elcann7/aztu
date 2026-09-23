@@ -371,8 +371,8 @@ export const WEEKLY_SCHEDULE: ScheduleItem[] = [
 export const COURSE_SYLLABUS: Record<string, SyllabusWeek[]> = {
   math: [
     { week: 1, dates: '15-19 Sen', title: 'Həqiqi ədədlər çoxluğu. Dəqiq aşağı və yuxarı sərhədlər (inf, sup)', type: 'lecture', status: 'completed' },
-    { week: 2, dates: '22-26 Sen', title: 'Ədədi ardıcıllıqlar və onların limiti. Yığılma əlamətləri', type: 'lecture', status: 'in_progress', description: 'Hazırda keçirilir (Aud. 1-506)' },
-    { week: 3, dates: '29 Sen - 03 Okt', title: 'Monoton ardıcıllıqlar. Veyerştras teoremi. e ədədi', type: 'lecture', status: 'upcoming' },
+    { week: 2, dates: '22-26 Sen', title: 'Çoxluqlar və həqiqi ədədlər: sərhədlər, supremum və infimum', type: 'lecture', status: 'in_progress', description: 'Bu günə qədər bildirilən mövzular; növbəti mövzular müəllimdən dəqiqləşdiriləcək' },
+    { week: 3, dates: '29 Sen - 03 Okt', title: 'Ədədi ardıcıllıqlar və onların limiti. Monotonluq', type: 'lecture', status: 'upcoming' },
     { week: 4, dates: '06-10 Okt', title: 'Funksiyanın limiti (Koşi və Heyne tərifləri). Görkəmli limitlər', type: 'lecture', status: 'upcoming' },
     { week: 5, dates: '13-17 Okt', title: 'Funksiyanın kəsilməzliyi və kəsilmə nöqtələrinin növləri', type: 'lecture', status: 'upcoming' },
     { week: 6, dates: '20-24 Okt', title: '1-Cİ KOLLOQVİUM (İlk 5 mövzu) & Funksiyanın törəməsi', type: 'colloquium', status: 'upcoming', description: '20 bal dəyərində' },

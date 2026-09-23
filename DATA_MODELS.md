@@ -23,6 +23,10 @@ Bütün verilənlər brauzerin yerli yaddaşında xüsusi prefikslərlə təhlü
 | `aztu_6326a2_bookmarks_<userId>` | `string[]` | Hər tələbənin bu brauzerdə saxladığı qeyd, material və sual ID-ləri |
 | `aztu_search_focus` | `{kind,id}` | Axtarış nəticəsindən paylaşım kartına bir dəfəlik keçid |
 | `aztu_sandbox_shared_code` | `string` | Sual-cavabdakı Python kodunu Sandbox-a bir dəfəlik ötürmə |
+| `aztu_math_best_v1_<userId>_<lessonId>` | `number` | Hər mühazirə testinin bu brauzerdəki ən yaxşı nəticəsi (0–6) |
+| `aztu_math_chat_v1_<userId>_<lessonId>` | `ChatMessage[]` | AI söhbətinin son 20 mesajı, yalnız `sessionStorage` |
+
+Riyaziyyat mühazirələri `MathLesson`, `MathRule` və `MathQuestion` tipləri ilə `src/data/mathLessons.ts` faylında statik saxlanır. AI söhbət tarixçəsi bu tabın `sessionStorage` yaddaşında qalır və verilənlər bazasına yazılmır.
 
 ---
 

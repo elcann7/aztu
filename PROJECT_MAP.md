@@ -22,7 +22,8 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`CHANGELOG.md`](./CHANGELOG.md) | Markdown | Layihənin bütün inkişaf addımları və versiya tarixçəsi |
 | [`PROJECT_MAP.md`](./PROJECT_MAP.md) | Markdown | **Bu sənəd** — Kod bazasının tam xəritəsi |
 | [`supabase/schema.sql`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/supabase/schema.sql) | SQL | **Supabase PostgreSQL Sxemi**: Cədvəllər, 30 nəfərlik limit tətikçisi, RLS qaydaları və Realtime yayımı |
-| [`vercel.json`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/vercel.json) | JSON | Vercel SPA 404 rewrite qaydası (`/(.*) -> /index.html`) |
+| [`vercel.json`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/vercel.json) | JSON | Vercel `/api` funksiyalarını saxlayan və qalan SPA marşrutlarını `index.html`-ə yönləndirən qaydalar |
+| `tsconfig.api.json` | JSON | Vercel API funksiyasının ayrıca TypeScript yoxlaması |
 | [`.env`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/.env) | Env | `VITE_GOOGLE_CLIENT_ID` Google OAuth Client ID |
 | [`index.html`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/index.html) | HTML | Əsas HTML sənədi, Google Identity Services script teqi |
 | [`package.json`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/package.json) | JSON | Asılılıqlar və build skriptləri (`npm run dev`, `npm run build`) |
@@ -73,6 +74,11 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`src/components/app/DashboardView.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/DashboardView.css) | Dashboard stilləri |
 | [`src/components/app/CourseShellView.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/CourseShellView.tsx) | Fənn portalı: Fənn detalları, müəllim, həftəlik mühazirə modulları və laboratoriyalar |
 | [`src/components/app/CourseShellView.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/CourseShellView.css) | Fənn portalı stilləri |
+| `src/components/app/MathLearningView.tsx` & `MathLearning.css` | Riyazi analiz mühazirələri və öyrənmə görünüşü |
+| `src/components/app/MathPractice.tsx` | Mövzu testləri və brauzerdə ən yaxşı nəticə |
+| `src/components/app/MathProofChallenge.tsx` | Yazılı isbat cəhdi, ipucu və nümunə həll |
+| `src/components/app/MathLabs.tsx` | Ven, sərhəd və ε-qonşuluğu simulyasiyaları |
+| `src/components/app/MathTutorChat.tsx` | Hər mühazirənin altındakı AI söhbəti |
 
 ---
 
@@ -119,4 +125,6 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`src/services/pythonRunner.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/pythonRunner.ts) | Python kodlarının brauzerdə təhlili və icra simulyatoru |
 | [`src/services/waterSimulation.ts`](./src/services/waterSimulation.ts) | 2D sönümlü dalğa sahəsi, əks etdirən maneələr, damla impulsları və Canvas səth işıqlandırması |
 | [`src/data/mockData.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/data/mockData.ts) | **Rəsmi Dərs Cədvəli və Təqvim**: Rəsmi AzTU 6326A2 həftəlik cədvəli (`WEEKLY_SCHEDULE`), semestr təqvimi və geri sayım (`SEMESTER_CONFIG`), 15 həftəlik fənn sillabusları (`COURSE_SYLLABUS`) və real müəllim məlumatları |
+| `src/data/mathLessons.ts` | Hazırda keçilən riyazi analiz mövzularının qaydaları, testləri və AI konteksti |
+| `api/lecture-chat.ts` | Gemini 3.1 Flash-Lite üçün server funksiyası; mövzu seçimi və sorğu limitləri |
 | [`src/styles/global.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/styles/global.css) | Qlobal CSS dəyişənləri (rənglər, şriftlər, spacing, radiuslar, animasiyalar) |

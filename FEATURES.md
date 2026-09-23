@@ -19,6 +19,7 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasındakı bütü
 | [9. Akademik Materiallar](#9-akademik-materiallar-file-browser) | Dərsliklər, laboratoriya faylları və slaydlar | `/app/materials` |
 | [10. Deadline İzləyicisi](#10-deadline-izləyicisi-tapşırıqlar) | İmtahan və laboratoriya tarixləri | `/app/deadlines` |
 | [11. Python Sandbox](#11-python-sandbox-laboratoriya-mühiti) | Brauzerdaxili Python redaktoru və icraçı | `/app/sandbox` |
+| Riyazi analiz mühazirələri | Qaydalar, test, isbat, AI və üç interaktiv laboratoriya | `/app/courses/math-analysis` |
 
 ---
 
@@ -192,7 +193,7 @@ Hər bir fənn portalında:
 
 ---
 
-## 15. Paylaşım Altı Müzakirə və Birgə Qeydlər
+## 14. Paylaşım Altı Müzakirə və Birgə Qeydlər
 - Qeyd və materialların altında həmin paylaşıma aid şərhlər yazılır; müzakirə adi sual siyahısını qarışdırmır.
 - Tələbə qeydə düzəliş təklif edə bilər. Qeydi paylaşan şəxs təklifi qəbul etdikdə yeni mətn göstərilir, ilkin mətn və qəbul edilmiş düzəlişlər qalır.
 - Qeyd, material və suallar `Yadda saxla` ilə cari tələbənin brauzerində ayrıca saxlanır və ümumi axtarışdan tapılır.
@@ -201,9 +202,17 @@ Hər bir fənn portalında:
 
 ---
 
-## 14. Su Simulyasiyası (Fizika Laboratoriyası)
+## 15. Su Simulyasiyası (Fizika Laboratoriyası)
 - `/app/water` marşrutunda 2D sönümlü dalğa tənliyi ilə real vaxtda su səthi işləyir; dalğalar çəkilən maneələrdən əks olunur və tədricən sönür.
 - Damla, maneə çəkmə və silgi alətləri siçan və toxunma ilə istifadə olunur.
 - Durgun, yağışlı və fırtınalı hazır rejimlər; dalğa sürəti, sönümləmə, fırça ölçüsü və yağış sıxlığı üçün sürgülər.
 - Pauza/davam, səhnəni sıfırlama, FPS göstəricisi və PNG ixracı mövcuddur.
 - Hesab məlumatı və verilənlər bazası ilə əlaqəsi yoxdur; laboratoriya vəziyyəti yalnız aktiv səhifənin yaddaşında saxlanılır.
+
+---
+
+## 16. Riyazi Analiz Mühazirələri, Praktika və AI
+- `Riyazi analiz-1` portalında üç ilkin mövzu: çoxluqlar və kvantorlar, həqiqi ədədlər və intervallar, supremum/infimum və tamlıq. Yalnız tələbənin keçildiyini bildirdiyi mövzular üçün köməkçi xülasədir.
+- Hər mövzuda təriflər, formulalar, işlənmiş nümunə, altı izahlı test sualı və yazılı isbat məşqi var. Test nəticəsi istifadəçinin brauzerində saxlanır.
+- İnteraktiv laboratoriyalar: sonlu çoxluqlarla Ven diaqramı, açıq/qapalı/ardıcıllıq çoxluğunun sərhədləri, həqiqi ədəd oxunda ε-qonşuluğu.
+- Hər mühazirənin altında həmin mövzuya bağlanan AI söhbəti var. Cavablar Vercel `/api/lecture-chat` funksiyası ilə `gemini-3.1-flash-lite` modelindən alınır. Son mesajlar bu tabın yaddaşında saxlanır və tələbə söhbəti təmizləyə bilir. AI cavabları köməkçi izahdır və müəllim qeydi deyil.
