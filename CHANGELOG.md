@@ -4,6 +4,18 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.11.0] — 2026-09-23
+
+### Fizika mövzuları və müəllim materialları
+- Fizika portalı LMS-in cari 8 mühazirə mövzusu və 7 laboratoriya işi ilə açılır; hər bir mövzu ayrıca seçilir.
+- Verilən 4 müəllim təqdimatından mövzuya uyğun qısa izahlar, əsas anlayışlar və özünü yoxlama sualları hazırlandı. Təqdimatı verilməyən mövzularda yalnız LMS planı göstərilir.
+- Verilən 6 uyğun laboratoriya təlimatından məqsəd, avadanlıq, iş ardıcıllığı və hesabat göstəriciləri çıxarıldı. Birinci laboratoriyanın ayrıca təlimatının olmadığı açıq göstərilir; verilən əlavə nixrom təlimatı LMS siyahısından kənarda ayrıca göstərilir.
+- Elektrostatika təqdimatının nömrəsi ilə LMS mövzu nömrəsi arasındakı fərq izah edilir. Fizika üçün uydurma 15 həftəlik plan, köhnə laboratoriya tapşırığı, tarix və müəllim qeydi çıxarıldı.
+- LMS məlumatına uyğun fizika kredit sayı 3 və fənn qrupu identifikatoru `İF-20403y` kimi yeniləndi.
+- `npm run build` və `npm run lint` ilə yoxlandı.
+
+---
+
 ## [1.10.1] — 2026-09-23
 
 ### Riyazi analiz dərslərinin rahat seçimi

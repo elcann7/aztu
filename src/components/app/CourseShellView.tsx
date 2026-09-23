@@ -33,6 +33,7 @@ import { CreateNoteModal } from './modals/CreateNoteModal';
 import { CreateDeadlineModal } from './modals/CreateDeadlineModal';
 import { CreateQuestionModal } from './modals/CreateQuestionModal';
 import { MathLearningView } from './MathLearningView';
+import { PhysicsLearningView } from './PhysicsLearningView';
 
 interface CourseShellViewProps {
   courseSlug: string;
@@ -58,7 +59,9 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
   } = useDatabase();
   const { user } = useAuth();
 
-  const [activeTab, setActiveTab] = useState<'overview' | 'syllabus' | 'lessons' | 'materials' | 'notes' | 'assignments' | 'qa'>(courseSlug === 'math-analysis' ? 'lessons' : 'overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'syllabus' | 'lessons' | 'physics-content' | 'materials' | 'notes' | 'assignments' | 'qa'>(
+    courseSlug === 'math-analysis' ? 'lessons' : courseSlug === 'physics' ? 'physics-content' : 'overview',
+  );
   const [modalType, setModalType] = useState<'material' | 'note' | 'deadline' | 'question' | null>(null);
 
   // QA expanded & answer state
@@ -98,8 +101,9 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
 
   const tabs = [
     ...(course.id === 'math' ? [{ id: 'lessons', label: 'Dərslər', icon: BookOpen }] : []),
-    { id: 'overview', label: course.id === 'math' ? 'Fənn haqqında' : 'Ümumi', icon: Layers },
-    ...(course.id === 'math' ? [] : [{ id: 'syllabus', label: '15 Həftəlik Plan', icon: BookOpen }]),
+    ...(course.id === 'phys' ? [{ id: 'physics-content', label: 'Mövzular və lablar', icon: BookOpen }] : []),
+    { id: 'overview', label: course.id === 'math' || course.id === 'phys' ? 'Fənn haqqında' : 'Ümumi', icon: Layers },
+    ...(course.id === 'math' || course.id === 'phys' ? [] : [{ id: 'syllabus', label: '15 Həftəlik Plan', icon: BookOpen }]),
     { id: 'materials', label: `Materiallar (${courseMaterials.length})`, icon: FolderOpen },
     { id: 'notes', label: `Qrup qeydləri (${courseNotes.length})`, icon: MessageSquareQuote },
     { id: 'assignments', label: `Tapşırıqlar (${courseDeadlines.length})`, icon: Clock },
@@ -290,7 +294,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
           </div>
 
           {/* Yalnız proqramı məlum olan fənlərdə həftəlik planı göstər. */}
-          {course.id !== 'math' && <div className="view-table-card">
+          {course.id !== 'math' && course.id !== 'phys' && <div className="view-table-card">
             <div style={{ 
               display: 'flex', 
               alignItems: 'center', 
@@ -573,6 +577,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
       )}
 
       {course.id === 'math' && activeTab === 'lessons' && <MathLearningView />}
+      {course.id === 'phys' && activeTab === 'physics-content' && <PhysicsLearningView />}
 
       {/* ========================================================
           TAB 2: MATERİALLAR

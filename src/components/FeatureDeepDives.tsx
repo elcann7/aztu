@@ -103,7 +103,7 @@ export const FeatureDeepDives: React.FC = () => {
                     <Clock size={13} className="header-icon-clock" />
                     <span className="mockup-section-title">Yaxınlaşan tapşırıqlar</span>
                   </div>
-                  <span className="badge badge-neutral">3 aktiv iş</span>
+                  <span className="badge badge-neutral">{ASSIGNMENTS.length} aktiv iş</span>
                 </div>
 
                 {/* Real deadline UI rows */}
@@ -347,4 +347,3 @@ export const FeatureDeepDives: React.FC = () => {
     </div>
   );
 };
-

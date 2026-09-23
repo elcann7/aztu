@@ -33,7 +33,7 @@ export const WorkspacePreview: React.FC = () => {
 
   const activeCourse = COURSES.find((c) => c.id === activeCourseId) || COURSES[0];
   const lecture = FEATURED_LECTURES[activeCourseId] || FEATURED_LECTURES['math'];
-  const courseAssignment = ASSIGNMENTS.find((a) => a.course === activeCourse.name) || ASSIGNMENTS[0];
+  const courseAssignment = ASSIGNMENTS.find((a) => a.course === activeCourse.name);
   const courseRemark = GROUP_REMARKS.find((r) => r.courseId === activeCourseId) || GROUP_REMARKS[0];
 
   return (
@@ -251,21 +251,27 @@ export const WorkspacePreview: React.FC = () => {
                           <Paperclip size={13} />
                         </div>
                         <div className="pdf-chip-content">
-                          <span className="pdf-chip-label">Əlavə olunmuş material:</span>
+                          <span className="pdf-chip-label">{activeCourseId === 'phys' ? 'Müəllim təqdimatının xülasəsi:' : 'Əlavə olunmuş material:'}</span>
                           <span className="pdf-chip-name">{lecture.materials[0]?.name || 'Mühazirə 03 — Çoxluqlar.pdf'}</span>
                         </div>
                         <span className="pdf-chip-size">{lecture.materials[0]?.sizeOrSource || '2.4 MB'}</span>
-                        <button type="button" className="pdf-chip-action" title="Materialı yüklə">
-                          <Download size={13} />
-                          <span>Yüklə</span>
-                        </button>
+                        {activeCourseId === 'phys' ? (
+                          <a href="/app/courses/physics" className="pdf-chip-action" title="Fizika mövzularına bax">
+                            <span>Bax</span>
+                          </a>
+                        ) : (
+                          <button type="button" className="pdf-chip-action" title="Materialı yüklə">
+                            <Download size={13} />
+                            <span>Yüklə</span>
+                          </button>
+                        )}
                       </div>
                     </div>
                   </article>
                 )}
 
                 {/* 2. TAPŞIRIQ ITEM */}
-                {(activeNavFilter === 'all' || activeNavFilter === 'deadlines') && (
+                {(activeNavFilter === 'all' || activeNavFilter === 'deadlines') && courseAssignment && (
                   <article className={`feed-item task-feed-card interactive-card ${isTaskCompleted ? 'is-completed' : ''}`}>
                     <div className="feed-item-header">
                       <div className="item-badge-pill badge-task">
@@ -301,6 +307,9 @@ export const WorkspacePreview: React.FC = () => {
                       </div>
                     </div>
                   </article>
+                )}
+                {activeNavFilter === 'deadlines' && activeCourseId === 'phys' && !courseAssignment && (
+                  <div className="feed-item">Fizika üzrə təsdiqlənmiş təhvil tarixi hələ paylaşılmayıb.</div>
                 )}
 
                 {/* 3. QRUP QEYDİ ITEM */}

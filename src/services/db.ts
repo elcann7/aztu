@@ -126,12 +126,12 @@ export const REAL_COURSES: Course[] = [
   },
   {
     id: 'phys',
-    code: 'PHYS-101',
+    code: 'İF-20403y',
     name: 'Fizika',
     slug: 'physics',
     lecturer: 'Dos. Sürəyya Məmmədova',
     department: 'Mühəndislik fizikası və elektronika kafedrası',
-    credits: 5,
+    credits: 3,
   },
   {
     id: 'prog',

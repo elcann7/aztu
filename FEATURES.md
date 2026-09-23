@@ -87,7 +87,7 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasındakı bütü
 Platforma 6 rəsmi universitet fənni üçün tam ixtisaslaşmış iş sahələrinə malikdir:
 1. **Riyazi analiz-1 (`MATH-101`)** — 6 kredit (Dos. Nizami Şıxəliyev / Müəl. Şamil Talıblı)
 2. **Xətti cəbr (`MATH-102`)** — 5 kredit (Dos. Rəna Əmirova)
-3. **Fizika (`PHYS-101`)** — 5 kredit (Dos. Sürəyya Məmmədova)
+3. **Fizika (`İF-20403y`)** — LMS-də 3 kredit, 30 saat (mühazirə müəllimi Sürəyya Məmmədova)
 4. **Proqramlaşdırmanın əsasları-1 (`CS-101`)** — 6 kredit (Dos. Fizuli Əzimov / Müəl. Şəbnəm İsgəndərli / Müəl. Ayxan Həsənov)
 5. **Xarici dildə işgüzar və akademik kommunikasiya -1 (`ENG-101`)** — 4 kredit (Müəl. Dilarə Həmidova)
 6. **Azərbaycan dilində işgüzar və akademik kommunikasiya (`AZE-101`)** — 4 kredit (Müəl. Nərmin İsayeva)
@@ -201,6 +201,14 @@ Hər bir fənn portalında:
 - Bulud mövcud olduqda müzakirə əməliyyatı server cavabını gözləyir və xəta olduqda istifadəçiyə bildirir. Mövcud auth/RLS arxitekturasının məxfilik məhdudiyyəti ayrıca həll edilməlidir.
 
 ---
+
+## Fizika üzrə mövzu və laboratoriya bələdçisi
+
+- Fizika portalı LMS-in 8 mühazirə mövzusunu və 7 laboratoriyasını nömrələnmiş seçim siyahısında açır. Mühazirə və laboratoriya arasında bir toxunuşla keçmək olur.
+- İlk 4 mövzuda müəllimin təqdimatlarından hazırlanmış qısa izah, mövzu planı və özünü yoxlama sualları var. Qalan 4 mövzuda təqdimat verilmədiyi açıq göstərilir.
+- 2–7-ci laboratoriyaların verilən Word təlimatları məqsəd, avadanlıq, ölçmə ardıcıllığı və nəticə bölmələri ilə xülasə edilib. 1-ci laboratoriyanın ayrıca təlimatı yoxdur.
+- Nixrom məftil üzrə əlavə müəllim təlimatı LMS-in hazırkı laboratoriya siyahısından kənarda göstərilir. Elektrostatika təqdimatındakı “Mühazirə 5” başlığı ilə LMS-dəki 3-cü mövzu fərqi qeyd olunur.
+- Mənbə fayllarının orijinalları portalda yüklənən qrup materialları deyil; burada onlardan hazırlanmış bələdçi göstərilir.
 
 ## 15. Su Simulyasiyası (Fizika Laboratoriyası)
 - `/app/water` marşrutunda 2D sönümlü dalğa tənliyi ilə real vaxtda su səthi işləyir; dalğalar çəkilən maneələrdən əks olunur və tədricən sönür.

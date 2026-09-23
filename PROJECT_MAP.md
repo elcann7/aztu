@@ -72,9 +72,10 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`src/components/app/TopBar.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/TopBar.css) | TopBar stilləri |
 | [`src/components/app/DashboardView.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/DashboardView.tsx) | Əsas iş lövhəsi: Tələbəyə salamlama, 4 əsas statistika kartı, günün cədvəli və elanlar |
 | [`src/components/app/DashboardView.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/DashboardView.css) | Dashboard stilləri |
-| [`src/components/app/CourseShellView.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/CourseShellView.tsx) | Fənn portalı: Riyazi analiz üçün ilkin dərs siyahısı, digər fənlər üçün ümumi görünüş, materiallar və qrup bölmələri |
+| [`src/components/app/CourseShellView.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/CourseShellView.tsx) | Fənn portalı: Riyazi analiz və fizika üçün ilkin mövzu siyahısı, digər fənlər üçün ümumi görünüş, materiallar və qrup bölmələri |
 | [`src/components/app/CourseShellView.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/CourseShellView.css) | Fənn portalı stilləri |
 | `src/components/app/MathLearningView.tsx` & `MathLearning.css` | Nömrələnmiş mühazirə siyahısı, dərs seçimi, dörd daxili bölmə və geri/növbəti keçidləri |
+| `src/components/app/PhysicsLearningView.tsx` & `PhysicsLearning.css` | LMS-ə uyğun fizika mövzuları, laboratoriya seçimi, müəllim materiallarının xülasəsi və mənbə qeydləri |
 | `src/components/app/MathPractice.tsx` | Mövzu testləri və brauzerdə ən yaxşı nəticə |
 | `src/components/app/MathProofChallenge.tsx` | Yazılı isbat cəhdi, ipucu və nümunə həll |
 | `src/components/app/MathLabs.tsx` | Seçilmiş dərsə uyğun Ven, ε-qonşuluğu və ya sərhəd simulyasiyası |
@@ -126,5 +127,6 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`src/services/waterSimulation.ts`](./src/services/waterSimulation.ts) | 2D sönümlü dalğa sahəsi, əks etdirən maneələr, damla impulsları və Canvas səth işıqlandırması |
 | [`src/data/mockData.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/data/mockData.ts) | **Rəsmi Dərs Cədvəli və Təqvim**: Rəsmi AzTU 6326A2 həftəlik cədvəli (`WEEKLY_SCHEDULE`), semestr təqvimi və geri sayım (`SEMESTER_CONFIG`), 15 həftəlik fənn sillabusları (`COURSE_SYLLABUS`) və real müəllim məlumatları |
 | `src/data/mathLessons.ts` | Hazırda keçilən riyazi analiz mövzularının qaydaları, testləri və AI konteksti |
+| `src/data/physicsContent.ts` | LMS-in 8 fizika mövzusu, 7 laboratoriyası və ayrıca nixrom təlimatı üçün mənbə əsaslı statik məzmun |
 | `api/lecture-chat.ts` | Gemini 3.1 Flash-Lite üçün server funksiyası; mövzu seçimi və sorğu limitləri |
 | [`src/styles/global.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/styles/global.css) | Qlobal CSS dəyişənləri (rənglər, şriftlər, spacing, radiuslar, animasiyalar) |

@@ -11,7 +11,7 @@ export interface Course {
 export interface SharedMaterial {
   id: string;
   name: string;
-  type: 'pdf' | 'link' | 'code';
+  type: 'pdf' | 'pptx' | 'docx' | 'link' | 'code';
   sizeOrSource: string;
   authorOrContext: string;
   date: string;
@@ -142,12 +142,12 @@ export const COURSES: Course[] = [
   },
   {
     id: 'phys',
-    code: 'PHYS-101',
+    code: 'İF-20403y',
     name: 'Fizika',
     slug: 'physics',
     lecturer: 'Dos. Sürəyya Məmmədova',
     department: 'Mühəndislik fizikası və elektronika kafedrası',
-    credits: 5,
+    credits: 3,
   },
   {
     id: 'prog',
@@ -403,23 +403,6 @@ export const COURSE_SYLLABUS: Record<string, SyllabusWeek[]> = {
     { week: 14, dates: '15-19 Dek', title: '3-CÜ KOLLOQVİUM & Kvadratik formalar və kanonik şəklə gətirilməsi', type: 'colloquium', status: 'upcoming' },
     { week: 15, dates: '22-26 Dek', title: 'Silvestr meyarı və Semestr Yekun İmtahana Hazırlıq', type: 'lecture', status: 'upcoming' },
   ],
-  phys: [
-    { week: 1, dates: '15-19 Sen', title: 'Maddi nöqtə kinematikası, sürət və təcil. (Lab: Ölçmə xətaları)', type: 'lecture', status: 'completed' },
-    { week: 2, dates: '22-26 Sen', title: 'Nyuton qanunları və dinamika. (Lab: Sərbəstdüşmə təcilinin təyini)', type: 'lecture', status: 'in_progress', description: 'Lab 5-205 / Mühazirə 5-312' },
-    { week: 3, dates: '29 Sen - 03 Okt', title: 'İmpuls və impulsun saxlanması qanunu. Reaktiv hərəkət', type: 'lecture', status: 'upcoming' },
-    { week: 4, dates: '06-10 Okt', title: 'İş, güc, kinetik və potensial enerji. Enerjinin saxlanması', type: 'lecture', status: 'upcoming' },
-    { week: 5, dates: '13-17 Okt', title: 'Bərk cismin fırlanma hərəkəti, inersiya momenti, Şteyner teoremi', type: 'lecture', status: 'upcoming' },
-    { week: 6, dates: '20-24 Okt', title: '1-Cİ KOLLOQVİUM & Qravitasiya sahəsi, Kepler qanunları', type: 'colloquium', status: 'upcoming' },
-    { week: 7, dates: '27-31 Okt', title: 'Mexaniki rəqslər, harmonik və sönən rəqslər', type: 'lecture', status: 'upcoming' },
-    { week: 8, dates: '03-07 Noy', title: 'Mexaniki dalğalar, dalğa tənliyi və səs dalğaları', type: 'lecture', status: 'upcoming' },
-    { week: 9, dates: '10-14 Noy', title: 'Molekulyar fizika, ideal qazın əsas kinetik tənliyi', type: 'lecture', status: 'upcoming' },
-    { week: 10, dates: '17-21 Noy', title: 'Termodinamikanın I və II qanunları, Karno dövrü və entropiya', type: 'lecture', status: 'upcoming' },
-    { week: 11, dates: '24-28 Noy', title: '2-Cİ KOLLOQVİUM & Elektrostatika, Kulon qanunu, sahə intensivliyi', type: 'colloquium', status: 'upcoming' },
-    { week: 12, dates: '01-05 Dek', title: 'Qauss teoremi, elektrik potensialı və kondensatorlar', type: 'lecture', status: 'upcoming' },
-    { week: 13, dates: '08-12 Dek', title: 'Sabit cərəyan qanunları: Om və Kirxhof qaydaları', type: 'lecture', status: 'upcoming' },
-    { week: 14, dates: '15-19 Dek', title: '3-CÜ KOLLOQVİUM & Maqnit sahəsi, Bio-Savar-Laplas və Amper qanunu', type: 'colloquium', status: 'upcoming' },
-    { week: 15, dates: '22-26 Dek', title: 'Elektromaqnit induksiyası, Faradey qanunu və Laboratoriya yekunu', type: 'lecture', status: 'upcoming' },
-  ],
   prog: [
     { week: 1, dates: '15-19 Sen', title: 'Python proqramlaşdırma dilinə giriş. İcra mühiti, sintaksis və standart I/O (print, input)', type: 'lecture', status: 'completed' },
     { week: 2, dates: '22-26 Sen', title: 'Dəyişənlər, əsas məlumat tipləri (int, float, str, bool), tip çevrilmələri və riyazi operatorlar', type: 'lecture', status: 'in_progress', description: 'Seminar: Müəl. Ayxan Həsənov / Lab: Müəl. Şəbnəm İsgəndərli' },
@@ -524,22 +507,22 @@ export const FEATURED_LECTURES: Record<string, Lecture> = {
     id: 'phys-lec-01',
     courseId: 'phys',
     courseName: 'Fizika',
-    number: 'Mühazirə 02 / Lab 02',
-    title: 'Nyuton qanunları və dinamikanın əsasları',
-    date: '22 Sentyabr',
-    room: 'Aud. 5-312 / Lab. 5-205',
+    number: 'Mövzu 1',
+    title: 'İrəliləmə və fırlanma hərəkətinin dinamikası',
+    date: '2026 Payız',
+    room: 'LMS fizika fənn qrupu',
     teacherRemark:
-      'Dos. Sürəyya Məmmədova: 2-ci laboratoriya işini növbəti bazar ertəsinə qədər laboratoriya dəftərində milimetrlik qrafiklə təhvil verin.',
+      'Dos. Sürəyya Məmmədovanın təqdimatında Nyuton qanunları, impuls, qüvvə və ətalət momenti, iş və enerji mövzuları izah olunur.',
     summary:
-      'İnersial hesablama sistemləri, Nyutonun 1-ci, 2-ci və 3-cü qanunları. Sürtünmə qüvvəsi və elastiklik qüvvələri.',
+      'LMS-in ilk mövzusu: Nyuton qanunları, impulsun saxlanması, fırlanma dinamikası və mexaniki enerjinin saxlanması.',
     materials: [
       {
         id: 'mat-phys-1',
-        name: 'Fizika_Mühazirə_02_Dinamika.pdf',
-        type: 'pdf',
-        sizeOrSource: '3.4 MB',
+        name: 'Fizika mühazirə 1 təqdimatı',
+        type: 'pptx',
+        sizeOrSource: 'Müəllim təqdimatı',
         authorOrContext: 'Dos. Sürəyya Məmmədova',
-        date: '22 Sen',
+        date: '2026 Payız',
       },
     ],
   },
@@ -641,11 +624,11 @@ export const SHARED_MATERIALS: SharedMaterial[] = [
   },
   {
     id: 'sm-4',
-    name: 'Fizika — 2-ci Laboratoriya Təlimatı.pdf',
-    type: 'pdf',
-    sizeOrSource: 'PDF · 3.1 MB',
-    authorOrContext: 'Dos. Sürəyya Məmmədova',
-    date: '19 Sen',
+    name: 'Fizika — disk və həlqənin ətalət momenti',
+    type: 'docx',
+    sizeOrSource: 'DOCX təlimatı',
+    authorOrContext: 'Müəllim laboratoriya təlimatı',
+    date: 'Paylaşılıb',
   },
 ];
 
@@ -659,16 +642,6 @@ export const ASSIGNMENTS: Assignment[] = [
     priority: 'high',
     points: 10,
     status: 'in_progress',
-  },
-  {
-    id: 'asg-2',
-    title: 'Laboratoriya işi №2: Sərbəstdüşmə təcili',
-    course: 'Fizika',
-    deadline: '28 sentyabr',
-    daysRemaining: '6 gün qalıb',
-    priority: 'high',
-    points: 10,
-    status: 'pending',
   },
   {
     id: 'asg-3',
@@ -749,10 +722,10 @@ export const GROUP_REMARKS: GroupRemark[] = [
     id: 'rem-5',
     course: 'Fizika',
     courseId: 'phys',
-    quote: 'Laboratoriya hesabatlarını yalnız laboratoriya dəftərində milimetrlik qrafiklə qəbul edirəm.',
-    author: 'Dos. Sürəyya Məmmədova',
-    date: '22 Sentyabr',
-    tag: 'Laboratoriya Tələbi',
+    quote: 'Cismin impulsu cismin kütləsi ilə onun sürətinin hasilinə bərabərdir.',
+    author: 'Sürəyya Məmmədova · Mühazirə 1',
+    date: 'Müəllim təqdimatı',
+    tag: 'Mühazirə izahı',
   },
   {
     id: 'rem-6',
