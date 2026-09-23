@@ -4,6 +4,16 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.12.0] — 2026-09-23
+
+### Fizika təqdimatlarının PDF-ləri və geniş konspektlər
+- Verilən 4 müəllim təqdimatı və 7 laboratoriya təlimatı PDF-ə çevrilərək Novcept-in mövcud Cloudflare R2 bucket-inə `aztu/physics/` altında yükləndi və fizika mövzularına bağlandı. 1-ci LMS laboratoriyası üçün sənəd verilmədiyindən PDF göstərilmir; nixrom işi əlavə fayl kimi qalır.
+- Birinci mühazirənin konspekti inersial sistem, Nyuton qanunları, qüvvələr, impuls, fırlanma kəmiyyətləri, qüvvə və ətalət momenti, impuls momenti, iş, enerji və saxlanma qanunu üzrə 10 geniş hissəyə bölündü. Digər 3 müəllim təqdimatı da mövzu planına uyğun genişləndirildi.
+- Hissələr açılıb bağlanan oxu görünüşündədir; PDF-lər mövzu və laboratoriya daxilində oxunur, ayrıca pəncərədə açmaq seçimi də var. Təqdimatdakı impuls momenti düsturunun mətn xətası konspektdə düzgün ifadə ilə göstərilir.
+- PDF səhifə sayları və nümunə səhifələr vizual yoxlandı; `npm run build` və `npm run lint` ilə kod yoxlandı.
+
+---
+
 ## [1.11.1] — 2026-09-23
 
 ### Fizika səhifəsinin sadələşdirilməsi

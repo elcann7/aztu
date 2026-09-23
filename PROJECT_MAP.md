@@ -128,5 +128,6 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`src/data/mockData.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/data/mockData.ts) | **Rəsmi Dərs Cədvəli və Təqvim**: Rəsmi AzTU 6326A2 həftəlik cədvəli (`WEEKLY_SCHEDULE`), semestr təqvimi və geri sayım (`SEMESTER_CONFIG`), 15 həftəlik fənn sillabusları (`COURSE_SYLLABUS`) və real müəllim məlumatları |
 | `src/data/mathLessons.ts` | Hazırda keçilən riyazi analiz mövzularının qaydaları, testləri və AI konteksti |
 | `src/data/physicsContent.ts` | LMS-in 8 fizika mövzusu, 7 laboratoriyası və ayrıca nixrom təlimatı üçün mənbə əsaslı statik məzmun |
+| Cloudflare R2 `aztu/physics/*.pdf` | Novcept-in mövcud bucket-ində müəllim sənədlərindən çevrilmiş, mövzulardan açılan 11 PDF; linklər `physicsContent.ts` içindədir |
 | `api/lecture-chat.ts` | Gemini 3.1 Flash-Lite üçün server funksiyası; mövzu seçimi və sorğu limitləri |
 | [`src/styles/global.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/styles/global.css) | Qlobal CSS dəyişənləri (rənglər, şriftlər, spacing, radiuslar, animasiyalar) |

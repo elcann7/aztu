@@ -182,5 +182,7 @@ Fizika portalı `CourseShellView` daxilində `PhysicsLearningView` ilə açılı
 
 Fizika üçün `CourseShellView` ilkin ekranda üç əsas keçid göstərir: Dərslər, Qrup, Fənn haqqında. Qrup keçidinin içindən mövcud material, qeyd, tapşırıq və sual görünüşlərinə gedilir; həmin CRUD axınları dəyişmir. `PhysicsLearningView` siyahıda yalnız nömrə və başlıq göstərir, mövzunun planı və mənbəsi isə HTML `details` ilə açılır. Bu sadələşdirmə yeni məlumat modeli yaratmır.
 
+Müəllim sənədləri LibreOffice ilə PDF-ə çevrilərək Novcept-in mövcud Cloudflare R2 bucket-ində `aztu/physics/` prefiksi ilə saxlanır. `physicsContent.ts` mövzu və laboratoriyanı uyğun `pdfUrl` ilə bağlayır; PDF açılan panelin `iframe`-ində oxunur və ayrıca pəncərəyə keçid var. Konspektin geniş hissələri klient tərəfində accordion vəziyyəti ilə tək-tək göstərilir. R2 ictimai CDN ünvanları server autentifikasiyası ilə qorunmur; bu, mövcud klient əsaslı girişdən ayrıca məhdudiyyətdir.
+
 
 AzTU 6326A2 memarlığı yüksək etibarlılıq, tələbə məlumatlarının tam qorunması, istənilən cihazda (mobil, planşet, noutbuk) qüsursuz işləməsi və sıfır xəta prinsipləri üzərində qurulmuşdur.

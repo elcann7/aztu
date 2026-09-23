@@ -6,6 +6,8 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının təhlük
 
 > **AI əlavə qeydi:** `GEMINI_API_KEY` yalnız Vercel server funksiyasında oxunur. `/api/lecture-chat` mühazirə ID-sini serverdə yoxlayır, mətn və tarixçə ölçüsünü məhdudlaşdırır, hər instansiya üçün IP əsaslı qısa müddətli limit tətbiq edir. Mövcud klient əsaslı giriş sistemi server səviyyəsində tələbə şəxsiyyətini təsdiqləmədiyi üçün bu limit tam sui-istifadə müdafiəsi sayılmır.
 
+> **Fizika PDF-ləri:** Müəllim təqdimatı və laboratoriya PDF-ləri Novcept-in mövcud Cloudflare R2 bucket-ində `aztu/physics/` altında ictimai CDN linkləri ilə saxlanır. Tətbiqin giriş ekranı birbaşa URL ilə açan şəxsi server səviyyəsində yoxlamır. Qrupdan kənara çıxmaması tələb olunarsa ayrıca server autentifikasiyası və məxfi fayl saxlama mexanizmi qurulmalıdır.
+
 ---
 
 ## 🛡️ Təhlükəsizlik Prinsipləri

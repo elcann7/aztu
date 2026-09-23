@@ -28,7 +28,7 @@ Bütün verilənlər brauzerin yerli yaddaşında xüsusi prefikslərlə təhlü
 
 Riyaziyyat mühazirələri `MathLesson`, `MathRule` və `MathQuestion` tipləri ilə `src/data/mathLessons.ts` faylında statik saxlanır. AI söhbət tarixçəsi bu tabın `sessionStorage` yaddaşında qalır və verilənlər bazasına yazılmır.
 
-Fizika məzmunu `src/data/physicsContent.ts` daxilində statik saxlanır. `PhysicsTopic` (`id`, `title`, `outline`, istəyə görə `sourceFile`, `presentationNumber`, `explanations`, `checkQuestions`) LMS mövzusunu və təqdimat xülasəsini; `PhysicsLab` (`id`, `title`, istəyə görə `sourceFile`, `objective`, `equipment`, `steps`, `result`) laboratoriya bələdçisini təsvir edir. Bu seçimlər üçün yeni `localStorage` açarı və ya verilənlər bazası cədvəli yoxdur. Saytın nümayiş materialı tipi `SharedMaterial.type` üçün `docx` və `pptx` dəyərləri dəstəklənir.
+Fizika məzmunu `src/data/physicsContent.ts` daxilində statik saxlanır. `PhysicsTopic` (`id`, `title`, `outline`, istəyə görə `sourceFile`, `pdfUrl`, `presentationNumber`, `explanations`, `checkQuestions`) LMS mövzusunu və təqdimat konspektini; `PhysicsLab` (`id`, `title`, istəyə görə `sourceFile`, `pdfUrl`, `objective`, `equipment`, `steps`, `result`) laboratoriya bələdçisini təsvir edir. `pdfUrl` Novcept-in mövcud Cloudflare R2 ictimai CDN ünvanına aparır; obyektlər `aztu/physics/` prefiksindədir. Bu seçimlər üçün yeni `localStorage` açarı və ya verilənlər bazası cədvəli yoxdur. Saytın nümayiş materialı tipi `SharedMaterial.type` üçün `docx` və `pptx` dəyərləri dəstəklənir.
 
 ---
 

@@ -10,6 +10,7 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının **Vercel
 - **GitHub Repozitoriyası**: [https://github.com/elcann7/aztu](https://github.com/elcann7/aztu)
 - **Əsas İstehsalat Qolu**: `main`
 - **AI server açarı**: `GEMINI_API_KEY` yalnız Vercel Production mühitində Secret kimi saxlanır; `VITE_` prefiksi ilə istifadə edilməməlidir.
+- **Fizika PDF-ləri**: 11 PDF Novcept-in mövcud Cloudflare R2 bucket-ində `aztu/physics/` altında saxlanır. `physicsContent.ts` birbaşa ictimai CDN linklərini istifadə edir; deploy zamanı PDF-lər Vercel paketinə daxil edilmir. Hazırkı klient əsaslı giriş bu URL-ləri qorumaq üçün server yoxlaması etmir.
 
 ---
 
