@@ -110,6 +110,28 @@
   border-color: #111418;
 }
 
+.course-shell-physics { gap: var(--space-4); padding-top: var(--space-4); }
+.course-shell-physics .course-header-card { padding-bottom: var(--space-3); }
+.course-shell-physics .course-subtabs-bar { margin-top: 0; border-top: 0; padding-top: 0; }
+.physics-group-hub { display: grid; gap: .75rem; }
+.physics-group-hub h2 { margin: 0; font-size: 1.2rem; }
+.physics-group-hub p { margin: 0 0 .4rem; color: var(--text-secondary); font-size: .85rem; }
+.physics-group-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
+.physics-group-grid button { display: flex; align-items: center; gap: .6rem; min-width: 0; padding: 1rem; border: 1px solid var(--border-default); border-radius: 10px; background: #fff; color: var(--text-primary); font: inherit; font-size: .85rem; cursor: pointer; text-align: left; }
+.physics-group-grid button:hover { border-color: #93c5fd; }
+.physics-group-grid button span { flex: 1; }
+.physics-group-grid button small { color: var(--text-muted); }
+.physics-group-back { align-self: flex-start; border: 0; background: none; color: #1d4ed8; font: inherit; font-size: .8rem; font-weight: 600; cursor: pointer; }
+.physics-course-about { padding: 1.25rem; border: 1px solid var(--border-default); border-radius: 12px; background: #fff; }
+.physics-course-about h2 { margin: 0 0 1rem; font-size: 1.2rem; }
+.physics-course-about dl { display: grid; gap: .8rem; margin: 0 0 1.2rem; }
+.physics-course-about dl div { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: .7rem; }
+.physics-course-about dt { color: var(--text-muted); font-size: .8rem; }
+.physics-course-about dd { margin: 0; font-size: .85rem; font-weight: 600; text-align: right; }
+.physics-course-about details summary { cursor: pointer; color: #1d4ed8; font-size: .8rem; font-weight: 600; }
+.physics-course-about details p { color: var(--text-secondary); font-size: .8rem; line-height: 1.5; }
+@media (max-width: 520px) { .physics-group-grid { grid-template-columns: 1fr; } }
+
 /* Placeholder box */
 .course-content-placeholder {
   border: 1px dashed var(--border-default);

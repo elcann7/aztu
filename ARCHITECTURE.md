@@ -180,5 +180,7 @@ Riyazi analiz portalı `CourseShellView` daxilində birbaşa dərs siyahısı il
 
 Fizika portalı `CourseShellView` daxilində `PhysicsLearningView` ilə açılır. LMS mövzu/laboratoriya sırası və müəllimin təqdimat/təlimatlarından hazırlanmış xülasələr `src/data/physicsContent.ts` statik faylındadır. Komponent mövzu və laboratoriya seçimini yalnız React vəziyyətində saxlayır; yeni server çağırışı və yaddaş sxemi yoxdur. Mənbəsi olmayan mövzuda müəllim izahı yaradılmır, LMS siyahısından kənar nixrom təlimatı ayrıca göstərilir.
 
+Fizika üçün `CourseShellView` ilkin ekranda üç əsas keçid göstərir: Dərslər, Qrup, Fənn haqqında. Qrup keçidinin içindən mövcud material, qeyd, tapşırıq və sual görünüşlərinə gedilir; həmin CRUD axınları dəyişmir. `PhysicsLearningView` siyahıda yalnız nömrə və başlıq göstərir, mövzunun planı və mənbəsi isə HTML `details` ilə açılır. Bu sadələşdirmə yeni məlumat modeli yaratmır.
+
 
 AzTU 6326A2 memarlığı yüksək etibarlılıq, tələbə məlumatlarının tam qorunması, istənilən cihazda (mobil, planşet, noutbuk) qüsursuz işləməsi və sıfır xəta prinsipləri üzərində qurulmuşdur.

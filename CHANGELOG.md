@@ -4,6 +4,16 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.11.1] — 2026-09-23
+
+### Fizika səhifəsinin sadələşdirilməsi
+- Fizika səhifəsində təkrarlanan fənn başlığı və məlumat blokları yığışdırıldı; ilkin görünüşdə yalnız mühazirə və laboratoriya seçimi göstərilir.
+- Qrup materialları, qeydlər, tapşırıqlar və suallar bir “Qrup” bölməsində toplandı. Fənn məlumatları ayrıca qısa görünüşə keçirildi.
+- Mövzu və laboratoriya siyahılarındakı uzun alt mətnlər çıxarıldı. Dərs daxilində müəllim izahı önə çəkildi; tam plan, əlavə təlimat və mənbə qeydləri istəyə görə açılır.
+- `npm run build` və `npm run lint` uğurludur (lintdə əvvəlki əlaqəsiz xəbərdarlıqlar qalır).
+
+---
+
 ## [1.11.0] — 2026-09-23
 
 ### Fizika mövzuları və müəllim materialları

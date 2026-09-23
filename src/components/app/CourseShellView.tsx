@@ -59,7 +59,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
   } = useDatabase();
   const { user } = useAuth();
 
-  const [activeTab, setActiveTab] = useState<'overview' | 'syllabus' | 'lessons' | 'physics-content' | 'materials' | 'notes' | 'assignments' | 'qa'>(
+  const [activeTab, setActiveTab] = useState<'overview' | 'syllabus' | 'lessons' | 'physics-content' | 'group' | 'materials' | 'notes' | 'assignments' | 'qa'>(
     courseSlug === 'math-analysis' ? 'lessons' : courseSlug === 'physics' ? 'physics-content' : 'overview',
   );
   const [modalType, setModalType] = useState<'material' | 'note' | 'deadline' | 'question' | null>(null);
@@ -99,11 +99,21 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
   const courseSchedule = WEEKLY_SCHEDULE.filter(s => s.courseId === targetId || s.courseId === course.id);
   const courseSyllabus = COURSE_SYLLABUS[targetId] || COURSE_SYLLABUS[course.id] || [];
 
-  const tabs = [
+  const physicsGroupTabs = [
+    { id: 'materials', label: 'Materiallar', count: courseMaterials.length, icon: FolderOpen },
+    { id: 'notes', label: 'Qrup qeydləri', count: courseNotes.length, icon: MessageSquareQuote },
+    { id: 'assignments', label: 'Tapşırıqlar', count: courseDeadlines.length, icon: Clock },
+    { id: 'qa', label: 'Sual-Cavab', count: courseQuestions.length, icon: HelpCircle },
+  ] as const;
+  const isPhysicsGroupTab = physicsGroupTabs.some((tab) => tab.id === activeTab);
+  const tabs = course.id === 'phys' ? [
+    { id: 'physics-content', label: 'Dərslər', icon: BookOpen },
+    { id: 'group', label: 'Qrup', icon: Layers },
+    { id: 'overview', label: 'Fənn haqqında', icon: User },
+  ] : [
     ...(course.id === 'math' ? [{ id: 'lessons', label: 'Dərslər', icon: BookOpen }] : []),
-    ...(course.id === 'phys' ? [{ id: 'physics-content', label: 'Mövzular və lablar', icon: BookOpen }] : []),
-    { id: 'overview', label: course.id === 'math' || course.id === 'phys' ? 'Fənn haqqında' : 'Ümumi', icon: Layers },
-    ...(course.id === 'math' || course.id === 'phys' ? [] : [{ id: 'syllabus', label: '15 Həftəlik Plan', icon: BookOpen }]),
+    { id: 'overview', label: course.id === 'math' ? 'Fənn haqqında' : 'Ümumi', icon: Layers },
+    ...(course.id === 'math' ? [] : [{ id: 'syllabus', label: '15 Həftəlik Plan', icon: BookOpen }]),
     { id: 'materials', label: `Materiallar (${courseMaterials.length})`, icon: FolderOpen },
     { id: 'notes', label: `Qrup qeydləri (${courseNotes.length})`, icon: MessageSquareQuote },
     { id: 'assignments', label: `Tapşırıqlar (${courseDeadlines.length})`, icon: Clock },
@@ -142,9 +152,10 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
   };
 
   return (
-    <div className="course-shell-flow">
+    <div className={`course-shell-flow ${course.id === 'phys' ? 'course-shell-physics' : ''}`}>
       {/* Course Header */}
       <div className="course-header-card">
+        {course.id !== 'phys' && <>
         <div className="course-meta-top">
           <span className="course-code-badge">{course.code}</span>
           <span className="course-credits-badge">{course.credits} Kredit</span>
@@ -164,12 +175,13 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
             <span>{course.department}</span>
           </div>
         </div>
+        </>}
 
         {/* Sub-navigation tabs */}
         <div className="course-subtabs-bar">
           {tabs.map((tab) => {
             const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
+            const isActive = activeTab === tab.id || (tab.id === 'group' && isPhysicsGroupTab);
             return (
               <button
                 key={tab.id}
@@ -185,10 +197,31 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
         </div>
       </div>
 
+      {course.id === 'phys' && activeTab === 'group' && <section className="physics-group-hub">
+        <h2>Qrup bölmələri</h2>
+        <p>Paylaşılan materiallara və müzakirələrə buradan keç.</p>
+        <div className="physics-group-grid">
+          {physicsGroupTabs.map((tab) => { const Icon = tab.icon; return <button key={tab.id} type="button" onClick={() => setActiveTab(tab.id)}>
+            <Icon size={18} aria-hidden="true" /><span>{tab.label}</span><small>{tab.count}</small><ArrowRight size={16} aria-hidden="true" />
+          </button>; })}
+        </div>
+      </section>}
+      {course.id === 'phys' && isPhysicsGroupTab && <button type="button" className="physics-group-back" onClick={() => setActiveTab('group')}>
+        ← Qrup bölmələri
+      </button>}
+
       {/* ========================================================
           TAB 1: ÜMUMİ (OVERVIEW)
           ======================================================== */}
-      {activeTab === 'overview' && (
+      {activeTab === 'overview' && course.id === 'phys' && <section className="physics-course-about">
+        <h2>Fənn haqqında</h2>
+        <dl><div><dt>Mühazirə müəllimi</dt><dd>Sürəyya Məmmədova</dd></div><div><dt>Kredit</dt><dd>3</dd></div><div><dt>Saat</dt><dd>30</dd></div></dl>
+        <details><summary>LMS məlumatları və qiymətləndirmə</summary>
+          <p>Fənn qrupu: 6326a2_if-20403y_fizika · 2026 Payız. Seminar və laboratoriya müəllimi LMS-də hələ təyin edilməyib.</p>
+          <p>Seminar 20, laboratoriya 10, sərbəst iş 10, davamiyyət 10 bal — cəmi 50 bal.</p>
+        </details>
+      </section>}
+      {activeTab === 'overview' && course.id !== 'phys' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           {/* Quick Metrics Bar */}
           <div style={{ 

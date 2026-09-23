@@ -72,10 +72,10 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`src/components/app/TopBar.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/TopBar.css) | TopBar stilləri |
 | [`src/components/app/DashboardView.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/DashboardView.tsx) | Əsas iş lövhəsi: Tələbəyə salamlama, 4 əsas statistika kartı, günün cədvəli və elanlar |
 | [`src/components/app/DashboardView.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/DashboardView.css) | Dashboard stilləri |
-| [`src/components/app/CourseShellView.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/CourseShellView.tsx) | Fənn portalı: Riyazi analiz və fizika üçün ilkin mövzu siyahısı, digər fənlər üçün ümumi görünüş, materiallar və qrup bölmələri |
+| [`src/components/app/CourseShellView.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/CourseShellView.tsx) | Fənn portalı: fizika üçün yığcam Dərslər/Qrup/Fənn haqqında naviqasiyası, riyazi analiz üçün ilkin mövzu siyahısı, digər fənlər üçün ümumi görünüş |
 | [`src/components/app/CourseShellView.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/CourseShellView.css) | Fənn portalı stilləri |
 | `src/components/app/MathLearningView.tsx` & `MathLearning.css` | Nömrələnmiş mühazirə siyahısı, dərs seçimi, dörd daxili bölmə və geri/növbəti keçidləri |
-| `src/components/app/PhysicsLearningView.tsx` & `PhysicsLearning.css` | LMS-ə uyğun fizika mövzuları, laboratoriya seçimi, müəllim materiallarının xülasəsi və mənbə qeydləri |
+| `src/components/app/PhysicsLearningView.tsx` & `PhysicsLearning.css` | Yığcam fizika dərs seçimi, müəllim izahları və istəyə görə açılan plan/mənbə qeydləri |
 | `src/components/app/MathPractice.tsx` | Mövzu testləri və brauzerdə ən yaxşı nəticə |
 | `src/components/app/MathProofChallenge.tsx` | Yazılı isbat cəhdi, ipucu və nümunə həll |
 | `src/components/app/MathLabs.tsx` | Seçilmiş dərsə uyğun Ven, ε-qonşuluğu və ya sərhəd simulyasiyası |

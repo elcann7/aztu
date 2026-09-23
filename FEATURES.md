@@ -204,6 +204,8 @@ Hər bir fənn portalında:
 
 ## Fizika üzrə mövzu və laboratoriya bələdçisi
 
+- Fizika səhifəsi yığcam dərs seçimi ilə açılır; “Qrup” altında materiallar, qeydlər, tapşırıqlar və suallar, “Fənn haqqında” altında isə müəllim və kredit məlumatı yerləşir.
+- Siyahıda yalnız işin nömrəsi və adı görünür. Dərs daxilində müəllim izahı önə çəkilir; tam plan, əlavə təlimat və mənbə qeydləri açılan hissələrdə saxlanır.
 - Fizika portalı LMS-in 8 mühazirə mövzusunu və 7 laboratoriyasını nömrələnmiş seçim siyahısında açır. Mühazirə və laboratoriya arasında bir toxunuşla keçmək olur.
 - İlk 4 mövzuda müəllimin təqdimatlarından hazırlanmış qısa izah, mövzu planı və özünü yoxlama sualları var. Qalan 4 mövzuda təqdimat verilmədiyi açıq göstərilir.
 - 2–7-ci laboratoriyaların verilən Word təlimatları məqsəd, avadanlıq, ölçmə ardıcıllığı və nəticə bölmələri ilə xülasə edilib. 1-ci laboratoriyanın ayrıca təlimatı yoxdur.
