@@ -108,28 +108,46 @@ export const FeatureDeepDives: React.FC = () => {
 
                 {/* Real deadline UI rows */}
                 <div className="compact-rows-stack reveal-rows">
-                  {ASSIGNMENTS.map((asg) => (
-                    <div key={asg.id} className="deadline-row-item row-item">
+                  {ASSIGNMENTS.length === 0 ? (
+                    <div className="deadline-row-item row-item">
                       <div className="deadline-info-col">
-                        <div className="deadline-title-text">{asg.title}</div>
+                        <div className="deadline-title-text">
+                          KOICA LMS üzrə hazırda aktiv tapşırıq yoxdur
+                        </div>
                         <div className="deadline-meta-sub">
-                          <span className="deadline-course-name">{asg.course}</span>
+                          <span className="deadline-course-name">Bütün 5 LMS fənni (#5038–#5042)</span>
                           <span className="file-meta-sep">•</span>
-                          <span className="deadline-date-val">{asg.deadline}</span>
+                          <span className="deadline-date-val">I Kollokvium: 20–24 Oktyabr 2026</span>
                         </div>
                       </div>
                       <div className="deadline-status-col">
-                        <span
-                          className={`badge ${
-                            asg.priority === 'high' ? 'badge-warning' : 'badge-neutral'
-                          }`}
-                        >
-                          {asg.daysRemaining}
-                        </span>
-                        <span className="deadline-score-pill">+{asg.points} bal</span>
+                        <span className="badge badge-neutral">0 tapşırıq</span>
                       </div>
                     </div>
-                  ))}
+                  ) : (
+                    ASSIGNMENTS.map((asg) => (
+                      <div key={asg.id} className="deadline-row-item row-item">
+                        <div className="deadline-info-col">
+                          <div className="deadline-title-text">{asg.title}</div>
+                          <div className="deadline-meta-sub">
+                            <span className="deadline-course-name">{asg.course}</span>
+                            <span className="file-meta-sep">•</span>
+                            <span className="deadline-date-val">{asg.deadline}</span>
+                          </div>
+                        </div>
+                        <div className="deadline-status-col">
+                          <span
+                            className={`badge ${
+                              asg.priority === 'high' ? 'badge-warning' : 'badge-neutral'
+                            }`}
+                          >
+                            {asg.daysRemaining}
+                          </span>
+                          <span className="deadline-score-pill">+{asg.points} bal</span>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             </div>

@@ -73,15 +73,15 @@ export const DashboardView: React.FC = () => {
 
   const gpaSummary = computeSemesterSummary(records);
 
-  // Timetable selected day (defaults to today: 2 = Çərşənbə axşamı)
+  // Timetable selected day (defaults to today on weekdays, Monday on weekends)
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(SEMESTER_CONFIG.todayDayIndex);
 
   const weekDays = [
-    { index: 1, name: 'B.e.', fullName: 'Bazar ertəsi' },
-    { index: 2, name: 'Ç.a.', fullName: 'Çərşənbə axşamı', isToday: true },
-    { index: 3, name: 'Çərş.', fullName: 'Çərşənbə' },
-    { index: 4, name: 'C.a.', fullName: 'Cümə axşamı' },
-    { index: 5, name: 'Cümə', fullName: 'Cümə' },
+    { index: 1, name: 'B.e.', fullName: 'Bazar ertəsi', isToday: SEMESTER_CONFIG.actualJsDay === 1 },
+    { index: 2, name: 'Ç.a.', fullName: 'Çərşənbə axşamı', isToday: SEMESTER_CONFIG.actualJsDay === 2 },
+    { index: 3, name: 'Çərş.', fullName: 'Çərşənbə', isToday: SEMESTER_CONFIG.actualJsDay === 3 },
+    { index: 4, name: 'C.a.', fullName: 'Cümə axşamı', isToday: SEMESTER_CONFIG.actualJsDay === 4 },
+    { index: 5, name: 'Cümə', fullName: 'Cümə', isToday: SEMESTER_CONFIG.actualJsDay === 5 },
   ];
 
   const filteredSchedule = WEEKLY_SCHEDULE.filter((s) => s.dayIndex === selectedDayIndex);
@@ -145,7 +145,7 @@ export const DashboardView: React.FC = () => {
               </span>
               <span className="dash-sem-date-note">
                 15 Sentyabr başlayıb ·{' '}
-                <strong>{SEMESTER_CONFIG.currentWeek}-ci Həftə, 2-ci Gün (Çərşənbə axşamı)</strong>
+                <strong>{SEMESTER_CONFIG.currentWeek}-ci Həftə ({SEMESTER_CONFIG.todayName})</strong>
               </span>
             </div>
             <h3 className="dash-sem-title">Semestr İrəliləyişi və İmtahan Hədəfi</h3>
@@ -182,9 +182,9 @@ export const DashboardView: React.FC = () => {
               <span className="milestone-status-dot pulse" />
               <span className="milestone-tag">Cari Mərhələ</span>
             </div>
-            <h4 className="milestone-name">2-ci Həftə Tədrisi</h4>
-            <p className="milestone-detail">Mühazirə və laboratoriya dərsləri davam edir.</p>
-            <span className="milestone-timeline">15 - 26 Sentyabr</span>
+            <h4 className="milestone-name">{SEMESTER_CONFIG.currentWeek}-ci Həftə Tədrisi</h4>
+            <p className="milestone-detail">Mühazirə, seminar və laboratoriya dərsləri davam edir.</p>
+            <span className="milestone-timeline">KOICA LMS · 0 Qaib (100%)</span>
           </div>
 
           <div className="dash-sem-milestone-card">

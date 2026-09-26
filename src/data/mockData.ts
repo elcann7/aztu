@@ -98,34 +98,61 @@ export interface SyllabusWeek {
 // ----------------------------------------------------------------------------
 // Semestr Təqvimi və Hesablama Konfiqurasiyası (2026/2027 Payız - 1-ci Semestr)
 // ----------------------------------------------------------------------------
-export const SEMESTER_CONFIG = {
-  semester: '2026/2027 Payız Semestri (1-ci Semestr)',
-  startDate: '2026-09-15',
-  endDate: '2026-12-26',
-  examSessionStart: '2027-01-05',
-  examSessionEnd: '2027-01-31',
-  totalWeeks: 15,
-  currentWeek: 2,
-  todayDayIndex: 2, // 2 = Çərşənbə axşamı
-  todayName: 'Çərşənbə axşamı',
-  daysToExam: 105,
-  weeksToExam: 14,
-  colloquium1Week: 6,
-  colloquium1Date: '20-24 Oktyabr 2026',
-  colloquium2Week: 11,
-  colloquium2Date: '24-28 Noyabr 2026',
-  colloquium3Week: 14,
-  colloquium3Date: '15-19 Dekabr 2026',
-};
+function computeDynamicSemesterConfig() {
+  const start = new Date('2026-09-15T00:00:00');
+  const examStart = new Date('2027-01-05T00:00:00');
+  const now = new Date();
+
+  const diffFromStartDays = Math.floor((now.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+  const computedWeek = Math.min(15, Math.max(1, Math.floor(diffFromStartDays / 7) + 1));
+  const daysToExam = Math.max(0, Math.ceil((examStart.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
+  const weeksToExam = Math.max(0, Math.ceil(daysToExam / 7));
+
+  const jsDay = now.getDay(); // 0 = Bazar, 1 = B.e., ..., 6 = Şənbə
+  const dayNames: Record<number, string> = {
+    0: 'Bazar',
+    1: 'Bazar ertəsi',
+    2: 'Çərşənbə axşamı',
+    3: 'Çərşənbə',
+    4: 'Cümə axşamı',
+    5: 'Cümə',
+    6: 'Şənbə',
+  };
+  // Həftəsonu cədvəl tabı üçün Bazar ertəsi (1), iş günlərində həmin gün (1..5)
+  const scheduleDayIndex = jsDay >= 1 && jsDay <= 5 ? jsDay : 1;
+
+  return {
+    semester: '2026/2027 Payız Semestri (1-ci Semestr)',
+    startDate: '2026-09-15',
+    endDate: '2026-12-26',
+    examSessionStart: '2027-01-05',
+    examSessionEnd: '2027-01-31',
+    totalWeeks: 15,
+    currentWeek: computedWeek,
+    todayDayIndex: scheduleDayIndex,
+    actualJsDay: jsDay,
+    todayName: dayNames[jsDay] || 'Bazar ertəsi',
+    daysToExam,
+    weeksToExam,
+    colloquium1Week: 6,
+    colloquium1Date: '20-24 Oktyabr 2026',
+    colloquium2Week: 11,
+    colloquium2Date: '24-28 Noyabr 2026',
+    colloquium3Week: 14,
+    colloquium3Date: '15-19 Dekabr 2026',
+  };
+}
+
+export const SEMESTER_CONFIG = computeDynamicSemesterConfig();
 
 // ----------------------------------------------------------------------------
-// AzTU 6326A2 — 6 Əsas Fənn (Rəsmi Cədvələ Uyğun)
+// AzTU 6326A2 — 6 Əsas Fənn (KOICA LMS Rəsmi Kodları və Müəllimləri ilə)
 // ----------------------------------------------------------------------------
 export const COURSES: Course[] = [
   {
     id: 'math',
-    code: 'MATH-101',
-    name: 'Riyazi analiz-1',
+    code: 'İf-61115y',
+    name: 'Riyazi analiz - 1',
     slug: 'math-analysis',
     lecturer: 'Dos. Nizami Şıxəliyev / Müəl. Şamil Talıblı',
     department: 'Ali Riyaziyyat kafedrası',
@@ -133,7 +160,7 @@ export const COURSES: Course[] = [
   },
   {
     id: 'algebra',
-    code: 'MATH-102',
+    code: 'İf-61119y',
     name: 'Xətti cəbr',
     slug: 'linear-algebra',
     lecturer: 'Dos. Rəna Əmirova / Müəl. Çingiz Ələkbərov',
@@ -142,7 +169,7 @@ export const COURSES: Course[] = [
   },
   {
     id: 'phys',
-    code: 'İF-20403y',
+    code: 'İf-20403y',
     name: 'Fizika',
     slug: 'physics',
     lecturer: 'Dos. Sürəyya Məmmədova',
@@ -151,17 +178,17 @@ export const COURSES: Course[] = [
   },
   {
     id: 'prog',
-    code: 'CS-101',
+    code: 'İf-61125y',
     name: 'Proqramlaşdırmanın əsasları-1',
     slug: 'programming',
-    lecturer: 'Dos. Füzuli Əzimov / Müəl. Ayxan Həsənov / Müəl. Şəbnəm İsgəndərli',
+    lecturer: 'Dos. Fizuli Əzimov / Müəl. Ayxan Həsənov / Müəl. Şəbnəm İsgəndərli',
     department: 'Kompüter Mühəndisliyi kafedrası',
     credits: 8,
   },
   {
     id: 'eng',
-    code: 'ENG-101',
-    name: 'Xarici dildə işgüzar və akademik kommunikasiya -1',
+    code: 'Üf-71705y',
+    name: 'Xarici dildə işgüzar və akademik kommunikasiya - 1',
     slug: 'english',
     lecturer: 'Müəl. Dilarə Həmidova',
     department: 'Xarici dillər kafedrası',
@@ -169,7 +196,7 @@ export const COURSES: Course[] = [
   },
   {
     id: 'aze',
-    code: 'AZE-101',
+    code: 'Üf-71706y',
     name: 'Azərbaycan dilində işgüzar və akademik kommunikasiya',
     slug: 'azerbaijani',
     lecturer: 'Müəl. Nərminə İsayeva',
@@ -284,7 +311,7 @@ export const WEEKLY_SCHEDULE: ScheduleItem[] = [
     courseId: 'aze',
     type: 'Seminar',
     typeCode: 'S',
-    lecturer: 'Müəl. Nərmin İsayeva',
+    lecturer: 'Müəl. Nərminə İsayeva',
     room: '1-422',
   },
   {
@@ -296,7 +323,7 @@ export const WEEKLY_SCHEDULE: ScheduleItem[] = [
     courseId: 'algebra',
     type: 'Seminar',
     typeCode: 'S',
-    lecturer: 'Dos. Rəna Əmirova',
+    lecturer: 'Müəl. Çingiz Ələkbərov',
     room: '1-422',
   },
   {
@@ -334,7 +361,7 @@ export const WEEKLY_SCHEDULE: ScheduleItem[] = [
     courseId: 'aze',
     type: 'Mühazirə',
     typeCode: 'M',
-    lecturer: 'Müəl. Nərmin İsayeva',
+    lecturer: 'Müəl. Nərminə İsayeva',
     room: '6-512',
   },
 

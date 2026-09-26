@@ -6,6 +6,7 @@ export type GradingForm = 'Forma-1' | 'Forma-2';
 
 export interface CourseAcademicConfig {
   id: string;
+  koicaId?: string;
   code: string;
   name: string;
   shortName: string;
@@ -15,6 +16,8 @@ export interface CourseAcademicConfig {
   form: GradingForm;
   totalHours: number; // KOICA rəsmi saatı: 75, 45 və ya 30
   weeklyHours: number; // Həftəlik dərs saatı: 5, 3 və ya 2
+  koicaTotalClasses: number; // KOICA LMS-dəki rəsmi dərs sayı (38, 23, 15)
+  koicaAttendedClasses: number; // KOICA LMS-də qeydə alınmış iştirak sayı
   lecturer: string;
   warningNote?: string;
   defaultSeminar: number;
@@ -34,8 +37,8 @@ export interface StudentCourseRecord {
 }
 
 export interface ComputedCourseMetrics {
-  totalClasses: number; // totalHours / 2
-  maxAbsences: number; // 25% limit (dərs cütü ilə)
+  totalClasses: number; // Math.ceil(totalHours / 2) -> 38, 23, 15
+  maxAbsences: number; // 25% limit (dərs cütü ilə: 9, 5, 3)
   remainingAbsences: number;
   absencePercent: number;
   isLimitExceeded: boolean;
@@ -54,6 +57,7 @@ export interface ComputedCourseMetrics {
 export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
   {
     id: 'prog',
+    koicaId: '5041',
     code: 'İf-61125y',
     name: 'Proqramlaşdırmanın əsasları-1',
     shortName: 'Proqramlaşdırma-1',
@@ -63,6 +67,8 @@ export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
     form: 'Forma-2',
     totalHours: 75,
     weeklyHours: 5,
+    koicaTotalClasses: 38,
+    koicaAttendedClasses: 2,
     lecturer: 'Dos. Fizuli Əzimov / Müəl. Ayxan Həsənov / Müəl. Şəbnəm İsgəndərli',
     defaultSeminar: 19,
     defaultLab: 10,
@@ -71,6 +77,7 @@ export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
   },
   {
     id: 'math',
+    koicaId: '5039',
     code: 'İf-61115y',
     name: 'Riyazi analiz - 1',
     shortName: 'Riyazi analiz-1',
@@ -80,6 +87,8 @@ export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
     form: 'Forma-1',
     totalHours: 75,
     weeklyHours: 5,
+    koicaTotalClasses: 38,
+    koicaAttendedClasses: 3,
     lecturer: 'Dos. Nizami Şıxəliyev / Müəl. Şamil Talıblı',
     defaultSeminar: 26,
     defaultLab: 0,
@@ -88,6 +97,7 @@ export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
   },
   {
     id: 'algebra',
+    koicaId: '5040',
     code: 'İf-61119y',
     name: 'Xətti cəbr',
     shortName: 'Xətti cəbr',
@@ -97,6 +107,8 @@ export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
     form: 'Forma-1',
     totalHours: 45,
     weeklyHours: 3,
+    koicaTotalClasses: 23,
+    koicaAttendedClasses: 2,
     lecturer: 'Dos. Rəna Əmirova / Müəl. Çingiz Ələkbərov',
     defaultSeminar: 26,
     defaultLab: 0,
@@ -105,6 +117,7 @@ export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
   },
   {
     id: 'aze',
+    koicaId: '5042',
     code: 'Üf-71706y',
     name: 'Azərbaycan dilində işgüzar və akademik kommunikasiya',
     shortName: 'ADİAK (Azərb. dili)',
@@ -114,6 +127,8 @@ export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
     form: 'Forma-1',
     totalHours: 45,
     weeklyHours: 3,
+    koicaTotalClasses: 23,
+    koicaAttendedClasses: 0,
     lecturer: 'Müəl. Nərminə İsayeva',
     defaultSeminar: 28,
     defaultLab: 0,
@@ -122,7 +137,7 @@ export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
   },
   {
     id: 'eng',
-    code: 'ENG-101',
+    code: 'Üf-71705y',
     name: 'Xarici dildə işgüzar və akademik kommunikasiya - 1',
     shortName: 'XDİAK (İngilis dili)',
     slug: 'english',
@@ -131,8 +146,10 @@ export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
     form: 'Forma-1',
     totalHours: 45,
     weeklyHours: 3,
+    koicaTotalClasses: 23,
+    koicaAttendedClasses: 0,
     lecturer: 'Müəl. Dilarə Həmidova',
-    warningNote: 'Müəllim qaibləri kağız jurnala yazır və sistemə sonradan vurulur — qaib almaq olmaz!',
+    warningNote: 'Fənn hələ KOICA LMS-ə əlavə edilməyib (müəllim qaibləri kağız jurnala yazır və sonradan sistemə vurulur).',
     defaultSeminar: 27,
     defaultLab: 0,
     defaultIndependent: 10,
@@ -140,6 +157,7 @@ export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
   },
   {
     id: 'phys',
+    koicaId: '5038',
     code: 'İf-20403y',
     name: 'Fizika',
     shortName: 'Fizika',
@@ -149,8 +167,10 @@ export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
     form: 'Forma-2',
     totalHours: 30,
     weeklyHours: 2,
+    koicaTotalClasses: 15,
+    koicaAttendedClasses: 0,
     lecturer: 'Dos. Sürəyya Məmmədova',
-    warningNote: '30 saatlıq fəndir (həftədə 2 saat): cəmi 3 dərs (6 saat) qaib haqqı var, 4-cü qaibdə kəsilir!',
+    warningNote: '30 saatlıq fəndir (həftədə 2 saat, cəmi 15 dərs): yalnız 3 dərs (6 saat) qaib haqqı var, 4-cü qaibdə kəsilir!',
     defaultSeminar: 17,
     defaultLab: 9,
     defaultIndependent: 9,
@@ -216,7 +236,7 @@ export function computeCourseMetrics(
   record: StudentCourseRecord
 ): ComputedCourseMetrics {
   const totalHours = config.totalHours;
-  const totalClasses = Math.floor(totalHours / 2);
+  const totalClasses = config.koicaTotalClasses || Math.ceil(totalHours / 2);
   // AzTU 25% qaib limiti (dərs cütü ilə: 75s -> 9 qaib, 45s -> 5 qaib, 30s -> 3 qaib)
   const maxAbsences = Math.floor((totalHours * 0.25) / 2);
   const absences = Math.max(0, record.absences);

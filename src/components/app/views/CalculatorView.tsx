@@ -326,7 +326,9 @@ export const CalculatorView: React.FC = () => {
                       Qaib İzləyicisi (Limit: max {metrics.maxAbsences} dərs / {metrics.maxAbsences * 2} saat)
                     </span>
                     <span className="calc-absence-sub">
-                      Rəsmi KOICA norması: {course.totalHours} saat (həftədə {course.weeklyHours} s. · {metrics.totalClasses} dərs cütü) · 25% limit
+                      {course.koicaId
+                        ? `KOICA LMS (#${course.koicaId}): ${metrics.totalClasses} dərsdən ${course.koicaAttendedClasses}-də iştirak · 0 qaib (100%, 10 bal)`
+                        : `Rəsmi norma: ${course.totalHours} saat (həftədə ${course.weeklyHours} s. · ${metrics.totalClasses} dərs) · 25% limit`}
                     </span>
                   </div>
 

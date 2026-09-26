@@ -154,7 +154,7 @@ export const REAL_COURSES: Course[] = [
   },
   {
     id: 'eng',
-    code: 'ENG-101',
+    code: 'Üf-71705y',
     name: 'Xarici dildə işgüzar və akademik kommunikasiya - 1',
     slug: 'english',
     lecturer: 'Müəl. Dilarə Həmidova',
@@ -295,7 +295,8 @@ export function formatAzDate(dateInput: string, style: 'short' | 'long' = 'short
 }
 
 export function mergeWithBuiltInMaterials(customList: Material[]): Material[] {
-  const sortedCustom = [...customList].sort(
+  const cleanCustom = customList.filter((m) => !m.id.startsWith('builtin_'));
+  const sortedCustom = [...cleanCustom].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
   const customIds = new Set(sortedCustom.map((m) => m.id));
@@ -306,13 +307,14 @@ export function mergeWithBuiltInMaterials(customList: Material[]): Material[] {
 }
 
 export function mergeWithBuiltInDeadlines(customList: Deadline[]): Deadline[] {
+  const cleanCustom = customList.filter((d) => !d.id.startsWith('builtin_'));
   const states = loadBuiltInDeadlineStates();
-  const customIds = new Set(customList.map((d) => d.id));
+  const customIds = new Set(cleanCustom.map((d) => d.id));
   const builtIns = BUILT_IN_DEADLINES.filter((b) => !customIds.has(b.id)).map((b) => ({
     ...b,
     isCompleted: states[b.id] ?? b.isCompleted ?? false,
   }));
-  const combined = [...customList, ...builtIns];
+  const combined = [...cleanCustom, ...builtIns];
   return combined.sort((a, b) => {
     const timeA = new Date(`${a.dueDate}T${a.dueTime || '23:59'}`).getTime();
     const timeB = new Date(`${b.dueDate}T${b.dueTime || '23:59'}`).getTime();
