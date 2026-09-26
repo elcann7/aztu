@@ -3,7 +3,7 @@ import './DashboardView.css';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter } from '../../context/RouterContext';
 import { useDatabase } from '../../context/DatabaseContext';
-import { computeDeadlineStatus } from '../../services/db';
+import { computeDeadlineStatus, formatAzDate } from '../../services/db';
 import {
   Calendar,
   FileText,
@@ -496,10 +496,7 @@ export const DashboardView: React.FC = () => {
                             {course?.name || dl.courseId}
                           </span>
                           <span className="bento-date-badge">
-                            {new Date(`${dl.dueDate}T12:00:00`).toLocaleDateString('az-AZ', {
-                              day: 'numeric',
-                              month: 'short',
-                            })}
+                            {formatAzDate(dl.dueDate, 'short')}
                           </span>
                         </div>
                         <span className="bento-row-name">{dl.title}</span>

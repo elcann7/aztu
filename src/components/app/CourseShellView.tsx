@@ -4,7 +4,7 @@ import './views/ViewsCommon.css';
 import { useDatabase } from '../../context/DatabaseContext';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter } from '../../context/RouterContext';
-import { computeDeadlineStatus } from '../../services/db';
+import { computeDeadlineStatus, formatAzDate } from '../../services/db';
 import {
   FolderOpen,
   Clock,
@@ -63,7 +63,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
   const { user } = useAuth();
   const { navigate } = useRouter();
 
-  const [activeTab, setActiveTab] = useState<'overview' | 'syllabus' | 'lessons' | 'physics-content' | 'group' | 'materials' | 'notes' | 'assignments' | 'qa'>(
+  const [activeTab, setActiveTab] = useState<'overview' | 'syllabus' | 'lessons' | 'physics-content' | 'materials' | 'notes' | 'assignments' | 'qa'>(
     courseSlug === 'math-analysis' ? 'lessons' : courseSlug === 'physics' ? 'physics-content' : 'overview',
   );
   const [modalType, setModalType] = useState<'material' | 'note' | 'deadline' | 'question' | null>(null);
@@ -104,14 +104,10 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
   const courseSchedule = WEEKLY_SCHEDULE.filter(s => s.courseId === targetId || s.courseId === course.id);
   const courseSyllabus = COURSE_SYLLABUS[targetId] || COURSE_SYLLABUS[course.id] || [];
 
-  const physicsGroupTabs = [
-    { id: 'materials', label: 'Materiallar', count: courseMaterials.length, icon: FolderOpen },
-    { id: 'assignments', label: 'Tapşırıqlar', count: courseDeadlines.length, icon: Clock },
-  ] as const;
-  const isPhysicsGroupTab = physicsGroupTabs.some((tab) => tab.id === activeTab);
   const tabs = course.id === 'phys' ? [
     { id: 'physics-content', label: 'Dərslər', icon: BookOpen },
-    { id: 'group', label: 'Resurslar', icon: Layers },
+    { id: 'materials', label: `Materiallar (${courseMaterials.length})`, icon: FolderOpen },
+    { id: 'assignments', label: `Tapşırıqlar (${courseDeadlines.length})`, icon: Clock },
     { id: 'overview', label: 'Fənn haqqında', icon: User },
   ] : [
     ...(course.id === 'math' ? [{ id: 'lessons', label: 'Dərslər', icon: BookOpen }] : []),
@@ -182,7 +178,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
         <div className="course-subtabs-bar">
           {tabs.map((tab) => {
             const Icon = tab.icon;
-            const isActive = activeTab === tab.id || (tab.id === 'group' && isPhysicsGroupTab);
+            const isActive = activeTab === tab.id;
             return (
               <button
                 key={tab.id}
@@ -197,19 +193,6 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
           })}
         </div>
       </div>
-
-      {course.id === 'phys' && activeTab === 'group' && <section className="physics-group-hub">
-        <h2>Qrup bölmələri</h2>
-        <p>Paylaşılan materiallara və müzakirələrə buradan keç.</p>
-        <div className="physics-group-grid">
-          {physicsGroupTabs.map((tab) => { const Icon = tab.icon; return <button key={tab.id} type="button" onClick={() => setActiveTab(tab.id)}>
-            <Icon size={18} aria-hidden="true" /><span>{tab.label}</span><small>{tab.count}</small><ArrowRight size={16} aria-hidden="true" />
-          </button>; })}
-        </div>
-      </section>}
-      {course.id === 'phys' && isPhysicsGroupTab && <button type="button" className="physics-group-back" onClick={() => setActiveTab('group')}>
-        ← Qrup bölmələri
-      </button>}
 
       {/* ========================================================
           TAB 1: ÜMUMİ (OVERVIEW)
@@ -425,7 +408,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                           {dl.title}
                         </div>
                         <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-                          {new Date(`${dl.dueDate}T12:00:00`).toLocaleDateString('az-AZ', { day: 'numeric', month: 'long' })}
+                          {formatAzDate(dl.dueDate, 'long')}
                           {dl.dueTime ? `, ${dl.dueTime}` : ''}
                         </div>
                       </div>
@@ -474,7 +457,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                     <div className="material-detail-col">
                       <span className="material-item-name">{mat.title}</span>
                       <span className="material-author-line">
-                        {mat.authorName} · {new Date(mat.createdAt).toLocaleDateString('az-AZ', { day: 'numeric', month: 'short' })}
+                        {mat.authorName} · {formatAzDate(mat.createdAt, 'short')}
                       </span>
                     </div>
                     {mat.type === 'file' ? (
@@ -483,7 +466,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                         onClick={() => downloadMaterialFile(mat.id)}
                       >
                         <Download size={13} />
-                        <span>Yüklə</span>
+                        <span>Endir</span>
                       </button>
                     ) : (
                       <a 
@@ -616,7 +599,15 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
           ======================================================== */}
       {activeTab === 'materials' && (
         <div>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap', marginBottom: '0.85rem' }}>
+            <div>
+              <h3 style={{ fontSize: '0.96rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
+                {course.name} — Dərs Materialları ({courseMaterials.length})
+              </h3>
+              <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', margin: '0.15rem 0 0 0' }}>
+                Mühazirə PDF-ləri, laboratoriya təlimatları və qrup konspektlərini buradan oxuya və ya endirə bilərsiniz.
+              </p>
+            </div>
             <button 
               className="btn-create-primary"
               onClick={() => setModalType('material')}
@@ -656,17 +647,21 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                   <React.Fragment key={mat.id}>
                     <div className="material-card-row">
                       <div className={`format-badge-box ${mat.type === 'file' ? 'is-file' : 'is-link'}`}>
-                        {mat.type === 'file' ? <FileText size={16} /> : <Link2 size={16} />}
+                        {mat.type === 'file' ? <FileText size={17} /> : <Link2 size={17} />}
                       </div>
 
                       <div className="material-detail-col">
                         <div className="material-row-top">
                           <span className="material-type-indicator">
-                            {mat.type === 'file' ? `Fayl (${mat.fileName || 'PDF'})` : 'Veb Keçid'}
+                            {isPdfReadable
+                              ? 'PDF Sənəd'
+                              : mat.type === 'file'
+                              ? `Konspekt (${mat.fileName || 'TXT'})`
+                              : 'Veb Keçid'}
                           </span>
                           {mat.fileSize && (
-                            <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>
-                              • {mat.fileSize}
+                            <span className="material-size-pill">
+                              {mat.fileSize}
                             </span>
                           )}
                         </div>
@@ -689,12 +684,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                         <div className="material-author-line">
                           <span>{mat.authorName}</span>
                           <span className="dot-sep">•</span>
-                          <span>
-                            {new Date(mat.createdAt).toLocaleDateString('az-AZ', {
-                              day: 'numeric',
-                              month: 'short',
-                            })}
-                          </span>
+                          <span>{formatAzDate(mat.createdAt, 'short')}</span>
                         </div>
                       </div>
 
@@ -702,7 +692,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                         {canReadInline && (
                           <button
                             type="button"
-                            className="row-action-btn"
+                            className={`row-action-btn ${isReaderOpen ? 'is-active' : ''}`}
                             onClick={() => setOpenReaderId(isReaderOpen ? null : mat.id)}
                             title="Səhifədən çıxmadan burada oxu"
                           >
@@ -834,12 +824,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                       <div className="note-header-line">
                         <span className="note-tag-pill">{getCategoryLabel(note.category)}</span>
                         <span className="note-time-chip">
-                          {new Date(note.createdAt).toLocaleDateString('az-AZ', {
-                            day: 'numeric',
-                            month: 'short',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })}
+                          {formatAzDate(note.createdAt, 'short')}
                         </span>
                       </div>
 
@@ -939,7 +924,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                       )}
 
                       <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '3px' }}>
-                        Son tarix: {new Date(`${dl.dueDate}T12:00:00`).toLocaleDateString('az-AZ', { day: 'numeric', month: 'long' })}
+                        Son tarix: {formatAzDate(dl.dueDate, 'long')}
                         {dl.dueTime ? `, saat ${dl.dueTime}` : ''}
                       </div>
                     </div>
@@ -1033,7 +1018,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                             </span>
                           )}
                           <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-                            {q.authorName} tərəfindən • {new Date(q.createdAt).toLocaleDateString('az-AZ', { day: 'numeric', month: 'short' })}
+                            {q.authorName} tərəfindən • {formatAzDate(q.createdAt, 'short')}
                           </span>
                         </div>
 
@@ -1127,14 +1112,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
 
                                   <div className="qa-answer-meta-row">
                                     <span>{ans.authorName}</span>
-                                    <span>
-                                      {new Date(ans.createdAt).toLocaleDateString('az-AZ', {
-                                        day: 'numeric',
-                                        month: 'short',
-                                        hour: '2-digit',
-                                        minute: '2-digit',
-                                      })}
-                                    </span>
+                                    <span>{formatAzDate(ans.createdAt, 'short')}</span>
                                   </div>
                                 </div>
                               );

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import './ViewsCommon.css';
 import { useDatabase } from '../../../context/DatabaseContext';
 import { useAuth } from '../../../context/AuthContext';
+import { formatAzDate } from '../../../services/db';
 import { CreateMaterialModal } from '../modals/CreateMaterialModal';
 import { PhysicsPdfViewer } from '../PhysicsPdfViewer';
 import { useBookmarks } from '../../../hooks/useBookmarks';
@@ -209,10 +210,7 @@ export const MaterialsView: React.FC = () => {
               const isNotesReadable = Boolean(mat.studyNotes && mat.studyNotes.length > 0);
               const canReadInline = isPdfReadable || isNotesReadable;
               const isReaderOpen = openReaderId === mat.id;
-              const formattedDate = new Date(mat.createdAt).toLocaleDateString('az-AZ', {
-                day: 'numeric',
-                month: 'short',
-              });
+              const formattedDate = formatAzDate(mat.createdAt, 'short');
 
               return (
                 <React.Fragment key={mat.id}>

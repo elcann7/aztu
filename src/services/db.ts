@@ -275,15 +275,34 @@ function saveBuiltInDeadlineStates(states: Record<string, boolean>): void {
   }
 }
 
+const AZ_MONTHS_SHORT = [
+  'Yan', 'Fev', 'Mart', 'Apr', 'May', 'İyun',
+  'İyul', 'Avq', 'Sent', 'Okt', 'Noy', 'Dek',
+];
+
+const AZ_MONTHS_LONG = [
+  'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun',
+  'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr',
+];
+
+export function formatAzDate(dateInput: string, style: 'short' | 'long' = 'short'): string {
+  const normalized = dateInput.length === 10 ? `${dateInput}T12:00:00` : dateInput;
+  const d = new Date(normalized);
+  if (Number.isNaN(d.getTime())) return dateInput;
+  const day = d.getDate();
+  const m = d.getMonth();
+  return `${day} ${style === 'long' ? AZ_MONTHS_LONG[m] : AZ_MONTHS_SHORT[m]}`;
+}
+
 export function mergeWithBuiltInMaterials(customList: Material[]): Material[] {
-  const customIds = new Set(customList.map((m) => m.id));
-  const combined = [
-    ...customList,
-    ...BUILT_IN_MATERIALS.filter((b) => !customIds.has(b.id)),
-  ];
-  return combined.sort(
+  const sortedCustom = [...customList].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
+  const customIds = new Set(sortedCustom.map((m) => m.id));
+  return [
+    ...sortedCustom,
+    ...BUILT_IN_MATERIALS.filter((b) => !customIds.has(b.id)),
+  ];
 }
 
 export function mergeWithBuiltInDeadlines(customList: Deadline[]): Deadline[] {

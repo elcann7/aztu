@@ -3,7 +3,7 @@ import './ViewsCommon.css';
 import { useDatabase } from '../../../context/DatabaseContext';
 import { useAuth } from '../../../context/AuthContext';
 import { CreateDeadlineModal } from '../modals/CreateDeadlineModal';
-import { computeDeadlineStatus } from '../../../services/db';
+import { computeDeadlineStatus, formatAzDate } from '../../../services/db';
 import { Calendar, Plus, Trash2, Check, Clock, Filter, AlertCircle } from 'lucide-react';
 
 export const DeadlinesView: React.FC = () => {
@@ -282,10 +282,7 @@ const DeadlineItemRow: React.FC<DeadlineItemRowProps> = ({
           <span className="subject-chip">{course?.name || dl.courseId}</span>
           <span className="schedule-date-tag">
             <Clock size={11} />
-            {new Date(`${dl.dueDate}T12:00:00`).toLocaleDateString('az-AZ', {
-              day: 'numeric',
-              month: 'short',
-            })}
+            {formatAzDate(dl.dueDate, 'short')}
             {dl.dueTime && ` • ${dl.dueTime}`}
           </span>
         </div>
