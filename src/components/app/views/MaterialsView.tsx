@@ -37,7 +37,8 @@ export const MaterialsView: React.FC = () => {
   const filteredMaterials = useMemo(() => {
     return materials.filter((m) => {
       if (selectedCourse !== 'all' && m.courseId !== selectedCourse) return false;
-      if (selectedType !== 'all' && m.type !== selectedType) return false;
+      if (selectedType === 'file' && m.type !== 'file' && !m.fileName) return false;
+      if (selectedType === 'link' && m.type !== 'link') return false;
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
         const matchTitle = m.title.toLowerCase().includes(q);
@@ -76,7 +77,7 @@ export const MaterialsView: React.FC = () => {
   };
 
   const getFileIcon = (title: string, type: string, fileName?: string) => {
-    if (type === 'link') return <Link2 size={15} color="#2563eb" />;
+    if (type === 'link' && !fileName) return <Link2 size={15} color="#2563eb" />;
     const ext = (fileName || title).split('.').pop()?.toLowerCase();
     if (ext === 'py' || ext === 'js' || ext === 'ts' || ext === 'html' || ext === 'css') {
       return <FileCode size={15} color="#0891b2" />;
@@ -242,8 +243,8 @@ export const MaterialsView: React.FC = () => {
                   </div>
 
                   <div className="mat-td mat-col-type">
-                    <span className={`mat-format-badge ${mat.type}`}>
-                      {mat.type === 'file' ? (mat.fileName?.split('.').pop()?.toUpperCase() || 'FAYL') : 'KEÇİD'}
+                    <span className={`mat-format-badge ${mat.fileName ? 'file' : mat.type}`}>
+                      {mat.fileName ? (mat.fileName.split('.').pop()?.toUpperCase() || 'FAYL') : 'KEÇİD'}
                     </span>
                   </div>
 
@@ -291,10 +292,10 @@ export const MaterialsView: React.FC = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="mat-action-btn open-link"
-                        title="Keçidi aç"
+                        title="KOICA LMS-də və ya keçiddə aç"
                       >
                         <ExternalLink size={13} />
-                        <span>Aç</span>
+                        <span>{mat.linkUrl?.includes('lms.aztu.edu.az') ? 'LMS-də Aç' : 'Aç'}</span>
                       </a>
                     )}
 

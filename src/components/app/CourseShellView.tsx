@@ -646,8 +646,8 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                 return (
                   <React.Fragment key={mat.id}>
                     <div className="material-card-row">
-                      <div className={`format-badge-box ${mat.type === 'file' ? 'is-file' : 'is-link'}`}>
-                        {mat.type === 'file' ? <FileText size={17} /> : <Link2 size={17} />}
+                      <div className={`format-badge-box ${mat.type === 'file' || mat.fileName ? 'is-file' : 'is-link'}`}>
+                        {mat.type === 'file' || mat.fileName ? <FileText size={17} /> : <Link2 size={17} />}
                       </div>
 
                       <div className="material-detail-col">
@@ -655,8 +655,8 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                           <span className="material-type-indicator">
                             {isPdfReadable
                               ? 'PDF Sənəd'
-                              : mat.type === 'file'
-                              ? `Konspekt (${mat.fileName || 'TXT'})`
+                              : mat.fileName
+                              ? mat.fileName
                               : 'Veb Keçid'}
                           </span>
                           {mat.fileSize && (
@@ -716,10 +716,10 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                             target="_blank"
                             rel="noopener noreferrer"
                             className="row-action-btn primary-action"
-                            title="Keçidi aç"
+                            title="KOICA LMS-də və ya keçiddə aç"
                           >
                             <ArrowRight size={13} />
-                            <span>Aç</span>
+                            <span>{mat.linkUrl?.includes('lms.aztu.edu.az') ? 'LMS-də Aç' : 'Aç'}</span>
                           </a>
                         )}
 
