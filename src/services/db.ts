@@ -104,7 +104,7 @@ export interface Vote {
   createdAt: string;
 }
 
-// 6 Real University Courses for 6326A2 (1-ci Semestr)
+// 6 Real University Courses for 6326A2 (1-ci Semestr · Tam 30 ECTS Kredit)
 export const REAL_COURSES: Course[] = [
   {
     id: 'math',
@@ -113,16 +113,16 @@ export const REAL_COURSES: Course[] = [
     slug: 'math-analysis',
     lecturer: 'Dos. Nizami Şıxəliyev / Müəl. Şamil Talıblı',
     department: 'Ali Riyaziyyat kafedrası',
-    credits: 6,
+    credits: 7,
   },
   {
     id: 'algebra',
     code: 'MATH-102',
     name: 'Xətti cəbr',
     slug: 'linear-algebra',
-    lecturer: 'Dos. Rəna Əmirova',
+    lecturer: 'Dos. Rəna Əmirova / Müəl. Çingiz Ələkbərov',
     department: 'Ali Riyaziyyat kafedrası',
-    credits: 5,
+    credits: 4,
   },
   {
     id: 'phys',
@@ -138,9 +138,9 @@ export const REAL_COURSES: Course[] = [
     code: 'CS-101',
     name: 'Proqramlaşdırmanın əsasları-1',
     slug: 'programming',
-    lecturer: 'Dos. Fizuli Əzimov / Müəl. Şəbnəm İsgəndərli / Müəl. Ayxan Həsənov',
+    lecturer: 'Dos. Füzuli Əzimov / Müəl. Ayxan Həsənov / Müəl. Şəbnəm İsgəndərli',
     department: 'Kompüter Mühəndisliyi kafedrası',
-    credits: 6,
+    credits: 8,
   },
   {
     id: 'eng',
@@ -156,7 +156,7 @@ export const REAL_COURSES: Course[] = [
     code: 'AZE-101',
     name: 'Azərbaycan dilində işgüzar və akademik kommunikasiya',
     slug: 'azerbaijani',
-    lecturer: 'Müəl. Nərmin İsayeva',
+    lecturer: 'Müəl. Nərminə İsayeva',
     department: 'Azərbaycan dili və pedaqogika kafedrası',
     credits: 4,
   },

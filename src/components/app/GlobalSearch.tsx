@@ -2,9 +2,6 @@ import React, { useMemo, useState } from 'react';
 import { Modal } from '../common/Modal';
 import { useDatabase } from '../../context/DatabaseContext';
 import { useRouter } from '../../context/RouterContext';
-import { useAuth } from '../../context/AuthContext';
-import { useBookmarks } from '../../hooks/useBookmarks';
-import { parseRevision } from '../../services/discussion';
 import './GlobalSearch.css';
 
 interface GlobalSearchProps {
@@ -12,92 +9,142 @@ interface GlobalSearchProps {
   onClose: () => void;
 }
 
-type SearchResult = { id: string; kind: string; title: string; detail: string; path: string; createdAt: string };
+type SearchResult = {
+  id: string;
+  kind: 'fənn' | 'alət' | 'material' | 'deadline';
+  title: string;
+  detail: string;
+  path: string;
+};
 
 export const GlobalSearch: React.FC<GlobalSearchProps> = ({ isOpen, onClose }) => {
-  const { courses, materials, notes, questions, getDiscussionComments } = useDatabase();
+  const { courses, materials, deadlines } = useDatabase();
   const { navigate } = useRouter();
-  const { user } = useAuth();
-  const { isSaved } = useBookmarks(user?.id);
   const [query, setQuery] = useState('');
   const [type, setType] = useState('all');
-  const [onlySaved, setOnlySaved] = useState(false);
+
+  const staticItems: SearchResult[] = useMemo(() => {
+    const courseItems: SearchResult[] = courses.map((c) => ({
+      id: `course-${c.id}`,
+      kind: 'fənn',
+      title: `${c.name} (${c.code})`,
+      detail: `${c.credits} Kredit · ${c.lecturer}`,
+      path: `/app/courses/${c.slug}`,
+    }));
+
+    const toolItems: SearchResult[] = [
+      {
+        id: 'tool-calc',
+        kind: 'alət',
+        title: '6326A2 Qaib Limit, Giriş Balı və GPA Kalkulyatoru',
+        detail: '25% qaib həddi, Forma-1 / Forma-2 giriş balı və 30 ECTS GPA hesablayıcısı',
+        path: '/app/calculator',
+      },
+      {
+        id: 'tool-python',
+        kind: 'alət',
+        title: 'Python 3.12 + Pandas Sandbox (CS-101 Laboratoriya)',
+        detail: 'Ayxan m. və Şəbnəm m. hazır seminar və laboratoriya kod şablonları',
+        path: '/app/sandbox',
+      },
+      {
+        id: 'tool-water',
+        kind: 'alət',
+        title: 'Fizika 2D Dalğa və Su Simulyasiyası',
+        detail: 'Sönümlü dalğa tənliyi, maneələr və interferensiya laboratoriyası',
+        path: '/app/water',
+      },
+    ];
+
+    return [...toolItems, ...courseItems];
+  }, [courses]);
 
   const results = useMemo(() => {
     const q = query.trim().toLocaleLowerCase('az-AZ');
-    if (!q && !onlySaved) return [];
     const courseName = (id: string) => courses.find((course) => course.id === id)?.name || id;
+
     const all: SearchResult[] = [
+      ...staticItems,
       ...materials.map((item) => ({
-        id: item.id, kind: 'material', title: item.title,
+        id: item.id,
+        kind: 'material' as const,
+        title: item.title,
         detail: `${courseName(item.courseId)} · ${item.description || item.fileName || item.authorName}`,
         path: '/app/materials',
-        createdAt: item.createdAt,
       })),
-      ...notes.map((item) => {
-        const revisions = getDiscussionComments('note', item.id)
-          .map((comment) => parseRevision(comment.content)).filter((revision) => revision !== null);
-        return {
-          id: item.id, kind: 'qeyd', title: revisions.at(-1)?.content || item.content,
-          detail: `${courseName(item.courseId)} · ${item.authorName}`,
-          path: '/app/notes', createdAt: item.createdAt,
-        };
-      }),
-      ...questions.filter((item) => !item.details?.startsWith('__aztu_discussion__:')).map((item) => ({
-        id: item.id, kind: 'sual', title: item.title,
-        detail: `${courseName(item.courseId)} · ${item.details || item.authorName}`,
-        path: '/app/qa',
-        createdAt: item.createdAt,
+      ...deadlines.map((item) => ({
+        id: item.id,
+        kind: 'deadline' as const,
+        title: item.title,
+        detail: `${courseName(item.courseId)} · Son tarix: ${item.dueDate}`,
+        path: '/app/deadlines',
       })),
     ];
-    return all.filter((item) =>
-      (type === 'all' || item.kind === type) &&
-      (!onlySaved || isSaved(item.kind === 'qeyd' ? 'note' : item.kind === 'sual' ? 'question' : 'material', item.id)) &&
-      (!q || `${item.title} ${item.detail}`.toLocaleLowerCase('az-AZ').includes(q))
-    ).sort((a, b) => {
-      const aTitleMatch = q && a.title.toLocaleLowerCase('az-AZ').includes(q) ? 1 : 0;
-      const bTitleMatch = q && b.title.toLocaleLowerCase('az-AZ').includes(q) ? 1 : 0;
-      return bTitleMatch - aTitleMatch || b.createdAt.localeCompare(a.createdAt);
-    }).slice(0, 30);
-  }, [query, type, onlySaved, courses, materials, notes, questions, getDiscussionComments, isSaved]);
+
+    return all
+      .filter(
+        (item) =>
+          (type === 'all' || item.kind === type) &&
+          (!q || `${item.title} ${item.detail}`.toLocaleLowerCase('az-AZ').includes(q))
+      )
+      .slice(0, 25);
+  }, [query, type, courses, materials, deadlines, staticItems]);
 
   const openResult = (result: SearchResult) => {
-    sessionStorage.setItem('aztu_search_focus', JSON.stringify({
-      kind: result.kind === 'qeyd' ? 'note' : result.kind === 'sual' ? 'question' : 'material', id: result.id,
-    }));
     navigate(result.path);
     onClose();
-    window.setTimeout(() => window.dispatchEvent(new Event('aztu-search-focus')), 0);
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Qrupda axtar" maxWidth="650px">
+    <Modal isOpen={isOpen} onClose={onClose} title="Platformada axtar" maxWidth="650px">
       <div className="global-search">
-        <label htmlFor="global-search-input" className="form-label">Nə axtarırsınız?</label>
+        <label htmlFor="global-search-input" className="form-label">
+          Nə axtarırsınız?
+        </label>
         <input
-          id="global-search-input" autoFocus type="search" className="form-input"
-          placeholder="Fənn, material, qeyd və ya sual yazın"
-          value={query} onChange={(event) => setQuery(event.target.value)}
+          id="global-search-input"
+          autoFocus
+          type="search"
+          className="form-input"
+          placeholder="Fənn, qaib kalkulyatoru, Python lab, PDF material və ya deadline..."
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
         />
         <div className="global-search-filters" aria-label="Nəticə növü">
           {[
-            ['all', 'Hamısı'], ['material', 'Materiallar'], ['qeyd', 'Qeydlər'], ['sual', 'Suallar'],
+            ['all', 'Hamısı'],
+            ['alət', 'Alətlər & Lab'],
+            ['fənn', 'Fənlər'],
+            ['material', 'Materiallar'],
+            ['deadline', 'Deadline-lar'],
           ].map(([value, label]) => (
-            <button key={value} type="button" className={type === value ? 'is-active' : ''}
-              onClick={() => setType(value)} aria-pressed={type === value}>{label}</button>
+            <button
+              key={value}
+              type="button"
+              className={type === value ? 'is-active' : ''}
+              onClick={() => setType(value)}
+              aria-pressed={type === value}
+            >
+              {label}
+            </button>
           ))}
         </div>
-        <label className="global-search-saved"><input type="checkbox" checked={onlySaved}
-          onChange={(event) => setOnlySaved(event.target.checked)} /> Yadda saxladıqlarım</label>
         <div className="global-search-results" aria-live="polite">
-          {!query.trim() && !onlySaved ? <p>Axtarış üçün söz yazın və ya yadda saxladıqlarınızı açın.</p> : results.length === 0 ? <p>Uyğun paylaşım tapılmadı.</p> :
+          {results.length === 0 ? (
+            <p>Uyğun nəticə tapılmadı.</p>
+          ) : (
             results.map((result) => (
-              <button key={`${result.kind}-${result.id}`} type="button" onClick={() => openResult(result)}>
+              <button
+                key={`${result.kind}-${result.id}`}
+                type="button"
+                onClick={() => openResult(result)}
+              >
                 <span className="global-search-kind">{result.kind}</span>
                 <strong>{result.title}</strong>
                 <small>{result.detail}</small>
               </button>
-            ))}
+            ))
+          )}
         </div>
       </div>
     </Modal>

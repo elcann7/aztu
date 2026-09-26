@@ -3,12 +3,14 @@ import './CourseShellView.css';
 import './views/ViewsCommon.css';
 import { useDatabase } from '../../context/DatabaseContext';
 import { useAuth } from '../../context/AuthContext';
+import { useRouter } from '../../context/RouterContext';
 import { computeDeadlineStatus } from '../../services/db';
 import {
   FolderOpen,
   Clock,
   MessageSquareQuote,
   HelpCircle,
+  Calculator,
   User,
   GraduationCap,
   Layers,
@@ -58,6 +60,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
     getAnswersForQuestion
   } = useDatabase();
   const { user } = useAuth();
+  const { navigate } = useRouter();
 
   const [activeTab, setActiveTab] = useState<'overview' | 'syllabus' | 'lessons' | 'physics-content' | 'group' | 'materials' | 'notes' | 'assignments' | 'qa'>(
     courseSlug === 'math-analysis' ? 'lessons' : courseSlug === 'physics' ? 'physics-content' : 'overview',
@@ -101,23 +104,19 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
 
   const physicsGroupTabs = [
     { id: 'materials', label: 'Materiallar', count: courseMaterials.length, icon: FolderOpen },
-    { id: 'notes', label: 'Qrup qeydləri', count: courseNotes.length, icon: MessageSquareQuote },
     { id: 'assignments', label: 'Tapşırıqlar', count: courseDeadlines.length, icon: Clock },
-    { id: 'qa', label: 'Sual-Cavab', count: courseQuestions.length, icon: HelpCircle },
   ] as const;
   const isPhysicsGroupTab = physicsGroupTabs.some((tab) => tab.id === activeTab);
   const tabs = course.id === 'phys' ? [
     { id: 'physics-content', label: 'Dərslər', icon: BookOpen },
-    { id: 'group', label: 'Qrup', icon: Layers },
+    { id: 'group', label: 'Resurslar', icon: Layers },
     { id: 'overview', label: 'Fənn haqqında', icon: User },
   ] : [
     ...(course.id === 'math' ? [{ id: 'lessons', label: 'Dərslər', icon: BookOpen }] : []),
     { id: 'overview', label: course.id === 'math' ? 'Fənn haqqında' : 'Ümumi', icon: Layers },
     ...(course.id === 'math' ? [] : [{ id: 'syllabus', label: '15 Həftəlik Plan', icon: BookOpen }]),
     { id: 'materials', label: `Materiallar (${courseMaterials.length})`, icon: FolderOpen },
-    { id: 'notes', label: `Qrup qeydləri (${courseNotes.length})`, icon: MessageSquareQuote },
     { id: 'assignments', label: `Tapşırıqlar (${courseDeadlines.length})`, icon: Clock },
-    { id: 'qa', label: `Sual-Cavab (${courseQuestions.length})`, icon: HelpCircle },
   ] as const;
 
   const handleToggleQuestion = (id: string) => {
@@ -232,6 +231,28 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
             <div 
               className="dash-poll-box" 
               style={{ cursor: 'pointer' }}
+              onClick={() => navigate('/app/calculator')}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>Qaib və Giriş Balı</span>
+                <Calculator size={14} color="var(--text-muted)" />
+              </div>
+              <span style={{ fontSize: '1.1rem', fontWeight: 700 }}>Hesabla →</span>
+            </div>
+
+            <div 
+              className="dash-poll-box"
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>ECTS Kredit Çəkisi</span>
+                <GraduationCap size={14} color="var(--text-muted)" />
+              </div>
+              <span style={{ fontSize: '1.25rem', fontWeight: 700 }}>{course.credits} Kredit</span>
+            </div>
+
+            <div 
+              className="dash-poll-box" 
+              style={{ cursor: 'pointer' }}
               onClick={() => setActiveTab('materials')}
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -244,18 +265,6 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
             <div 
               className="dash-poll-box" 
               style={{ cursor: 'pointer' }}
-              onClick={() => setActiveTab('notes')}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>Qrup qeydləri</span>
-                <MessageSquareQuote size={14} color="var(--text-muted)" />
-              </div>
-              <span style={{ fontSize: '1.25rem', fontWeight: 700 }}>{courseNotes.length}</span>
-            </div>
-
-            <div 
-              className="dash-poll-box" 
-              style={{ cursor: 'pointer' }}
               onClick={() => setActiveTab('assignments')}
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -263,18 +272,6 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                 <Clock size={14} color="var(--text-muted)" />
               </div>
               <span style={{ fontSize: '1.25rem', fontWeight: 700 }}>{courseDeadlines.length}</span>
-            </div>
-
-            <div 
-              className="dash-poll-box" 
-              style={{ cursor: 'pointer' }}
-              onClick={() => setActiveTab('qa')}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>Suallar</span>
-                <HelpCircle size={14} color="var(--text-muted)" />
-              </div>
-              <span style={{ fontSize: '1.25rem', fontWeight: 700 }}>{courseQuestions.length}</span>
             </div>
           </div>
 

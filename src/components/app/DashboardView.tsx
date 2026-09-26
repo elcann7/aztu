@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './DashboardView.css';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter } from '../../context/RouterContext';
@@ -9,10 +9,9 @@ import {
   FileText,
   Link2,
   Download,
-  MessageSquareQuote,
-  HelpCircle,
-  CheckCircle2,
-  Vote,
+  Calculator,
+  Waves,
+  BookOpen,
   ArrowRight,
   Plus,
   Terminal,
@@ -22,32 +21,58 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { SEMESTER_CONFIG, WEEKLY_SCHEDULE } from '../../data/mockData';
+import {
+  AZTU_6326A2_COURSES,
+  type StudentCourseRecord,
+  getDefaultRecords,
+  loadStudentRecords,
+  saveStudentRecords,
+  computeCourseMetrics,
+  computeSemesterSummary,
+} from '../../services/academicTracker';
 import { CreateDeadlineModal } from './modals/CreateDeadlineModal';
-import { CreateNoteModal } from './modals/CreateNoteModal';
 import { CreateMaterialModal } from './modals/CreateMaterialModal';
-import { CreatePollModal } from './modals/CreatePollModal';
-import { CreateQuestionModal } from './modals/CreateQuestionModal';
 
 export const DashboardView: React.FC = () => {
   const { user } = useAuth();
   const { navigate } = useRouter();
-  const { 
+  const {
     courses,
-    deadlines, 
-    notes, 
-    materials, 
-    polls, 
-    questions, 
+    deadlines,
+    materials,
     toggleDeadline,
-    voteInPoll, 
-    hasUserVotedInPoll,
-    getVotesForPoll,
     downloadMaterialFile,
-    getAnswersForQuestion,
   } = useDatabase();
 
   // Modals state
-  const [modalType, setModalType] = useState<'deadline' | 'note' | 'material' | 'poll' | 'question' | null>(null);
+  const [modalType, setModalType] = useState<'deadline' | 'material' | null>(null);
+
+  // Live Qaib & GPA tracker records
+  const [records, setRecords] = useState<Record<string, StudentCourseRecord>>(() =>
+    loadStudentRecords(user?.id)
+  );
+
+  useEffect(() => {
+    setRecords(loadStudentRecords(user?.id));
+  }, [user?.id]);
+
+  const adjustAbsence = (courseId: string, delta: number) => {
+    setRecords((prev) => {
+      const current = prev[courseId] || getDefaultRecords()[courseId];
+      const nextAbs = Math.max(0, current.absences + delta);
+      const next = {
+        ...prev,
+        [courseId]: {
+          ...current,
+          absences: nextAbs,
+        },
+      };
+      saveStudentRecords(next, user?.id);
+      return next;
+    });
+  };
+
+  const gpaSummary = computeSemesterSummary(records);
 
   // Timetable selected day (defaults to today: 2 = Çərşənbə axşamı)
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(SEMESTER_CONFIG.todayDayIndex);
@@ -60,49 +85,25 @@ export const DashboardView: React.FC = () => {
     { index: 5, name: 'Cümə', fullName: 'Cümə' },
   ];
 
-  const filteredSchedule = WEEKLY_SCHEDULE.filter(s => s.dayIndex === selectedDayIndex);
-  const currentProgressPercent = Math.round((SEMESTER_CONFIG.currentWeek / SEMESTER_CONFIG.totalWeeks) * 100);
+  const filteredSchedule = WEEKLY_SCHEDULE.filter((s) => s.dayIndex === selectedDayIndex);
+  const currentProgressPercent = Math.round(
+    (SEMESTER_CONFIG.currentWeek / SEMESTER_CONFIG.totalWeeks) * 100
+  );
 
   // Top 3 upcoming non-completed deadlines (sorted by nearest dueDate)
   const activeDeadlines = [...deadlines]
-    .filter(d => !d.isCompleted)
-    .sort((a, b) => new Date(`${a.dueDate}T${a.dueTime || '23:59'}`).getTime() - new Date(`${b.dueDate}T${b.dueTime || '23:59'}`).getTime())
-    .slice(0, 3);
+    .filter((d) => !d.isCompleted)
+    .sort(
+      (a, b) =>
+        new Date(`${a.dueDate}T${a.dueTime || '23:59'}`).getTime() -
+        new Date(`${b.dueDate}T${b.dueTime || '23:59'}`).getTime()
+    )
+    .slice(0, 4);
 
-  // Latest 2 notes
-  const recentNotes = [...notes]
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-    .slice(0, 2);
-
-  // Latest 3 materials
+  // Latest 4 materials
   const recentMaterials = [...materials]
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-    .slice(0, 3);
-
-  // Active poll (first from list)
-  const activePoll = polls[0] || null;
-
-  // Latest 2 questions
-  const recentQuestions = [...questions]
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-    .slice(0, 2);
-
-  const handleVote = async (pollId: string, optionId: string) => {
-    try {
-      voteInPoll(pollId, optionId);
-    } catch (err: any) {
-      alert(err.message || 'Səs verərkən xəta baş verdi');
-    }
-  };
-
-  const getCategoryLabel = (cat: string) => {
-    switch (cat) {
-      case 'teacher_said': return 'Müəllim dedi';
-      case 'exam_colloquium': return 'İmtahan/Kollokvium';
-      case 'seminar': return 'Seminar';
-      default: return 'Ümumi';
-    }
-  };
+    .slice(0, 4);
 
   return (
     <div className="dashboard-content-flow">
@@ -110,17 +111,17 @@ export const DashboardView: React.FC = () => {
       <div className="dashboard-welcome-header">
         <div>
           <h2 className="welcome-headline">Xoş gəldin, {user?.firstName || 'Tələbə'}</h2>
-          <p className="welcome-subline">6326A2 · Kompüter Mühəndisliyi · Payız Semestri</p>
+          <p className="welcome-subline">6326A2 · Kompüter Mühəndisliyi · Payız Semestri (30 ECTS)</p>
         </div>
 
         <div className="welcome-actions-row">
           <button
             type="button"
-            onClick={() => setModalType('deadline')}
+            onClick={() => navigate('/app/calculator')}
             className="btn-dash-primary"
           >
-            <Plus size={14} />
-            <span>Tapşırıq əlavə et</span>
+            <Calculator size={14} />
+            <span>Qaib və Bal Hesabla</span>
           </button>
 
           <button
@@ -144,28 +145,33 @@ export const DashboardView: React.FC = () => {
                 I Semestr (2026/2027)
               </span>
               <span className="dash-sem-date-note">
-                15 Sentyabr başlayıb · <strong>{SEMESTER_CONFIG.currentWeek}-ci Həftə, 2-ci Gün (Çərşənbə axşamı)</strong>
+                15 Sentyabr başlayıb ·{' '}
+                <strong>{SEMESTER_CONFIG.currentWeek}-ci Həftə, 2-ci Gün (Çərşənbə axşamı)</strong>
               </span>
             </div>
             <h3 className="dash-sem-title">Semestr İrəliləyişi və İmtahan Hədəfi</h3>
           </div>
           <div className="dash-sem-countdown-pill">
             <Clock size={14} />
-            <span>İmtahanlara <strong>{SEMESTER_CONFIG.daysToExam} gün</strong> qaldı</span>
+            <span>
+              İmtahanlara <strong>{SEMESTER_CONFIG.daysToExam} gün</strong> qaldı
+            </span>
           </div>
         </div>
 
         {/* Progress Bar */}
         <div className="dash-sem-progress-wrap">
           <div className="dash-sem-progress-bar-bg">
-            <div 
-              className="dash-sem-progress-bar-fill" 
-              style={{ width: `${currentProgressPercent}%` }} 
+            <div
+              className="dash-sem-progress-bar-fill"
+              style={{ width: `${currentProgressPercent}%` }}
             />
           </div>
           <div className="dash-sem-progress-labels">
             <span>Həftə 1 (15 Sent)</span>
-            <span className="dash-sem-current-step">Hazırda: Həftə {SEMESTER_CONFIG.currentWeek} ({currentProgressPercent}%)</span>
+            <span className="dash-sem-current-step">
+              Hazırda: Həftə {SEMESTER_CONFIG.currentWeek} ({currentProgressPercent}%)
+            </span>
             <span>Həftə 15 (26 Dek) · İmtahan: 5 Yanvar</span>
           </div>
         </div>
@@ -227,7 +233,7 @@ export const DashboardView: React.FC = () => {
 
           {/* Days Tabs */}
           <div className="dash-schedule-days-tabs">
-            {weekDays.map(d => (
+            {weekDays.map((d) => (
               <button
                 key={d.index}
                 type="button"
@@ -248,8 +254,10 @@ export const DashboardView: React.FC = () => {
               <p>Bu gün üçün cədvəldə dərs yoxdur (Sərbəst hazırlıq günü).</p>
             </div>
           ) : (
-            filteredSchedule.map(item => {
-              const matchedCourse = courses.find(c => c.id === item.courseId || c.slug === item.courseId);
+            filteredSchedule.map((item) => {
+              const matchedCourse = courses.find(
+                (c) => c.id === item.courseId || c.slug === item.courseId
+              );
               return (
                 <div key={item.id} className="dash-schedule-card">
                   <div className="dash-sched-time-col">
@@ -288,7 +296,7 @@ export const DashboardView: React.FC = () => {
                         className="dash-sched-goto-btn"
                         title="Fənnə keç"
                       >
-                        <span>Materiallar</span>
+                        <span>Dərsə keç</span>
                         <ArrowRight size={11} />
                       </button>
                     )}
@@ -300,19 +308,19 @@ export const DashboardView: React.FC = () => {
         </div>
       </div>
 
-      {/* 4. Academic Courses Grid (Clean 21st.dev Style) */}
+      {/* 4. Academic Courses Grid (6 Fənn · 30 ECTS) */}
       <div className="dash-courses-section">
         <div className="dash-section-meta-row">
-          <h3 className="dash-section-heading">Fənlər və Tədris Sahələri</h3>
-          <span className="dash-heading-link" onClick={() => navigate('/app/courses/math-analysis')}>
-            Bütün fənlər →
+          <h3 className="dash-section-heading">Fənlər və Tədris Sahələri (Tam 30 ECTS)</h3>
+          <span className="dash-heading-link" onClick={() => navigate('/app/calculator')}>
+            Qaib və GPA hesabla →
           </span>
         </div>
 
         <div className="dash-courses-grid">
           {courses.map((c) => {
-            const courseMaterials = materials.filter(m => m.courseId === c.id);
-            const courseDeadlines = deadlines.filter(d => d.courseId === c.id);
+            const courseMaterials = materials.filter((m) => m.courseId === c.id);
+            const courseDeadlines = deadlines.filter((d) => d.courseId === c.id);
 
             return (
               <div
@@ -341,16 +349,111 @@ export const DashboardView: React.FC = () => {
         </div>
       </div>
 
-      {/* 3. Bento Grid: 2-Column Academic Workspace Feed */}
+      {/* 5. Bento Grid: Always-Full 6326A2 Single-Player Tools & Academic Feed */}
       <div className="dash-bento-grid">
-        {/* Left Column: Deadlines & Group Notes */}
+        {/* Left Column: Live Qaib & GPA Tracker + Deadlines */}
         <div className="bento-column">
-          {/* Card: Yaxın Deadline-lar */}
+          {/* Card 1: 6326A2 Qaib Limit və GPA İzləyicisi */}
+          <div className="bento-card">
+            <div className="bento-card-header">
+              <div className="bento-title-wrap">
+                <Calculator size={15} color="#0f172a" />
+                <h3 className="bento-card-title">6326A2 Qaib Limit və GPA İzləyicisi</h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => navigate('/app/calculator')}
+                className="bento-view-all-link"
+              >
+                <span>Tam Kalkulyator</span>
+                <ArrowRight size={11} />
+              </button>
+            </div>
+
+            <div className="bento-qaib-summary-bar">
+              <div className="bento-qaib-stat">
+                <span className="bento-qaib-stat-label">Çəkili GPA (30 kr)</span>
+                <span
+                  className={`bento-qaib-stat-val ${
+                    gpaSummary.failedByAbsenceCount > 0 ? 'is-danger' : 'is-good'
+                  }`}
+                >
+                  {gpaSummary.weightedGpa.toFixed(2)} GPA
+                </span>
+              </div>
+              <div className="bento-qaib-stat">
+                <span className="bento-qaib-stat-label">Orta Giriş Balı</span>
+                <span className="bento-qaib-stat-val">{gpaSummary.averageEntryScore} / 50</span>
+              </div>
+              <div className="bento-qaib-stat">
+                <span className="bento-qaib-stat-label">Cəmi Qaib</span>
+                <span
+                  className={`bento-qaib-stat-val ${
+                    gpaSummary.failedByAbsenceCount > 0 ? 'is-danger' : ''
+                  }`}
+                >
+                  {gpaSummary.totalAbsences} dərs ({gpaSummary.totalAbsences * 2} s.)
+                </span>
+              </div>
+            </div>
+
+            <div className="bento-qaib-list">
+              {AZTU_6326A2_COURSES.map((c) => {
+                const rec = records[c.id] || getDefaultRecords()[c.id];
+                const m = computeCourseMetrics(c, rec);
+                return (
+                  <div key={c.id} className="bento-qaib-row">
+                    <div className="bento-qaib-course-info">
+                      <span className="bento-qaib-course-name">
+                        {c.shortName} ({c.credits} kr)
+                      </span>
+                      <span
+                        className={`bento-qaib-course-sub ${
+                          m.isLimitExceeded
+                            ? 'is-danger'
+                            : m.isDangerZone
+                            ? 'is-warn'
+                            : ''
+                        }`}
+                      >
+                        {m.isLimitExceeded
+                          ? `Limit aşılıb! (Max ${m.maxAbsences} qaib)`
+                          : `${m.remainingAbsences} qaib haqqı qalıb (Limit: ${m.maxAbsences}) · Giriş: ${m.entryScore}`}
+                      </span>
+                    </div>
+
+                    <div className="bento-qaib-controls">
+                      <button
+                        type="button"
+                        className="bento-qaib-btn"
+                        disabled={rec.absences <= 0}
+                        onClick={() => adjustAbsence(c.id, -1)}
+                        aria-label="Qaib azalt"
+                      >
+                        −
+                      </button>
+                      <span className="bento-qaib-count">{rec.absences} qaib</span>
+                      <button
+                        type="button"
+                        className="bento-qaib-btn"
+                        onClick={() => adjustAbsence(c.id, 1)}
+                        aria-label="Qaib artır"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Card 2: Yaxınlaşan Deadline-lar */}
           <div className="bento-card">
             <div className="bento-card-header">
               <div className="bento-title-wrap">
                 <Calendar size={15} color="#0f172a" />
-                <h3 className="bento-card-title">Yaxınlaşan Deadline-lar</h3>
+                <h3 className="bento-card-title">Yaxınlaşan Kollokvium və Tapşırıqlar</h3>
               </div>
               <button
                 type="button"
@@ -364,20 +467,20 @@ export const DashboardView: React.FC = () => {
 
             {activeDeadlines.length === 0 ? (
               <div className="bento-compact-empty">
-                <p>Yaxınlaşan deadline yoxdur.</p>
+                <p>Yaxınlaşan aktiv tapşırıq yoxdur.</p>
                 <button
                   type="button"
                   onClick={() => setModalType('deadline')}
                   className="bento-empty-btn"
                 >
                   <Plus size={12} />
-                  <span>Əlavə et</span>
+                  <span>Tapşırıq əlavə et</span>
                 </button>
               </div>
             ) : (
               <div className="bento-items-list">
                 {activeDeadlines.map((dl) => {
-                  const course = courses.find(c => c.id === dl.courseId);
+                  const course = courses.find((c) => c.id === dl.courseId);
                   const status = computeDeadlineStatus(dl.dueDate, dl.dueTime);
 
                   return (
@@ -390,7 +493,9 @@ export const DashboardView: React.FC = () => {
                       />
                       <div className="bento-row-main">
                         <div className="bento-row-tags">
-                          <span className="bento-subject-badge">{course?.name || dl.courseId}</span>
+                          <span className="bento-subject-badge">
+                            {course?.name || dl.courseId}
+                          </span>
                           <span className="bento-date-badge">
                             {new Date(`${dl.dueDate}T12:00:00`).toLocaleDateString('az-AZ', {
                               day: 'numeric',
@@ -401,7 +506,11 @@ export const DashboardView: React.FC = () => {
                         <span className="bento-row-name">{dl.title}</span>
                       </div>
                       <div className="bento-row-status">
-                        <span className={`bento-urgency-pill ${status.isUrgent || status.isOverdue ? 'is-urgent' : ''}`}>
+                        <span
+                          className={`bento-urgency-pill ${
+                            status.isUrgent || status.isOverdue ? 'is-urgent' : ''
+                          }`}
+                        >
                           {status.label}
                         </span>
                       </div>
@@ -411,207 +520,88 @@ export const DashboardView: React.FC = () => {
               </div>
             )}
           </div>
-
-          {/* Card: Son Qrup Qeydləri */}
-          <div className="bento-card">
-            <div className="bento-card-header">
-              <div className="bento-title-wrap">
-                <MessageSquareQuote size={15} color="#0f172a" />
-                <h3 className="bento-card-title">Son Qrup Qeydləri</h3>
-              </div>
-              <button
-                type="button"
-                onClick={() => navigate('/app/notes')}
-                className="bento-view-all-link"
-              >
-                <span>Bütün qeydlər ({notes.length})</span>
-                <ArrowRight size={11} />
-              </button>
-            </div>
-
-            {recentNotes.length === 0 ? (
-              <div className="bento-compact-empty">
-                <p>Qrupda hələ qeyd paylaşılmayıb.</p>
-                <button
-                  type="button"
-                  onClick={() => setModalType('note')}
-                  className="bento-empty-btn"
-                >
-                  <Plus size={12} />
-                  <span>Qeyd yaz</span>
-                </button>
-              </div>
-            ) : (
-              <div className="bento-items-list">
-                {recentNotes.map((note) => {
-                  const course = courses.find(c => c.id === note.courseId);
-                  return (
-                    <div key={note.id} className="bento-note-item">
-                      <div className={`bento-note-accent ${note.category}`} />
-                      <div className="bento-note-body">
-                        <div className="bento-note-top">
-                          <span className="bento-subject-badge">{course?.name || note.courseId}</span>
-                          <span className="bento-note-cat">{getCategoryLabel(note.category)}</span>
-                          <span className="bento-time-text">
-                            {new Date(note.createdAt).toLocaleDateString('az-AZ', {
-                              day: 'numeric',
-                              month: 'short',
-                            })}
-                          </span>
-                        </div>
-                        <p className="bento-quote-text">"{note.content}"</p>
-                        <span className="bento-author-text">{note.authorName} tərəfindən</span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
         </div>
 
-        {/* Right Column: Live Poll, Q&A & Materials */}
+        {/* Right Column: Interactive Labs & Materials */}
         <div className="bento-column">
-          {/* Card: Aktiv Sorğu */}
+          {/* Card 3: İnteraktiv Laboratoriyalar və Dərs Bələdçiləri */}
           <div className="bento-card">
             <div className="bento-card-header">
               <div className="bento-title-wrap">
-                <Vote size={15} color="#0f172a" />
-                <h3 className="bento-card-title">Aktiv Qrup Sorğusu</h3>
+                <Terminal size={15} color="#0f172a" />
+                <h3 className="bento-card-title">İnteraktiv Laboratoriya və Hazırlıq Mərkəzi</h3>
               </div>
-              <button
-                type="button"
-                onClick={() => navigate('/app/polls')}
-                className="bento-view-all-link"
-              >
-                <span>Sorğular ({polls.length})</span>
-                <ArrowRight size={11} />
-              </button>
             </div>
 
-            {!activePoll ? (
-              <div className="bento-compact-empty">
-                <p>Hazırda aktiv sorğu yoxdur.</p>
-                <button
-                  type="button"
-                  onClick={() => setModalType('poll')}
-                  className="bento-empty-btn"
-                >
-                  <Plus size={12} />
-                  <span>Yeni sorğu</span>
-                </button>
-              </div>
-            ) : (
-              <div className="bento-poll-content">
-                <h4 className="bento-poll-title">{activePoll.question}</h4>
-                <div className="bento-poll-meta">
-                  <span>{activePoll.authorName} tərəfindən</span>
-                  <span>•</span>
-                  <span>{getVotesForPoll(activePoll.id).length} səs</span>
-                </div>
-
-                <div className="bento-poll-options">
-                  {activePoll.options.map((opt) => {
-                    const votes = getVotesForPoll(activePoll.id);
-                    const totalVotes = votes.length;
-                    const optVotes = votes.filter(v => v.optionId === opt.id).length;
-                    const pct = totalVotes > 0 ? Math.round((optVotes / totalVotes) * 100) : 0;
-                    const isVoted = hasUserVotedInPoll(activePoll.id) && votes.some(v => v.userId === user?.id && v.optionId === opt.id);
-
-                    return (
-                      <div
-                        key={opt.id}
-                        onClick={() => handleVote(activePoll.id, opt.id)}
-                        className={`bento-poll-opt-btn ${isVoted ? 'is-voted' : ''}`}
-                      >
-                        <div className="bento-opt-text-row">
-                          <span>{opt.text}</span>
-                          <span className="bento-pct-text">{pct}%</span>
-                        </div>
-                        <div className="bento-poll-progress-bg">
-                          <div
-                            className="bento-poll-progress-fill"
-                            style={{ width: `${pct}%` }}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Card: Son Sual-Cavab */}
-          <div className="bento-card">
-            <div className="bento-card-header">
-              <div className="bento-title-wrap">
-                <HelpCircle size={15} color="#0f172a" />
-                <h3 className="bento-card-title">Sual-Cavab</h3>
-              </div>
-              <button
-                type="button"
-                onClick={() => navigate('/app/qa')}
-                className="bento-view-all-link"
+            <div className="bento-lab-list">
+              <div
+                className="bento-lab-item"
+                onClick={() => navigate('/app/sandbox')}
               >
-                <span>Hamısı ({questions.length})</span>
-                <ArrowRight size={11} />
-              </button>
+                <div className="bento-lab-main">
+                  <span className="bento-lab-title">
+                    CS-101 · Python 3.12 + Pandas Brauzer Sandbox-u
+                  </span>
+                  <span className="bento-lab-desc">
+                    Müəl. Ayxan Həsənov və Müəl. Şəbnəm İsgəndərlinin dərsləri üzrə hazır seminar və laboratoriya şablonları.
+                  </span>
+                </div>
+                <ArrowRight size={14} color="#64748b" />
+              </div>
+
+              <div
+                className="bento-lab-item"
+                onClick={() => navigate('/app/courses/math-analysis')}
+              >
+                <div className="bento-lab-main">
+                  <span className="bento-lab-title">
+                    MATH-101 · Riyazi Analiz Mühazirələr, Test və ε-Ətrafı Lab
+                  </span>
+                  <span className="bento-lab-desc">
+                    Çoxluqlar, həqiqi ədədlər, supremum/infimum simulyatoru, özünü yoxlama testləri və AI köməkçi.
+                  </span>
+                </div>
+                <ArrowRight size={14} color="#64748b" />
+              </div>
+
+              <div
+                className="bento-lab-item"
+                onClick={() => navigate('/app/courses/physics')}
+              >
+                <div className="bento-lab-main">
+                  <span className="bento-lab-title">
+                    İF-20403y · Fizika 8 Mühazirə + 7 Laboratoriya PDF Bələdçisi
+                  </span>
+                  <span className="bento-lab-desc">
+                    Dos. Sürəyya Məmmədovanın təqdimatları, laboratoriya hesablamaları və daxili PDF oxuyucu.
+                  </span>
+                </div>
+                <BookOpen size={14} color="#64748b" />
+              </div>
+
+              <div
+                className="bento-lab-item"
+                onClick={() => navigate('/app/water')}
+              >
+                <div className="bento-lab-main">
+                  <span className="bento-lab-title">
+                    Fizika · 2D Sönümlü Dalğa və Su Simulyasiyası
+                  </span>
+                  <span className="bento-lab-desc">
+                    Dalğa interferensiyası, maneələrdən əksolunma və rəqs tənliyinin interaktiv laboratoriyası.
+                  </span>
+                </div>
+                <Waves size={14} color="#64748b" />
+              </div>
             </div>
-
-            {recentQuestions.length === 0 ? (
-              <div className="bento-compact-empty">
-                <p>Hələ sual verilməyib.</p>
-                <button
-                  type="button"
-                  onClick={() => setModalType('question')}
-                  className="bento-empty-btn"
-                >
-                  <Plus size={12} />
-                  <span>Sual ver</span>
-                </button>
-              </div>
-            ) : (
-              <div className="bento-items-list">
-                {recentQuestions.map((q) => {
-                  const course = courses.find(c => c.id === q.courseId);
-                  const answers = getAnswersForQuestion(q.id);
-                  const hasAccepted = answers.some(a => a.isAccepted);
-
-                  return (
-                    <div
-                      key={q.id}
-                      className="bento-qa-row"
-                      onClick={() => navigate('/app/qa')}
-                    >
-                      <div className="bento-qa-main">
-                        <div className="bento-row-tags">
-                          <span className="bento-subject-badge">{course?.name || q.courseId}</span>
-                          {hasAccepted && (
-                            <span className="bento-resolved-badge">
-                              <CheckCircle2 size={10} />
-                              Həll olundu
-                            </span>
-                          )}
-                        </div>
-                        <span className="bento-row-name">{q.title}</span>
-                      </div>
-                      <span className="bento-answers-count">
-                        {answers.length} cavab
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
           </div>
 
-          {/* Card: Son Materiallar */}
+          {/* Card 4: Son Materiallar */}
           <div className="bento-card">
             <div className="bento-card-header">
               <div className="bento-title-wrap">
                 <FileText size={15} color="#0f172a" />
-                <h3 className="bento-card-title">Son Materiallar</h3>
+                <h3 className="bento-card-title">Akademik Materiallar və Dərsliklər</h3>
               </div>
               <button
                 type="button"
@@ -625,7 +615,7 @@ export const DashboardView: React.FC = () => {
 
             {recentMaterials.length === 0 ? (
               <div className="bento-compact-empty">
-                <p>Hələ material paylaşılmayıb.</p>
+                <p>Hələ əlavə fayl yüklənməyib.</p>
                 <button
                   type="button"
                   onClick={() => setModalType('material')}
@@ -638,10 +628,14 @@ export const DashboardView: React.FC = () => {
             ) : (
               <div className="bento-items-list">
                 {recentMaterials.map((mat) => {
-                  const course = courses.find(c => c.id === mat.courseId);
+                  const course = courses.find((c) => c.id === mat.courseId);
                   return (
                     <div key={mat.id} className="bento-material-row">
-                      <div className={`bento-mat-icon ${mat.type === 'file' ? 'is-file' : 'is-link'}`}>
+                      <div
+                        className={`bento-mat-icon ${
+                          mat.type === 'file' ? 'is-file' : 'is-link'
+                        }`}
+                      >
                         {mat.type === 'file' ? <FileText size={13} /> : <Link2 size={13} />}
                       </div>
                       <div className="bento-row-main">
@@ -684,20 +678,8 @@ export const DashboardView: React.FC = () => {
         isOpen={modalType === 'deadline'}
         onClose={() => setModalType(null)}
       />
-      <CreateNoteModal
-        isOpen={modalType === 'note'}
-        onClose={() => setModalType(null)}
-      />
       <CreateMaterialModal
         isOpen={modalType === 'material'}
-        onClose={() => setModalType(null)}
-      />
-      <CreatePollModal
-        isOpen={modalType === 'poll'}
-        onClose={() => setModalType(null)}
-      />
-      <CreateQuestionModal
-        isOpen={modalType === 'question'}
         onClose={() => setModalType(null)}
       />
     </div>

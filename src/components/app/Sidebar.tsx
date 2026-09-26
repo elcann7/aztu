@@ -1,18 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Sidebar.css';
 import { useRouter, Link } from '../../context/RouterContext';
 import { useAuth } from '../../context/AuthContext';
 import {
   Bookmark,
   Home,
+  Calculator,
   Terminal,
   Waves,
-  MessageSquareQuote,
-  HelpCircle,
-  Vote,
   FolderOpen,
   Calendar,
-  ChevronDown,
   LogOut,
   X,
 } from 'lucide-react';
@@ -26,7 +23,6 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenProfile }) => {
   const { currentPath, navigate } = useRouter();
   const { user, logout } = useAuth();
-  const [toolsMenuState, setToolsMenuState] = useState<{ path: string; open: boolean } | null>(null);
 
   const handleLogout = () => {
     logout();
@@ -38,19 +34,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenProfile
     { name: 'Xətti cəbr', path: '/app/courses/linear-algebra', code: 'MATH-102' },
     { name: 'Fizika', path: '/app/courses/physics', code: 'İF-20403y' },
     { name: 'Proqramlaşdırma-1', path: '/app/courses/programming', code: 'CS-101' },
-    { name: 'Xarici dildə işgüzar kom. -1', path: '/app/courses/english', code: 'ENG-101' },
-    { name: 'Azərbaycan dildə işgüzar kom.', path: '/app/courses/azerbaijani', code: 'AZE-101' },
+    { name: 'XDİAK (İngilis dili)', path: '/app/courses/english', code: 'ENG-101' },
+    { name: 'ADİAK (Azərbaycan dili)', path: '/app/courses/azerbaijani', code: 'AZE-101' },
   ];
 
-  const navSections = [
-    { name: 'Qrup qeydləri', path: '/app/notes', icon: MessageSquareQuote },
-    { name: 'Sual-Cavab', path: '/app/qa', icon: HelpCircle },
-    { name: 'Sorğular', path: '/app/polls', icon: Vote },
-    { name: 'Materiallar', path: '/app/materials', icon: FolderOpen },
-    { name: 'Deadline-lar', path: '/app/deadlines', icon: Calendar },
+  const toolSections = [
+    { name: 'Qaib və Bal Hesabla', path: '/app/calculator', icon: Calculator },
+    { name: 'Python Sandbox', path: '/app/sandbox', icon: Terminal },
+    { name: 'Su simulyasiyası', path: '/app/water', icon: Waves },
+    { name: 'Materiallar və PDF', path: '/app/materials', icon: FolderOpen },
+    { name: 'Kollokvium & Deadline', path: '/app/deadlines', icon: Calendar },
   ];
-  const toolsActive = ['/app/sandbox', '/app/water', ...navSections.map((section) => section.path)].includes(currentPath);
-  const showTools = toolsMenuState?.path === currentPath ? toolsMenuState.open : toolsActive;
 
   return (
     <>
@@ -91,14 +85,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenProfile
             onClick={onClose}
           >
             <Home size={15} className="nav-icon" />
-            <span className="nav-label">Əsas</span>
+            <span className="nav-label">Əsas Lövhə</span>
           </Link>
 
           <div className="nav-divider" />
 
           {/* 2. Courses Group */}
           <div className="nav-group">
-            <span className="nav-group-header">FƏNLƏR</span>
+            <span className="nav-group-header">FƏNLƏR (30 ECTS)</span>
             <div className="nav-group-items">
               {courses.map((c) => {
                 const isActive = currentPath === c.path;
@@ -119,19 +113,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenProfile
 
           <div className="nav-divider" />
 
-          {/* 3. Secondary tools stay available behind one disclosure. */}
-          <div className={`sidebar-tools ${showTools ? 'is-open' : ''}`}>
-            <button type="button" className="sidebar-tools-toggle" aria-expanded={showTools} onClick={() => setToolsMenuState({ path: currentPath, open: !showTools })}>
-              <span>Qrup və alətlər</span><ChevronDown size={15} aria-hidden="true" />
-            </button>
-            {showTools && <div className="nav-group-items">
-              <Link to="/app/sandbox" className={`nav-entry ${currentPath === '/app/sandbox' ? 'is-active' : ''}`} onClick={onClose}>
-                <Terminal size={15} className="nav-icon" /><span className="nav-label">Python Sandbox</span>
-              </Link>
-              <Link to="/app/water" className={`nav-entry ${currentPath === '/app/water' ? 'is-active' : ''}`} onClick={onClose}>
-                <Waves size={15} className="nav-icon" /><span className="nav-label">Su simulyasiyası</span>
-              </Link>
-              {navSections.map((sec) => {
+          {/* 3. Always-Ready 6326A2 Tools & Resources */}
+          <div className="nav-group">
+            <span className="nav-group-header">ALƏTLƏR VƏ BAZA</span>
+            <div className="nav-group-items">
+              {toolSections.map((sec) => {
                 const isActive = currentPath === sec.path;
                 const Icon = sec.icon;
                 return (
@@ -146,7 +132,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenProfile
                   </Link>
                 );
               })}
-            </div>}
+            </div>
           </div>
         </nav>
 

@@ -233,3 +233,13 @@ Hər bir fənn portalında:
 - Hər mövzuda təriflər, formulalar, işlənmiş nümunə, altı izahlı test sualı və yazılı isbat məşqi var. Test nəticəsi istifadəçinin brauzerində saxlanır.
 - İnteraktiv laboratoriyalar: sonlu çoxluqlarla Ven diaqramı, açıq/qapalı/ardıcıllıq çoxluğunun sərhədləri, həqiqi ədəd oxunda ε-qonşuluğu.
 - Hər mühazirənin AI bölməsi yalnız həmin mövzuya bağlanan söhbətdir. Cavablar Vercel `/api/lecture-chat` funksiyası ilə `gemini-3.1-flash-lite` modelindən alınır. Son mesajlar bu tabın yaddaşında saxlanır və tələbə söhbəti təmizləyə bilir. AI cavabları köməkçi izahdır və müəllim qeydi deyil.
+
+---
+
+## 17. 6326A2 Qaib Limit, Giriş Balı və 30 ECTS GPA Kalkulyatoru
+- `/app/calculator` marşrutunda və Əsas Lövhədə (`/app`) işləyən, başqa tələbələrin aktivliyindən asılı olmayan fərdi akademik izləyici.
+- **Tam 30 ECTS Bologna Sistemi**: Proqramlaşdırma-1 (8 kr, Forma-2), Riyazi analiz-1 (7 kr, Forma-1), Xətti cəbr (4 kr, Forma-1), ADİAK (4 kr, Forma-1), XDİAK (4 kr, Forma-1) və Fizika (3 kr, Forma-2).
+- **25% Qaib Həddi İzləyicisi**: Hər fənn üçün dərs saatına (`30/45/60/75/90 saat`) uyğun maksimum qaib cütü, qalan qaib haqqı və 10 ballıq şkala üzrə avtomatik davamiyyət balı.
+- **Kollokvium Çeviricisi**: 10 ballıq şkaladakı 3 kollokvium və cari seminar ortalamasını birbaşa Forma-1 (30 bal) və Forma-2 (20 bal) şkalasına çevirir.
+- **İmtahan Hədəf Cədvəli**: Cari giriş balına görə 51 (E), 71 (C - Təqaüd), 81 (B) və 91 (A - Əlaçı) almaq üçün imtahanda minimum neçə bal lazım olduğunu göstərir.
+

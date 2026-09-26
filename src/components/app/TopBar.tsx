@@ -31,14 +31,14 @@ export const TopBar: React.FC<TopBarProps> = ({ title, onToggleMobileMenu, onOpe
       </div>
 
       <div className="topbar-right">
-        <button type="button" className="topbar-search-box" onClick={onOpenSearch} aria-label="Qrupda axtar">
+        <button type="button" className="topbar-search-box" onClick={onOpenSearch} aria-label="Platformada axtar">
           <Search size={14} className="search-icon" />
-          <span className="search-input">Qeyd, sual və material axtar...</span>
+          <span className="search-input">Fənn, qaib kalkulyatoru, lab və ya material axtar...</span>
           <kbd className="search-shortcut">Ctrl K</kbd>
         </button>
-        <button type="button" className="topbar-share-btn" onClick={onOpenQuickShare} aria-label="Qrupla paylaş">
+        <button type="button" className="topbar-share-btn" onClick={onOpenQuickShare} aria-label="Sürətli əməliyyat">
           <Plus size={15} />
-          <span>Paylaş</span>
+          <span>Əlavə et</span>
         </button>
 
         {/* User Profile Avatar Trigger */}

@@ -1,0 +1,654 @@
+/* ==========================================================================
+   AzTU 6326A2 — Qaib Limit, Giriş Balı və 30 ECTS GPA Kalkulyatoru
+   Təmiz, Mat Akademik Kağız Dizaynı (#ffffff / #f8fafc) — Neon və Parıltı Yoxdur
+   ========================================================================== */
+
+.calc-view-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding-bottom: 48px;
+}
+
+/* 1. Top Summary Banner */
+.calc-summary-banner {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.calc-banner-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.calc-banner-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.calc-group-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background-color: #f1f5f9;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+.calc-bologna-pill {
+  font-size: 12px;
+  color: #475569;
+  font-weight: 500;
+}
+
+.calc-banner-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.02em;
+}
+
+.calc-banner-subtitle {
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.calc-preset-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.calc-preset-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1e293b;
+  background-color: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.calc-preset-btn:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.calc-preset-btn.is-primary {
+  background-color: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+}
+
+.calc-preset-btn.is-primary:hover {
+  background-color: #1e293b;
+}
+
+/* KPI Grid inside Banner */
+.calc-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.calc-kpi-card {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.calc-kpi-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.calc-kpi-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.calc-kpi-sub {
+  font-size: 12px;
+  color: #475569;
+  font-weight: 500;
+}
+
+.calc-kpi-card.status-good {
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.calc-kpi-card.status-good .calc-kpi-value {
+  color: #166534;
+}
+
+.calc-kpi-card.status-warn {
+  background-color: #fffbeb;
+  border-color: #fde68a;
+}
+
+.calc-kpi-card.status-warn .calc-kpi-value {
+  color: #92400e;
+}
+
+.calc-kpi-card.status-danger {
+  background-color: #fef2f2;
+  border-color: #fecaca;
+}
+
+.calc-kpi-card.status-danger .calc-kpi-value {
+  color: #991b1b;
+}
+
+/* 2. Quick Colloquium Converter Box */
+.calc-converter-bar {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.calc-conv-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.calc-conv-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.calc-conv-desc {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.calc-conv-inputs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.calc-conv-field {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.calc-conv-field input {
+  width: 52px;
+  padding: 5px 7px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: #0f172a;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.calc-conv-results {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.calc-conv-badge {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+}
+
+/* 3. Courses Grid (6 Cards) */
+.calc-courses-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.calc-course-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: border-color 0.15s ease;
+}
+
+.calc-course-card.is-danger {
+  border-color: #fca5a5;
+  background-color: #fffafa;
+}
+
+.calc-course-card.is-warn {
+  border-color: #fcd34d;
+}
+
+.calc-course-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.calc-course-meta-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+  flex-wrap: wrap;
+}
+
+.calc-code-tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 5px;
+  background-color: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+}
+
+.calc-credit-tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 5px;
+  background-color: #f8fafc;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+.calc-form-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 5px;
+  background-color: #f8fafc;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+.calc-course-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 3px 0;
+}
+
+.calc-course-lecturer {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0;
+}
+
+.calc-grade-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 6px 11px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  min-width: 78px;
+}
+
+.calc-grade-badge.grade-A,
+.calc-grade-badge.grade-B {
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+
+.calc-grade-badge.grade-C,
+.calc-grade-badge.grade-D,
+.calc-grade-badge.grade-E {
+  background-color: #fffbeb;
+  border-color: #fde68a;
+  color: #92400e;
+}
+
+.calc-grade-badge.grade-F {
+  background-color: #fef2f2;
+  border-color: #fecaca;
+  color: #991b1b;
+}
+
+.calc-grade-score {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.calc-grade-letter {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Warning Banner on Course Card */
+.calc-course-note {
+  font-size: 12px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  background-color: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #92400e;
+  line-height: 1.4;
+}
+
+/* Absence Tracker Block */
+.calc-absence-box {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.calc-absence-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.calc-absence-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.calc-absence-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.calc-absence-sub {
+  font-size: 11.5px;
+  color: #64748b;
+}
+
+.calc-absence-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.calc-hours-select {
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 4px 7px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background-color: #ffffff;
+  color: #334155;
+}
+
+.calc-stepper {
+  display: inline-flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.calc-step-btn {
+  width: 30px;
+  height: 28px;
+  border: none;
+  background-color: transparent;
+  color: #0f172a;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calc-step-btn:hover:not(:disabled) {
+  background-color: #f1f5f9;
+}
+
+.calc-step-btn:disabled {
+  color: #cbd5e1;
+  cursor: not-allowed;
+}
+
+.calc-step-val {
+  min-width: 58px;
+  text-align: center;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0f172a;
+  border-left: 1px solid #e2e8f0;
+  border-right: 1px solid #e2e8f0;
+  padding: 0 6px;
+}
+
+.calc-absence-bar-bg {
+  width: 100%;
+  height: 7px;
+  background-color: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.calc-absence-bar-fill {
+  height: 100%;
+  background-color: #0f172a;
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}
+
+.calc-absence-bar-fill.is-warn {
+  background-color: #d97706;
+}
+
+.calc-absence-bar-fill.is-danger {
+  background-color: #dc2626;
+}
+
+.calc-absence-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.calc-status-ok {
+  color: #166534;
+}
+
+.calc-status-warn {
+  color: #b45309;
+}
+
+.calc-status-danger {
+  color: #b91c1c;
+}
+
+/* Pre-Exam & Exam Inputs */
+.calc-inputs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.calc-input-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.calc-input-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.calc-input-max {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.calc-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.calc-input-row input[type='range'] {
+  flex: 1;
+  accent-color: #0f172a;
+  cursor: pointer;
+}
+
+.calc-num-input {
+  width: 48px;
+  padding: 3px 5px;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0f172a;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+/* Needed in Exam Footer */
+.calc-needed-footer {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.calc-entry-summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.calc-needed-pills {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.calc-target-pill {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 5px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1px;
+}
+
+.calc-target-name {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.calc-target-val {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+@media (max-width: 960px) {
+  .calc-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .calc-courses-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .calc-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+  .calc-inputs-grid {
+    grid-template-columns: 1fr;
+  }
+  .calc-needed-pills {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
