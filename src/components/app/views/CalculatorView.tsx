@@ -299,6 +299,9 @@ export const CalculatorView: React.FC = () => {
                     <span className="calc-credit-tag">
                       {course.credits} Kredit ({course.gpaWeightPercent}%)
                     </span>
+                    <span className="calc-form-tag">
+                      {course.totalHours} saat · Həftədə {course.weeklyHours} s.
+                    </span>
                     <span className="calc-form-tag">{course.form}</span>
                   </div>
                   <h3 className="calc-course-name">{course.name}</h3>
@@ -323,26 +326,11 @@ export const CalculatorView: React.FC = () => {
                       Qaib İzləyicisi (Limit: max {metrics.maxAbsences} dərs / {metrics.maxAbsences * 2} saat)
                     </span>
                     <span className="calc-absence-sub">
-                      Cəmi {rec.totalHours} saat ({metrics.totalClasses} dərs cütü) · 25% kəsilmə həddi
+                      Rəsmi KOICA norması: {course.totalHours} saat (həftədə {course.weeklyHours} s. · {metrics.totalClasses} dərs cütü) · 25% limit
                     </span>
                   </div>
 
                   <div className="calc-absence-controls">
-                    <select
-                      className="calc-hours-select"
-                      value={rec.totalHours}
-                      onChange={(e) =>
-                        updateRecord(course.id, { totalHours: Number(e.target.value) })
-                      }
-                      title="Fənnin ümumi saatı"
-                    >
-                      <option value={30}>30 saat</option>
-                      <option value={45}>45 saat</option>
-                      <option value={60}>60 saat</option>
-                      <option value={75}>75 saat</option>
-                      <option value={90}>90 saat</option>
-                    </select>
-
                     <div className="calc-stepper">
                       <button
                         type="button"

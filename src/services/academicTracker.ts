@@ -13,7 +13,8 @@ export interface CourseAcademicConfig {
   credits: number;
   gpaWeightPercent: number;
   form: GradingForm;
-  defaultTotalHours: number; // 30, 45, 60, 75, 90
+  totalHours: number; // KOICA rəsmi saatı: 75, 45 və ya 30
+  weeklyHours: number; // Həftəlik dərs saatı: 5, 3 və ya 2
   lecturer: string;
   warningNote?: string;
   defaultSeminar: number;
@@ -53,15 +54,16 @@ export interface ComputedCourseMetrics {
 export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
   {
     id: 'prog',
-    code: 'CS-101',
+    code: 'İf-61125y',
     name: 'Proqramlaşdırmanın əsasları-1',
     shortName: 'Proqramlaşdırma-1',
     slug: 'programming',
     credits: 8,
     gpaWeightPercent: 26.7,
     form: 'Forma-2',
-    defaultTotalHours: 90,
-    lecturer: 'Dos. Füzuli Əzimov / Müəl. Ayxan Həsənov / Müəl. Şəbnəm İsgəndərli',
+    totalHours: 75,
+    weeklyHours: 5,
+    lecturer: 'Dos. Fizuli Əzimov / Müəl. Ayxan Həsənov / Müəl. Şəbnəm İsgəndərli',
     defaultSeminar: 19,
     defaultLab: 10,
     defaultIndependent: 10,
@@ -69,14 +71,15 @@ export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
   },
   {
     id: 'math',
-    code: 'MATH-101',
-    name: 'Riyazi analiz-1',
+    code: 'İf-61115y',
+    name: 'Riyazi analiz - 1',
     shortName: 'Riyazi analiz-1',
     slug: 'math-analysis',
     credits: 7,
     gpaWeightPercent: 23.3,
     form: 'Forma-1',
-    defaultTotalHours: 75,
+    totalHours: 75,
+    weeklyHours: 5,
     lecturer: 'Dos. Nizami Şıxəliyev / Müəl. Şamil Talıblı',
     defaultSeminar: 26,
     defaultLab: 0,
@@ -85,14 +88,15 @@ export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
   },
   {
     id: 'algebra',
-    code: 'MATH-102',
+    code: 'İf-61119y',
     name: 'Xətti cəbr',
     shortName: 'Xətti cəbr',
     slug: 'linear-algebra',
     credits: 4,
     gpaWeightPercent: 13.3,
     form: 'Forma-1',
-    defaultTotalHours: 60,
+    totalHours: 45,
+    weeklyHours: 3,
     lecturer: 'Dos. Rəna Əmirova / Müəl. Çingiz Ələkbərov',
     defaultSeminar: 26,
     defaultLab: 0,
@@ -101,14 +105,15 @@ export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
   },
   {
     id: 'aze',
-    code: 'AZE-101',
+    code: 'Üf-71706y',
     name: 'Azərbaycan dilində işgüzar və akademik kommunikasiya',
     shortName: 'ADİAK (Azərb. dili)',
     slug: 'azerbaijani',
     credits: 4,
     gpaWeightPercent: 13.3,
     form: 'Forma-1',
-    defaultTotalHours: 45,
+    totalHours: 45,
+    weeklyHours: 3,
     lecturer: 'Müəl. Nərminə İsayeva',
     defaultSeminar: 28,
     defaultLab: 0,
@@ -118,13 +123,14 @@ export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
   {
     id: 'eng',
     code: 'ENG-101',
-    name: 'Xarici dildə işgüzar və akademik kommunikasiya -1',
+    name: 'Xarici dildə işgüzar və akademik kommunikasiya - 1',
     shortName: 'XDİAK (İngilis dili)',
     slug: 'english',
     credits: 4,
     gpaWeightPercent: 13.3,
     form: 'Forma-1',
-    defaultTotalHours: 45,
+    totalHours: 45,
+    weeklyHours: 3,
     lecturer: 'Müəl. Dilarə Həmidova',
     warningNote: 'Müəllim qaibləri kağız jurnala yazır və sistemə sonradan vurulur — qaib almaq olmaz!',
     defaultSeminar: 27,
@@ -134,16 +140,17 @@ export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
   },
   {
     id: 'phys',
-    code: 'İF-20403y',
+    code: 'İf-20403y',
     name: 'Fizika',
     shortName: 'Fizika',
     slug: 'physics',
     credits: 3,
     gpaWeightPercent: 10.0,
     form: 'Forma-2',
-    defaultTotalHours: 30,
+    totalHours: 30,
+    weeklyHours: 2,
     lecturer: 'Dos. Sürəyya Məmmədova',
-    warningNote: '30 saatlıq fəndir: cəmi 3 dərs (6 saat) qaib haqqı var, 4-cü qaibdə imtahana buraxılmır!',
+    warningNote: '30 saatlıq fəndir (həftədə 2 saat): cəmi 3 dərs (6 saat) qaib haqqı var, 4-cü qaibdə kəsilir!',
     defaultSeminar: 17,
     defaultLab: 9,
     defaultIndependent: 9,
@@ -151,14 +158,14 @@ export const AZTU_6326A2_COURSES: CourseAcademicConfig[] = [
   },
 ];
 
-const STORAGE_PREFIX = 'aztu_6326a2_academic_tracker_v1';
+const STORAGE_PREFIX = 'aztu_6326a2_academic_tracker_v2';
 
 export function getDefaultRecords(): Record<string, StudentCourseRecord> {
   const map: Record<string, StudentCourseRecord> = {};
   for (const c of AZTU_6326A2_COURSES) {
     map[c.id] = {
       courseId: c.id,
-      totalHours: c.defaultTotalHours,
+      totalHours: c.totalHours,
       absences: 0,
       seminarScore: c.defaultSeminar,
       labScore: c.defaultLab,
@@ -182,6 +189,7 @@ export function loadStudentRecords(userId?: string): Record<string, StudentCours
         merged[c.id] = {
           ...defaults[c.id],
           ...parsed[c.id],
+          totalHours: c.totalHours, // Rəsmi KOICA saatı həmişə sabit qalır
         };
       }
     }
@@ -207,9 +215,9 @@ export function computeCourseMetrics(
   config: CourseAcademicConfig,
   record: StudentCourseRecord
 ): ComputedCourseMetrics {
-  const totalHours = Math.max(15, record.totalHours || config.defaultTotalHours);
+  const totalHours = config.totalHours;
   const totalClasses = Math.floor(totalHours / 2);
-  // AzTU 25% qaib limiti (dərs cütü ilə)
+  // AzTU 25% qaib limiti (dərs cütü ilə: 75s -> 9 qaib, 45s -> 5 qaib, 30s -> 3 qaib)
   const maxAbsences = Math.floor((totalHours * 0.25) / 2);
   const absences = Math.max(0, record.absences);
   const remainingAbsences = Math.max(0, maxAbsences - absences);

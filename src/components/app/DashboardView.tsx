@@ -405,7 +405,7 @@ export const DashboardView: React.FC = () => {
                   <div key={c.id} className="bento-qaib-row">
                     <div className="bento-qaib-course-info">
                       <span className="bento-qaib-course-name">
-                        {c.shortName} ({c.credits} kr)
+                        {c.shortName} ({c.credits} kr · {c.totalHours} saat)
                       </span>
                       <span
                         className={`bento-qaib-course-sub ${
@@ -417,7 +417,7 @@ export const DashboardView: React.FC = () => {
                         }`}
                       >
                         {m.isLimitExceeded
-                          ? `Limit aşılıb! (Max ${m.maxAbsences} qaib)`
+                          ? `Limit aşılıb! (Max ${m.maxAbsences} qaib / ${m.maxAbsences * 2} s.)`
                           : `${m.remainingAbsences} qaib haqqı qalıb (Limit: ${m.maxAbsences}) · Giriş: ${m.entryScore}`}
                       </span>
                     </div>
