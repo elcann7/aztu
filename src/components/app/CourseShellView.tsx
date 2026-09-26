@@ -63,11 +63,25 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
   const { user } = useAuth();
   const { navigate } = useRouter();
 
-  const [activeTab, setActiveTab] = useState<'overview' | 'syllabus' | 'lessons' | 'physics-content' | 'materials' | 'notes' | 'assignments' | 'qa'>(
-    courseSlug === 'math-analysis' ? 'lessons' : courseSlug === 'physics' ? 'physics-content' : 'overview',
+  const getDefaultTab = (slug: string) => {
+    if (slug === 'math-analysis') return 'lessons';
+    if (slug === 'physics') return 'physics-content';
+    if (['linear-algebra', 'programming', 'azerbaijani'].includes(slug)) return 'course-rules';
+    return 'overview';
+  };
+
+  const [activeTab, setActiveTab] = useState<'overview' | 'syllabus' | 'lessons' | 'physics-content' | 'course-rules' | 'materials' | 'notes' | 'assignments' | 'qa'>(
+    getDefaultTab(courseSlug),
   );
   const [modalType, setModalType] = useState<'material' | 'note' | 'deadline' | 'question' | null>(null);
   const [openReaderId, setOpenReaderId] = useState<string | null>(null);
+  const [selectedRuleMatId, setSelectedRuleMatId] = useState<string | null>(null);
+
+  React.useEffect(() => {
+    setActiveTab(getDefaultTab(courseSlug));
+    setOpenReaderId(null);
+    setSelectedRuleMatId(null);
+  }, [courseSlug]);
 
   // QA expanded & answer state
   const [expandedQuestions, setExpandedQuestions] = useState<Record<string, boolean>>({});
@@ -98,6 +112,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
 
   // Filtered items for this specific course
   const courseMaterials = materials.filter((m) => m.courseId === course.id);
+  const rulesMaterials = courseMaterials.filter((m) => m.studyNotes && m.studyNotes.length > 0);
   const courseNotes = notes.filter((n) => n.courseId === course.id);
   const courseDeadlines = deadlines.filter((d) => d.courseId === course.id);
   const courseQuestions = questions.filter((q) => q.courseId === course.id);
@@ -111,6 +126,9 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
     { id: 'overview', label: 'Fənn haqqında', icon: User },
   ] : [
     ...(course.id === 'math' ? [{ id: 'lessons', label: 'Dərslər', icon: BookOpen }] : []),
+    ...(rulesMaterials.length > 0 && course.id !== 'math'
+      ? [{ id: 'course-rules', label: `Dərslər & Qaydalar (${rulesMaterials.length})`, icon: BookOpen }]
+      : []),
     { id: 'overview', label: course.id === 'math' ? 'Fənn haqqında' : 'Ümumi', icon: Layers },
     ...(course.id === 'math' ? [] : [{ id: 'syllabus', label: '15 Həftəlik Plan', icon: BookOpen }]),
     { id: 'materials', label: `Materiallar (${courseMaterials.length})`, icon: FolderOpen },
@@ -595,6 +613,119 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
       {course.id === 'phys' && activeTab === 'physics-content' && <PhysicsLearningView />}
 
       {/* ========================================================
+          TAB: DƏRSLƏR VƏ QAYDALAR (KOICA LMS FAYLLARINDAN ÇIXARILMIŞ)
+          ======================================================== */}
+      {activeTab === 'course-rules' && rulesMaterials.length > 0 && (() => {
+        const defaultMat =
+          rulesMaterials.find((m) => m.description?.includes('✓ Keçildi')) ||
+          rulesMaterials[0];
+        const activeRuleMat =
+          rulesMaterials.find((m) => m.id === selectedRuleMatId) || defaultMat;
+
+        return (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div className="view-table-card" style={{ padding: '1rem 1.15rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
+                <div>
+                  <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)' }}>
+                    KOICA LMS Rəsmi Təqdimat & Vəsaitlərindən Çıxarılmış Qaydalar
+                  </span>
+                  <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0.2rem 0 0 0' }}>
+                    {course.name} — Mövzular üzrə Qaydalar, Düsturlar və Nümunələr
+                  </h3>
+                </div>
+                <span className="syllabus-status-pill completed">
+                  ✓ 1–2-ci həftə mövzuları seçilib
+                </span>
+              </div>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
+                {rulesMaterials.map((rm, idx) => {
+                  const isCurrentSelected = activeRuleMat?.id === rm.id;
+                  const isCovered = Boolean(rm.description?.includes('✓ Keçildi'));
+                  return (
+                    <button
+                      key={rm.id}
+                      type="button"
+                      onClick={() => setSelectedRuleMatId(rm.id)}
+                      className={`row-action-btn ${isCurrentSelected ? 'primary-action' : ''}`}
+                      style={{
+                        padding: '0.42rem 0.7rem',
+                        fontSize: '0.76rem',
+                        fontWeight: isCurrentSelected ? 700 : 500,
+                        border: isCurrentSelected
+                          ? '1px solid var(--text-primary)'
+                          : isCovered
+                          ? '1px solid #16a34a'
+                          : '1px solid var(--border-subtle)',
+                      }}
+                    >
+                      <span>
+                        {isCovered ? '✓ ' : `${idx + 1}. `}
+                        {rm.title.length > 48 ? `${rm.title.slice(0, 48)}…` : rm.title}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {activeRuleMat && (
+              <div className="view-table-card" style={{ padding: '1.15rem' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap', paddingBottom: '0.85rem', borderBottom: '1px solid var(--border-subtle)', marginBottom: '1rem' }}>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.3rem' }}>
+                      <span className="material-type-indicator">
+                        {activeRuleMat.fileName || 'KOICA LMS Materialı'}
+                      </span>
+                      {activeRuleMat.description?.includes('✓ Keçildi') && (
+                        <span className="syllabus-status-pill completed">✓ Keçildi (1–2-ci həftə)</span>
+                      )}
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                        Müəllim: {activeRuleMat.authorName}
+                      </span>
+                    </div>
+                    <h3 style={{ fontSize: '1.02rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
+                      {activeRuleMat.title}
+                    </h3>
+                    {activeRuleMat.description && (
+                      <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', margin: '0.25rem 0 0 0' }}>
+                        {activeRuleMat.description}
+                      </p>
+                    )}
+                  </div>
+
+                  {activeRuleMat.linkUrl && (
+                    <a
+                      href={activeRuleMat.linkUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="row-action-btn"
+                    >
+                      <span>Orijinal faylı LMS-də aç</span>
+                      <ArrowRight size={13} />
+                    </a>
+                  )}
+                </div>
+
+                <div className="mat-study-sections">
+                  {activeRuleMat.studyNotes?.map((sec) => (
+                    <div key={sec.heading} className="mat-study-section-card">
+                      <h4>{sec.heading}</h4>
+                      <p style={{ whiteSpace: 'pre-line' }}>{sec.body}</p>
+                      {sec.formulaOrCode && (
+                        <pre className="mat-study-code">{sec.formulaOrCode}</pre>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })()}
+
+      {/* ========================================================
           TAB 2: MATERİALLAR
           ======================================================== */}
       {activeTab === 'materials' && (
@@ -605,7 +736,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                 {course.name} — Dərs Materialları ({courseMaterials.length})
               </h3>
               <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', margin: '0.15rem 0 0 0' }}>
-                Mühazirə PDF-ləri, laboratoriya təlimatları və qrup konspektlərini buradan oxuya və ya endirə bilərsiniz.
+                Mühazirə PDF-ləri, təqdimat qaydaları, laboratoriya təlimatları və qrup konspektlərini buradan oxuya və ya endirə bilərsiniz.
               </p>
             </div>
             <button 
@@ -694,10 +825,10 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                             type="button"
                             className={`row-action-btn ${isReaderOpen ? 'is-active' : ''}`}
                             onClick={() => setOpenReaderId(isReaderOpen ? null : mat.id)}
-                            title="Səhifədən çıxmadan burada oxu"
+                            title="Müəllimin faylından çıxarılmış qaydaları və sənədi burada oxu"
                           >
                             <BookOpen size={13} />
-                            <span>{isReaderOpen ? 'Bağla' : 'Oxu'}</span>
+                            <span>{isReaderOpen ? 'Bağla' : isNotesReadable ? 'Qaydalar & Oxu' : 'Oxu'}</span>
                           </button>
                         )}
 
@@ -743,7 +874,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                       <div className="mat-inline-reader">
                         <div className="mat-inline-reader-header">
                           <span className="mat-inline-reader-title">
-                            {mat.title} ({mat.authorName})
+                            📖 {mat.title} — Müəllim Faylından Qaydalar və Xülasə ({mat.authorName})
                           </span>
                           <button
                             type="button"
@@ -754,22 +885,22 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                           </button>
                         </div>
 
-                        {isPdfReadable && mat.linkUrl && (
-                          <PhysicsPdfViewer url={mat.linkUrl} title={mat.title} />
-                        )}
-
                         {isNotesReadable && mat.studyNotes && (
                           <div className="mat-study-sections">
                             {mat.studyNotes.map((sec) => (
                               <div key={sec.heading} className="mat-study-section-card">
                                 <h4>{sec.heading}</h4>
-                                <p>{sec.body}</p>
+                                <p style={{ whiteSpace: 'pre-line' }}>{sec.body}</p>
                                 {sec.formulaOrCode && (
                                   <pre className="mat-study-code">{sec.formulaOrCode}</pre>
                                 )}
                               </div>
                             ))}
                           </div>
+                        )}
+
+                        {isPdfReadable && mat.linkUrl && (
+                          <PhysicsPdfViewer url={mat.linkUrl} title={mat.title} />
                         )}
                       </div>
                     )}

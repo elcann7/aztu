@@ -267,12 +267,12 @@ export const MaterialsView: React.FC = () => {
                       <button
                         type="button"
                         className={`mat-action-btn read-inline ${isReaderOpen ? 'is-active' : ''}`}
-                        title="Səhifədən çıxmadan burada oxu"
+                        title="Müəllimin faylından çıxarılmış qaydaları və sənədi burada oxu"
                         aria-expanded={isReaderOpen}
                         onClick={() => setOpenReaderId(isReaderOpen ? null : mat.id)}
                       >
                         <BookOpen size={13} />
-                        <span>{isReaderOpen ? 'Bağla' : 'Oxu'}</span>
+                        <span>{isReaderOpen ? 'Bağla' : isNotesReadable ? 'Qaydalar & Oxu' : 'Oxu'}</span>
                       </button>
                     )}
 
@@ -316,7 +316,7 @@ export const MaterialsView: React.FC = () => {
                   <div className="mat-inline-reader">
                     <div className="mat-inline-reader-header">
                       <span className="mat-inline-reader-title">
-                        {mat.title} ({mat.authorName})
+                        📖 {mat.title} — Müəllim Faylından Qaydalar və Xülasə ({mat.authorName})
                       </span>
                       <button
                         type="button"
@@ -327,22 +327,22 @@ export const MaterialsView: React.FC = () => {
                       </button>
                     </div>
 
-                    {isPdfReadable && mat.linkUrl && (
-                      <PhysicsPdfViewer url={mat.linkUrl} title={mat.title} />
-                    )}
-
                     {isNotesReadable && mat.studyNotes && (
                       <div className="mat-study-sections">
                         {mat.studyNotes.map((sec) => (
                           <div key={sec.heading} className="mat-study-section-card">
                             <h4>{sec.heading}</h4>
-                            <p>{sec.body}</p>
+                            <p style={{ whiteSpace: 'pre-line' }}>{sec.body}</p>
                             {sec.formulaOrCode && (
                               <pre className="mat-study-code">{sec.formulaOrCode}</pre>
                             )}
                           </div>
                         ))}
                       </div>
+                    )}
+
+                    {isPdfReadable && mat.linkUrl && (
+                      <PhysicsPdfViewer url={mat.linkUrl} title={mat.title} />
                     )}
                   </div>
                 )}
