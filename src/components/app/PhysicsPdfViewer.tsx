@@ -12,6 +12,9 @@ export const PhysicsPdfViewer = ({ url, title }: { url: string; title: string })
   useEffect(() => {
     let active = true;
     let task: PDFDocumentLoadingTask | undefined;
+    setDocument(null);
+    setPageNumber(1);
+    setMessage('PDF yüklənir...');
     const load = async () => {
       try {
         const pdfjs = await import('pdfjs-dist');
@@ -23,7 +26,7 @@ export const PhysicsPdfViewer = ({ url, title }: { url: string; title: string })
         setDocument(loaded);
         setMessage('');
       } catch {
-        if (active) setMessage('PDF yüklənmədi. Aşağıdakı keçidlə ayrıca aç.');
+        if (active) setMessage('PDF yüklənmədi. Yuxarıdakı düymə ilə ayrıca aça bilərsiniz.');
       }
     };
     void load();
@@ -49,14 +52,15 @@ export const PhysicsPdfViewer = ({ url, title }: { url: string; title: string })
         const page = await document.getPage(pageNumber);
         if (!active || !canvasRef.current) return;
         const base = page.getViewport({ scale: 1 });
-        const displayWidth = Math.min(width, base.width);
-        const scale = (displayWidth / base.width) * Math.min(window.devicePixelRatio || 1, 2);
+        const displayWidth = Math.min(width, Math.max(base.width, 860));
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const scale = (displayWidth / base.width) * dpr;
         const viewport = page.getViewport({ scale });
         const canvas = canvasRef.current;
         canvas.width = Math.ceil(viewport.width);
         canvas.height = Math.ceil(viewport.height);
         canvas.style.width = `${displayWidth}px`;
-        canvas.style.height = `${viewport.height / Math.min(window.devicePixelRatio || 1, 2)}px`;
+        canvas.style.height = `${viewport.height / dpr}px`;
         renderTask = page.render({ canvas, viewport });
         await renderTask.promise;
         if (active) setMessage('');
@@ -72,9 +76,9 @@ export const PhysicsPdfViewer = ({ url, title }: { url: string; title: string })
 
   return <div className="physics-pdf-viewer">
     {document && <div className="physics-pdf-toolbar" aria-label="PDF səhifələri">
-      <button type="button" disabled={pageNumber === 1} onClick={() => setPageNumber((value) => value - 1)}>Əvvəlki</button>
-      <span>{pageNumber} / {document.numPages}</span>
-      <button type="button" disabled={pageNumber === document.numPages} onClick={() => setPageNumber((value) => value + 1)}>Növbəti</button>
+      <button type="button" disabled={pageNumber === 1} onClick={() => setPageNumber((value) => value - 1)}>← Əvvəlki səhifə</button>
+      <span>Səhifə {pageNumber} / {document.numPages}</span>
+      <button type="button" disabled={pageNumber === document.numPages} onClick={() => setPageNumber((value) => value + 1)}>Növbəti səhifə →</button>
     </div>}
     <div className="physics-pdf-page" ref={pageWrapRef}>
       {message && <p role="status">{message}</p>}

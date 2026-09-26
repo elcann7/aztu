@@ -267,12 +267,12 @@ export const MaterialsView: React.FC = () => {
                       <button
                         type="button"
                         className={`mat-action-btn read-inline ${isReaderOpen ? 'is-active' : ''}`}
-                        title="Müəllimin faylından çıxarılmış qaydaları və sənədi burada oxu"
+                        title="Müəllimin faylından çıxarılmış qaydaları və PDF sənədi sayt daxilində oxu"
                         aria-expanded={isReaderOpen}
                         onClick={() => setOpenReaderId(isReaderOpen ? null : mat.id)}
                       >
                         <BookOpen size={13} />
-                        <span>{isReaderOpen ? 'Bağla' : isNotesReadable ? 'Qaydalar & Oxu' : 'Oxu'}</span>
+                        <span>{isReaderOpen ? 'Bağla' : isNotesReadable ? 'Qaydalar & PDF Oxu' : 'PDF Oxu'}</span>
                       </button>
                     )}
 
@@ -281,10 +281,10 @@ export const MaterialsView: React.FC = () => {
                         type="button"
                         onClick={() => downloadMaterialFile(mat)}
                         className="mat-action-btn download"
-                        title="Faylı endir və ya aç"
+                        title="PDF sənədi endir və ya aç"
                       >
                         <Download size={13} />
-                        <span>Endir</span>
+                        <span>PDF Endir</span>
                       </button>
                     ) : (
                       <a
@@ -292,10 +292,10 @@ export const MaterialsView: React.FC = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="mat-action-btn open-link"
-                        title="KOICA LMS-də və ya keçiddə aç"
+                        title="Keçidi aç"
                       >
                         <ExternalLink size={13} />
-                        <span>{mat.linkUrl?.includes('lms.aztu.edu.az') ? 'LMS-də Aç' : 'Aç'}</span>
+                        <span>Aç</span>
                       </a>
                     )}
 

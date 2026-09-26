@@ -297,7 +297,10 @@ export function formatAzDate(dateInput: string, style: 'short' | 'long' = 'short
 export function mergeWithBuiltInMaterials(customList: Material[]): Material[] {
   const builtInIds = new Set(BUILT_IN_MATERIALS.map((b) => b.id));
   const cleanCustom = customList.filter(
-    (m) => !m.id.startsWith('builtin_') && !builtInIds.has(m.id)
+    (m) =>
+      !m.id.startsWith('builtin_') &&
+      !m.id.startsWith('koica_') &&
+      !builtInIds.has(m.id)
   );
   const sortedCustom = [...cleanCustom].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()

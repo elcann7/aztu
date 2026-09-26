@@ -700,10 +700,10 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                       href={activeRuleMat.linkUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="row-action-btn"
+                      className="row-action-btn primary-action"
                     >
-                      <span>Orijinal faylı LMS-də aç</span>
-                      <ArrowRight size={13} />
+                      <Download size={13} />
+                      <span>PDF-i Endir / Tam Ekranda Aç</span>
                     </a>
                   )}
                 </div>
@@ -719,6 +719,12 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                     </div>
                   ))}
                 </div>
+
+                {activeRuleMat.linkUrl && activeRuleMat.linkUrl.toLowerCase().endsWith('.pdf') && (
+                  <div style={{ marginTop: '1rem' }}>
+                    <PhysicsPdfViewer url={activeRuleMat.linkUrl} title={activeRuleMat.title} />
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -825,10 +831,10 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                             type="button"
                             className={`row-action-btn ${isReaderOpen ? 'is-active' : ''}`}
                             onClick={() => setOpenReaderId(isReaderOpen ? null : mat.id)}
-                            title="Müəllimin faylından çıxarılmış qaydaları və sənədi burada oxu"
+                            title="Müəllimin faylından çıxarılmış qaydaları və PDF sənədi sayt daxilində oxu"
                           >
                             <BookOpen size={13} />
-                            <span>{isReaderOpen ? 'Bağla' : isNotesReadable ? 'Qaydalar & Oxu' : 'Oxu'}</span>
+                            <span>{isReaderOpen ? 'Bağla' : isNotesReadable ? 'Qaydalar & PDF Oxu' : 'PDF Oxu'}</span>
                           </button>
                         )}
 
@@ -836,10 +842,10 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                           <button
                             className="row-action-btn primary-action"
                             onClick={() => downloadMaterialFile(mat.id)}
-                            title="Faylı endir"
+                            title="PDF sənədi endir və ya yeni pəncərədə aç"
                           >
                             <Download size={13} />
-                            <span>Endir</span>
+                            <span>PDF Endir</span>
                           </button>
                         ) : (
                           <a
@@ -847,10 +853,10 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                             target="_blank"
                             rel="noopener noreferrer"
                             className="row-action-btn primary-action"
-                            title="KOICA LMS-də və ya keçiddə aç"
+                            title="Keçidi aç"
                           >
                             <ArrowRight size={13} />
-                            <span>{mat.linkUrl?.includes('lms.aztu.edu.az') ? 'LMS-də Aç' : 'Aç'}</span>
+                            <span>Aç</span>
                           </a>
                         )}
 
