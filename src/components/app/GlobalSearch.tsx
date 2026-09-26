@@ -41,18 +41,18 @@ export const GlobalSearch: React.FC<GlobalSearchProps> = ({ isOpen, onClose }) =
         path: '/app/calculator',
       },
       {
-        id: 'tool-python',
+        id: 'tool-materials',
         kind: 'alət',
-        title: 'Python 3.12 + Pandas Sandbox (CS-101 Laboratoriya)',
-        detail: 'Ayxan m. və Şəbnəm m. hazır seminar və laboratoriya kod şablonları',
-        path: '/app/sandbox',
+        title: '6326A2 Rəsmi Materiallar və PDF Baza',
+        detail: 'Mühazirə slaydları, laboratoriya təlimatları, PDF oxuyucu və fənn konspektləri',
+        path: '/app/materials',
       },
       {
-        id: 'tool-water',
+        id: 'tool-python',
         kind: 'alət',
-        title: 'Fizika 2D Dalğa və Su Simulyasiyası',
-        detail: 'Sönümlü dalğa tənliyi, maneələr və interferensiya laboratoriyası',
-        path: '/app/water',
+        title: 'Python 3.12 + Pandas Sandbox (İf-61125y Laboratoriya)',
+        detail: 'Ayxan m. və Şəbnəm m. hazır seminar və laboratoriya kod şablonları',
+        path: '/app/sandbox',
       },
     ];
 

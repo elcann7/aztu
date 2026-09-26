@@ -7,7 +7,6 @@ import {
   Home,
   Calculator,
   Terminal,
-  Waves,
   FolderOpen,
   Calendar,
   LogOut,
@@ -30,20 +29,19 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenProfile
   };
 
   const courses = [
-    { name: 'Riyazi analiz-1', path: '/app/courses/math-analysis', code: 'MATH-101' },
-    { name: 'Xətti cəbr', path: '/app/courses/linear-algebra', code: 'MATH-102' },
-    { name: 'Fizika', path: '/app/courses/physics', code: 'İF-20403y' },
-    { name: 'Proqramlaşdırma-1', path: '/app/courses/programming', code: 'CS-101' },
+    { name: 'Proqramlaşdırma-1', path: '/app/courses/programming', code: 'İf-61125y' },
+    { name: 'Riyazi analiz-1', path: '/app/courses/math-analysis', code: 'İf-61115y' },
+    { name: 'Xətti cəbr', path: '/app/courses/linear-algebra', code: 'İf-61119y' },
+    { name: 'ADİAK (Azərbaycan dili)', path: '/app/courses/azerbaijani', code: 'Üf-71706y' },
     { name: 'XDİAK (İngilis dili)', path: '/app/courses/english', code: 'ENG-101' },
-    { name: 'ADİAK (Azərbaycan dili)', path: '/app/courses/azerbaijani', code: 'AZE-101' },
+    { name: 'Fizika', path: '/app/courses/physics', code: 'İf-20403y' },
   ];
 
   const toolSections = [
     { name: 'Qaib və Bal Hesabla', path: '/app/calculator', icon: Calculator },
-    { name: 'Python Sandbox', path: '/app/sandbox', icon: Terminal },
-    { name: 'Su simulyasiyası', path: '/app/water', icon: Waves },
     { name: 'Materiallar və PDF', path: '/app/materials', icon: FolderOpen },
     { name: 'Kollokvium & Deadline', path: '/app/deadlines', icon: Calendar },
+    { name: 'Python Sandbox', path: '/app/sandbox', icon: Terminal },
   ];
 
   return (

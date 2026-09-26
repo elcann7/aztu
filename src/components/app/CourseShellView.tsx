@@ -36,6 +36,7 @@ import { CreateDeadlineModal } from './modals/CreateDeadlineModal';
 import { CreateQuestionModal } from './modals/CreateQuestionModal';
 import { MathLearningView } from './MathLearningView';
 import { PhysicsLearningView } from './PhysicsLearningView';
+import { PhysicsPdfViewer } from './PhysicsPdfViewer';
 
 interface CourseShellViewProps {
   courseSlug: string;
@@ -66,6 +67,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
     courseSlug === 'math-analysis' ? 'lessons' : courseSlug === 'physics' ? 'physics-content' : 'overview',
   );
   const [modalType, setModalType] = useState<'material' | 'note' | 'deadline' | 'question' | null>(null);
+  const [openReaderId, setOpenReaderId] = useState<string | null>(null);
 
   // QA expanded & answer state
   const [expandedQuestions, setExpandedQuestions] = useState<Record<string, boolean>>({});
@@ -644,80 +646,144 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
           ) : (
             <div className="view-table-card">
               {courseMaterials.map(mat => {
-                const isAuthor = user?.id === mat.authorId;
+                const isAuthor = user?.id === mat.authorId && !mat.isBuiltIn;
+                const isPdfReadable = Boolean(mat.linkUrl && mat.linkUrl.toLowerCase().endsWith('.pdf'));
+                const isNotesReadable = Boolean(mat.studyNotes && mat.studyNotes.length > 0);
+                const canReadInline = isPdfReadable || isNotesReadable;
+                const isReaderOpen = openReaderId === mat.id;
+
                 return (
-                  <div key={mat.id} className="material-card-row">
-                    <div className={`format-badge-box ${mat.type === 'file' ? 'is-file' : 'is-link'}`}>
-                      {mat.type === 'file' ? <FileText size={16} /> : <Link2 size={16} />}
-                    </div>
+                  <React.Fragment key={mat.id}>
+                    <div className="material-card-row">
+                      <div className={`format-badge-box ${mat.type === 'file' ? 'is-file' : 'is-link'}`}>
+                        {mat.type === 'file' ? <FileText size={16} /> : <Link2 size={16} />}
+                      </div>
 
-                    <div className="material-detail-col">
-                      <div className="material-row-top">
-                        <span className="material-type-indicator">
-                          {mat.type === 'file' ? `Fayl (${mat.fileName || 'PDF'})` : 'Veb Keçid'}
-                        </span>
-                        {mat.fileSize && (
-                          <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>
-                            • {mat.fileSize}
+                      <div className="material-detail-col">
+                        <div className="material-row-top">
+                          <span className="material-type-indicator">
+                            {mat.type === 'file' ? `Fayl (${mat.fileName || 'PDF'})` : 'Veb Keçid'}
                           </span>
-                        )}
-                      </div>
+                          {mat.fileSize && (
+                            <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>
+                              • {mat.fileSize}
+                            </span>
+                          )}
+                        </div>
 
-                      <h3 className="material-item-name">{mat.title}</h3>
-                      {mat.description && (
-                        <p className="material-item-desc">{mat.description}</p>
-                      )}
-
-                      <div className="material-author-line">
-                        <span>{mat.authorName} tərəfindən</span>
-                        <span className="dot-sep">•</span>
-                        <span>
-                          {new Date(mat.createdAt).toLocaleDateString('az-AZ', {
-                            day: 'numeric',
-                            month: 'short',
-                          })}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="material-actions-col">
-                      {mat.type === 'file' ? (
-                        <button
-                          className="row-action-btn primary-action"
-                          onClick={() => downloadMaterialFile(mat.id)}
-                          title="Faylı endir"
-                        >
-                          <Download size={13} />
-                          <span>Yüklə</span>
-                        </button>
-                      ) : (
-                        <a
-                          href={mat.linkUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="row-action-btn primary-action"
-                          title="Keçidi aç"
-                        >
-                          <ArrowRight size={13} />
-                          <span>Aç</span>
-                        </a>
-                      )}
-
-                      {isAuthor && (
-                        <button
-                          className="row-action-delete"
+                        <h3
+                          className="material-item-name"
+                          style={{ cursor: canReadInline ? 'pointer' : 'default' }}
                           onClick={() => {
-                            if (window.confirm('Bu materialı silmək istədiyinizə əminsiniz?')) {
-                              deleteMaterial(mat.id);
+                            if (canReadInline) {
+                              setOpenReaderId(isReaderOpen ? null : mat.id);
                             }
                           }}
-                          title="Materialı sil"
                         >
-                          <Trash2 size={14} />
-                        </button>
-                      )}
+                          {mat.title}
+                        </h3>
+                        {mat.description && (
+                          <p className="material-item-desc">{mat.description}</p>
+                        )}
+
+                        <div className="material-author-line">
+                          <span>{mat.authorName}</span>
+                          <span className="dot-sep">•</span>
+                          <span>
+                            {new Date(mat.createdAt).toLocaleDateString('az-AZ', {
+                              day: 'numeric',
+                              month: 'short',
+                            })}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="material-actions-col">
+                        {canReadInline && (
+                          <button
+                            type="button"
+                            className="row-action-btn"
+                            onClick={() => setOpenReaderId(isReaderOpen ? null : mat.id)}
+                            title="Səhifədən çıxmadan burada oxu"
+                          >
+                            <BookOpen size={13} />
+                            <span>{isReaderOpen ? 'Bağla' : 'Oxu'}</span>
+                          </button>
+                        )}
+
+                        {mat.type === 'file' ? (
+                          <button
+                            className="row-action-btn primary-action"
+                            onClick={() => downloadMaterialFile(mat.id)}
+                            title="Faylı endir"
+                          >
+                            <Download size={13} />
+                            <span>Endir</span>
+                          </button>
+                        ) : (
+                          <a
+                            href={mat.linkUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="row-action-btn primary-action"
+                            title="Keçidi aç"
+                          >
+                            <ArrowRight size={13} />
+                            <span>Aç</span>
+                          </a>
+                        )}
+
+                        {isAuthor && (
+                          <button
+                            className="row-action-delete"
+                            onClick={() => {
+                              if (window.confirm('Bu materialı silmək istədiyinizə əminsiniz?')) {
+                                deleteMaterial(mat.id);
+                              }
+                            }}
+                            title="Materialı sil"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        )}
+                      </div>
                     </div>
-                  </div>
+
+                    {isReaderOpen && canReadInline && (
+                      <div className="mat-inline-reader">
+                        <div className="mat-inline-reader-header">
+                          <span className="mat-inline-reader-title">
+                            {mat.title} ({mat.authorName})
+                          </span>
+                          <button
+                            type="button"
+                            className="row-action-btn"
+                            onClick={() => setOpenReaderId(null)}
+                          >
+                            Bağla ✕
+                          </button>
+                        </div>
+
+                        {isPdfReadable && mat.linkUrl && (
+                          <PhysicsPdfViewer url={mat.linkUrl} title={mat.title} />
+                        )}
+
+                        {isNotesReadable && mat.studyNotes && (
+                          <div className="mat-study-sections">
+                            {mat.studyNotes.map((sec) => (
+                              <div key={sec.heading} className="mat-study-section-card">
+                                <h4>{sec.heading}</h4>
+                                <p>{sec.body}</p>
+                                {sec.formulaOrCode && (
+                                  <pre className="mat-study-code">{sec.formulaOrCode}</pre>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </React.Fragment>
                 );
               })}
             </div>

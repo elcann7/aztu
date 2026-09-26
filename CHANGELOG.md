@@ -6,12 +6,12 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ## [1.14.0] — 2026-09-26
 
-### 6326A2 Qaib Limit, Giriş Balı və 30 ECTS GPA Kalkulyatoru + Tək Oyunçulu (Single-Player) Transformasiya
+### 6326A2 Qaib Limit, Giriş Balı və 30 ECTS GPA Kalkulyatoru + Rəsmi Materiallar Bazası
 - **Yeni Modul (`/app/calculator`)**: [`CalculatorView.tsx`](./src/components/app/views/CalculatorView.tsx), [`CalculatorView.css`](./src/components/app/views/CalculatorView.css) və [`academicTracker.ts`](./src/services/academicTracker.ts) yaradıldı.
 - **Rəsmi 30 ECTS Kredit, KOICA Saatları və Forma-1 / Forma-2 Düsturu**: 6 fənnin kreditləri və KOICA/LMS-dəki rəsmi saatları sabitləndi (`Proqramlaşdırma-1: 8 kr / 75 saat`, `Riyazi analiz-1: 7 kr / 75 saat`, `Xətti cəbr: 4 kr / 45 saat`, `ADİAK: 4 kr / 45 saat`, `XDİAK: 4 kr / 45 saat`, `Fizika: 3 kr / 30 saat` = 30 kredit, 315 akademik saat).
 - **25% Qaib Həddi İzləyicisi (Saat Seçimisiz, Avtomatik)**: Hər fənnin öz rəsmi saatına görə maksimum qaib limiti (`75 saat → max 9 qaib`, `45 saat → max 5 qaib`, `30 saat → max 3 qaib`), qalan qaib haqqı və 10 ballıq şkala üzrə davamiyyət balı avtomatik hesablanır.
-- **Kollokvium və Seminar Çeviricisi**: 10 ballıq şkaladakı 3 kollokvium + seminar qiymətini dərhal Forma-1 (30 bal) və Forma-2 (20 bal) qarşılığına çevirən alət əlavə olundu.
-- **Boş Sosial Bölmələrin Təmizlənməsi**: Başqa tələbələrin yazmasından asılı olub boş qalan `Qrup qeydləri`, `Sual-Cavab` və `Sorğular` bölmələri naviqasiyadan, fənn tablarından və Əsas Lövhədən çıxarıldı; əvəzində Əsas Lövhəyə canlı **Qaib & GPA İzləyicisi** və **İnteraktiv Laboratoriya Mərkəzi** yerləşdirildi.
+- **Rəsmi Materiallar və PDF Baza ([`courseMaterialsData.ts`](./src/data/courseMaterialsData.ts))**: Fizika üzrə **11 rəsmi mühazirə və laboratoriya PDF-i** + Proqramlaşdırma-1, Riyazi analiz-1, Xətti cəbr, ADİAK və XDİAK üzrə konspekt, düstur və kod paketləri (cəmi **16 rəsmi resurs** və **5 semestr tapşırığı/kollokviumu**) birbaşa bazaya daxil edildi. [`MaterialsView.tsx`](./src/components/app/views/MaterialsView.tsx) və [`CourseShellView.tsx`](./src/components/app/CourseShellView.tsx) daxilində səhifədən çıxmadan PDF və konspekt oxumaq üçün **"Oxu"** paneli əlavə olundu.
+- **Mənasız Bölmələrin Təmizlənməsi**: İstifadə olunmayan `Su simulyasiyası` (`/app/water`), `Qrup qeydləri`, `Sual-Cavab` və `Sorğular` bölmələri yığışdırıldı.
 - `npm run build` uğurla tamamlandı (0 xəta).
 
 ---

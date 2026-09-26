@@ -3,7 +3,7 @@ import './ViewsCommon.css';
 import { useDatabase } from '../../../context/DatabaseContext';
 import { useAuth } from '../../../context/AuthContext';
 import { CreateMaterialModal } from '../modals/CreateMaterialModal';
-import { DiscussionPanel } from '../DiscussionPanel';
+import { PhysicsPdfViewer } from '../PhysicsPdfViewer';
 import { useBookmarks } from '../../../hooks/useBookmarks';
 import { useSearchFocus } from '../../../hooks/useSearchFocus';
 import {
@@ -19,7 +19,7 @@ import {
   FileCode,
   FileArchive,
   FileSpreadsheet,
-  MessageCircle,
+  BookOpen,
   Bookmark,
 } from 'lucide-react';
 
@@ -32,7 +32,7 @@ export const MaterialsView: React.FC = () => {
   const [selectedCourse, setSelectedCourse] = useState<string>('all');
   const [selectedType, setSelectedType] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [openDiscussionId, setOpenDiscussionId] = useState<string | null>(null);
+  const [openReaderId, setOpenReaderId] = useState<string | null>(null);
   const filteredMaterials = useMemo(() => {
     return materials.filter((m) => {
       if (selectedCourse !== 'all' && m.courseId !== selectedCourse) return false;
@@ -74,9 +74,9 @@ export const MaterialsView: React.FC = () => {
     }
   };
 
-  const getFileIcon = (title: string, type: string) => {
+  const getFileIcon = (title: string, type: string, fileName?: string) => {
     if (type === 'link') return <Link2 size={15} color="#2563eb" />;
-    const ext = title.split('.').pop()?.toLowerCase();
+    const ext = (fileName || title).split('.').pop()?.toLowerCase();
     if (ext === 'py' || ext === 'js' || ext === 'ts' || ext === 'html' || ext === 'css') {
       return <FileCode size={15} color="#0891b2" />;
     }
@@ -95,11 +95,11 @@ export const MaterialsView: React.FC = () => {
       <div className="view-header-strip">
         <div className="view-header-meta">
           <div className="view-title-row">
-            <h1 className="view-main-title">Materiallar</h1>
+            <h1 className="view-main-title">Materiallar və PDF Baza</h1>
             <span className="count-badge">{filteredMaterials.length} resurs</span>
           </div>
           <p className="view-sub-title">
-            Mühazirə konspektləri, laboratoriya təlimatları, kod nümunələri və faydalı keçidlər.
+            6326A2 qrupunun 6 fənni üzrə mühazirə PDF-ləri, laboratoriya təlimatları, kod paketləri və konspektlər.
           </p>
         </div>
 
@@ -119,7 +119,7 @@ export const MaterialsView: React.FC = () => {
           <Search size={14} className="filter-icon-dim" />
           <input
             type="text"
-            placeholder="Material və ya fayl axtar..."
+            placeholder="Mühazirə, laboratoriya PDF-i, konspekt və ya fənn axtar..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="materials-search-input"
@@ -139,7 +139,7 @@ export const MaterialsView: React.FC = () => {
             onClick={() => setSelectedType('file')}
             className={`mat-type-pill ${selectedType === 'file' ? 'is-active' : ''}`}
           >
-            Fayllar
+            Fayllar & PDF
           </button>
           <button
             type="button"
@@ -157,7 +157,7 @@ export const MaterialsView: React.FC = () => {
             onChange={(e) => setSelectedCourse(e.target.value)}
             className="materials-select"
           >
-            <option value="all">Bütün fənlər</option>
+            <option value="all">Bütün fənlər (6 fənn)</option>
             {courses.map(c => (
               <option key={c.id} value={c.id}>{c.name}</option>
             ))}
@@ -178,7 +178,7 @@ export const MaterialsView: React.FC = () => {
                 : 'Hələ heç bir tədris materialı paylaşılmayıb.'}
             </p>
             <p className="compact-empty-desc">
-              Mühazirə slaydlarını və ya laboratoriya fayllarını yükləyərək qrupunuzla bölüşün.
+              Mühazirə slaydlarını və ya laboratoriya fayllarını yükləyərək bazaya əlavə edin.
             </p>
           </div>
           <button
@@ -196,7 +196,7 @@ export const MaterialsView: React.FC = () => {
             <div className="mat-th mat-col-name">Ad və Təsvir</div>
             <div className="mat-th mat-col-course">Fənn</div>
             <div className="mat-th mat-col-type">Format</div>
-            <div className="mat-th mat-col-author">Yükləyən</div>
+            <div className="mat-th mat-col-author">Müəllim / Mənbə</div>
             <div className="mat-th mat-col-date">Tarix</div>
             <div className="mat-th mat-col-actions">Əməliyyat</div>
           </div>
@@ -204,7 +204,11 @@ export const MaterialsView: React.FC = () => {
           <div className="materials-table-body">
             {filteredMaterials.map((mat) => {
               const course = courses.find(c => c.id === mat.courseId);
-              const isOwner = user?.id === mat.authorId;
+              const isOwner = user?.id === mat.authorId && !mat.isBuiltIn;
+              const isPdfReadable = Boolean(mat.linkUrl && mat.linkUrl.toLowerCase().endsWith('.pdf'));
+              const isNotesReadable = Boolean(mat.studyNotes && mat.studyNotes.length > 0);
+              const canReadInline = isPdfReadable || isNotesReadable;
+              const isReaderOpen = openReaderId === mat.id;
               const formattedDate = new Date(mat.createdAt).toLocaleDateString('az-AZ', {
                 day: 'numeric',
                 month: 'short',
@@ -215,10 +219,20 @@ export const MaterialsView: React.FC = () => {
                 <div id={`search-material-${mat.id}`} className="materials-table-row">
                   <div className="mat-td mat-col-name">
                     <div className="mat-icon-wrapper">
-                      {getFileIcon(mat.title, mat.type)}
+                      {getFileIcon(mat.title, mat.type, mat.fileName)}
                     </div>
                     <div className="mat-name-info">
-                      <span className="mat-title-text">{mat.title}</span>
+                      <span
+                        className="mat-title-text"
+                        style={{ cursor: canReadInline ? 'pointer' : 'default' }}
+                        onClick={() => {
+                          if (canReadInline) {
+                            setOpenReaderId(isReaderOpen ? null : mat.id);
+                          }
+                        }}
+                      >
+                        {mat.title}
+                      </span>
                       {mat.description && (
                         <span className="mat-desc-text">{mat.description}</span>
                       )}
@@ -249,17 +263,26 @@ export const MaterialsView: React.FC = () => {
                       aria-pressed={bookmarks.isSaved('material', mat.id)} onClick={() => bookmarks.toggle('material', mat.id)}>
                       <Bookmark size={13} fill={bookmarks.isSaved('material', mat.id) ? 'currentColor' : 'none'} />
                     </button>
-                    <button type="button" className="mat-action-btn" title="Müzakirəni aç"
-                      aria-expanded={openDiscussionId === mat.id}
-                      onClick={() => setOpenDiscussionId(openDiscussionId === mat.id ? null : mat.id)}>
-                      <MessageCircle size={13} /><span>Müzakirə</span>
-                    </button>
+
+                    {canReadInline && (
+                      <button
+                        type="button"
+                        className={`mat-action-btn read-inline ${isReaderOpen ? 'is-active' : ''}`}
+                        title="Səhifədən çıxmadan burada oxu"
+                        aria-expanded={isReaderOpen}
+                        onClick={() => setOpenReaderId(isReaderOpen ? null : mat.id)}
+                      >
+                        <BookOpen size={13} />
+                        <span>{isReaderOpen ? 'Bağla' : 'Oxu'}</span>
+                      </button>
+                    )}
+
                     {mat.type === 'file' ? (
                       <button
                         type="button"
                         onClick={() => downloadMaterialFile(mat)}
                         className="mat-action-btn download"
-                        title="Faylı endir"
+                        title="Faylı endir və ya aç"
                       >
                         <Download size={13} />
                         <span>Endir</span>
@@ -289,9 +312,41 @@ export const MaterialsView: React.FC = () => {
                     )}
                   </div>
                 </div>
-                {openDiscussionId === mat.id && <DiscussionPanel targetType="material" targetId={mat.id}
-                  targetTitle={mat.title} courseId={mat.courseId}
-                  ownerId={mat.authorId} ownerName={mat.authorName} />}
+
+                {isReaderOpen && canReadInline && (
+                  <div className="mat-inline-reader">
+                    <div className="mat-inline-reader-header">
+                      <span className="mat-inline-reader-title">
+                        {mat.title} ({mat.authorName})
+                      </span>
+                      <button
+                        type="button"
+                        className="mat-action-btn"
+                        onClick={() => setOpenReaderId(null)}
+                      >
+                        Bağla ✕
+                      </button>
+                    </div>
+
+                    {isPdfReadable && mat.linkUrl && (
+                      <PhysicsPdfViewer url={mat.linkUrl} title={mat.title} />
+                    )}
+
+                    {isNotesReadable && mat.studyNotes && (
+                      <div className="mat-study-sections">
+                        {mat.studyNotes.map((sec) => (
+                          <div key={sec.heading} className="mat-study-section-card">
+                            <h4>{sec.heading}</h4>
+                            <p>{sec.body}</p>
+                            {sec.formulaOrCode && (
+                              <pre className="mat-study-code">{sec.formulaOrCode}</pre>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
                 </React.Fragment>
               );
             })}

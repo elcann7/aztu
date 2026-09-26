@@ -8,7 +8,6 @@ import { CourseShellView } from './CourseShellView';
 import { MaterialsView } from './views/MaterialsView';
 import { DeadlinesView } from './views/DeadlinesView';
 import { PythonSandboxView } from './views/PythonSandboxView';
-import { WaterSimulationView } from './views/WaterSimulationView';
 import { CalculatorView } from './views/CalculatorView';
 import { ProfileModal } from './modals/ProfileModal';
 import { Modal } from '../common/Modal';
@@ -45,9 +44,6 @@ export const AppShell: React.FC = () => {
   } else if (currentPath === '/app/sandbox') {
     pageTitle = 'Python Sandbox';
     activeContent = <PythonSandboxView />;
-  } else if (currentPath === '/app/water') {
-    pageTitle = 'Su Simulyasiyası';
-    activeContent = <WaterSimulationView />;
   } else if (currentPath.startsWith('/app/courses/')) {
     const slug = currentPath.replace('/app/courses/', '');
     const titles: Record<string, string> = {

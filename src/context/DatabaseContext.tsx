@@ -13,6 +13,8 @@ import type {
 import {
   dbService,
   getFileFromIndexedDB,
+  mergeWithBuiltInMaterials,
+  mergeWithBuiltInDeadlines,
 } from '../services/db';
 import { useAuth } from './AuthContext';
 import { isSupabaseConfigured, supabase } from '../services/supabase';
@@ -147,42 +149,40 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }
 
       if (materialsRes.data) {
-        setMaterials(
-          materialsRes.data.map((r) => ({
-            id: r.id,
-            title: r.title,
-            courseId: r.course_id,
-            type: r.type as 'file' | 'link',
-            description: r.description || undefined,
-            fileName: r.file_name || undefined,
-            fileSize: r.file_size || undefined,
-            fileMime: r.file_mime || undefined,
-            linkUrl: r.link_url || undefined,
-            authorId: r.author_id,
-            authorName: r.author_name,
-            createdAt: r.created_at,
-            updatedAt: r.updated_at,
-          }))
-        );
+        const cloudMats: Material[] = materialsRes.data.map((r) => ({
+          id: r.id,
+          title: r.title,
+          courseId: r.course_id,
+          type: r.type as 'file' | 'link',
+          description: r.description || undefined,
+          fileName: r.file_name || undefined,
+          fileSize: r.file_size || undefined,
+          fileMime: r.file_mime || undefined,
+          linkUrl: r.link_url || undefined,
+          authorId: r.author_id,
+          authorName: r.author_name,
+          createdAt: r.created_at,
+          updatedAt: r.updated_at,
+        }));
+        setMaterials(mergeWithBuiltInMaterials(cloudMats));
       }
 
       if (deadlinesRes.data) {
-        setDeadlines(
-          deadlinesRes.data.map((r) => ({
-            id: r.id,
-            title: r.title,
-            courseId: r.course_id,
-            description: r.description || undefined,
-            dueDate: r.due_date,
-            dueTime: r.due_time || undefined,
-            points: r.points || 10,
-            isCompleted: r.is_completed,
-            authorId: r.author_id,
-            authorName: r.author_name,
-            createdAt: r.created_at,
-            updatedAt: r.updated_at,
-          }))
-        );
+        const cloudDls: Deadline[] = deadlinesRes.data.map((r) => ({
+          id: r.id,
+          title: r.title,
+          courseId: r.course_id,
+          description: r.description || undefined,
+          dueDate: r.due_date,
+          dueTime: r.due_time || undefined,
+          points: r.points || 10,
+          isCompleted: r.is_completed,
+          authorId: r.author_id,
+          authorName: r.author_name,
+          createdAt: r.created_at,
+          updatedAt: r.updated_at,
+        }));
+        setDeadlines(mergeWithBuiltInDeadlines(cloudDls));
       }
 
       if (questionsRes.data) {
@@ -457,6 +457,32 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
     if (material.linkUrl) {
       window.open(material.linkUrl, '_blank');
+      return;
+    }
+
+    if (material.studyNotes && material.studyNotes.length > 0) {
+      const contentLines = [
+        `# ${material.title}`,
+        `# Müəllif / Mənbə: ${material.authorName}`,
+        material.description ? `# Təsvir: ${material.description}\n` : '',
+        ...material.studyNotes.map(
+          (sec) =>
+            `\n## ${sec.heading}\n${sec.body}${
+              sec.formulaOrCode ? `\n\n${sec.formulaOrCode}\n` : ''
+            }`
+        ),
+      ];
+      const textBlob = new Blob([contentLines.join('\n')], {
+        type: 'text/plain;charset=utf-8',
+      });
+      const url = URL.createObjectURL(textBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = material.fileName || 'konspekt.md';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
       return;
     }
 

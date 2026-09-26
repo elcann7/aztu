@@ -10,7 +10,6 @@ import {
   Link2,
   Download,
   Calculator,
-  Waves,
   BookOpen,
   ArrowRight,
   Plus,
@@ -540,7 +539,7 @@ export const DashboardView: React.FC = () => {
               >
                 <div className="bento-lab-main">
                   <span className="bento-lab-title">
-                    CS-101 · Python 3.12 + Pandas Brauzer Sandbox-u
+                    İf-61125y · Python 3.12 + Pandas Brauzer Sandbox-u
                   </span>
                   <span className="bento-lab-desc">
                     Müəl. Ayxan Həsənov və Müəl. Şəbnəm İsgəndərlinin dərsləri üzrə hazır seminar və laboratoriya şablonları.
@@ -555,7 +554,7 @@ export const DashboardView: React.FC = () => {
               >
                 <div className="bento-lab-main">
                   <span className="bento-lab-title">
-                    MATH-101 · Riyazi Analiz Mühazirələr, Test və ε-Ətrafı Lab
+                    İf-61115y · Riyazi Analiz Mühazirələr, Test və ε-Ətrafı Lab
                   </span>
                   <span className="bento-lab-desc">
                     Çoxluqlar, həqiqi ədədlər, supremum/infimum simulyatoru, özünü yoxlama testləri və AI köməkçi.
@@ -570,28 +569,13 @@ export const DashboardView: React.FC = () => {
               >
                 <div className="bento-lab-main">
                   <span className="bento-lab-title">
-                    İF-20403y · Fizika 8 Mühazirə + 7 Laboratoriya PDF Bələdçisi
+                    İf-20403y · Fizika 8 Mühazirə + 7 Laboratoriya PDF Bələdçisi
                   </span>
                   <span className="bento-lab-desc">
                     Dos. Sürəyya Məmmədovanın təqdimatları, laboratoriya hesablamaları və daxili PDF oxuyucu.
                   </span>
                 </div>
                 <BookOpen size={14} color="#64748b" />
-              </div>
-
-              <div
-                className="bento-lab-item"
-                onClick={() => navigate('/app/water')}
-              >
-                <div className="bento-lab-main">
-                  <span className="bento-lab-title">
-                    Fizika · 2D Sönümlü Dalğa və Su Simulyasiyası
-                  </span>
-                  <span className="bento-lab-desc">
-                    Dalğa interferensiyası, maneələrdən əksolunma və rəqs tənliyinin interaktiv laboratoriyası.
-                  </span>
-                </div>
-                <Waves size={14} color="#64748b" />
               </div>
             </div>
           </div>

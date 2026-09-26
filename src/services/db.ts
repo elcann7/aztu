@@ -4,6 +4,8 @@
 // Includes server-side style validation and strict permission checks
 // ============================================================================
 
+import { BUILT_IN_MATERIALS, BUILT_IN_DEADLINES } from '../data/courseMaterialsData';
+
 export interface Course {
   id: string;
   code: string;
@@ -12,6 +14,12 @@ export interface Course {
   lecturer: string;
   department: string;
   credits: number;
+}
+
+export interface MaterialStudySection {
+  heading: string;
+  body: string;
+  formulaOrCode?: string;
 }
 
 export interface Material {
@@ -28,6 +36,8 @@ export interface Material {
   authorName: string;
   createdAt: string;
   updatedAt?: string;
+  isBuiltIn?: boolean;
+  studyNotes?: MaterialStudySection[];
 }
 
 export type NoteCategory = 'teacher_said' | 'exam_colloquium' | 'seminar' | 'general';
@@ -104,12 +114,21 @@ export interface Vote {
   createdAt: string;
 }
 
-// 6 Real University Courses for 6326A2 (1-ci Semestr · Tam 30 ECTS Kredit)
+// 6 Real University Courses for 6326A2 (1-ci Semestr · Tam 30 ECTS Kredit · Rəsmi KOICA Kodları)
 export const REAL_COURSES: Course[] = [
   {
+    id: 'prog',
+    code: 'İf-61125y',
+    name: 'Proqramlaşdırmanın əsasları-1',
+    slug: 'programming',
+    lecturer: 'Dos. Fizuli Əzimov / Müəl. Ayxan Həsənov / Müəl. Şəbnəm İsgəndərli',
+    department: 'Kompüter Mühəndisliyi kafedrası',
+    credits: 8,
+  },
+  {
     id: 'math',
-    code: 'MATH-101',
-    name: 'Riyazi analiz-1',
+    code: 'İf-61115y',
+    name: 'Riyazi analiz - 1',
     slug: 'math-analysis',
     lecturer: 'Dos. Nizami Şıxəliyev / Müəl. Şamil Talıblı',
     department: 'Ali Riyaziyyat kafedrası',
@@ -117,7 +136,7 @@ export const REAL_COURSES: Course[] = [
   },
   {
     id: 'algebra',
-    code: 'MATH-102',
+    code: 'İf-61119y',
     name: 'Xətti cəbr',
     slug: 'linear-algebra',
     lecturer: 'Dos. Rəna Əmirova / Müəl. Çingiz Ələkbərov',
@@ -125,40 +144,31 @@ export const REAL_COURSES: Course[] = [
     credits: 4,
   },
   {
-    id: 'phys',
-    code: 'İF-20403y',
-    name: 'Fizika',
-    slug: 'physics',
-    lecturer: 'Dos. Sürəyya Məmmədova',
-    department: 'Mühəndislik fizikası və elektronika kafedrası',
-    credits: 3,
-  },
-  {
-    id: 'prog',
-    code: 'CS-101',
-    name: 'Proqramlaşdırmanın əsasları-1',
-    slug: 'programming',
-    lecturer: 'Dos. Füzuli Əzimov / Müəl. Ayxan Həsənov / Müəl. Şəbnəm İsgəndərli',
-    department: 'Kompüter Mühəndisliyi kafedrası',
-    credits: 8,
+    id: 'aze',
+    code: 'Üf-71706y',
+    name: 'Azərbaycan dilində işgüzar və akademik kommunikasiya',
+    slug: 'azerbaijani',
+    lecturer: 'Müəl. Nərminə İsayeva',
+    department: 'Azərbaycan dili və pedaqogika kafedrası',
+    credits: 4,
   },
   {
     id: 'eng',
     code: 'ENG-101',
-    name: 'Xarici dildə işgüzar və akademik kommunikasiya -1',
+    name: 'Xarici dildə işgüzar və akademik kommunikasiya - 1',
     slug: 'english',
     lecturer: 'Müəl. Dilarə Həmidova',
     department: 'Xarici dillər kafedrası',
     credits: 4,
   },
   {
-    id: 'aze',
-    code: 'AZE-101',
-    name: 'Azərbaycan dilində işgüzar və akademik kommunikasiya',
-    slug: 'azerbaijani',
-    lecturer: 'Müəl. Nərminə İsayeva',
-    department: 'Azərbaycan dili və pedaqogika kafedrası',
-    credits: 4,
+    id: 'phys',
+    code: 'İf-20403y',
+    name: 'Fizika',
+    slug: 'physics',
+    lecturer: 'Dos. Sürəyya Məmmədova',
+    department: 'Mühəndislik fizikası və elektronika kafedrası',
+    credits: 3,
   },
 ];
 
@@ -166,6 +176,7 @@ export const REAL_COURSES: Course[] = [
 const KEY_MATERIALS = 'aztu_real_materials';
 const KEY_NOTES = 'aztu_real_notes';
 const KEY_DEADLINES = 'aztu_real_deadlines';
+const KEY_BUILTIN_DL_STATE = 'aztu_builtin_deadlines_state_v1';
 const KEY_QUESTIONS = 'aztu_real_questions';
 const KEY_ANSWERS = 'aztu_real_answers';
 const KEY_POLLS = 'aztu_real_polls';
@@ -247,6 +258,49 @@ function saveList<T>(key: string, list: T[]): void {
   localStorage.setItem(key, JSON.stringify(list));
 }
 
+function loadBuiltInDeadlineStates(): Record<string, boolean> {
+  try {
+    const raw = localStorage.getItem(KEY_BUILTIN_DL_STATE);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveBuiltInDeadlineStates(states: Record<string, boolean>): void {
+  try {
+    localStorage.setItem(KEY_BUILTIN_DL_STATE, JSON.stringify(states));
+  } catch {
+    // ignore
+  }
+}
+
+export function mergeWithBuiltInMaterials(customList: Material[]): Material[] {
+  const customIds = new Set(customList.map((m) => m.id));
+  const combined = [
+    ...customList,
+    ...BUILT_IN_MATERIALS.filter((b) => !customIds.has(b.id)),
+  ];
+  return combined.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
+}
+
+export function mergeWithBuiltInDeadlines(customList: Deadline[]): Deadline[] {
+  const states = loadBuiltInDeadlineStates();
+  const customIds = new Set(customList.map((d) => d.id));
+  const builtIns = BUILT_IN_DEADLINES.filter((b) => !customIds.has(b.id)).map((b) => ({
+    ...b,
+    isCompleted: states[b.id] ?? b.isCompleted ?? false,
+  }));
+  const combined = [...customList, ...builtIns];
+  return combined.sort((a, b) => {
+    const timeA = new Date(`${a.dueDate}T${a.dueTime || '23:59'}`).getTime();
+    const timeB = new Date(`${b.dueDate}T${b.dueTime || '23:59'}`).getTime();
+    return timeA - timeB;
+  });
+}
+
 // ============================================================================
 // DATABASE OPERATIONS WITH VALIDATION & PERMISSIONS
 // ============================================================================
@@ -272,9 +326,7 @@ export const dbService = {
   // --------------------------------------------------------------------------
   getMaterials(courseId?: string): Material[] {
     const all = loadList<Material>(KEY_MATERIALS);
-    const sorted = all.sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    );
+    const sorted = mergeWithBuiltInMaterials(all);
     if (courseId) {
       return sorted.filter((m) => m.courseId === courseId);
     }
@@ -437,12 +489,7 @@ export const dbService = {
   // --------------------------------------------------------------------------
   getDeadlines(courseId?: string): Deadline[] {
     const all = loadList<Deadline>(KEY_DEADLINES);
-    // Sort by dueDate ascending (nearest first)
-    const sorted = all.sort((a, b) => {
-      const timeA = new Date(`${a.dueDate}T${a.dueTime || '23:59'}`).getTime();
-      const timeB = new Date(`${b.dueDate}T${b.dueTime || '23:59'}`).getTime();
-      return timeA - timeB;
-    });
+    const sorted = mergeWithBuiltInDeadlines(all);
     if (courseId) {
       return sorted.filter((d) => d.courseId === courseId);
     }
@@ -492,6 +539,14 @@ export const dbService = {
   },
 
   toggleDeadlineCompletion(id: string): Deadline | null {
+    if (id.startsWith('builtin_dl_')) {
+      const states = loadBuiltInDeadlineStates();
+      states[id] = !states[id];
+      saveBuiltInDeadlineStates(states);
+      const found = BUILT_IN_DEADLINES.find((b) => b.id === id);
+      return found ? { ...found, isCompleted: states[id] } : null;
+    }
+
     const all = loadList<Deadline>(KEY_DEADLINES);
     const index = all.findIndex((d) => d.id === id);
     if (index === -1) return null;
