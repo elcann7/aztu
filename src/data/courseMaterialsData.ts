@@ -1149,7 +1149,7 @@ export const BUILT_IN_MATERIALS: Material[] = [
 
   // ==========================================================================
   // 3. XƏTTİ CƏBR VƏ ANALİTİK HƏNDƏSƏ (LMS ID: 5040 · 6326a2_if-61119y)
-  // Müəllim: Sevda İsgəndərova / Dos. Rəna Əmirova (Cloudflare R2 PDF + Universitet Səviyyəli Qaydalar)
+  // Müəllimlər: Dos. Rəna Əmirova / Müəl. Çingiz Ələkbərov (Cloudflare R2 PDF + 0-dan İzahlı Qaydalar)
   // ==========================================================================
   {
     id: 'koica_alg_4234',
@@ -1163,7 +1163,7 @@ export const BUILT_IN_MATERIALS: Material[] = [
     fileMime: 'application/pdf',
     linkUrl: 'https://pub-40bab608394d42c2883a3de1b69e3d1f.r2.dev/aztu/algebra/muhazire-01.pdf',
     authorId: 'system_aztu',
-    authorName: 'Sevda İsgəndərova / Rəna Əmirova',
+    authorName: 'Dos. Rəna Əmirova',
     createdAt: '2026-09-18T14:08:38.000Z',
     isBuiltIn: true,
     studyNotes: [
@@ -1228,7 +1228,7 @@ export const BUILT_IN_MATERIALS: Material[] = [
     fileMime: 'application/pdf',
     linkUrl: 'https://pub-40bab608394d42c2883a3de1b69e3d1f.r2.dev/aztu/algebra/muhazire-02.pdf',
     authorId: 'system_aztu',
-    authorName: 'Sevda İsgəndərova / Rəna Əmirova',
+    authorName: 'Dos. Rəna Əmirova',
     createdAt: '2026-09-18T14:11:30.000Z',
     isBuiltIn: true,
     studyNotes: [
@@ -1279,7 +1279,7 @@ export const BUILT_IN_MATERIALS: Material[] = [
     fileMime: 'application/pdf',
     linkUrl: 'https://pub-40bab608394d42c2883a3de1b69e3d1f.r2.dev/aztu/algebra/muhazire-03-06-laplas-ters-matris-ranq.pdf',
     authorId: 'system_aztu',
-    authorName: 'Sevda İsgəndərova',
+    authorName: 'Dos. Rəna Əmirova / Müəl. Çingiz Ələkbərov',
     createdAt: '2026-09-21T10:00:00.000Z',
     isBuiltIn: true,
     studyNotes: [
@@ -1348,7 +1348,7 @@ export const BUILT_IN_MATERIALS: Material[] = [
     fileMime: 'application/pdf',
     linkUrl: 'https://pub-40bab608394d42c2883a3de1b69e3d1f.r2.dev/aztu/algebra/muhazire-07-14-xcts-kramer-qauss-mexsusi.pdf',
     authorId: 'system_aztu',
-    authorName: 'Sevda İsgəndərova',
+    authorName: 'Dos. Rəna Əmirova / Müəl. Çingiz Ələkbərov',
     createdAt: '2026-09-22T10:00:00.000Z',
     isBuiltIn: true,
     studyNotes: [
@@ -1388,7 +1388,7 @@ export const BUILT_IN_MATERIALS: Material[] = [
 
   // ==========================================================================
   // 4. RİYAZİ ANALİZ - 1 (LMS ID: 5039 · 6326a2_if-61115y_riyazi analiz - 1)
-  // Müəllim: Sevda İsgəndərova (Cloudflare R2 PDF + 0-dan İzahlı Universitet Qaydaları)
+  // Müəllimlər: Dos. Nizami Şıxəliyev / Müəl. Şamil Talıblı (Cloudflare R2 PDF + 0-dan İzahlı Universitet Qaydaları)
   // ==========================================================================
   {
     id: 'uni_math_m1_m5',
@@ -1402,7 +1402,7 @@ export const BUILT_IN_MATERIALS: Material[] = [
     fileMime: 'application/pdf',
     linkUrl: 'https://pub-40bab608394d42c2883a3de1b69e3d1f.r2.dev/aztu/math/riyazi-analiz-m1-m5-kollokvium1.pdf',
     authorId: 'system_aztu',
-    authorName: 'Sevda İsgəndərova',
+    authorName: 'Dos. Nizami Şıxəliyev / Müəl. Şamil Talıblı',
     createdAt: '2026-09-18T09:00:00.000Z',
     isBuiltIn: true,
     studyNotes: [
@@ -1489,7 +1489,7 @@ export const BUILT_IN_MATERIALS: Material[] = [
     fileMime: 'application/pdf',
     linkUrl: 'https://pub-40bab608394d42c2883a3de1b69e3d1f.r2.dev/aztu/math/riyazi-analiz-m6-m15-toreme-inteqral.pdf',
     authorId: 'system_aztu',
-    authorName: 'Sevda İsgəndərova',
+    authorName: 'Dos. Nizami Şıxəliyev / Müəl. Şamil Talıblı',
     createdAt: '2026-09-20T09:00:00.000Z',
     isBuiltIn: true,
     studyNotes: [
@@ -1605,7 +1605,7 @@ export const BUILT_IN_MATERIALS: Material[] = [
 
   // ==========================================================================
   // 6. XARİCİ DİLDƏ İŞGÜZAR VƏ AKADEMİK KOMMUNİKASİYA (LMS ID: 5043 · XDİAK)
-  // Müəllim: Vahidə Nuriyeva (Cloudflare R2 PDF + 0-dan İzahlı Akademik İngilis Dili Qaydaları)
+  // Müəllim: Müəl. Dilarə Həmidova (Cloudflare R2 PDF + 0-dan İzahlı Akademik İngilis Dili Qaydaları)
   // ==========================================================================
   {
     id: 'uni_eng_xdiak',
@@ -1619,7 +1619,7 @@ export const BUILT_IN_MATERIALS: Material[] = [
     fileMime: 'application/pdf',
     linkUrl: 'https://pub-40bab608394d42c2883a3de1b69e3d1f.r2.dev/aztu/eng/xdiak-academic-english-cs.pdf',
     authorId: 'system_aztu',
-    authorName: 'Vahidə Nuriyeva',
+    authorName: 'Müəl. Dilarə Həmidova',
     createdAt: '2026-09-20T11:00:00.000Z',
     isBuiltIn: true,
     studyNotes: [

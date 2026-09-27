@@ -23,7 +23,7 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
   - **ADİAK və XDİAK**: Funksional üslublar, rəsmi-işgüzar sənəd şablonları (Ərizə, CV, Akt, Protokol), akademik yazı və B1–B2 İngilis dili qrammatika qaydaları 0-dan cədvəllərlə tərtib olundu.
 - **KOICA LMS (`api-lms.aztu.edu.az`) Dəqiq Məlumatları və Cloudflare R2 PDF Bazası (33 PDF)**:
   - KOICA LMS-dəki bütün rəsmi PPTX/DOCX/PDF faylları PDF-ə çevrilərək Cloudflare R2 (`https://pub-40bab608394d42c2883a3de1b69e3d1f.r2.dev/aztu/...`) üzərinə yükləndi; xarici LMS düymələri yığışdırılaraq bütün faylların birbaşa saytın öz daxilində (`PhysicsPdfViewer`) açılması təmin edildi.
-  - Saxta deadline-lar silindi (`BUILT_IN_DEADLINES = []`), rəsmi müəllim adları, sillabuslar və 100% davamiyyət (0 qaib) göstəriciləri KOICA LMS ilə tam uyğunlaşdırıldı.
+  - Saxta deadline-lar silindi (`BUILT_IN_DEADLINES = []`), rəsmi müəllim adları (`Dos. Nizami Şıxəliyev / Müəl. Şamil Talıblı` — Riyazi analiz-1, `Dos. Rəna Əmirova / Müəl. Çingiz Ələkbərov` — Xətti cəbr, `Müəl. Dilarə Həmidova` — XDİAK), sillabuslar və 100% davamiyyət (0 qaib) göstəriciləri KOICA LMS ilə tam uyğunlaşdırıldı.
 - `npm run build` uğurla tamamlandı (0 xəta).
 
 ---

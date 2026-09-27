@@ -56,7 +56,7 @@ export const MathLearningView = () => {
             düsturdakı hər bir simvolun (∀, ∃, sup, inf, ε, δ, N) mənası, həll alqoritmi və nümunə.
           </p>
           <small>
-            Müəllim: Sevda İsgəndərova · AzTU 6326a2 qrupu üçün universitet proqramına uyğun tərtib edilmişdir.
+            Müəllimlər: Dos. Nizami Şıxəliyev (mühazirə) · Müəl. Şamil Talıblı (məşğələ) · AzTU 6326A2 qrupu üçün universitet proqramına uyğun tərtib edilmişdir.
           </small>
         </div>
         <div className="math-lesson-list" aria-label="Riyazi analiz mühazirələri">
