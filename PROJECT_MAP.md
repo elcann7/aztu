@@ -72,11 +72,12 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`src/components/app/TopBar.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/TopBar.css) | TopBar stilləri |
 | [`src/components/app/DashboardView.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/DashboardView.tsx) | Əsas iş lövhəsi: Tələbəyə salamlama, 4 əsas statistika kartı, günün cədvəli və elanlar |
 | [`src/components/app/DashboardView.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/DashboardView.css) | Dashboard stilləri |
-| [`src/components/app/CourseShellView.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/CourseShellView.tsx) | Fənn portalı: fizika üçün yığcam Dərslər/Qrup/Fənn haqqında naviqasiyası, riyazi analiz üçün ilkin mövzu siyahısı, digər fənlər üçün ümumi görünüş |
+| [`src/components/app/CourseShellView.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/CourseShellView.tsx) | Fənn portalı: hər 6 fənn üçün «Dərslər & Qaydalar», «Materiallar», «Tapşırıqlar», «15 Həftəlik Plan» və daxili PDF/Qayda oxuyucusu |
 | [`src/components/app/CourseShellView.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/CourseShellView.css) | Fənn portalı stilləri |
-| `src/components/app/MathLearningView.tsx` & `MathLearning.css` | Nömrələnmiş mühazirə siyahısı, dərs seçimi, dörd daxili bölmə və geri/növbəti keçidləri |
-| `src/components/app/PhysicsLearningView.tsx` & `PhysicsLearning.css` | Yığcam fizika dərs seçimi, müəllim izahları və istəyə görə açılan plan/mənbə qeydləri |
-| `src/components/app/PhysicsPdfViewer.tsx` | R2-dəki PDF-i PDF.js ilə saytın içində səhifə-səhifə göstərən oxuyucu |
+| [`src/components/app/StudyNoteCard.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/StudyNoteCard.tsx) & [`StudyNoteCard.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/StudyNoteCard.css) | **0-dan Öyrədən Universitet Bələdçisi (`StudyNotesList`)**: Sadə dillə məntiq, nəzəriyyə, düstur, simvol lüğəti, addım-addım həll, nümunə və imtahan xəbərdarlığı kartları |
+| `src/components/app/MathLearningView.tsx` & `MathLearning.css` | Riyazi analiz üzrə 8 interaktiv mühazirə, `StudyNotesList` ilə 0-dan izahlar, daxili PDF, praktika, laboratoriya və AI köməkçi |
+| `src/components/app/PhysicsLearningView.tsx` & `PhysicsLearning.css` | Fizika üzrə 8 mühazirə və 8 laboratoriya işi, `StudyNotesList` ilə 0-dan izahlar, özünü yoxlama sualları və daxili R2 PDF oxuyucusu |
+| `src/components/app/PhysicsPdfViewer.tsx` | Cloudflare R2-dəki 33 PDF-i PDF.js ilə saytın içində səhifə-səhifə göstərən oxuyucu |
 | `src/components/app/MathPractice.tsx` | Mövzu testləri və brauzerdə ən yaxşı nəticə |
 | `src/components/app/MathProofChallenge.tsx` | Yazılı isbat cəhdi, ipucu və nümunə həll |
 | `src/components/app/MathLabs.tsx` | Seçilmiş dərsə uyğun Ven, ε-qonşuluğu və ya sərhəd simulyasiyası |
@@ -88,7 +89,7 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | Fayl | Təsviri |
 | :--- | :--- |
 | [`src/components/app/views/NotesView.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/views/NotesView.tsx) | **Qrup Qeydləri**: Mühazirə ipucları zaman xətti, "Müəllim dedi", kateqoriyalar, nisbi tarix qruplaşması |
-| [`src/components/app/views/MaterialsView.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/views/MaterialsView.tsx) | **Akademik Materiallar**: Dərsliklər, laboratoriya faylları və slaydlar kataloqu |
+| [`src/components/app/views/MaterialsView.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/views/MaterialsView.tsx) | **Akademik Materiallar**: Bütün 6 fənn üzrə 33 rəsmi R2 PDF-i və `StudyNotesList` ilə səhifədaxili 0-dan izahlı qaydalar kataloqu |
 | [`src/components/app/views/DeadlinesView.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/views/DeadlinesView.tsx) | **Deadline İzləyicisi**: İmtahan və laboratoriya təhvil tarixləri, geri sayım sayğacı |
 | [`src/components/app/views/QAView.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/views/QAView.tsx) | **Sual-Cavab Forumu**: Suallar, cavablar, "Həll edildi" nişanı və səsvermə (Upvote) |
 | [`src/components/app/views/PollsView.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/views/PollsView.tsx) | **Qrup Sorğuları**: Qrupdaxili demokratik səsvermə və real-vaxt faiz qrafikləri |
@@ -123,17 +124,16 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`src/services/academicTracker.ts`](./src/services/academicTracker.ts) | **6326A2 Akademik Hesablayıcı Xidməti**: 30 ECTS kredit çəkiləri, 25% qaib limiti, Forma-1/Forma-2 giriş balı və GPA hesablaması |
 | [`src/services/googleAuth.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/googleAuth.ts) | Google Identity Services API klient skripti, Client ID idarəsi və JWT deşifrələyici |
 | [`src/services/supabase.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/supabase.ts) | **Supabase Klienti**: Realtime və PostgreSQL bulud əlaqəsi, oflayn ehtiyat mexanizmi |
-| [`src/services/db.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/db.ts) | Bütün məlumat strukturlarının saxlanması, oxunması və tip definisiyaları |
+| [`src/services/db.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/db.ts) | Bütün məlumat strukturlarının saxlanması, oxunması və tip definisiyaları (`MaterialStudySection` daxil olmaqla) |
 | `src/services/discussion.ts` | Müzakirə mövzusu ID-si və düzəliş/versiya işarələri |
 | `src/hooks/useBookmarks.ts` | Tələbənin brauzerdə saxladığı paylaşımların idarəsi |
 | `src/hooks/useSearchFocus.ts` | Ümumi axtarışdan konkret paylaşım kartına keçid |
 | [`src/services/pythonRunner.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/services/pythonRunner.ts) | Python kodlarının brauzerdə təhlili və icra simulyatoru |
 | [`src/services/waterSimulation.ts`](./src/services/waterSimulation.ts) | 2D sönümlü dalğa sahəsi, əks etdirən maneələr, damla impulsları və Canvas səth işıqlandırması |
-| [`src/data/mockData.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/data/mockData.ts) | **Rəsmi Dərs Cədvəli və Təqvim**: Rəsmi AzTU 6326A2 həftəlik cədvəli (`WEEKLY_SCHEDULE`), semestr təqvimi və geri sayım (`SEMESTER_CONFIG`), 15 həftəlik fənn sillabusları (`COURSE_SYLLABUS`) və real müəllim məlumatları |
-| `src/data/mathLessons.ts` | Hazırda keçilən riyazi analiz mövzularının qaydaları, testləri və AI konteksti |
-| `src/data/physicsContent.ts` | LMS-in 8 fizika mövzusu, 7 laboratoriyasının və ayrıca nixrom təlimatının mənbə əsaslı statik məzmunu |
-| `src/data/physicsLessonDetails.ts` | İlk dörd müəllim təqdimatının genişləndirilmiş dərs mətni və təqdimatı olmayan mövzular üçün LMS planına əsaslanan müstəqil öyrənmə mətni |
-| `src/data/physicsLabDetails.ts` | Müəllimin laboratoriya təlimatları üzrə nəzəriyyə, ölçmə addımları və nəticə hesablamaları |
-| Cloudflare R2 `aztu/physics/*.pdf` | Novcept-in mövcud bucket-ində müəllim sənədlərindən çevrilmiş, mövzulardan açılan 11 PDF; linklər `physicsContent.ts` içindədir |
+| [`src/data/mockData.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/data/mockData.ts) | **Rəsmi Dərs Cədvəli və Təqvim**: Rəsmi AzTU 6326A2 həftəlik cədvəli (`WEEKLY_SCHEDULE`), semestr təqvimi və geri sayım (`SEMESTER_CONFIG`), KOICA LMS-ə uyğun sillabuslar (`COURSE_SYLLABUS`) |
+| [`src/data/courseMaterialsData.ts`](./src/data/courseMaterialsData.ts) | **KOICA LMS Rəsmi Materialları və 0-dan Öyrədən Qaydalar Bazası**: Bütün 6 fənn üzrə 33 Cloudflare R2 PDF-i və `MaterialStudySection` (`intuition`, `body`, `formulaOrCode`, `symbols`, `steps`, `example`, `warning`) qaydaları |
+| `src/data/mathLessons.ts` | Riyazi analiz üzrə 8 mühazirənin 0-dan izahlı qaydaları, simvol lüğəti, testləri, isbatları və AI konteksti |
+| `src/data/physicsContent.ts` | LMS-in 8 fizika mühazirəsi və 8 laboratoriyasının `BUILT_IN_MATERIALS` əsaslı 0-dan izahlı məzmunu və R2 PDF linkləri |
+| Cloudflare R2 `aztu/{physics,math,algebra,programming,adiak,english}/*.pdf` | Novcept-in R2 bucket-ində (`pub-40bab608394d42c2883a3de1b69e3d1f.r2.dev`) yerləşən 33 rəsmi PDF dərslik, mühazirə, laboratoriya və konspekt |
 | `api/lecture-chat.ts` | Gemini 3.1 Flash-Lite üçün server funksiyası; mövzu seçimi və sorğu limitləri |
 | [`src/styles/global.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/styles/global.css) | Qlobal CSS dəyişənləri (rənglər, şriftlər, spacing, radiuslar, animasiyalar) |

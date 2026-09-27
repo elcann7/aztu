@@ -4,6 +4,30 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.15.0] — 2026-09-28
+
+### 0-dan Öyrədən Universitet Bələdçisi (`StudyNoteCard`), KOICA LMS Canlı Sinxronizasiyası və 33 Cloudflare R2 PDF İnteqrasiyası
+- **Yeni Komponent (`StudyNoteCard.tsx` & `StudyNoteCard.css`)**: Mövzunu ilk dəfə görən 1-ci kurs tələbəsi üçün 7 bloklu pedaqoji kart sistemi yaradıldı:
+  1. 💡 **Sadə dillə məntiq (0-dan izah — bu nədir və niyə lazımdır?)** (`intuition`)
+  2. 📘 **Əsas Nəzəriyyə və Qayda** (`body`)
+  3. 📐 **Əsas Düstur / Qayda / Sintaksis** (`formulaOrCode`)
+  4. 🔤 **Düsturdakı Hərflərin və İşarələrin Mənası** (`symbols` — ikisütunlu simvol lüğəti)
+  5. 🪜 **Məsələni Addım-Addım Necə Həll Edirik?** (`steps` — nömrələnmiş həll alqoritmi)
+  6. ✏️ **Sıfırdan Həll Olunmuş Nümunə (Rəqəmlərlə / Kodla)** (`example`)
+  7. ⚠️ **İmtahanda və Kollokviumda Diqqət Et!** (`warning`)
+- **Bütün 6 Fənn Üzrə 0-dan İzahlı Qaydalar ([`courseMaterialsData.ts`](./src/data/courseMaterialsData.ts), [`mathLessons.ts`](./src/data/mathLessons.ts), [`physicsContent.ts`](./src/data/physicsContent.ts))**:
+  - **Riyazi analiz - 1**: Həm 8 interaktiv mühazirə (`MathLearningView.tsx`), həm də M1–M15 konspektləri (`∈`/`⊆`, `∀`/`∃`, `sup`/`inf`, `ε–N` və `ε–δ` limitləri, I/II görkəmli limitlər, ekvivalent sonsuz kiçilənlər cədvəli, I/II növ kəsilmə, törəmə, Leybnis, Lopital, Makloren, inteqral) sıfırdan izahlarla yeniləndi.
+  - **Fizika**: Köhnə sıx 18-hissəli akkordeon ləğv edildi; 8 mühazirə və 8 laboratoriya işi (`PhysicsLearningView.tsx`) 0-dan öyrədən `StudyNotesList` kartları, düstur lüğəti və rəqəmlərlə həll nümunələri ilə əvəzləndi.
+  - **Xətti cəbr və analitik həndəsə**: Determinantlar, Sarrus və Laplas üsulları, tərs matris, Qauss və Kramer üsulları, matrisin ranqı, məxsusi ədədlər (`det(A − λI) = 0`), vektor hasilləri, düz xətt/müstəvi və ikitərtibli əyrilər 0-dan rəqəmlərlə həll olundu.
+  - **Proqramlaşdırmanın əsasları-1**: Oqtay Ələkbərovun C/C++ dərsliyi və Fizuli Əzimovun M1–M15 Python təqdimatları 0-dan izahlı kod nümunələri ilə yazıldı.
+  - **ADİAK və XDİAK**: Funksional üslublar, rəsmi-işgüzar sənəd şablonları (Ərizə, CV, Akt, Protokol), akademik yazı və B1–B2 İngilis dili qrammatika qaydaları 0-dan cədvəllərlə tərtib olundu.
+- **KOICA LMS (`api-lms.aztu.edu.az`) Dəqiq Məlumatları və Cloudflare R2 PDF Bazası (33 PDF)**:
+  - KOICA LMS-dəki bütün rəsmi PPTX/DOCX/PDF faylları PDF-ə çevrilərək Cloudflare R2 (`https://pub-40bab608394d42c2883a3de1b69e3d1f.r2.dev/aztu/...`) üzərinə yükləndi; xarici LMS düymələri yığışdırılaraq bütün faylların birbaşa saytın öz daxilində (`PhysicsPdfViewer`) açılması təmin edildi.
+  - Saxta deadline-lar silindi (`BUILT_IN_DEADLINES = []`), rəsmi müəllim adları, sillabuslar və 100% davamiyyət (0 qaib) göstəriciləri KOICA LMS ilə tam uyğunlaşdırıldı.
+- `npm run build` uğurla tamamlandı (0 xəta).
+
+---
+
 ## [1.14.0] — 2026-09-26
 
 ### 6326A2 Qaib Limit, Giriş Balı və 30 ECTS GPA Kalkulyatoru + Rəsmi Materiallar Bazası

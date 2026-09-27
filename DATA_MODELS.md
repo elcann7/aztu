@@ -183,20 +183,32 @@ export interface Vote {
 
 ---
 
-## 7. Akademik Materiallar Modeli (`Material`)
+## 7. Akademik Materiallar və 0-dan Öyrədən Qaydalar Modeli (`Material` & `MaterialStudySection`)
 
 ```typescript
+export interface MaterialStudySection {
+  heading: string;            // Mövzu / Bölmə başlığı
+  intuition?: string;         // 💡 Sadə dillə məntiq (0-dan izah — bu nədir və niyə lazımdır?)
+  body: string;               // 📘 Əsas nəzəriyyə və tərif
+  formulaOrCode?: string;     // 📐 Əsas düstur, qanun və ya proqram kodu
+  symbols?: string[];         // 🔤 Düsturdakı hər bir hərf və işarənin mənası ("simvol — izah")
+  steps?: string[];           // 🪜 Məsələni addım-addım necə həll edirik?
+  example?: string;           // ✏️ Sıfırdan rəqəmlərlə / kodla həll olunmuş nümunə
+  warning?: string;           // ⚠️ İmtahanda və kollokviumda ən çox edilən səhv / diqqət ediləcək məqam
+}
+
 export interface Material {
-  id: string;                 // Material ID-si
+  id: string;                 // Material ID-si (məs: 'koica_phys_3824')
   title: string;              // Faylın və ya keçidin adı
-  courseId: string;           // Fənn ID-si
+  courseId: string;           // Fənn ID-si ('phys', 'math', 'algebra', 'prog', 'aze', 'eng')
   type: 'file' | 'link';      // Fayl və ya Xarici Resurs linki
   description?: string;       // Qısa təsvir
-  fileName?: string;          // Orijinal fayl adı (məs: 'lab_1_hesabat.pdf')
-  fileSize?: string;          // Faylın ölçüsü (məs: '2.4 MB')
+  fileName?: string;          // Orijinal fayl adı (məs: 'koica-muh1-dinamika.pdf')
+  fileSize?: string;          // Faylın ölçüsü (məs: '3.6 MB · PDF + 0-dan İzahlı Qaydalar')
   fileMime?: string;          // MIME tipi (məs: 'application/pdf')
-  linkUrl?: string;           // Xarici keçid URL-i
-  authorId: string;           // Paylaşan tələbə
+  linkUrl?: string;           // Cloudflare R2 ictimai CDN URL-i
+  studyNotes?: MaterialStudySection[]; // 0-dan öyrədən universitet səviyyəli qayda kartları
+  authorId: string;           // Paylaşan müəllif / sistem
   authorName: string;
   createdAt: string;
   updatedAt?: string;

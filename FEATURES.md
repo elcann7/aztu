@@ -243,3 +243,17 @@ Hər bir fənn portalında:
 - **Kollokvium Çeviricisi**: 10 ballıq şkaladakı 3 kollokvium və cari seminar ortalamasını birbaşa Forma-1 (30 bal) və Forma-2 (20 bal) şkalasına çevirir.
 - **İmtahan Hədəf Cədvəli**: Cari giriş balına görə 51 (E), 71 (C - Təqaüd), 81 (B) və 91 (A - Əlaçı) almaq üçün imtahanda minimum neçə bal lazım olduğunu göstərir.
 
+---
+
+## 18. 0-dan Öyrədən Universitet Bələdçisi (`StudyNotesList`) və 33 Cloudflare R2 PDF Bazası
+- **7 Bloklu Pedaqoji Strukturlaşdırma (`StudyNoteCard.tsx`)**: Bütün 6 fənnin mühazirə, laboratoriya və konspektləri yalnız təkrar üçün deyil, mövzunu ilk dəfə görən 1-ci kurs tələbəsinin **0-dan müstəqil öyrənməsi** üçün tərtib edilib:
+  1. 💡 **Sadə dillə məntiq**: Mövzunun nə olduğu və niyə lazım olduğu haqqında 0-dan intuitiv izah.
+  2. 📘 **Əsas Nəzəriyyə və Qayda**: Universitet proqramına uyğun səliqəli nəzəri izah.
+  3. 📐 **Əsas Düstur / Qayda / Sintaksis**: Akademik düstur və ya proqram kodu bloku.
+  4. 🔤 **Düsturdakı Hərflərin və İşarələrin Mənası**: Hər bir riyazi/fiziki simvolun və ya kod operatorunun ikisütunlu izahlı lüğəti.
+  5. 🪜 **Məsələni Addım-Addım Necə Həll Edirik?**: Məsələ və ya tapşırıq həlli üçün nömrələnmiş alqoritm.
+  6. ✏️ **Sıfırdan Həll Olunmuş Nümunə**: Konkret rəqəmlərlə və ya işlək kodla tam həll edilmiş misal.
+  7. ⚠️ **İmtahanda və Kollokviumda Diqqət Et!**: Tələbələrin ən çox etdiyi səhvlər və xəbərdarlıqlar.
+- **Səhifədaxili R2 PDF Oxuyucusu (`PhysicsPdfViewer.tsx`)**: KOICA LMS-dən çəkilmiş və tərtib edilmiş bütün **33 PDF faylı** (`aztu/physics/`, `aztu/math/`, `aztu/algebra/`, `aztu/programming/`, `aztu/adiak/`, `aztu/english/`) Cloudflare R2 CDN üzərindən birbaşa saytın öz içində səhifə-səhifə oxunur.
+
+
