@@ -5,6 +5,7 @@ import { useAuth } from '../../../context/AuthContext';
 import { formatAzDate } from '../../../services/db';
 import { CreateMaterialModal } from '../modals/CreateMaterialModal';
 import { PhysicsPdfViewer } from '../PhysicsPdfViewer';
+import { StudyNotesList } from '../StudyNoteCard';
 import { useBookmarks } from '../../../hooks/useBookmarks';
 import { useSearchFocus } from '../../../hooks/useSearchFocus';
 import {
@@ -328,17 +329,7 @@ export const MaterialsView: React.FC = () => {
                     </div>
 
                     {isNotesReadable && mat.studyNotes && (
-                      <div className="mat-study-sections">
-                        {mat.studyNotes.map((sec) => (
-                          <div key={sec.heading} className="mat-study-section-card">
-                            <h4>{sec.heading}</h4>
-                            <p style={{ whiteSpace: 'pre-line' }}>{sec.body}</p>
-                            {sec.formulaOrCode && (
-                              <pre className="mat-study-code">{sec.formulaOrCode}</pre>
-                            )}
-                          </div>
-                        ))}
-                      </div>
+                      <StudyNotesList sections={mat.studyNotes} materialTitle={mat.title} />
                     )}
 
                     {isPdfReadable && mat.linkUrl && (

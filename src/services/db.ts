@@ -18,8 +18,13 @@ export interface Course {
 
 export interface MaterialStudySection {
   heading: string;
+  intuition?: string;
   body: string;
   formulaOrCode?: string;
+  symbols?: string[];
+  steps?: string[];
+  example?: string;
+  warning?: string;
 }
 
 export interface Material {

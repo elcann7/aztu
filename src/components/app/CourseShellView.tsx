@@ -37,6 +37,7 @@ import { CreateQuestionModal } from './modals/CreateQuestionModal';
 import { MathLearningView } from './MathLearningView';
 import { PhysicsLearningView } from './PhysicsLearningView';
 import { PhysicsPdfViewer } from './PhysicsPdfViewer';
+import { StudyNotesList } from './StudyNoteCard';
 
 interface CourseShellViewProps {
   courseSlug: string;
@@ -709,17 +710,9 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                   )}
                 </div>
 
-                <div className="mat-study-sections">
-                  {activeRuleMat.studyNotes?.map((sec) => (
-                    <div key={sec.heading} className="mat-study-section-card">
-                      <h4>{sec.heading}</h4>
-                      <p style={{ whiteSpace: 'pre-line' }}>{sec.body}</p>
-                      {sec.formulaOrCode && (
-                        <pre className="mat-study-code">{sec.formulaOrCode}</pre>
-                      )}
-                    </div>
-                  ))}
-                </div>
+                {activeRuleMat.studyNotes && activeRuleMat.studyNotes.length > 0 && (
+                  <StudyNotesList sections={activeRuleMat.studyNotes} materialTitle={activeRuleMat.title} />
+                )}
 
                 {activeRuleMat.linkUrl && activeRuleMat.linkUrl.toLowerCase().endsWith('.pdf') && (
                   <div style={{ marginTop: '1rem' }}>
@@ -893,17 +886,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                         </div>
 
                         {isNotesReadable && mat.studyNotes && (
-                          <div className="mat-study-sections">
-                            {mat.studyNotes.map((sec) => (
-                              <div key={sec.heading} className="mat-study-section-card">
-                                <h4>{sec.heading}</h4>
-                                <p style={{ whiteSpace: 'pre-line' }}>{sec.body}</p>
-                                {sec.formulaOrCode && (
-                                  <pre className="mat-study-code">{sec.formulaOrCode}</pre>
-                                )}
-                              </div>
-                            ))}
-                          </div>
+                          <StudyNotesList sections={mat.studyNotes} materialTitle={mat.title} />
                         )}
 
                         {isPdfReadable && mat.linkUrl && (
