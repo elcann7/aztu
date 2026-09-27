@@ -66,7 +66,7 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
   const getDefaultTab = (slug: string) => {
     if (slug === 'math-analysis') return 'lessons';
     if (slug === 'physics') return 'physics-content';
-    if (['linear-algebra', 'programming', 'azerbaijani'].includes(slug)) return 'course-rules';
+    if (['linear-algebra', 'programming', 'azerbaijani', 'english'].includes(slug)) return 'course-rules';
     return 'overview';
   };
 
@@ -120,14 +120,15 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
   const courseSyllabus = COURSE_SYLLABUS[targetId] || COURSE_SYLLABUS[course.id] || [];
 
   const tabs = course.id === 'phys' ? [
-    { id: 'physics-content', label: 'Dərslər', icon: BookOpen },
+    { id: 'physics-content', label: 'Dərslər & Lab', icon: BookOpen },
+    { id: 'course-rules', label: `Qaydalar & PDF (${rulesMaterials.length})`, icon: FileText },
     { id: 'materials', label: `Materiallar (${courseMaterials.length})`, icon: FolderOpen },
     { id: 'assignments', label: `Tapşırıqlar (${courseDeadlines.length})`, icon: Clock },
     { id: 'overview', label: 'Fənn haqqında', icon: User },
   ] : [
-    ...(course.id === 'math' ? [{ id: 'lessons', label: 'Dərslər', icon: BookOpen }] : []),
-    ...(rulesMaterials.length > 0 && course.id !== 'math'
-      ? [{ id: 'course-rules', label: `Dərslər & Qaydalar (${rulesMaterials.length})`, icon: BookOpen }]
+    ...(course.id === 'math' ? [{ id: 'lessons', label: 'Dərslər (8 Mühazirə)', icon: BookOpen }] : []),
+    ...(rulesMaterials.length > 0
+      ? [{ id: 'course-rules', label: course.id === 'math' ? `Konspektlər & PDF (${rulesMaterials.length})` : `Dərslər & Qaydalar (${rulesMaterials.length})`, icon: BookOpen }]
       : []),
     { id: 'overview', label: course.id === 'math' ? 'Fənn haqqında' : 'Ümumi', icon: Layers },
     ...(course.id === 'math' ? [] : [{ id: 'syllabus', label: '15 Həftəlik Plan', icon: BookOpen }]),

@@ -6,12 +6,13 @@ import { MathPractice } from './MathPractice';
 import { MathTutorChat } from './MathTutorChat';
 import { MathProofChallenge } from './MathProofChallenge';
 import { MathLessonLab } from './MathLabs';
+import { PhysicsPdfViewer } from './PhysicsPdfViewer';
 import './MathLearning.css';
 
 type LessonSection = 'rules' | 'practice' | 'lab' | 'chat';
 
 const sections = [
-  { id: 'rules', label: 'Qaydalar', icon: BookOpen },
+  { id: 'rules', label: 'Qaydalar & PDF', icon: BookOpen },
   { id: 'practice', label: 'Praktika', icon: ClipboardCheck },
   { id: 'lab', label: 'Laboratoriya', icon: FlaskConical },
   { id: 'chat', label: 'AI köməkçi', icon: MessageCircle },
@@ -45,10 +46,10 @@ export const MathLearningView = () => {
 
   if (!lesson) return <div className="math-learning" ref={topRef}>
     <div className="math-learning-intro">
-      <span className="math-eyebrow">Riyazi analiz · dərslər</span>
-      <h2>Mühazirəni seç</h2>
-      <p>Mövzunu seç; qaydalar, test, laboratoriya və AI köməkçi bir yerdədir.</p>
-      <small>Mövzular qrupdan bildirilən məlumata əsaslanır, müəllimin rəsmi konspekti deyil. Yeni dərslər keçildikcə əlavə olunacaq.</small>
+      <span className="math-eyebrow">Riyazi analiz - 1 · Ali Riyaziyyat Mühazirələri</span>
+      <h2>Universitet Səviyyəli Mühazirələr, Teoremlər və R2 PDF Konspektlər</h2>
+      <p>Mövzunu seç: analitik təriflər (ε–δ, ε–N), teoremlər, isbatlar, PDF konspekt, test və laboratoriya bir yerdədir.</p>
+      <small>Müəllim: Sevda İsgəndərova · AzTU 6326a2 qrupu üçün universitet proqramına uyğun tərtib edilmişdir.</small>
     </div>
     <div className="math-lesson-list" aria-label="Riyazi analiz mühazirələri">
       {MATH_LESSONS.map((item, index) => <button key={item.id} type="button" className="math-lesson-card" onClick={() => openLesson(item.id)}>
@@ -57,7 +58,7 @@ export const MathLearningView = () => {
           <span className="math-lesson-card-kicker">Mühazirə {index + 1} · {item.duration}</span>
           <strong>{item.title}</strong>
           <span className="math-lesson-card-summary">{item.subtitle}</span>
-          <span className="math-lesson-card-tools">Qaydalar <span>·</span> Test <span>·</span> Laboratoriya <span>·</span> AI</span>
+          <span className="math-lesson-card-tools">Ali Riyaziyyat Qaydaları <span>·</span> Daxili PDF <span>·</span> Test <span>·</span> İsbat</span>
         </span>
         <ArrowRight className="math-lesson-card-arrow" size={19} aria-hidden="true" />
       </button>)}
@@ -86,7 +87,7 @@ export const MathLearningView = () => {
     <div className="math-lesson-panel" key={lesson.id}>
       <div className="math-lesson" style={{ display: section === 'rules' ? undefined : 'none' }}>
         <section aria-labelledby={`rules-${lesson.id}`}>
-          <div className="math-section-heading"><div><span className="math-eyebrow">Qaydalar</span><h3 id={`rules-${lesson.id}`}>Bilməli olduğun əsaslar</h3></div></div>
+          <div className="math-section-heading"><div><span className="math-eyebrow">Qaydalar & Teoremlər</span><h3 id={`rules-${lesson.id}`}>Universitet Səviyyəli Nəzəriyyə və Düsturlar</h3></div></div>
           <div className="math-rule-list">{lesson.rules.map((rule, index) => <div className="math-rule" key={rule.title}>
             <span className="math-rule-index">{String(index + 1).padStart(2, '0')}</span>
             <div><h4>{rule.title}</h4><p>{rule.explanation}</p>
@@ -94,6 +95,11 @@ export const MathLearningView = () => {
               {rule.example && <p className="math-rule-example"><strong>Nümunə:</strong> {rule.example}</p>}</div>
           </div>)}</div>
         </section>
+        {lesson.pdfUrl && (
+          <section style={{ marginTop: 18 }}>
+            <PhysicsPdfViewer url={lesson.pdfUrl} title={`${lesson.title} — PDF Konspekt`} />
+          </section>
+        )}
         <section className="math-worked" aria-labelledby={`worked-${lesson.id}`}>
           <span className="math-eyebrow">Addım-addım</span><h3 id={`worked-${lesson.id}`}>İşlənmiş nümunə</h3>
           <p className="math-worked-prompt">{lesson.workedExample.prompt}</p>
@@ -104,7 +110,6 @@ export const MathLearningView = () => {
         <button type="button" className="math-primary-button math-next-step" onClick={() => openSection('practice')}>
           Praktikaya keç <ArrowRight size={15} aria-hidden="true" />
         </button>
-        <p className="math-source">Əlavə oxu: <a href="https://ocw.mit.edu/courses/18-100a-real-analysis-fall-2020/pages/lecture-notes-and-readings/" target="_blank" rel="noopener noreferrer">MIT OpenCourseWare · Real Analysis mühazirələri</a></p>
       </div>
       <div className="math-lesson" style={{ display: section === 'practice' ? undefined : 'none' }}>
         <MathPractice lesson={lesson} userId={user?.id} />
