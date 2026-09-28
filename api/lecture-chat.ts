@@ -1,4 +1,5 @@
 import { getMathLesson } from '../src/data/mathLessons.js';
+import { createClient } from '@supabase/supabase-js';
 
 type HistoryItem = { role: 'user' | 'model'; text: string };
 type RequestBody = { lessonId?: unknown; message?: unknown; history?: unknown };
@@ -50,6 +51,15 @@ const allowRequest = (ip: string) => {
 };
 
 export async function POST(request: Request) {
+  const authToken = request.headers.get('authorization')?.replace(/^Bearer\s+/i, '') || '';
+  const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
+  const secretKey = process.env.SUPABASE_SECRET_KEY || '';
+  if (!authToken || !supabaseUrl || !secretKey) return json({ error: 'Təsdiqlənmiş tələbə girişi tələb olunur.' }, 401);
+  const admin = createClient(supabaseUrl, secretKey, { auth: { persistSession: false, autoRefreshToken: false } });
+  const { data: verified, error: authError } = await admin.auth.getUser(authToken);
+  if (authError || !verified.user) return json({ error: 'Sessiya etibarsızdır.' }, 401);
+  const { data: member, error: memberError } = await admin.from('profiles').select('id').eq('auth_user_id', verified.user.id).eq('group_name', '6326A2').maybeSingle();
+  if (memberError || !member) return json({ error: 'Qrup üzvlüyü təsdiqlənmədi.' }, 403);
   if (!request.headers.get('content-type')?.includes('application/json')) {
     return json({ error: 'JSON sorğusu tələb olunur.' }, 415);
   }

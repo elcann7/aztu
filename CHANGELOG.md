@@ -4,6 +4,21 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.16.0] — 2026-09-28 (canlı keçid gözləyir)
+
+### Giriş və qrup məlumatlarının serverdə qorunması, ilkin paketin kiçildilməsi
+- Brauzer `localStorage` hesabı və sessiyası giriş mənbəyi olmaqdan çıxarıldı. E-poçt girişi Supabase Auth ilə, Google girişi isə Supabase-in yoxladığı ID tokenlə işləyir; əl ilə Google e-poçtu/adı yazılan yol silindi.
+- `api/auth.ts` əlavə edildi: qrup kodu, təsdiqli e-poçt siyahısı və 30 nəfərlik kvota serverdə yoxlanır. Yeni parol hesabı e-poçt təsdiqindən sonra, köhnə profil isə həmin ünvanın doğrulanmış sahibi tərəfindən bağlanır; zəif köhnə heş giriş üçün qəbul edilmir.
+- SQL miqrasiyası üzvlük/sahiblik RLS qaydaları, `auth_user_id` əlaqəsi, paralel qeydiyyat üçün seriallaşdırılmış kvota triggeri, köhnə parol heşi sütununun klientdən gizlədilməsi və özəl material faylları üçün Storage qaydaları yaradır. Müzakirə mövzusu yalnız mövcud paylaşımın deterministik ID-si ilə yaradıla bilər; qəbul edilmiş qeyd düzəlişini yalnız qeyd sahibi yaza bilər.
+- Canlı sxemdə aşkar edilən `on_auth_user_created` trigger-i hər Auth hesabına avtomatik profil yaradırdı; miqrasiya onu ləğv edir ki, qrup kodu, təsdiqli e-poçt siyahısı və 30 nəfərlik yoxlama yalnız server üzvlük axınında işləsin.
+- AI mühazirə API-si doğrulanmış qrup sessiyası tələb edir. `DatabaseContext` girişdən əvvəl bulud məlumatını oxumur və rədd edilmiş oxunuşu uğurlu saymır.
+- Özəl Storage üçün yaradılan müddətli keçid bitəndə materialın yolu yenidən müəyyənləşdirilib yeni keçid alınır; bulud silinməsi rədd ediləndə material yerli görünüşdən silinmiş kimi göstərilmir.
+- Səhifə və iş sahəsi bölmələri dinamik yüklənir: əsas JS paketi yerli build-də ~961 KB-dan ~447 KB-a düşdü.
+- **Canlı tətbiq hələ köhnə versiyadadır:** SQL miqrasiyası və canlı RLS/Storage testləri bitməyib. Kod yalnız miqrasiya və server sazlamaları ilə birlikdə yerləşdirilməlidir.
+- **Canlı keçid hazırlığı:** AzTU layihəsinə idarəetmə bağlantısı quruldu. İstifadəçinin göstərişinə əsasən profil şəkli olan `Elcan Seferli` profili saxlanıldı; digər 4 profil və onlara bağlı 3 köhnə Auth hesabı silindi, saxlanılan profil yenidən təsdiqləndi. Vercel Production-a `AZTU_GROUP_SECURITY_CODE` və yalnız saxlanılan e-poçtu ehtiva edən `AZTU_ALLOWED_EMAILS` əlavə edildi. Legacy `service_role` açarı söhbətdə paylaşıldığı üçün server kodu yalnız yeni, ayrıca ləğv edilə bilən `SUPABASE_SECRET_KEY` qəbul edir. Yeni açar, Google provider, SQL miqrasiyası və canlı yoxlamalar hələ gözləyir.
+
+---
+
 ## [1.15.0] — 2026-09-28
 
 ### 0-dan Öyrədən Universitet Bələdçisi (`StudyNoteCard`), KOICA LMS Canlı Sinxronizasiyası və 33 Cloudflare R2 PDF İnteqrasiyası

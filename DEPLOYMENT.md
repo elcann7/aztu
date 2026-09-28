@@ -1,5 +1,16 @@
 # AzTU 6326A2 — Yerləşdirmə və Əməliyyat Bələdçisi (Deployment Guide)
 
+> **1.16.0 keçid bloklayıcısı:** AzTU Supabase layihəsinin canlı sxemi yoxlanıb. İstifadəçinin göstərişi ilə şəkilli profil saxlanılıb, digər 4 profil və 3 köhnə Auth hesabı silinib. Vercel Production mühitinə qrup kodu və yalnız saxlanılan profilin e-poçtu əlavə edilib. Legacy `service_role` açarı söhbətdə paylaşılıb; onu Vercel-ə əlavə etməyin. Yeni `sb_secret_...` açarı `SUPABASE_SECRET_KEY` adı ilə Vercel Production-a daxil edilməli, sonra köhnə açar ləğv edilməlidir. Supabase Google provider sazlanmadan, `supabase/migrations/20260928152552_secure_group_access.sql` miqrasiyası ilə canlı allow/deny testləri tamamlanmadan yeni tətbiqi yerləşdirməyin. Köhnə canlı RLS siyasətləri hələ açıqdır.
+
+## 1.16.0 yerləşdirmə ardıcıllığı
+
+1. AzTU Supabase layihəsinə giriş açın və `profiles`, `storage.objects`, `pg_policies` vəziyyətini yoxlayın; bazanın ehtiyat nüsxəsini alın.
+2. Miqrasiyanı tətbiq edin. `anon` rolunun qrup cədvəllərini oxuya/yaza bilmədiyini, üzvün yalnız öz profilini yenilədiyini, 31-ci paralel qeydiyyatın rədd edildiyini və material bucket-inin özəl olduğunu test edin.
+   Miqrasiya `auth.users` üzərindəki köhnə `on_auth_user_created` trigger-ini də ləğv edir; əks halda hər Auth qeydiyyatı qrup yoxlamasından kənar profil yaradar.
+3. Supabase **Settings → API Keys → Publishable and secret API keys** bölməsində yeni `sb_secret_...` açarı yaradıb Vercel Production-a `SUPABASE_SECRET_KEY` adı ilə əlavə edin. `SUPABASE_URL` (və ya mövcud `VITE_SUPABASE_URL`), `AZTU_GROUP_SECURITY_CODE=6326A2` və yalnız təsdiqli tələbə ünvanlarından ibarət `AZTU_ALLOWED_EMAILS` (vergüllə ayrılmış) də olmalıdır. Supabase Auth-da **Confirm email** və işlək SMTP tələb olunur. Server `mailer_autoconfirm` aktivdirsə parol qeydiyyatını və bağlanmasını rədd edir. `SUPABASE_SECRET_KEY` heç vaxt `VITE_` prefiksi ilə klientə verilməməlidir. Mövcud `VITE_SUPABASE_URL` və `VITE_SUPABASE_ANON_KEY` klient üçün qalır.
+4. Supabase Auth Google provider-ində Google Client ID/Secret və callback URL-ni qurun. Yeni Google girişini və köhnə Google profilinin bağlanmasını yoxlayın.
+5. Yeni parol qeydiyyatında təsdiq e-poçtunu, təsdiqdən sonra ilk girişdə qrup kodu ilə profil bağlanmasını, köhnə profilin e-poçt sahibi ilə bağlanmasını, profil yeniləməsini, qrup paylaşımını, Realtime-ı, özəl faylın imzalı keçidlə açılmasını və AI API-ni yoxlayın. Bundan sonra frontend/API deploy edin.
+
 Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının **Vercel** və **GitHub** üzərində istehsalat (production) mühitinə yerləşdirilməsi, domen sazlamaları və konfiqurasiya qaydalarını təsvir edir.
 
 ---
@@ -10,6 +21,8 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının **Vercel
 - **GitHub Repozitoriyası**: [https://github.com/elcann7/aztu](https://github.com/elcann7/aztu)
 - **Əsas İstehsalat Qolu**: `main`
 - **AI server açarı**: `GEMINI_API_KEY` yalnız Vercel Production mühitində Secret kimi saxlanır; `VITE_` prefiksi ilə istifadə edilməməlidir.
+- **Giriş server açarı**: `SUPABASE_SECRET_KEY` yalnız Vercel server funksiyalarında saxlanır; `AZTU_GROUP_SECURITY_CODE` qeydiyyat endpoint-i üçün tələb olunur. Paylaşılmış legacy `service_role` açarı canlı keçid tamamlanandan sonra deaktiv edilməlidir.
+- **Tələbə siyahısı**: `AZTU_ALLOWED_EMAILS` serverdə icazəli ünvanları saxlayır. Bu dəyişən olmadan yeni profil bağlanmır; köhnə profillər də e-poçt sahibi təsdiqlənənədək bağlı qalır.
 - **Fizika PDF-ləri**: 11 PDF Novcept-in mövcud Cloudflare R2 bucket-ində `aztu/physics/` altında saxlanır. `physicsContent.ts` birbaşa ictimai CDN linklərini istifadə edir; deploy zamanı PDF-lər Vercel paketinə daxil edilmir. Hazırkı klient əsaslı giriş bu URL-ləri qorumaq üçün server yoxlaması etmir.
 
 ---

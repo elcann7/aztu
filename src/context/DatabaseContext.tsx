@@ -96,6 +96,17 @@ interface DatabaseContextType {
 
 const DatabaseContext = createContext<DatabaseContextType | null>(null);
 
+const storagePathFromUrl = (value?: string): string | null => {
+  if (!value) return null;
+  if (value.startsWith('storage://materials/')) return value.slice('storage://materials/'.length);
+  try {
+    const url = new URL(value);
+    if (!url.hostname.endsWith('.supabase.co')) return null;
+    const match = url.pathname.match(/\/storage\/v1\/object\/(?:public|sign|authenticated)\/materials\/(.+)$/);
+    return match ? decodeURIComponent(match[1]) : null;
+  } catch { return null; }
+};
+
 export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useAuth();
 
@@ -112,7 +123,7 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   // Fetch all live data from Supabase
   const fetchCloudData = useCallback(async () => {
-    if (!isSupabaseConfigured() || !supabase) return false;
+    if (!user || !isSupabaseConfigured() || !supabase) return false;
 
     try {
       const [
@@ -133,6 +144,10 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         supabase.from('poll_votes').select('*'),
       ]);
 
+      if ([notesRes, materialsRes, deadlinesRes, questionsRes, answersRes, pollsRes, votesRes].some((result) => result.error)) {
+        throw new Error('Cloud data request was rejected');
+      }
+
       if (notesRes.data) {
         setNotes(
           notesRes.data.map((r) => ({
@@ -149,7 +164,7 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }
 
       if (materialsRes.data) {
-        const cloudMats: Material[] = materialsRes.data.map((r) => ({
+        const cloudMats: Material[] = await Promise.all(materialsRes.data.map(async (r) => ({
           id: r.id,
           title: r.title,
           courseId: r.course_id,
@@ -158,12 +173,17 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           fileName: r.file_name || undefined,
           fileSize: r.file_size || undefined,
           fileMime: r.file_mime || undefined,
-          linkUrl: r.link_url || undefined,
+          linkUrl: await (async () => {
+            const path = r.type === 'file' ? storagePathFromUrl(r.link_url) : null;
+            if (!path || !supabase) return r.link_url || undefined;
+            const { data, error } = await supabase.storage.from('materials').createSignedUrl(path, 3600);
+            return error ? undefined : data.signedUrl;
+          })(),
           authorId: r.author_id,
           authorName: r.author_name,
           createdAt: r.created_at,
           updatedAt: r.updated_at,
-        }));
+        })));
         setMaterials(mergeWithBuiltInMaterials(cloudMats));
       }
 
@@ -251,11 +271,11 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       console.warn('Supabase fetch failed, falling back to local database:', err);
       return false;
     }
-  }, []);
+  }, [user]);
 
   const refreshData = useCallback(() => {
     // If Supabase is available, sync cloud data
-    if (isSupabaseConfigured() && supabase) {
+    if (user && isSupabaseConfigured() && supabase) {
       fetchCloudData().catch(() => {});
     }
 
@@ -266,10 +286,14 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setPolls(dbService.getPolls());
     setQuestions(dbService.getQuestions());
     setVersion((v) => v + 1);
-  }, [fetchCloudData]);
+  }, [fetchCloudData, user]);
 
   // Initial load and Realtime subscriptions
   useEffect(() => {
+    if (!user) {
+      setMaterials([]); setNotes([]); setDeadlines([]); setPolls([]); setQuestions([]); setAnswers([]); setVotes([]);
+      return;
+    }
     refreshData();
 
     // Setup Supabase Realtime channel for live synchronization across all 30 students
@@ -340,7 +364,7 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         }
       };
     }
-  }, [refreshData, fetchCloudData]);
+  }, [user, refreshData, fetchCloudData]);
 
   // Materials methods
   const createMaterial = useCallback(
@@ -374,14 +398,13 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
         // If file upload and Supabase is configured, upload to Supabase Storage bucket 'materials'
         if (params.type === 'file' && params.file && isSupabaseConfigured() && supabase) {
-          const safeName = `${Date.now()}_${params.file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
+          const safeName = `${user.id}/${Date.now()}_${params.file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
           const { error: uploadError } = await supabase.storage
             .from('materials')
-            .upload(safeName, params.file, { upsert: true });
+            .upload(safeName, params.file, { upsert: false });
 
           if (!uploadError) {
-            const { data: urlData } = supabase.storage.from('materials').getPublicUrl(safeName);
-            publicFileUrl = urlData.publicUrl;
+            publicFileUrl = `storage://materials/${safeName}`;
             uploadedStoragePath = safeName;
           } else {
             throw uploadError;
@@ -433,7 +456,8 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       if (!user) return { success: false, error: 'Daxil olmamısınız.' };
       try {
         if (isSupabaseConfigured() && supabase) {
-          await supabase.from('materials').delete().eq('id', id);
+          const { error } = await supabase.from('materials').delete().eq('id', id);
+          if (error) throw error;
         }
         await dbService.deleteMaterial(id, user.id);
         refreshData();
@@ -456,7 +480,14 @@ export const DatabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (!material) return;
 
     if (material.linkUrl) {
-      window.open(material.linkUrl, '_blank');
+      const storagePath = material.type === 'file' ? storagePathFromUrl(material.linkUrl) : null;
+      if (storagePath && supabase) {
+        const { data, error } = await supabase.storage.from('materials').createSignedUrl(storagePath, 3600);
+        if (error) { alert('Fayl açıla bilmədi. Yenidən daxil olub cəhd edin.'); return; }
+        window.open(data.signedUrl, '_blank');
+      } else {
+        window.open(material.linkUrl, '_blank');
+      }
       return;
     }
 

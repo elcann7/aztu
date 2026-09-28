@@ -1,5 +1,7 @@
 # AzTU 6326A2 — Proqram Təminatı Memarlığı (Architecture Guide)
 
+> **1.16.0 keçid qeydi:** Yeni kodda `AuthContext` yalnız Supabase Auth tərəfindən doğrulanmış sessiya və `profiles.auth_user_id` ilə bağlı 6326A2 profili qəbul edir. `DatabaseProvider` iş sahəsi ilə birlikdə dinamik yüklənir. Üzvlük və sahiblik bazada RLS ilə qorunur; qeydiyyat və köhnə profilin təsdiqlənmiş e-poçt sahibi ilə bağlanması `api/auth.ts` server funksiyasındadır. Bu memarlıq canlı SQL miqrasiyası tətbiq ediləndən sonra işləyir.
+
 Bu sənəd **AzTU 6326A2** akademik iş sahəsinin sistem arxitekturasını, komponent iyerarxiyasını, vəziyyət idarəetməsini (state management), marşrutlaşdırma və dialoq (modal) portal mexanizmini ətraflı izah edir.
 
 ---
@@ -70,14 +72,14 @@ Layihədə xarici ağır vəziyyət idarəetmə kitabxanaları (məsələn, Redu
 
 ### 2.2. AuthContext (`src/context/AuthContext.tsx`)
 - **Məsuliyyəti**: Tələbə autentifikasiyası, 30 nəfərlik kvota nəzarəti, təhlükəsizlik kodu və tələbə profilinin idarə edilməsi.
-- **Təhlükəsizlik alqoritmi**: Şifrələr Web Crypto API vasitəsilə SHA-256 alqoritmində `6326A2_WORKSPACE_SECURE_SALT_v1` gizli salt-ı ilə heşlənir.
+- **Giriş mənbəyi**: Supabase Auth sessiyası və həmin hesabın `profiles.auth_user_id` əlaqəsi. Köhnə SHA-256 heşi giriş üçün istifadə olunmur; profil yalnız təsdiqlənmiş e-poçt sahibinə bağlanır.
 - **Şəxsiyyət Bloklaması (Locked Identity)**: Tələbənin `firstName`, `lastName` və `group` dəyərləri proqram səviyyəsində dəyişdirilməz (immutable) saxlanılır.
-- **Google GIS İnteqrasiyası**: `loginWithGoogle` funksiyası Google JWT tokenini deşifrə edir və tələbə profilini avtomatik formalaşdırır.
+- **Google GIS İnteqrasiyası**: `loginWithGoogle` Google ID tokenini Supabase Auth-a göndərir; profil serverdə doğrulanmış Google istifadəçisi üçün bağlanır.
 
 ### 2.3. DatabaseContext (`src/context/DatabaseContext.tsx`)
 - **Məsuliyyəti**: Fənlər, qeydlər, sual-cavablar, sorğular, materiallar və deadline-ların vahid CRUD əməliyyatları.
-- **Davamlılıq (Persistence)**: Bütün dəyişikliklər avtomatik olaraq brauzerin `localStorage` yaddaşına yazılır və səhifə yeniləndikdə dərhal bərpa olunur.
-- **İlkin verilənlər (Seeding)**: Sistem ilk dəfə açıldıqda 4 əsas fənn, nümunəvi qeydlər və tapşırıqlar avtomatik yüklənir.
+- **Davamlılıq (Persistence)**: Paylaşımlar Supabase-də saxlanır; brauzer yaddaşı oflayn nüsxədir. Giriş sessiyası üçün yerli hesab siyahısı istifadə olunmur.
+- **İlkin verilənlər (Seeding)**: Altı fənnin statik məzmunu və oflayn nüsxə yerli xidmətlərdən oxunur.
 - **Paylaşım Müzakirəsi**: Qeyd/materiala aid müzakirə mövcud `questions` və `answers` cədvəllərində deterministik mövzu ID-si ilə saxlanır. Qəbul edilmiş qeyd düzəlişləri əlavə cavab kimi tarixçəyə yazılır; ilkin mətn qorunur.
 - **ID uyğunluğu**: Yeni material, qeyd, sual və cavabın bir ID-si həm yerli saxlamaya, həm bulud yazısına ötürülür.
 

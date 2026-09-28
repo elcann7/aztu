@@ -16,13 +16,15 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`ARCHITECTURE.md`](./ARCHITECTURE.md) | Markdown | SPA arxitekturası, React Context vəziyyət idarəetməsi və React Portal dialoq sistemi |
 | [`FEATURES.md`](./FEATURES.md) | Markdown | Bütün 12 modulun funksional izahatı |
 | [`DATA_MODELS.md`](./DATA_MODELS.md) | Markdown | Bütün TypeScript interfeysləri, ER diaqramı və localStorage yaddaş açarları |
-| [`SECURITY.md`](./SECURITY.md) | Markdown | 30 tələbə kvotası, SHA-256 duzlanmış heşləmə və tələbə şəxsiyyətinin toxunulmazlığı |
+| [`SECURITY.md`](./SECURITY.md) | Markdown | Supabase Auth/RLS keçidi, 30 tələbə kvotası və tələbə şəxsiyyətinin toxunulmazlığı |
 | [`DEPLOYMENT.md`](./DEPLOYMENT.md) | Markdown | Vercel SPA rewrite konfiqurasiyası və Google Cloud Console sazlamaları |
 | [`CONTRIBUTING.md`](./CONTRIBUTING.md) | Markdown | Qrup tələbələri üçün kodlaşdırma və commit standartları |
 | [`CHANGELOG.md`](./CHANGELOG.md) | Markdown | Layihənin bütün inkişaf addımları və versiya tarixçəsi |
 | [`PROJECT_MAP.md`](./PROJECT_MAP.md) | Markdown | **Bu sənəd** — Kod bazasının tam xəritəsi |
 | [`supabase/schema.sql`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/supabase/schema.sql) | SQL | **Supabase PostgreSQL Sxemi**: Cədvəllər, 30 nəfərlik limit tətikçisi, RLS qaydaları və Realtime yayımı |
 | [`vercel.json`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/vercel.json) | JSON | Vercel `/api` funksiyalarını saxlayan və qalan SPA marşrutlarını `index.html`-ə yönləndirən qaydalar |
+| `supabase/migrations/20260928152552_secure_group_access.sql` | SQL | Supabase Auth üzvlüyü, kvota, RLS və özəl Storage keçidi; canlı bazaya tətbiq gözləyir |
+| `api/auth.ts` | TypeScript | Təsdiqli e-poçtla server qeydiyyatı, köhnə profilin e-poçt sahibi ilə bağlanması, Google üzvlüyü və kvota sayı |
 | `tsconfig.api.json` | JSON | Vercel API funksiyasının ayrıca TypeScript yoxlaması |
 | [`.env`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/.env) | Env | `VITE_GOOGLE_CLIENT_ID` Google OAuth Client ID |
 | [`index.html`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/index.html) | HTML | Əsas HTML sənədi, Google Identity Services script teqi |
@@ -43,7 +45,7 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 ### 3. Vəziyyət İdarəetməsi (`src/context/`)
 | Fayl | Məsuliyyəti |
 | :--- | :--- |
-| [`src/context/AuthContext.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/context/AuthContext.tsx) | **Tələbə Girişi və Təhlükəsizlik**: 30 tələbə kvotası (həm brauzerdə, həm canlı Supabase triggerində), `6326A2` qrup kodu, Web Crypto SHA-256 + Salt heşləmə, Google GIS login, dondurulmuş şəxsiyyət sahələri (`firstName`, `lastName`, `group`), Supabase `profiles` cədvəli ilə ikiistiqamətli sinxronizasiya. |
+| [`src/context/AuthContext.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/context/AuthContext.tsx) | **Tələbə Girişi və Təhlükəsizlik**: doğrulanmış Supabase Auth sessiyası və üzv profili, `6326A2` qrup kodu, 30 nəfərlik server kvotası, Google ID token girişi və kilidli şəxsiyyət sahələri. |
 | [`src/context/DatabaseContext.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/context/DatabaseContext.tsx) | **Verilənlər Bazasının İdarə Edilməsi**: Canlı Supabase PostgreSQL və Realtime (`supabase.channel('public:aztu_realtime_workspace')`) inteqrasiyası, akademik materiallar üçün Supabase Storage bulud fayl saxlancı, qeydlər, sual-cavablar, sorğular, səslər və deadline-lar üçün CRUD metodları, şəbəkə kəsildikdə dərhal yerli IndexedDB/LocalStorage ehtiyat nüsxəsinə keçid. |
 | [`src/context/RouterContext.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/context/RouterContext.tsx) | **Xüsusi SPA Router**: `window.history.pushState` və `popstate` əsaslı yüngül marşrutlaşdırıcı, `useRouter` hook-u və `<Link>` komponenti. |
 
@@ -63,6 +65,7 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | Fayl | Təsviri |
 | :--- | :--- |
 | [`src/components/app/AppShell.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/AppShell.tsx) | Vahid iş sahəsinin əsas şeli: `Sidebar`, `TopBar`, dinamik görünüş və `ProfileModal` |
+| `src/components/app/Workspace.tsx` | Yalnız təsdiqlənmiş iş sahəsində `DatabaseProvider` qurur; səhifə paketi dinamik yüklənir |
 | [`src/components/app/AppShell.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/AppShell.css) | İş mühitinin flexbox və viewport hündürlük stilləri |
 | `src/components/app/GlobalSearch.tsx` & `.css` | Qeyd, material və sual üzrə ümumi axtarış, filtr və nəticəyə keçid |
 | `src/components/app/DiscussionPanel.tsx` & `.css` | Qeyd və material altında şərh, düzəliş təklifi və qəbul edilmiş versiyalar |

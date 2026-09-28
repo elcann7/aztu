@@ -1,5 +1,7 @@
 # AzTU 6326A2 — Funksional Bələdçi (Features Guide)
 
+> **1.16.0:** E-poçt/Google girişi doğrulanmış Supabase Auth sessiyasına keçirilib; Google-un əl ilə e-poçt/ad daxil edilən ehtiyat formu çıxarılıb. Qrup kodu, 30 nəfərlik kvota və profilin kilidli sahələri saxlanıb. Bulud faylları özəl Storage və müddətli keçidlərlə açılır. Bu dəyişikliklər canlı mühitdə SQL miqrasiyası ilə birlikdə aktivləşdirilməlidir.
+
 Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasındakı bütün modulların, funksiyaların və imkanların ətraflı izahını təqdim edir.
 
 ---
@@ -37,7 +39,7 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasındakı bütü
   - Tələbənin Google profilindəki ad, soyad və profil şəkli avtomatik oxunur.
 - **E-poçt və Şifrə ilə Giriş**:
   - Universitet e-poçt ünvanı (`ad.soyad@aztu.edu.az`).
-  - Web Crypto SHA-256 və duzlama (salting) ilə təhlükəsiz saxlanma.
+  - Yeni şifrələr Supabase Auth tərəfindən idarə olunur; köhnə profillər yalnız təsdiqlənmiş e-poçt sahibi tərəfindən bağlanır.
 - **Qrup Təhlükəsizlik Kodu (`6326A2`)**:
   - Hesab yaradarkən və ya Google ilə ilk dəfə daxil olarkən qrup kodu tələb edilir. Kənar şəxslərin qeydiyyatı bloklanır.
 - **30 Tələbə Limiti**:

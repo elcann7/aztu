@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { MathLesson } from '../../data/mathLessons';
+import { supabase } from '../../services/supabase';
 import './MathLearning.css';
 
 type ChatMessage = { role: 'user' | 'model'; text: string };
@@ -39,9 +40,11 @@ export const MathTutorChat = ({ lesson, userId }: { lesson: MathLesson; userId?:
     setError('');
     controller.current = new AbortController();
     try {
+      const { data: sessionData } = await supabase?.auth.getSession() || { data: { session: null } };
+      if (!sessionData.session) throw new Error('AI köməkçi üçün yenidən daxil olun.');
       const response = await fetch('/api/lecture-chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${sessionData.session.access_token}` },
         body: JSON.stringify({ lessonId: lesson.id, message, history: prior }),
         signal: controller.current.signal,
       });

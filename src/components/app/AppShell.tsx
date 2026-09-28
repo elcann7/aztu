@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import './AppShell.css';
 import { useRouter } from '../../context/RouterContext';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
-import { DashboardView } from './DashboardView';
-import { CourseShellView } from './CourseShellView';
-import { MaterialsView } from './views/MaterialsView';
-import { DeadlinesView } from './views/DeadlinesView';
-import { PythonSandboxView } from './views/PythonSandboxView';
-import { CalculatorView } from './views/CalculatorView';
+const DashboardView = lazy(() => import('./DashboardView').then((module) => ({ default: module.DashboardView })));
+const CourseShellView = lazy(() => import('./CourseShellView').then((module) => ({ default: module.CourseShellView })));
+const MaterialsView = lazy(() => import('./views/MaterialsView').then((module) => ({ default: module.MaterialsView })));
+const DeadlinesView = lazy(() => import('./views/DeadlinesView').then((module) => ({ default: module.DeadlinesView })));
+const PythonSandboxView = lazy(() => import('./views/PythonSandboxView').then((module) => ({ default: module.PythonSandboxView })));
+const CalculatorView = lazy(() => import('./views/CalculatorView').then((module) => ({ default: module.CalculatorView })));
 import { ProfileModal } from './modals/ProfileModal';
 import { Modal } from '../common/Modal';
 import { GlobalSearch } from './GlobalSearch';
@@ -86,7 +86,9 @@ export const AppShell: React.FC = () => {
 
         {/* Scrollable View Content */}
         <main className="workspace-content-body">
-          {activeContent}
+          <Suspense fallback={<div className="route-loading" role="status">Bölmə yüklənir...</div>}>
+            {activeContent}
+          </Suspense>
         </main>
       </div>
 

@@ -1,17 +1,19 @@
 # AzTU 6326A2 — Verilənlər Modelləri və Sxemlər (Data Models & Schemas)
 
+> **1.16.0 model keçidi:** `profiles.auth_user_id UUID UNIQUE REFERENCES auth.users(id)` doğrulanmış Supabase Auth hesabını mövcud profil `id`-sinə bağlayır. Köhnə `author_id` əlaqələri dəyişmir. Köhnə `profiles.password_hash` giriş üçün istifadə olunmur; `anon` və `authenticated` rollarına bu sütunu oxuma icazəsi verilmir. `aztu_6326a2_users` və `aztu_6326a2_session` açarları artıq giriş mənbəyi deyil. Material faylları `storage://materials/<profil-id>/<fayl>` şəklində saxlanır və üzvlər üçün müddətli imzalı URL-ə çevrilir. Canlı tətbiq SQL miqrasiyasını gözləyir.
+
 Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasındakı bütün verilənlər strukturlarını, TypeScript interfeyslərini, sahə tələblərini və `localStorage` yaddaş açarlarını əhatə edir.
 
 ---
 
 ## 1. Yaddaş Açarları (Storage Keys)
 
-Bütün verilənlər brauzerin yerli yaddaşında xüsusi prefikslərlə təhlükəsiz şəkildə saxlanılır:
+Brauzer yaddaşı akademik məlumatların oflayn nüsxəsi və fərdi seçimlər üçün istifadə olunur. Giriş sessiyasının mənbəyi Supabase Auth-dur:
 
 | Yaddaş Açarı (Key) | Növü | Təsviri |
 | :--- | :--- | :--- |
-| `aztu_6326a2_session` | `User` | Cari aktiv sessiyada daxil olmuş tələbənin profili |
-| `aztu_6326a2_users` | `StoredAccount[]` | Qeydiyyatdan keçmiş bütün tələbələrin siyahısı (maksimum 30) |
+| `aztu_6326a2_session` | köhnə format | 1.16.0-da oxunmur; giriş üçün etibarlı deyil |
+| `aztu_6326a2_users` | köhnə format | 1.16.0-da oxunmur; hesab və şifrə mənbəyi deyil |
 | `aztu_6326a2_courses` | `Course[]` | Akademik fənlərin siyahısı və kreditləri |
 | `aztu_6326a2_notes` | `GroupNote[]` | Qrup mühazirə və müəllim qeydləri |
 | `aztu_6326a2_questions` | `Question[]` | Sual-Cavab forumundakı suallar |
@@ -55,13 +57,8 @@ export interface User {
 }
 ```
 
-### 2.2. `StoredAccount`
-```typescript
-interface StoredAccount {
-  user: User;
-  passwordHash?: string;      // Web Crypto SHA-256 + Salt heşi (yalnız e-poçt/şifrə hesabı üçün)
-}
-```
+### 2.2. Doğrulanmış hesab əlaqəsi
+`User.id` mövcud profilin ID-sidir; giriş zamanı `profiles.auth_user_id` Supabase Auth istifadəçisinə uyğun gəlməlidir. Köhnə `StoredAccount` artıq tətbiqin autentifikasiya modeli deyil.
 
 ### 2.3. `ProfileUpdateData`
 Tələbə tərəfindən profil modalında redaktə edilə bilən fərdi sahələr:
@@ -268,7 +265,7 @@ Layihə canlı Supabase PostgreSQL layihəsinə (`wcjdduxtssltkjkslyit`) bağlı
 
 | Cədvəl | İlkin Açar (PK) | Əsas Sahələr | Təhlükəsizlik / Qaydalar |
 | :--- | :--- | :--- | :--- |
-| `profiles` | `id (UUID)` | `first_name, last_name, email, password_hash, group_name, bio, student_id_number, specialty, telegram, phone, github, avatar_url, avatar_initials, auth_provider` | `check_max_students_limit()` triggeri (Maks 30 tələbə) |
+| `profiles` | `id` | `auth_user_id (UUID, UNIQUE)`, `first_name, last_name, email, group_name, bio, student_id_number, specialty, telegram, phone, github, avatar_url, avatar_initials, auth_provider`; köhnə `password_hash` istifadə olunmur | Seriallaşdırılmış 30 nəfər triggeri və öz profilinə məhdud RLS |
 | `courses` | `id (UUID)` | `name, code, slug, lecturer, department, credits` | Universitet fənnləri |
 | `notes` | `id (TEXT)` | `course_id, content, category, author_id, author_name, created_at, updated_at` | RLS aktiv, Realtime yayım |
 | `questions` | `id (TEXT)` | `title, details, course_id, accepted_answer_id, author_id, author_name, created_at, updated_at` | RLS aktiv, Realtime yayım |
@@ -280,9 +277,9 @@ Layihə canlı Supabase PostgreSQL layihəsinə (`wcjdduxtssltkjkslyit`) bağlı
 | `deadlines` | `id (TEXT)` | `title, course_id, description, due_date, due_time, points, is_completed, author_id, author_name, created_at, updated_at` | RLS aktiv, Realtime yayım |
 
 ### Bulud Fayl Saxlanması (Supabase Storage)
-- **Bucket Adı**: `materials` (İctimai / Public)
-- **RLS**: Anonim və autentifikasiyalı istifadəçilər fayl yükləyə (`INSERT`), baxa (`SELECT`) və silə (`DELETE`) bilər.
-- **İnteqrasiya**: Yüklənən faylların ictimai URL ünvanı avtomatik `materials.link_url` sahəsinə yazılır və 30 tələbənin hamısı üçün ani əlçatan olur.
+- **Bucket Adı**: `materials` (1.16.0 miqrasiyasından sonra özəl)
+- **RLS**: Yalnız təsdiqlənmiş qrup üzvü oxuya bilər; yeni fayl `profil-id/` prefiksi ilə yüklənir və sahibi silə bilər.
+- **İnteqrasiya**: `materials.link_url` yeni fayllar üçün `storage://materials/...` ünvanı saxlayır; tətbiq üzvə bir saatlıq imzalı oxu keçidi verir. Köhnə ictimai URL-lər də oxuda imzalı keçidə çevrilir.
 
 ### Real-vaxt Yayım Kanalı (Realtime Broadcast)
 - **Kanal adı**: `public:aztu_realtime_workspace`

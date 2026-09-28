@@ -3,7 +3,7 @@ import './LoginPage.css';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter, Link } from '../../context/RouterContext';
 import { Bookmark, ArrowRight, AlertCircle, ArrowLeft, X, ShieldCheck, Key } from 'lucide-react';
-import { parseGoogleJwt, GOOGLE_CLIENT_ID } from '../../services/googleAuth';
+import { GOOGLE_CLIENT_ID } from '../../services/googleAuth';
 
 export const LoginPage: React.FC = () => {
   const { login, loginWithGoogle, isRegistrationLocked } = useAuth();
@@ -11,6 +11,7 @@ export const LoginPage: React.FC = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [groupCode, setGroupCode] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -20,9 +21,8 @@ export const LoginPage: React.FC = () => {
   });
   const [showGoogleModal, setShowGoogleModal] = useState(false);
   const [showClientIdConfig, setShowClientIdConfig] = useState(false);
-  const [googleEmail, setGoogleEmail] = useState('');
-  const [googleName, setGoogleName] = useState('');
-  const [googleGroupCode, setGoogleGroupCode] = useState('6326A2');
+  const [googleCredential, setGoogleCredential] = useState('');
+  const [googleGroupCode, setGoogleGroupCode] = useState('');
   const [googleError, setGoogleError] = useState<string | null>(null);
   const [isGoogleSubmitting, setIsGoogleSubmitting] = useState(false);
 
@@ -40,18 +40,11 @@ export const LoginPage: React.FC = () => {
         window.google.accounts.id.initialize({
           client_id: activeClientId,
           callback: async (response: { credential: string }) => {
-            const payload = parseGoogleJwt(response.credential);
-            if (!payload) {
-              setError('Google məlumatları oxunmadı.');
-              return;
-            }
-
-            const res = await loginWithGoogle(payload.email, payload.name, undefined, payload.picture);
+            const res = await loginWithGoogle(response.credential);
             if (res.success) {
               navigate('/app');
             } else if (res.requiresGroupCode) {
-              setGoogleEmail(payload.email);
-              setGoogleName(payload.name);
+              setGoogleCredential(response.credential);
               setShowGoogleModal(true);
             } else {
               setError(res.error || 'Google ilə daxil olmaq mümkün olmadı.');
@@ -102,7 +95,7 @@ export const LoginPage: React.FC = () => {
     if (window.google?.accounts?.id) {
       window.google.accounts.id.prompt();
     } else {
-      setShowGoogleModal(true);
+      setError('Google giriş xidməti yüklənmədi. Bir az sonra yenidən cəhd edin.');
     }
   };
 
@@ -122,7 +115,7 @@ export const LoginPage: React.FC = () => {
     setError(null);
     setIsSubmitting(true);
 
-    const res = await login(email, password);
+    const res = await login(email, password, groupCode);
     setIsSubmitting(false);
 
     if (res.success) {
@@ -137,7 +130,7 @@ export const LoginPage: React.FC = () => {
     setGoogleError(null);
     setIsGoogleSubmitting(true);
 
-    const res = await loginWithGoogle(googleEmail, googleName, googleGroupCode);
+    const res = await loginWithGoogle(googleCredential, googleGroupCode);
     setIsGoogleSubmitting(false);
 
     if (res.success) {
@@ -255,6 +248,19 @@ export const LoginPage: React.FC = () => {
             />
           </div>
 
+          <div className="form-group">
+            <label htmlFor="login-group-code" className="form-label">Qrup kodu (ilk giriş üçün)</label>
+            <input
+              id="login-group-code"
+              type="text"
+              value={groupCode}
+              onChange={(e) => setGroupCode(e.target.value)}
+              placeholder="Köhnə hesabı bağlayarkən daxil edin"
+              className="form-input"
+              autoComplete="off"
+            />
+          </div>
+
           <button
             type="submit"
             disabled={isSubmitting}
@@ -321,38 +327,7 @@ export const LoginPage: React.FC = () => {
             )}
 
             <form onSubmit={handleGoogleSubmit} className="google-modal-form">
-              <div className="form-group">
-                <label className="form-label" htmlFor="google-email-input">
-                  Google və ya AzTU E-poçt
-                </label>
-                <input
-                  id="google-email-input"
-                  type="email"
-                  value={googleEmail}
-                  onChange={(e) => setGoogleEmail(e.target.value)}
-                  placeholder="ad.soyad@aztu.edu.az və ya @gmail.com"
-                  required
-                  autoFocus
-                  className="form-input"
-                  autoComplete="email"
-                />
-              </div>
-
-              <div className="form-group">
-                <label className="form-label" htmlFor="google-name-input">
-                  Ad və Soyad
-                </label>
-                <input
-                  id="google-name-input"
-                  type="text"
-                  value={googleName}
-                  onChange={(e) => setGoogleName(e.target.value)}
-                  placeholder="Məsələn: Əli Əliyev"
-                  required
-                  className="form-input"
-                  autoComplete="name"
-                />
-              </div>
+              <p className="input-hint">Google hesabınız təsdiqləndi. İlk qeydiyyatı tamamlamaq üçün qrup kodunu daxil edin.</p>
 
               <div className="form-group">
                 <div className="form-label-row">
@@ -439,10 +414,9 @@ export const LoginPage: React.FC = () => {
                 className="btn-cancel"
                 onClick={() => {
                   setShowClientIdConfig(false);
-                  setShowGoogleModal(true);
                 }}
               >
-                Sürətli Giriş
+                Bağla
               </button>
               <button
                 type="button"

@@ -1,16 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import './App.css';
 import { RouterProvider, useRouter } from './context/RouterContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { DatabaseProvider } from './context/DatabaseContext';
-import { LoginPage } from './pages/auth/LoginPage';
-import { RegisterPage } from './pages/auth/RegisterPage';
-import { AppShell } from './components/app/AppShell';
-import { Header } from './components/Header';
-import { Hero } from './components/Hero';
-import { WorkspacePreview } from './components/WorkspacePreview';
-import { FeatureDeepDives } from './components/FeatureDeepDives';
-import { Footer } from './components/Footer';
+const LoginPage = lazy(() => import('./pages/auth/LoginPage').then((module) => ({ default: module.LoginPage })));
+const RegisterPage = lazy(() => import('./pages/auth/RegisterPage').then((module) => ({ default: module.RegisterPage })));
+const Workspace = lazy(() => import('./components/app/Workspace').then((module) => ({ default: module.Workspace })));
+const Header = lazy(() => import('./components/Header').then((module) => ({ default: module.Header })));
+const Hero = lazy(() => import('./components/Hero').then((module) => ({ default: module.Hero })));
+const WorkspacePreview = lazy(() => import('./components/WorkspacePreview').then((module) => ({ default: module.WorkspacePreview })));
+const FeatureDeepDives = lazy(() => import('./components/FeatureDeepDives').then((module) => ({ default: module.FeatureDeepDives })));
+const Footer = lazy(() => import('./components/Footer').then((module) => ({ default: module.Footer })));
 import { useScrollReveal } from './hooks/useScrollReveal';
 
 // Landing Page (100% UNTOUCHED in design, layout, content, animations)
@@ -98,7 +97,7 @@ const AppContent: React.FC = () => {
     if (!isAuthenticated) {
       return null;
     }
-    return <AppShell />;
+    return <Workspace />;
   }
 
   // 4. Landing Page (Default '/')
@@ -109,9 +108,9 @@ export const App: React.FC = () => {
   return (
     <RouterProvider>
       <AuthProvider>
-        <DatabaseProvider>
+        <Suspense fallback={<div className="route-loading" role="status">Yüklənir...</div>}>
           <AppContent />
-        </DatabaseProvider>
+        </Suspense>
       </AuthProvider>
     </RouterProvider>
   );

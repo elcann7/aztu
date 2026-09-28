@@ -2,11 +2,13 @@
 
 ![AzTU 6326A2 Banner](https://img.shields.io/badge/AzTU-6326A2-blue?style=for-the-badge&logo=academic&logoColor=white)
 ![React 19](https://img.shields.io/badge/React-19.0-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-6.2-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8.3-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![Vercel Production](https://img.shields.io/badge/Vercel-Live_Production-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
 > **Azərbaycan Texniki Universiteti (AzTU)**, İnformasiya Texnologiyaları və Kompüter Mühəndisliyi fakültəsinin **6326A2** akademik qrupu üçün hazırlanmış yüksək səviyyəli vahid idarəetmə və resurs mübadiləsi platforması.
+
+> **Təhlükəsizlik keçidi (1.16.0):** Repozitoriyada Supabase Auth və RLS miqrasiyası hazırlanıb. Canlı AzTU Supabase layihəsi bu sessiyada əlçatan olmadığından həmin miqrasiya və yeni giriş axını hələ istehsalatda təsdiqlənməyib. Cari canlı saytın məxfiliyini bu README zəmanət kimi təqdim etmir; vəziyyət və keçid addımları [SECURITY.md](./SECURITY.md) və [DEPLOYMENT.md](./DEPLOYMENT.md)-dədir.
 
 🌐 **Canlı İstehsalat URL-i:** [https://aztu-ebon.vercel.app](https://aztu-ebon.vercel.app)  
 📦 **GitHub Repozitoriyası:** [https://github.com/elcann7/aztu](https://github.com/elcann7/aztu)
@@ -38,7 +40,7 @@ Platforma **Linear** və **21st.dev** dizayn fəlsəfəsindən ilhamlanaraq müa
 
 1. **Rəsmi Google Identity Services (GIS) & E-poçt Girişi**:
    - Google ilə bir toxunuşla (`One Tap` / Rəsmi Google düyməsi) tələbə hesabı ilə giriş.
-   - Standart universitet e-poçtu və şifrə ilə qeydiyyat.
+   - E-poçt və şifrə ilə Supabase Auth qeydiyyatı; e-poçt təsdiqindən sonra qrup profili bağlanır.
 2. **Qrup Mühafizəsi və Kvota Limiti**:
    - **Maksimum 30 Nəfər**: Kənar şəxslərin daxil olmaması üçün qeydiyyat 30 tələbə ilə məhdudlaşdırılıb.
    - **6326A2 Təhlükəsizlik Kodu**: Giriş və qeydiyyat zamanı qrup kodu mütləq tələb olunur.
@@ -47,10 +49,7 @@ Platforma **Linear** və **21st.dev** dizayn fəlsəfəsindən ilhamlanaraq müa
    - Profil şəkli yükləmə, hazır akademik avatarlar və Google profil şəkli inteqrasiyası.
    - Bio/status, Tələbə bilet nömrəsi, İxtisas, Telegram, Əlaqə nömrəsi və GitHub linki əlavə etmə imkanı.
 4. **Fənn Portalları (Course Shells)**:
-   - **Riyazi analiz** (MATH-101)
-   - **Fizika** (PHYS-102)
-   - **Proqramlaşdırma** (CS-101)
-   - **İngilis dili** (ENG-101)
+   - **Riyazi analiz**, **Xətti cəbr**, **Fizika**, **Proqramlaşdırma**, **ADİAK**, **XDİAK**.
    - Sillabus, həftəlik mühazirələr, slaydlar və kolloqvium materialları.
 5. **Qrup Qeydləri (Timeline)**:
    - Müəllimlərin dərslərdə xüsusi vurğuladığı qeydlər ("Müəllim dedi"), imtahan ipucları, seminar tələbləri.
@@ -79,10 +78,10 @@ Platforma **Linear** və **21st.dev** dizayn fəlsəfəsindən ilhamlanaraq müa
 | Sahə | Texnologiya | İzah |
 | :--- | :--- | :--- |
 | **Frontend Freymvork** | React 19 (TypeScript) | Komponent əsaslı, müasir tip təhlükəsiz memarlıq |
-| **Bina Aləti** | Vite 6 | İldırım sürətli HMR və optimallaşdırılmış istehsal paketi |
+| **Yığma Aləti** | Vite 8 | Dinamik səhifə paketləri və istehsal build-i |
 | **Dizayn Sistemi** | Pure Vanilla CSS | HSL rəng palitrası, glassmorphism, responsive qridlər |
 | **İkonlar** | Lucide React | Təmiz və müasir vektor ikon dəsti |
-| **Autentifikasiya** | Google GIS + Web Crypto | Google Identity Services API və SHA-256 şifrələmə |
+| **Autentifikasiya** | Supabase Auth + Google GIS | Serverdə doğrulanmış sessiya və üzvlük RLS qaydaları; canlı keçid gözləyir |
 | **Vəziyyət İdarəetməsi** | React Context API | `AuthContext`, `DatabaseContext`, `RouterContext` |
 | **Hosting & CI/CD** | Vercel | Avtomatik SPA yönləndirmə və qlobal CDN yerləşdirmə |
 
@@ -90,10 +89,10 @@ Platforma **Linear** və **21st.dev** dizayn fəlsəfəsindən ilhamlanaraq müa
 
 ## 🔒 Təhlükəsizlik və Məxfilik Sistemi
 
-- **30 Tələbə Limiti**: `AuthContext`-də qeydiyyatdan keçmiş tələbə sayı daimi monitorinq olunur. Say 30-a çatdıqda qeydiyyat avtomatik olaraq kilidlənir.
-- **Qrup Kodu Təsdiqi (`6326A2`)**: Qeydiyyat və Google ilə ilk girişdə qrup şifrəsi olmadan hesab yaradıla bilməz.
-- **Şifrə Təhlükəsizliyi**: Şifrələr Web Crypto API vasitəsilə gizli salt ilə SHA-256 alqoritmində heşlənir.
-- **Şəxsiyyətin Dəyişdirilməzliyi**: Tələbələrin rəsmi Adı və Soyadı profil pəncərəsində kilidlənir (read-only), saxtakarlığın qarşısı alınır.
+- **30 Tələbə Limiti**: Server qeydiyyatı və bazanın seriallaşdırılmış triggeri 31-ci profili rədd edir.
+- **Qrup Kodu Təsdiqi (`6326A2`)**: İlk qeydiyyatda serverdə yoxlanır; kodun özü klientdə göründüyü üçün təkbaşına məxfilik sərhədi sayılmır.
+- **Şifrə Təhlükəsizliyi**: Yeni hesabların şifrələri Supabase Auth tərəfindən idarə olunur. Köhnə SHA-256 heşləri giriş üçün istifadə olunmur və klientdən gizlədilir.
+- **Şəxsiyyətin Dəyişdirilməzliyi**: Ad, soyad və qrup həm profil formunda, həm bazanın klient yazma icazələrində kilidlidir.
 
 ---
 

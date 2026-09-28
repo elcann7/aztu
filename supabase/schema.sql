@@ -150,9 +150,13 @@ RETURNS TRIGGER AS $$
 DECLARE
   current_count INTEGER;
 BEGIN
+  PERFORM pg_advisory_xact_lock(hashtext('aztu_6326a2_profile_quota'));
   SELECT COUNT(*) INTO current_count FROM profiles;
   IF current_count >= 30 THEN
     RAISE EXCEPTION 'AzTU 6326A2 XƏTASI: Qrupda maksimum 30 nəfərlik kvota dolmuşdur!';
+  END IF;
+  IF NEW.group_name IS DISTINCT FROM '6326A2' THEN
+    RAISE EXCEPTION 'Yanlış qrup';
   END IF;
   RETURN NEW;
 END;
@@ -164,76 +168,18 @@ BEFORE INSERT ON profiles
 FOR EACH ROW
 EXECUTE FUNCTION check_max_students_limit();
 
--- ============================================================================
--- 9. ROW LEVEL SECURITY (RLS) TƏNZİMLƏNMƏSİ
--- ============================================================================
-ALTER TABLE courses ENABLE ROW LEVEL SECURITY;
-ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
-ALTER TABLE notes ENABLE ROW LEVEL SECURITY;
-ALTER TABLE questions ENABLE ROW LEVEL SECURITY;
-ALTER TABLE answers ENABLE ROW LEVEL SECURITY;
-ALTER TABLE polls ENABLE ROW LEVEL SECURITY;
-ALTER TABLE poll_options ENABLE ROW LEVEL SECURITY;
-ALTER TABLE poll_votes ENABLE ROW LEVEL SECURITY;
-ALTER TABLE materials ENABLE ROW LEVEL SECURITY;
-ALTER TABLE deadlines ENABLE ROW LEVEL SECURITY;
-
-DROP POLICY IF EXISTS "Public read courses" ON courses;
-CREATE POLICY "Public read courses" ON courses FOR SELECT TO anon, authenticated USING (true);
-
-DROP POLICY IF EXISTS "Public read profiles" ON profiles;
-CREATE POLICY "Public read profiles" ON profiles FOR SELECT TO anon, authenticated USING (true);
-DROP POLICY IF EXISTS "Public insert profiles" ON profiles;
-CREATE POLICY "Public insert profiles" ON profiles FOR INSERT TO anon, authenticated WITH CHECK (true);
-DROP POLICY IF EXISTS "Public update profiles" ON profiles;
-CREATE POLICY "Public update profiles" ON profiles FOR UPDATE TO anon, authenticated USING (true);
-
-DROP POLICY IF EXISTS "Public read notes" ON notes;
-CREATE POLICY "Public read notes" ON notes FOR SELECT TO anon, authenticated USING (true);
-DROP POLICY IF EXISTS "Public insert notes" ON notes;
-CREATE POLICY "Public insert notes" ON notes FOR INSERT TO anon, authenticated WITH CHECK (true);
-DROP POLICY IF EXISTS "Public delete notes" ON notes;
-CREATE POLICY "Public delete notes" ON notes FOR DELETE TO anon, authenticated USING (true);
-
-DROP POLICY IF EXISTS "Public read questions" ON questions;
-CREATE POLICY "Public read questions" ON questions FOR SELECT TO anon, authenticated USING (true);
-DROP POLICY IF EXISTS "Public insert questions" ON questions;
-CREATE POLICY "Public insert questions" ON questions FOR INSERT TO anon, authenticated WITH CHECK (true);
-DROP POLICY IF EXISTS "Public update questions" ON questions;
-CREATE POLICY "Public update questions" ON questions FOR UPDATE TO anon, authenticated USING (true);
-
-DROP POLICY IF EXISTS "Public read answers" ON answers;
-CREATE POLICY "Public read answers" ON answers FOR SELECT TO anon, authenticated USING (true);
-DROP POLICY IF EXISTS "Public insert answers" ON answers;
-CREATE POLICY "Public insert answers" ON answers FOR INSERT TO anon, authenticated WITH CHECK (true);
-
-DROP POLICY IF EXISTS "Public read polls" ON polls;
-CREATE POLICY "Public read polls" ON polls FOR SELECT TO anon, authenticated USING (true);
-DROP POLICY IF EXISTS "Public insert polls" ON polls;
-CREATE POLICY "Public insert polls" ON polls FOR INSERT TO anon, authenticated WITH CHECK (true);
-
-DROP POLICY IF EXISTS "Public read poll_options" ON poll_options;
-CREATE POLICY "Public read poll_options" ON poll_options FOR SELECT TO anon, authenticated USING (true);
-DROP POLICY IF EXISTS "Public insert poll_options" ON poll_options;
-CREATE POLICY "Public insert poll_options" ON poll_options FOR INSERT TO anon, authenticated WITH CHECK (true);
-
-DROP POLICY IF EXISTS "Public read poll_votes" ON poll_votes;
-CREATE POLICY "Public read poll_votes" ON poll_votes FOR SELECT TO anon, authenticated USING (true);
-DROP POLICY IF EXISTS "Public insert poll_votes" ON poll_votes;
-CREATE POLICY "Public insert poll_votes" ON poll_votes FOR INSERT TO anon, authenticated WITH CHECK (true);
-
-DROP POLICY IF EXISTS "Public read materials" ON materials;
-CREATE POLICY "Public read materials" ON materials FOR SELECT TO anon, authenticated USING (true);
-DROP POLICY IF EXISTS "Public insert materials" ON materials;
-CREATE POLICY "Public insert materials" ON materials FOR INSERT TO anon, authenticated WITH CHECK (true);
-
-DROP POLICY IF EXISTS "Public read deadlines" ON deadlines;
-CREATE POLICY "Public read deadlines" ON deadlines FOR SELECT TO anon, authenticated USING (true);
-DROP POLICY IF EXISTS "Public insert deadlines" ON deadlines;
-CREATE POLICY "Public insert deadlines" ON deadlines FOR INSERT TO anon, authenticated WITH CHECK (true);
-DROP POLICY IF EXISTS "Public update deadlines" ON deadlines;
-CREATE POLICY "Public update deadlines" ON deadlines FOR UPDATE TO anon, authenticated USING (true);
-
+-- Access policies are managed by supabase/migrations/20260928152552_secure_group_access.sql.
+-- Do not recreate the old anon policies here: a fresh database remains closed until the migration runs.
+DO $$
+DECLARE table_name text;
+BEGIN
+  FOREACH table_name IN ARRAY ARRAY[
+    'courses','profiles','notes','questions','answers','polls','poll_options',
+    'poll_votes','materials','deadlines'
+  ] LOOP
+    EXECUTE format('ALTER TABLE public.%I ENABLE ROW LEVEL SECURITY', table_name);
+  END LOOP;
+END $$;
 -- ============================================================================
 -- 10. REALTIME YAYIMI AKTİVLƏŞDİRMƏK
 -- ============================================================================
