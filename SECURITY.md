@@ -1,12 +1,12 @@
 # AzTU 6326A2 — Təhlükəsizlik Siyasəti və Qaydaları (Security Policy)
 
-> **2026-09-28 keçid vəziyyəti:** Repozitoriyada Supabase Auth sessiyası, profilə bağlı RLS, server qeydiyyatı, paralel qeydiyyatda atomik 30 nəfərlik kvota və özəl Storage üçün miqrasiya hazırlanıb. Canlı AzTU layihəsində şəkilli profil saxlanılıb, digər 4 profil və 3 köhnə Auth hesabı istifadəçinin göstərişi ilə silinib. Köhnə Auth trigger-i və açıq RLS siyasətləri hələ canlıdır; miqrasiya və allow/deny testləri tətbiq/təsdiq edilməyib. Aşağıdakı əvvəlki klient əsaslı təsvirlər cari istehsalatın təhlükəsizlik zəmanəti sayılmır.
+> **2026-09-28 keçid vəziyyəti:** Repozitoriyada Supabase Auth sessiyası, profilə bağlı RLS, server qeydiyyatı, paralel qeydiyyatda atomik 30 nəfərlik kvota və özəl Storage üçün miqrasiya hazırlanıb. Canlı AzTU layihəsində şəkilli profil saxlanılıb, digər 4 profil və 3 köhnə Auth hesabı istifadəçinin göstərişi ilə silinib. `legacy_rpc_hardening` miqrasiyası iki imtiyazlı funksiyanın birbaşa çağırışını bağlayıb; icazə yoxlaması bunu təsdiqləyib. Köhnə Auth trigger-i və açıq RLS siyasətləri hələ canlıdır; əsas miqrasiya və allow/deny testləri tətbiq/təsdiq edilməyib. Aşağıdakı əvvəlki klient əsaslı təsvirlər cari istehsalatın təhlükəsizlik zəmanəti sayılmır.
 
 Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının təhlükəsizlik memarlığını, qoruma mexanizmlərini, 30 nəfərlik kvota baryerini və məxfilik qaydalarını müəyyən edir.
 
 > **2026-09-23 tarixi tapıntı:** Əvvəlki sürümdə Google JWT yalnız klientdə oxunurdu və `anon` RLS siyasətləri geniş giriş verirdi. 1.16.0 kodu bu axınları dəyişir; canlı bazaya miqrasiya tətbiq edilənədək tapıntı canlı mühit üçün açıq sayılır.
 
-> **Açar keçidi:** Legacy `service_role` açarı söhbətdə paylaşılıb və məxfi sayılmır. Yeni server kodu yalnız ayrıca yaradıla və ləğv edilə bilən `SUPABASE_SECRET_KEY` (`sb_secret_...`) qəbul edir. Köhnə açar istifadə edilməməli və yeni server açarı işlədikdən sonra Supabase-də deaktiv edilməlidir; heç bir gizli açar repozitoriyaya və ya `VITE_` dəyişəninə yazılmamalıdır.
+> **Açar keçidi:** Legacy `service_role` açarı söhbətdə paylaşılıb və məxfi sayılmır. İstifadəçinin açıq göstərişi ilə həmin açar müvəqqəti olaraq yalnız Vercel serverindəki `SUPABASE_SECRET_KEY` dəyişənində saxlanır. Onu yeni, ayrıca ləğv edilə bilən `sb_secret_...` açarı ilə əvəz edib legacy açarı deaktiv etmək lazımdır; heç bir gizli açar repozitoriyaya və ya `VITE_` dəyişəninə yazılmamalıdır.
 
 > **AI əlavə qeydi:** `GEMINI_API_KEY` yalnız Vercel server funksiyasında oxunur. 1.16.0 `/api/lecture-chat` funksiyası Supabase Auth tokenini və qrup profilini serverdə yoxlayır, mühazirə ID-sini təsdiqləyir, mətn və tarixçə ölçüsünü məhdudlaşdırır, hər instansiya üçün IP əsaslı qısa müddətli limit tətbiq edir. Bu nəzarət yalnız yeni API yerləşdirildikdən sonra canlıdır.
 
