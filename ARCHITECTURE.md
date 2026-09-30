@@ -55,10 +55,9 @@ Layihədə xarici ağır vəziyyət idarəetmə kitabxanaları (məsələn, Redu
 
 ### 2.1. RouterContext (`src/context/RouterContext.tsx`)
 - **İş prinsipi**: Brauzerin `window.history.pushState` və `popstate` hadisələrinə əsaslanan xüsusi, yüngül marşrutlaşdırıcı.
-- **SPA Rewrites**: Vercel serverində `vercel.json` əvvəl `/api/:path*` funksiyalarını və `/adiak-serbest-is-23` statik təqdimat modulunu qoruyur, qalan SPA marşrutlarını `index.html`-ə yönləndirir.
+- **SPA Rewrites**: Vercel serverində `vercel.json` əvvəl `/api/:path*` funksiyalarını qoruyur, qalan SPA marşrutlarını `index.html`-ə yönləndirir.
 - **Marşrutlar**:
   - `/` — Əsas təqdimat (Landing) səhifəsi
-  - `/adiak-serbest-is-23/index.html` — ADİAK Sərbəst İş №23 interaktiv slayd və ESD simulyatoru (`index.html`, `style.css`, `script.js`)
   - `/login` — Giriş səhifəsi
   - `/register` — Qeydiyyat səhifəsi
   - `/app` — Əsas iş lövhəsi (Dashboard)

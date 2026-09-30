@@ -5,10 +5,6 @@
       "destination": "/api/:path*"
     },
     {
-      "source": "/adiak-serbest-is-23",
-      "destination": "/adiak-serbest-is-23/index.html"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

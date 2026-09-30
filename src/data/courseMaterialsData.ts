@@ -1602,40 +1602,6 @@ export const BUILT_IN_MATERIALS: Material[] = [
       },
     ],
   },
-  {
-    id: 'koica_aze_serbest23',
-    title: 'Sərbəst İş №23 (Hazır Təqdimat + PPTX/PDF + Nitq): Elektron sənəd dövriyyəsinin tətbiqi, hazırlanması və icra qaydaları',
-    courseId: 'aze',
-    type: 'file',
-    description:
-      'KOICA LMS #1274 Sərbəst İş Tapşırığı üçün tam hazır 12 slaydlıq paket (Səfərli Elcan · 6326A2) · PowerPoint (.pptx), PDF (.pdf), Canlı ESD Simulyatoru (/adiak-serbest-is-23/index.html) və 3.5 dəqiqəlik şifahi çıxış nitqi',
-    fileName: 'Elcan_Seferli_6326A2_ADIAK_Movzu_23.pdf',
-    fileSize: '110 KB · 12 Slayd PDF + PPTX + Simulyator',
-    fileMime: 'application/pdf',
-    linkUrl: '/adiak-serbest-is-23/Elcan_Seferli_6326A2_ADIAK_Movzu_23.pdf',
-    authorId: 'system_aztu',
-    authorName: 'Səfərli Elcan (Müəllim: Nərminə İsayeva)',
-    createdAt: '2026-09-30T19:55:00.000Z',
-    isBuiltIn: true,
-    studyNotes: [
-      {
-        heading: '1. Hazır Təqdimat Faylları və Canlı Nümayiş Keçidləri (Mövzu №23)',
-        intuition:
-          'KOICA LMS #1274 sərbəst iş tapşırığına yükləmək və dərsdə lövhədə nümayiş etdirmək üçün hər 3 format (PowerPoint .pptx, 16:9 .pdf və İnteraktiv Veb-Simulyator) tam hazırdır.',
-        body: 'Aşağıdakı ünvanlardan istənilən formatı birbaşa aça və ya endirə bilərsiniz:',
-        formulaOrCode:
-          '• İnteraktiv Veb-Təqdimat + Canlı ESD Simulyatoru: /adiak-serbest-is-23/index.html\n• PowerPoint (.pptx) faylı (KOICA LMS üçün):       /adiak-serbest-is-23/Elcan_Seferli_6326A2_ADIAK_Movzu_23.pptx\n• PDF (.pdf) faylı (12 slayd, 16:9 format):        /adiak-serbest-is-23/Elcan_Seferli_6326A2_ADIAK_Movzu_23.pdf',
-      },
-      {
-        heading: '2. Elektron Sənədin 7 Məcburi Rekviziti, 5 Təsnifat Qaydası və 5 İcra Mərhələsi (Məşğələ 14 & 19)',
-        intuition:
-          'Nərminə İsayevanın dərs vəsaitinə (səh. 120–129) və Məşğələ 14/19 slaydlarına əsasən elektron sənəd dövriyyəsində həm hüquqi rekvizitlər, həm də rəsmi-işgüzar üslubun dil normaları qorunmalıdır.',
-        body: 'Dərsdə soruşulan əsas nəzəri qaydalar:',
-        formulaOrCode:
-          'Xidməti və Elektron Sənədin 7 Məcburi Rekviziti:\n1) Rəsmi elektron blank (Qurumun tam adı və loqosu/gerbi);\n2) Kimə ünvanlandığını göstərən «Başlıq» (vəzifə, soyad, ad, ata adı);\n3) Tərtib tarixi və qeydiyyat nömrəsi (Zaman möhürü — Timestamp);\n4) Sənədin növünün adı (SƏRƏNCAM, QƏRAR, ARAYIŞ, XİDMƏTİ QEYD);\n5) Sənədin mətninə başlıq (mövzu — «... haqqında»);\n6) Sənədin əsas mətni (konstatasiya + inzibati/təklif hissəsi);\n7) Tərtibçinin vəzifəsi, elektron imzası (ASAN İmza / SİMA), dekodlanması (S.A.A.) və QR-kod.\n\nElektron Sənədin 5 Mərhələli İcra Axını (Workflow):\nMərhələ 1: Layihənin hazırlanması (Qaralama)\nMərhələ 2: Daxili razılaşdırma (Elektron Vizalanma)\nMərhələ 3: Rəqəmsal imzalanma (ASAN İmza / SİMA — hüquqi qüvvə qazanır)\nMərhələ 4: Qeydiyyat və Rəhbərin Elektron Dərkənarı (Rezolyusiya + Deadline)\nMərhələ 5: İcraya nəzarət və Rəqəmsal Arxivləşdirmə\n\nKorporativ E-poçt Normativləri (Məşğələ 19):\n• Ölçü: Kağız üzərində yazılandan 2 dəfə qısa olmalıdır;\n• Elektron imza bloku: Maksimum 5–6 sətir və bir sətirdə maksimum 70 işarə;\n• İcra (cavab) müddəti: Maksimum 2 gündən çox olmamalıdır.',
-      },
-    ],
-  },
   ...[
     { id: '9701', num: 1, size: '1.2 MB', date: '2026-09-29T21:08:58.000Z', topic: '“Azərbaycan dilində işgüzar və akademik kommunikasiya” fənninin mövzusu, məqsəd və vəzifələri. Kommunikasiya anlayışı.', note: 'Kommunikasiyanın 3 əsas tərəfi (kommunikativ, interaktiv, perseptiv), nitqin kommunikativ funksiyası və "Azərbaycan Texniki Universiteti" mətni üzrə praktik iş.' },
     { id: '9703', num: 2, size: '0.6 MB', date: '2026-09-29T21:09:53.000Z', topic: 'Azərbaycan dilində işgüzar üslubun mahiyyəti və əsas xüsusiyyətləri.', note: 'Rəsmi-işgüzar üslubun 3 alt üslubu (qanunvericilik, diplomatik, kargüzarlıq), standartlıq, dəqiqlik və obyektivlik tələbləri.' },
