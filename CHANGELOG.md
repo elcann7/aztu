@@ -14,6 +14,8 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
   - Fənn rəsmi olaraq KOICA LMS-ə əlavə edildiyi üçün fənn kodu `Üf-71801y(e)`, dərs yükü **60 saat (həftədə 4 saat, 30 dərs, maksimum 7 qaib haqqı)** və Müəl. Dilarə Həmidovanın **15 rəsmi məşğələ mövzusu** (`Unit 1 A–E` .. `Unit 5 A–E` + `Literature Insights 1–3`) [`academicTracker.ts`](./src/services/academicTracker.ts), [`mockData.ts`](./src/data/mockData.ts) və [`courseMaterialsData.ts`](./src/data/courseMaterialsData.ts) fayllarına sinxronlaşdırıldı.
 - **Fizika (`5038` — `İf-20403y`) və Davamiyyət Yeniləməsi**:
   - KOICA LMS-də təyin edilmiş laboratoriya müəllimi **Müəl. Səyyarə Sadıqova (`Qrup #5155`)** və bütün fənlər üzrə yeni iştirak sayları (`Riyazi analiz: 5/38`, `ADİAK: 4/23`, `Proqramlaşdırma: 3/38`, `Xətti cəbr: 2/23`, `Fizika: 1/15`, `XDİAK: 0/30` — hamısı `0 qaib`, `100%`, `10 bal`) yeniləndi.
+- **Giriş və Sessiya Bərpası (`AuthContext.tsx`, `LoginPage.tsx`, `RegisterPage.tsx`, `DatabaseContext.tsx`)**:
+  - Canlı bazada `auth_user_id` SQL miqrasiyası hələ tətbiq edilmədiyi üçün yarımçıq qalmış `18491e1` Auth dəyişikliyi aktiv işlək `profiles` + Google GIS + E-poçt/Şifrə (`localStorage` + Supabase `profiles`) axınına qaytarıldı; `elcanseferli09@gmail.com` hesabı üçün həm Google ilə birbaşa giriş, həm də e-poçt/şifrə ilə giriş aktivləşdirildi.
 
 ---
 

@@ -12,7 +12,7 @@ import {
   ShieldCheck,
   X,
 } from 'lucide-react';
-import { GOOGLE_CLIENT_ID } from '../../services/googleAuth';
+import { parseGoogleJwt, GOOGLE_CLIENT_ID } from '../../services/googleAuth';
 
 export const RegisterPage: React.FC = () => {
   const { register, loginWithGoogle, registeredCount, maxLimit, isRegistrationLocked } = useAuth();
@@ -25,12 +25,12 @@ export const RegisterPage: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [groupCode, setGroupCode] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Google Modal State
   const [showGoogleModal, setShowGoogleModal] = useState(false);
-  const [googleCredential, setGoogleCredential] = useState('');
+  const [googleEmail, setGoogleEmail] = useState('');
+  const [googleName, setGoogleName] = useState('');
   const [googleGroupCode, setGoogleGroupCode] = useState('');
   const [googleError, setGoogleError] = useState<string | null>(null);
   const [isGoogleSubmitting, setIsGoogleSubmitting] = useState(false);
@@ -49,11 +49,18 @@ export const RegisterPage: React.FC = () => {
         window.google.accounts.id.initialize({
           client_id: activeClientId,
           callback: async (response: { credential: string }) => {
-            const res = await loginWithGoogle(response.credential);
+            const payload = parseGoogleJwt(response.credential);
+            if (!payload) {
+              setError('Google məlumatları oxunmadı.');
+              return;
+            }
+
+            const res = await loginWithGoogle(payload.email, payload.name, undefined, payload.picture);
             if (res.success) {
               navigate('/app');
             } else if (res.requiresGroupCode) {
-              setGoogleCredential(response.credential);
+              setGoogleEmail(payload.email);
+              setGoogleName(payload.name);
               setShowGoogleModal(true);
             } else {
               setError(res.error || 'Google ilə qeydiyyat zamanı xəta baş verdi.');
@@ -102,8 +109,8 @@ export const RegisterPage: React.FC = () => {
       return;
     }
 
-    if (password.length < 8) {
-      setError('Şifrə minimum 8 simvoldan ibarət olmalıdır.');
+    if (password.length < 6) {
+      setError('Şifrə minimum 6 simvoldan ibarət olmalıdır.');
       return;
     }
 
@@ -117,7 +124,7 @@ export const RegisterPage: React.FC = () => {
     setIsSubmitting(false);
 
     if (res.success) {
-      setSuccessMessage('Təsdiq linki e-poçtunuza göndərildi. Ünvanı təsdiqlədikdən sonra Giriş səhifəsində e-poçt, şifrə və qrup kodunu daxil edin.');
+      navigate('/app');
     } else {
       setError(res.error || 'Qeydiyyat zamanı xəta baş verdi.');
     }
@@ -128,7 +135,7 @@ export const RegisterPage: React.FC = () => {
     setGoogleError(null);
     setIsGoogleSubmitting(true);
 
-    const res = await loginWithGoogle(googleCredential, googleGroupCode);
+    const res = await loginWithGoogle(googleEmail, googleName, googleGroupCode);
     setIsGoogleSubmitting(false);
 
     if (res.success) {
@@ -162,8 +169,6 @@ export const RegisterPage: React.FC = () => {
           <h1 className="auth-title">Qeydiyyatdan keçin</h1>
           <p className="auth-subtitle">6326A2 qrup iş sahəsinə qoşulun</p>
         </div>
-
-        {successMessage && <div className="auth-success-box" role="status">{successMessage}</div>}
 
         {/* Quota Indicator Badge */}
         <div className={`quota-status-pill ${isRegistrationLocked ? 'quota-locked' : ''}`}>
@@ -298,7 +303,7 @@ export const RegisterPage: React.FC = () => {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Minimum 8 simvol"
+                  placeholder="Minimum 6 simvol"
                   required
                   className="form-input"
                   autoComplete="new-password"
@@ -389,7 +394,38 @@ export const RegisterPage: React.FC = () => {
             )}
 
             <form onSubmit={handleGoogleSubmit} className="google-modal-form">
-              <p className="input-hint">Google hesabınız təsdiqləndi. İlk qeydiyyatı tamamlamaq üçün qrup kodunu daxil edin.</p>
+              <div className="form-group">
+                <label className="form-label" htmlFor="google-reg-email">
+                  Google və ya AzTU E-poçt
+                </label>
+                <input
+                  id="google-reg-email"
+                  type="email"
+                  value={googleEmail}
+                  onChange={(e) => setGoogleEmail(e.target.value)}
+                  placeholder="ad.soyad@aztu.edu.az və ya @gmail.com"
+                  required
+                  autoFocus
+                  className="form-input"
+                  autoComplete="email"
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="form-label" htmlFor="google-reg-name">
+                  Ad və Soyad
+                </label>
+                <input
+                  id="google-reg-name"
+                  type="text"
+                  value={googleName}
+                  onChange={(e) => setGoogleName(e.target.value)}
+                  placeholder="Məsələn: Əli Əliyev"
+                  required
+                  className="form-input"
+                  autoComplete="name"
+                />
+              </div>
 
               <div className="form-group">
                 <label className="form-label" htmlFor="google-reg-code">
