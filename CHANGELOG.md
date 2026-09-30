@@ -11,6 +11,7 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
   - [`src/data/courseMaterialsData.ts`](./src/data/courseMaterialsData.ts) daxilində `koica_aze_4933` materialının 44 mövzusu Müəl. Nərminə İsayevanın rəsmi PDF faylındakı dəqiq nömrələmə ilə (xüsusilə **Mövzu №23: «Elektron sənəd dövriyyəsinin tətbiqi, bu növ sənədlərin hazırlanması və icra qaydaları»**) yeniləndi.
 - **Mövzu №23 Üzrə Təbii Tələbə PowerPoint (`.pptx`) Təqdimatı (`Elcan_Seferli_6326A2_Serbest_Is.pptx`)**:
   - İlk slaydda yalnız **Azərbaycan Texniki Universiteti**, mövzunun adı, **Tələbə: Səfərli Elcan** və **Qrup: 6326A2** yerləşdirilməklə 10 slaydlıq sadə, səliqəli və təbii tələbə təqdimatı hazırlandı.
+  - Balanslı görünüş üçün 10 slayddan **5-nə** (**Slayd 2, 5, 7, 8, 9**) mövzuya uyğun təbii ofis fotoşəkilləri və praktiki sxem/nümunə təsvirləri əlavə olundu.
 
 ---
 
