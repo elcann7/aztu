@@ -138,6 +138,7 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`src/data/courseMaterialsData.ts`](./src/data/courseMaterialsData.ts) | **KOICA LMS Rəsmi Materialları və 0-dan Öyrədən Qaydalar Bazası**: Bütün 6 fənn üzrə 33 Cloudflare R2 PDF-i və `MaterialStudySection` (`intuition`, `body`, `formulaOrCode`, `symbols`, `steps`, `example`, `warning`) qaydaları |
 | `src/data/mathLessons.ts` | Riyazi analiz üzrə 8 mühazirənin 0-dan izahlı qaydaları, simvol lüğəti, testləri, isbatları və AI konteksti |
 | `src/data/physicsContent.ts` | LMS-in 8 fizika mühazirəsi və 8 laboratoriyasının `BUILT_IN_MATERIALS` əsaslı 0-dan izahlı məzmunu və R2 PDF linkləri |
-| Cloudflare R2 `aztu/{physics,math,algebra,programming,adiak,english}/*.pdf` | Novcept-in R2 bucket-ində (`pub-40bab608394d42c2883a3de1b69e3d1f.r2.dev`) yerləşən 33 rəsmi PDF dərslik, mühazirə, laboratoriya və konspekt |
+| `public/adiak-serbest-is-23/{index.html,style.css,script.js,*.pptx,*.pdf}` | **ADİAK Sərbəst İş №23 Paketi**: «Elektron sənəd dövriyyəsinin tətbiqi, hazırlanması və icra qaydaları» mövzusu üzrə 12 slaydlıq `.pptx`, `.pdf`, canlı ESD & Rəqəmsal İmza simulyatoru və spiker nitqi |
+| Cloudflare R2 `aztu/{physics,math,algebra,programming,adiak,english}/*.pdf` | Novcept-in R2 bucket-ində (`pub-40bab608394d42c2883a3de1b69e3d1f.r2.dev`) yerləşən 55 rəsmi PDF dərslik, mühazirə, laboratoriya və konspekt |
 | `api/lecture-chat.ts` | Gemini 3.1 Flash-Lite üçün server funksiyası; mövzu seçimi və sorğu limitləri |
 | [`src/styles/global.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/styles/global.css) | Qlobal CSS dəyişənləri (rənglər, şriftlər, spacing, radiuslar, animasiyalar) |

@@ -4,6 +4,21 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.18.0] — 2026-09-30
+
+### ADİAK Sərbəst İş Təqdimatı (Mövzu №23 — KOICA LMS #1274): PPTX, PDF, İnteraktiv Veb-Simulyator və Şifahi Çıxış Konspekti
+- **KOICA LMS #4933 (`Sərbəst işlərin mövzuları.pdf`) Hərfbəhərf Uyğunlaşdırma**:
+  - [`src/data/courseMaterialsData.ts`](./src/data/courseMaterialsData.ts) daxilində `koica_aze_4933` materialının 44 mövzusu Müəl. Nərminə İsayevanın rəsmi PDF faylındakı dəqiq nömrələmə ilə (xüsusilə **Mövzu №23: «Elektron sənəd dövriyyəsinin tətbiqi, bu növ sənədlərin hazırlanması və icra qaydaları»**) yeniləndi.
+- **Mövzu №23 Üzrə Tam Hazır Sərbəst İş Paketi (`public/adiak-serbest-is-23/`)**:
+  - **PowerPoint (`.pptx`) Təqdimatı** (`Elcan_Seferli_6326A2_ADIAK_Movzu_23.pptx`): 12 slaydlıq 16:9 rəsmi akademik prezentasiya (spiker qeydləri daxil olmaqla, KOICA LMS `#1274` tapşırığına birbaşa yükləmək üçün).
+  - **PDF (`.pdf`) Təqdimatı** (`Elcan_Seferli_6326A2_ADIAK_Movzu_23.pdf`): 12 səhifəlik yüksək dəqiqlikli 16:9 PDF versiyası (saytın daxili PDF oxuyucusunda və istənilən proyektorda şrift sürüşməsi olmadan açılır).
+  - **İnteraktiv Veb-Təqdimat və Canlı ESD & Rəqəmsal İmza Simulyatoru** (`index.html`, `style.css`, `script.js` — 3 ayrı fayl, sıfır neon, təmiz ağ kağız `#ffffff` / `#f8fafc` dizayn):
+    - **Rejim 1 (12 Slaydlıq Nümayiş)**: Klaviatura oxları (`←` / `→`), tam ekran (`F11`) və hər slaydın altında avtomatik dəyişən **«🎤 Spiker Nitqi»** paneli.
+    - **Rejim 2 (Canlı ESD Simulyatoru)**: 4 sənəd növü (`Sərəncam`, `Xidməti Qeyd`, `Arayış`, `Xidmət Müqaviləsi`), 5 mərhələli iş axını (`Layihə → Viza → İmza → Dərkənar → Arxiv`), `SİMA / ASAN İmza` ilə SHA-256 heş hesablanması və **«⚠️ Mətnə Müdaxilə Testi»** (1 hərf dəyişdikdə kriptoqrafik imzanın pozulmasının canlı nümayişi).
+    - **Rejim 3 (Tam Çıxış Nitqi və 6 Yoxlama Sualının Cavabı)**: Universitetdə ilk sərbəst işdə 10/10 almaq üçün 3.5 dəqiqəlik nitq mətni və müəllimin verə biləcəyi sualların cavabları.
+
+---
+
 ## [1.17.0] — 2026-09-30
 
 ### KOICA LMS Canlı Yeniləmə: ADİAK 22 Təqdimat PDF-i + Sərbəst İş (#1274), XDİAK (#5277 · 60 saat) və Fizika Lab Müəllimi

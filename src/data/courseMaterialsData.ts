@@ -1583,22 +1583,56 @@ export const BUILT_IN_MATERIALS: Material[] = [
     isBuiltIn: true,
     studyNotes: [
       {
-        heading: 'Sərbəst İş Mövzuları (1 – 15)',
-        body: 'KOICA LMS-dəki “Sərbəst işlərin mövzuları.docx” faylından birbaşa çıxarılmış rəsmi siyahı (I hissə):',
+        heading: 'Sərbəst İş Mövzuları (1 – 15) — Orijinal KOICA LMS #4933 Siyahısı',
+        body: 'KOICA LMS-dəki “Sərbəst işlərin mövzuları.docx” faylından hərfbəhərf çıxarılmış rəsmi siyahı (I hissə):',
         formulaOrCode:
-          '1. Azərbaycan dilində işgüzar və akademik kommunikasiya fənninin məqsəd və vəzifələri.\n2. Kommunikasiya anlayışı, növləri və formaları.\n3. İşgüzar üslubun mahiyyəti və əsas xüsusiyyətləri.\n4. İşgüzar ünsiyyət və onun əsas prinsipləri.\n5. İşgüzar ünsiyyətdə özünütəsdiq təqdimatı və imic.\n6. Şifahi işgüzar kommunikasiya: dialoq və monoloji janrlar.\n7. İşgüzar danışıqların aparılması mərhələləri və qaydaları.\n8. Qeyri-verbal (sözsüz) kommunikasiya: bədən dili, mimika və jestlər.\n9. İşgüzar ünsiyyət etikası və psixologiyası.\n10. Subordinasiya qaydaları və işgüzar etiket.\n11. Layihə fəaliyyətinin təqdimatı və kütlə qarşısında çıxış.\n12. Peşə etikası və işgüzar karyeranın idarə edilməsi.\n13. Şifahi işgüzar ünsiyyətin mədəniyyətlərarası aspektləri.\n14. Yazılı işgüzar kommunikasiya və onun əsas tələbləri.\n15. Şəxsi sənədlərin növləri və tərtibi qaydaları (ərizə, tərcümeyi-hal, CV, izahat).',
+          '1. “Azərbaycan dilində işgüzar və akademik kommunikasiya” fənninin mövzusu, məqsəd və vəzifələri.\n2. Kommunikasiya haqqında anlayış.\n3. Kommunikativlik nitqin mühüm funksiyalarından biri kimi.\n4. Azərbaycan dilində işgüzar üslubun mahiyyəti və xüsusiyyətləri.\n5. İşgüzar ünsiyyət və onun əsas prinsipləri.\n6. Ünsiyyət informasiya mübadiləsi kimi.\n7. İşgüzar ünsiyyətdə özünütəsdiq təqdimatı.\n8. İşgüzar ünsiyyətdə dialoq janrları.\n9. İşgüzar ünsiyyətin monoloji janrları.\n10. İşgüzar ünsiyyətdə sözsüz bağlantı və ünsiyyəti tamamlayan ifadəli hərəkətlər; bədən dili, mimika və jestlər.\n11. İşgüzar ünsiyyət etikası və psixologiyası.\n12. Lahiyə fəaliyyətinin logistik dəstəklənməsi.\n13. Layihə hazırlığı və onun təqdimatı.\n14. Layihənin təqdimatında tələb olunan elementlər.\n15. Müvafiq ixtisaslar üzrə Azərbaycan dilində şifahi və yazılı kommunikasiya.',
       },
       {
-        heading: 'Sərbəst İş Mövzuları (16 – 30)',
-        body: 'KOICA LMS-dəki “Sərbəst işlərin mövzuları.docx” faylından birbaşa çıxarılmış rəsmi siyahı (II hissə):',
+        heading: 'Sərbəst İş Mövzuları (16 – 30) — Orijinal KOICA LMS #4933 Siyahısı',
+        body: 'KOICA LMS-dəki “Sərbəst işlərin mövzuları.docx” faylından hərfbəhərf çıxarılmış rəsmi siyahı (II hissə):',
         formulaOrCode:
-          '16. Təşkilati və inzibati sənədlər (əmr, sərəncam, qərar, nizamnamə).\n17. Elektron sənəd dövriyyəsi və onun üstünlükləri.\n18. İstinad və analitik sənədlərin tərtibi (arayış, akt, protokol, hesabat).\n19. İşgüzar məktubların növləri və yazılma qaydaları.\n20. Biznes sahəsində işgüzar ünsiyyət və kommersiya yazışmaları.\n21. İşgüzar elektron poçt (e-mail) yazışma etiketi.\n22. Sosial şəbəkələrdə işgüzar kommunikasiya qaydaları.\n23. Ticarət yazışmaları (sorğu, təklif, iddia və cavab məktubları).\n24. Qeyri-kommersiya məktubları (dəvətnamə, təbrik, təşəkkür, zəmanət məktubu).\n25. Yazılı işgüzar ünsiyyətdə reklam və elan mətnlərinin hazırlanması.\n26. Reklam biznes əlaqələrinin üzvi hissəsi kimi.\n27. Dil mediası və reklam mətnlərinin dil-üslub xüsusiyyətləri.\n28. Akademik kommunikasiya anlayışı və elmi üslubun xüsusiyyətləri.\n29. Elmi işlərin (tezis, məqalə, referat, kurs işi) yazılma qaydaları.\n30. Akademik yazı strukturunda giriş, əsas hissə, nəticə və ədəbiyyat siyahısı.',
+          '16. Peşə etikası və etiket qaydaları.\n17. İşgüzar karyeranın idarə edilməsi.\n18. Şifahi işgüzar ünsiyyətinin mədəniyyətlər-arası aspektləri.\n19. Yazılı işgüzar kommunikasiya və onların aparılması qaydaları.\n20. Sənəd yazılı işgüzar ünsiyyətin əsas məhsulu kimi və onun xüsusi funksiyaları.\n21. Şəxsi sənədlərin növləri və tərtibi qaydaları.\n22. Təşkilati və inzibati sənədlər.\n23. Elektron sənəd dövriyyəsinin tətbiqi, bu növ sənədlərin hazırlanması və icra qaydaları.\n24. İstinad və analitik sənədlər.\n25. İstinad və analitik sənədlərin tərtibinə dair çalşmalar.\n26. Məktublar; onların növləri və yazılma qaydaları.\n27. Biznes sahəsində işgüzar ünsiyyət; əsas etik prinsiplər, davranış qaydaları və danışıqların aparılması texnikası.\n28. Kommersiya yazışmaları və işgüzar tövsiyələr.\n29. İşgüzar e-mail və digər daxili elektron yazışmalar; sosial şəbəkələrdən istifadə qaydaları.\n30. Yazılı mesajların əsas növləri; ticarət yazışmaları (məktubları) və qeyri-kommersiya məktubları.',
       },
       {
-        heading: 'Sərbəst İş Mövzuları (31 – 44)',
-        body: 'KOICA LMS-dəki “Sərbəst işlərin mövzuları.docx” faylından birbaşa çıxarılmış rəsmi siyahı (III hissə):',
+        heading: 'Sərbəst İş Mövzuları (31 – 44) — Orijinal KOICA LMS #4933 Siyahısı',
+        body: 'KOICA LMS-dəki “Sərbəst işlərin mövzuları.docx” faylından hərfbəhərf çıxarılmış rəsmi siyahı (III hissə):',
         formulaOrCode:
-          '31. Elmi mətnlərdə sitatgətirmə, istinad qaydaları və plagiat problemi.\n32. Annotasiya, xülasə (abstract) və açar sözlərin tərtibi qaydaları.\n33. Elmi-tədqiqat mövzusu üzrə icmal məqalələrin hazırlanması.\n34. Akademik və işgüzar təqdimatların (prezentasiyaların) hazırlanma qaydaları.\n35. Azərbaycan ədəbi dilinin normaları (fonetik, leksik, qrammatik) və işgüzar nitq.\n36. Natamam və tam rəsmi sənəd formalarının müqayisəli təhlili.\n37. Müasir informasiya texnologiyaları dövründə akademik kommunikasiya.\n38. İşgüzar mübahisə, polemika və debat aparmaq mədəniyyəti.\n39. Telefon danışıqları və onlayn video-konfrans etiketi.\n40. Mühəndis fəaliyyətində texniki sənədləşmə və akademik yazı.\n41. Dövlət dili haqqında Azərbaycan Respublikasının Qanunu və rəsmi yazışma.\n42. İşgüzar kommunikasiyada nitq maneələri (kommunikativ baryerlər) və onların aradan qaldırılması.\n43. Müsahibəyə (işə qəbul) hazırlıq və özünü təqdimetmə texnikası.\n44. Akademik natiqlikdə arqumentasiya və dinləyici auditoriyasının idarə olunması.',
+          '31. Elektron işgüzar rabitə.\n32. Poçt yazışmaları.\n33. Məktub yazmağın əsas prinsipləri.\n34. Yazılı işgüzar ünsiyyətdə reklam.\n35. Reklam biznes əlaqələrinin üzvi və ayrılmaz hissəsi kimi.\n36. Dil mediası və reklam dilinin əsas xüsusiyyətləri.\n37. Akademik məqsədlər üçün dil.\n38. Akademik və peşəkar yazı qaydaları.\n39. Akademik kommunikasiyanın elementləri, xüsusiyyətləri və növləri.\n40. Akademik yazı - elmi iş (referat, tezis, məqalə, kurs işi, kurs layihəsi, dissertasiya və s.) yazmaq və hazırlanması qaydaları.\n41. Elmi-tədqiqat mövzusu üzrə icmal məqalələrin hazırlasnması və növləri.\n42. Elmi işlər barədə prezentasiyaların hazırlanması.\n43. Dissertasiyanın tərtibi qaydaları.\n44. Yazılı işgüzar ünsiyyətin mədəniyyətlərarası ölçüsü.',
+      },
+    ],
+  },
+  {
+    id: 'koica_aze_serbest23',
+    title: 'Sərbəst İş №23 (Hazır Təqdimat + PPTX/PDF + Nitq): Elektron sənəd dövriyyəsinin tətbiqi, hazırlanması və icra qaydaları',
+    courseId: 'aze',
+    type: 'file',
+    description:
+      'KOICA LMS #1274 Sərbəst İş Tapşırığı üçün tam hazır 12 slaydlıq paket (Səfərli Elcan · 6326A2) · PowerPoint (.pptx), PDF (.pdf), Canlı ESD Simulyatoru (/adiak-serbest-is-23/index.html) və 3.5 dəqiqəlik şifahi çıxış nitqi',
+    fileName: 'Elcan_Seferli_6326A2_ADIAK_Movzu_23.pdf',
+    fileSize: '110 KB · 12 Slayd PDF + PPTX + Simulyator',
+    fileMime: 'application/pdf',
+    linkUrl: '/adiak-serbest-is-23/Elcan_Seferli_6326A2_ADIAK_Movzu_23.pdf',
+    authorId: 'system_aztu',
+    authorName: 'Səfərli Elcan (Müəllim: Nərminə İsayeva)',
+    createdAt: '2026-09-30T19:55:00.000Z',
+    isBuiltIn: true,
+    studyNotes: [
+      {
+        heading: '1. Hazır Təqdimat Faylları və Canlı Nümayiş Keçidləri (Mövzu №23)',
+        intuition:
+          'KOICA LMS #1274 sərbəst iş tapşırığına yükləmək və dərsdə lövhədə nümayiş etdirmək üçün hər 3 format (PowerPoint .pptx, 16:9 .pdf və İnteraktiv Veb-Simulyator) tam hazırdır.',
+        body: 'Aşağıdakı ünvanlardan istənilən formatı birbaşa aça və ya endirə bilərsiniz:',
+        formulaOrCode:
+          '• İnteraktiv Veb-Təqdimat + Canlı ESD Simulyatoru: /adiak-serbest-is-23/index.html\n• PowerPoint (.pptx) faylı (KOICA LMS üçün):       /adiak-serbest-is-23/Elcan_Seferli_6326A2_ADIAK_Movzu_23.pptx\n• PDF (.pdf) faylı (12 slayd, 16:9 format):        /adiak-serbest-is-23/Elcan_Seferli_6326A2_ADIAK_Movzu_23.pdf',
+      },
+      {
+        heading: '2. Elektron Sənədin 7 Məcburi Rekviziti, 5 Təsnifat Qaydası və 5 İcra Mərhələsi (Məşğələ 14 & 19)',
+        intuition:
+          'Nərminə İsayevanın dərs vəsaitinə (səh. 120–129) və Məşğələ 14/19 slaydlarına əsasən elektron sənəd dövriyyəsində həm hüquqi rekvizitlər, həm də rəsmi-işgüzar üslubun dil normaları qorunmalıdır.',
+        body: 'Dərsdə soruşulan əsas nəzəri qaydalar:',
+        formulaOrCode:
+          'Xidməti və Elektron Sənədin 7 Məcburi Rekviziti:\n1) Rəsmi elektron blank (Qurumun tam adı və loqosu/gerbi);\n2) Kimə ünvanlandığını göstərən «Başlıq» (vəzifə, soyad, ad, ata adı);\n3) Tərtib tarixi və qeydiyyat nömrəsi (Zaman möhürü — Timestamp);\n4) Sənədin növünün adı (SƏRƏNCAM, QƏRAR, ARAYIŞ, XİDMƏTİ QEYD);\n5) Sənədin mətninə başlıq (mövzu — «... haqqında»);\n6) Sənədin əsas mətni (konstatasiya + inzibati/təklif hissəsi);\n7) Tərtibçinin vəzifəsi, elektron imzası (ASAN İmza / SİMA), dekodlanması (S.A.A.) və QR-kod.\n\nElektron Sənədin 5 Mərhələli İcra Axını (Workflow):\nMərhələ 1: Layihənin hazırlanması (Qaralama)\nMərhələ 2: Daxili razılaşdırma (Elektron Vizalanma)\nMərhələ 3: Rəqəmsal imzalanma (ASAN İmza / SİMA — hüquqi qüvvə qazanır)\nMərhələ 4: Qeydiyyat və Rəhbərin Elektron Dərkənarı (Rezolyusiya + Deadline)\nMərhələ 5: İcraya nəzarət və Rəqəmsal Arxivləşdirmə\n\nKorporativ E-poçt Normativləri (Məşğələ 19):\n• Ölçü: Kağız üzərində yazılandan 2 dəfə qısa olmalıdır;\n• Elektron imza bloku: Maksimum 5–6 sətir və bir sətirdə maksimum 70 işarə;\n• İcra (cavab) müddəti: Maksimum 2 gündən çox olmamalıdır.',
       },
     ],
   },

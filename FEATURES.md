@@ -22,6 +22,7 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasındakı bütü
 | [10. Deadline İzləyicisi](#10-deadline-izləyicisi-tapşırıqlar) | İmtahan və laboratoriya tarixləri | `/app/deadlines` |
 | [11. Python Sandbox](#11-python-sandbox-laboratoriya-mühiti) | Brauzerdaxili Python redaktoru və icraçı | `/app/sandbox` |
 | Riyazi analiz mühazirələri | Qaydalar, test, isbat, AI və üç interaktiv laboratoriya | `/app/courses/math-analysis` |
+| ADİAK Sərbəst İş №23 Təqdimatı & ESD Simulyatoru | 12 slaydlıq təqdimat (`.pptx`/`.pdf`), canlı rəqəmsal imza laboratoriyası və şifahi çıxış konspekti | `/adiak-serbest-is-23/index.html` |
 
 ---
 
