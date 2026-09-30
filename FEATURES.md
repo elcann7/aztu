@@ -86,21 +86,21 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasındakı bütü
 ---
 
 ## 5. Fənn Portalları (Course Shells)
-Platforma 6 rəsmi universitet fənni üçün tam ixtisaslaşmış iş sahələrinə malikdir:
-1. **Riyazi analiz-1 (`MATH-101`)** — 6 kredit (Dos. Nizami Şıxəliyev / Müəl. Şamil Talıblı)
-2. **Xətti cəbr (`MATH-102`)** — 5 kredit (Dos. Rəna Əmirova)
-3. **Fizika (`İF-20403y`)** — LMS-də 3 kredit, 30 saat (mühazirə müəllimi Sürəyya Məmmədova)
-4. **Proqramlaşdırmanın əsasları-1 (`CS-101`)** — 6 kredit (Dos. Fizuli Əzimov / Müəl. Şəbnəm İsgəndərli / Müəl. Ayxan Həsənov)
-5. **Xarici dildə işgüzar və akademik kommunikasiya -1 (`ENG-101`)** — 4 kredit (Müəl. Dilarə Həmidova)
-6. **Azərbaycan dilində işgüzar və akademik kommunikasiya (`AZE-101`)** — 4 kredit (Müəl. Nərmin İsayeva)
+Platforma 6 rəsmi universitet fənni (KOICA LMS ilə tam sinxron, cəmi 30 ECTS kredit və 55 Cloudflare R2 PDF) üçün tam ixtisaslaşmış iş sahələrinə malikdir:
+1. **Riyazi analiz-1 (`İF-61115y` · KOICA `#5039`)** — 7 kredit, 75 saat / 38 dərs (Dos. Nizami Şıxəliyev / Müəl. Şamil Talıblı)
+2. **Xətti cəbr (`İF-61119y` · KOICA `#5040`)** — 4 kredit, 45 saat / 23 dərs (Dos. Rəna Əmirova / Müəl. Çingiz Ələkbərov)
+3. **Fizika (`İF-20403y` · KOICA `#5038`)** — 3 kredit, 30 saat / 15 dərs (Dos. Sürəyya Məmmədova / Lab: Müəl. Səyyarə Sadıqova `#5155`)
+4. **Proqramlaşdırmanın əsasları-1 (`İF-61125y` · KOICA `#5041`)** — 8 kredit, 75 saat / 38 dərs (Dos. Fizuli Əzimov / Müəl. Ayxan Həsənov)
+5. **Xarici dildə işgüzar və akademik kommunikasiya-1 (`Üf-71801y(e)` · KOICA `#5277`)** — 4 kredit, 60 saat / 30 dərs (Müəl. Dilarə Həmidova — 15 rəsmi mövzu: Unit 1 A–E .. Unit 5 A–E + Literature Insights)
+6. **Azərbaycan dilində işgüzar və akademik kommunikasiya (`ÜF-71706y` · KOICA `#5042`)** — 4 kredit, 45 saat / 23 dərs (Müəl. Nərminə İsayeva — 24 rəsmi KOICA faylı, o cümlədən Məşğələ 1–23 PDF təqdimatları və `#1274` sərbəst iş tapşırığı)
 
 Hər bir fənn portalında:
 - Fənnin kodu, kredit sayı, kafedrası və rəsmi müəllim heyəti.
 - **Fənn Dərs Cədvəli və Auditoriyalar**: Dərsin keçirildiyi günlər, saatlar, növü və otaqlar.
 - **15 Həftəlik Tədris Proqramı və Sillabus**: Hər həftənin konkret mövzusu, tarixləri, kollokviumlar və imtahan hədəfləri.
-- **Materiallar**: Mühazirə slaydları, kitablar və fayllar (Supabase Storage).
+- **Materiallar**: Mühazirə slaydları, kitablar və fayllar (Cloudflare R2 PDF oxuyucusu və 7 bloklu `StudyNoteCard` bələdçisi).
 - **Qrup Qeydləri**: Fənnə aid müəllim tövsiyələri və qeydlər.
-- **Tapşırıqlar**: Fənn üzrə laboratoriya və ev tapşırıqlarının izlənməsi.
+- **Tapşırıqlar**: Fənn üzrə laboratoriya və sərbəst iş tapşırıqlarının izlənməsi.
 - **Sual-Cavab**: Tələbələr arasında sual mübadiləsi.
 
 ---

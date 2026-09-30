@@ -33,7 +33,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenProfile
     { name: 'Riyazi analiz-1', path: '/app/courses/math-analysis', code: 'İf-61115y' },
     { name: 'Xətti cəbr', path: '/app/courses/linear-algebra', code: 'İf-61119y' },
     { name: 'ADİAK (Azərbaycan dili)', path: '/app/courses/azerbaijani', code: 'Üf-71706y' },
-    { name: 'XDİAK (İngilis dili)', path: '/app/courses/english', code: 'ENG-101' },
+    { name: 'XDİAK (İngilis dili)', path: '/app/courses/english', code: 'Üf-71801y(e)' },
     { name: 'Fizika', path: '/app/courses/physics', code: 'İf-20403y' },
   ];
 

@@ -159,7 +159,7 @@ export const REAL_COURSES: Course[] = [
   },
   {
     id: 'eng',
-    code: 'Üf-71705y',
+    code: 'Üf-71801y(e)',
     name: 'Xarici dildə işgüzar və akademik kommunikasiya - 1',
     slug: 'english',
     lecturer: 'Müəl. Dilarə Həmidova',
@@ -171,7 +171,7 @@ export const REAL_COURSES: Course[] = [
     code: 'İf-20403y',
     name: 'Fizika',
     slug: 'physics',
-    lecturer: 'Dos. Sürəyya Məmmədova',
+    lecturer: 'Dos. Sürəyya Məmmədova / Müəl. Səyyarə Sadıqova (Lab)',
     department: 'Mühəndislik fizikası və elektronika kafedrası',
     credits: 3,
   },

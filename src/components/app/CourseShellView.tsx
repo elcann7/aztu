@@ -219,10 +219,14 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
           ======================================================== */}
       {activeTab === 'overview' && course.id === 'phys' && <section className="physics-course-about">
         <h2>Fənn haqqında</h2>
-        <dl><div><dt>Mühazirə müəllimi</dt><dd>Sürəyya Məmmədova</dd></div><div><dt>Kredit</dt><dd>3</dd></div><div><dt>Saat</dt><dd>30</dd></div></dl>
+        <dl>
+          <div><dt>Mühazirə müəllimi</dt><dd>Dos. Sürəyya Məmmədova</dd></div>
+          <div><dt>Laboratoriya müəllimi</dt><dd>Müəl. Səyyarə Sadıqova (Qrup #5155)</dd></div>
+          <div><dt>Kredit / Saat</dt><dd>3 kredit / 30 saat (15 dərs)</dd></div>
+        </dl>
         <details><summary>LMS məlumatları və qiymətləndirmə</summary>
-          <p>Fənn qrupu: 6326a2_if-20403y_fizika · 2026 Payız. Seminar və laboratoriya müəllimi LMS-də hələ təyin edilməyib.</p>
-          <p>Seminar 20, laboratoriya 10, sərbəst iş 10, davamiyyət 10 bal — cəmi 50 bal.</p>
+          <p>Fənn qrupu: 6326a2_if-20403y_fizika (KOICA #5038) · 2026 Payız · Davamiyyət: 15 dərsdən 1-də iştirak (0 qaib, 100%, 10 bal).</p>
+          <p>Forma-2: Seminar 20, laboratoriya 10, sərbəst iş 10, davamiyyət 10 bal — cəmi 50 bal.</p>
         </details>
       </section>}
       {activeTab === 'overview' && course.id !== 'phys' && (

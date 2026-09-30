@@ -1602,27 +1602,80 @@ export const BUILT_IN_MATERIALS: Material[] = [
       },
     ],
   },
+  ...[
+    { id: '9701', num: 1, size: '1.2 MB', date: '2026-09-29T21:08:58.000Z', topic: '“Azərbaycan dilində işgüzar və akademik kommunikasiya” fənninin mövzusu, məqsəd və vəzifələri. Kommunikasiya anlayışı.', note: 'Kommunikasiyanın 3 əsas tərəfi (kommunikativ, interaktiv, perseptiv), nitqin kommunikativ funksiyası və "Azərbaycan Texniki Universiteti" mətni üzrə praktik iş.' },
+    { id: '9703', num: 2, size: '0.6 MB', date: '2026-09-29T21:09:53.000Z', topic: 'Azərbaycan dilində işgüzar üslubun mahiyyəti və əsas xüsusiyyətləri.', note: 'Rəsmi-işgüzar üslubun 3 alt üslubu (qanunvericilik, diplomatik, kargüzarlıq), standartlıq, dəqiqlik və obyektivlik tələbləri.' },
+    { id: '9704', num: 3, size: '0.9 MB', date: '2026-09-29T21:10:50.000Z', topic: 'İşgüzar ünsiyyət və onun əsas prinsipləri.', note: 'İşgüzar kommunikasiyada tərəfdaşlıq, aktiv dinləmə, müzakirə mədəniyyəti və arqumentasiya qaydaları.' },
+    { id: '9705', num: 4, size: '0.6 MB', date: '2026-09-29T21:11:23.000Z', topic: 'İşgüzar ünsiyyətdə özünütəsdiq təqdimatı və müsbət imic.', note: 'İlk 30–60 saniyədə ilkin təəssüratın formalaşması, işgüzar etiket, geyim kodeksi, səs tembri və özünü təqdimetmə.' },
+    { id: '9706', num: 5, size: '1.9 MB', date: '2026-09-29T21:12:06.000Z', topic: 'İşgüzar ünsiyyətdə dialoq janrları üzərində praktik işlər.', note: 'İşgüzar söhbət, danışıqlar, müsahibə və müzakirə zamanı dialoji nitqin qurulması qaydaları.' },
+    { id: '9707', num: 6, size: '1.0 MB', date: '2026-09-29T21:12:48.000Z', topic: 'İşgüzar ünsiyyətdə monoloji janrlar və çıxış mədəniyyəti.', note: 'Hesabat nitqi, məruzə, təqdimat çıxışı və salamlama nitqinin giriş, əsas hissə və yekun strukturu.' },
+    { id: '9708', num: 7, size: '0.8 MB', date: '2026-09-29T21:13:25.000Z', topic: 'Sözsüz bağlantı (qeyri-verbal kommunikasiya): bədən dili, mimika və jestlər.', note: 'Kinesika, proksemika (məsafə zonaları: intim, şəxsi, sosial, ictimai), vizual kontakt və jestlərin işgüzar ünsiyyətdə rolu.' },
+    { id: '9709', num: 8, size: '1.3 MB', date: '2026-09-29T21:14:13.000Z', topic: 'İşgüzar ünsiyyət etikası, psixologiyası və subordinasiya qaydaları.', note: 'Üfüqi (həmkarlararası) və şaquli (rəhbər–tabelik) münasibətlərdə subordinasiya, xidməti etiket və korporativ mədəniyyət.' },
+    { id: '9710', num: 9, size: '1.3 MB', date: '2026-09-29T21:15:37.000Z', topic: 'Layihə fəaliyyətinin logistik dəstəklənməsi və təqdimatı.', note: 'Komanda işi, layihə mərhələlərinin təqdimatı, auditoriya qarşısında vizual və şifahi təqdimat bacarıqları.' },
+    { id: '9711', num: 10, size: '1.2 MB', date: '2026-09-29T21:17:05.000Z', topic: 'Peşə etikası və işgüzar karyeranın idarə edilməsi.', note: 'Mühəndis və İT mütəxəssisinin peşə etikası kodeksi, karyera planlaması və peşəkar ünsiyyət standartları.' },
+    { id: '9712', num: 11, size: '1.0 MB', date: '2026-09-29T21:17:39.000Z', topic: 'Şifahi işgüzar ünsiyyətin mədəniyyətlərarası aspektləri.', note: 'Beynəlxalq işgüzar mühitdə milli-mədəni fərqlər, yüksək və aşağı kontekstli mədəniyyətlərlə danışıq qaydaları.' },
+    { id: '9713', num: 13, size: '1.0 MB', date: '2026-09-29T21:18:27.000Z', topic: 'Şəxsi sənədlərin növləri və tərtibi qaydaları (Ərizə, CV, Tərcümeyi-hal, İzahat).', note: 'Şəxsi kargüzarlıq sənədlərinin rekvizitləri: adresat, sənədin adı, məzmun, tarix və şəxsi imza qaydaları.' },
+    { id: '9714', num: 14, size: '0.6 MB', date: '2026-09-29T21:19:03.000Z', topic: 'Təşkilati və inzibati sənədlər. Elektron sənəd dövriyyəsi.', note: 'Əmr, sərəncam, qərar, nizamnamə və təlimatların hüquqi-inzibati strukturu və elektron imza / rəqəmsal sənəd dövriyyəsi.' },
+    { id: '9715', num: 15, size: '0.4 MB', date: '2026-09-29T21:19:58.000Z', topic: 'İstinad və analitik sənədlərin tərtibi (Arayış, Akt, Protokol, Hesabat).', note: 'Fakt və hadisələri təsdiqləyən sənədlərin (akt, protokol, xidməti arayış) giriş, konstatasiya və qərar hissələri.' },
+    { id: '9716', num: 16, size: '0.7 MB', date: '2026-09-29T21:20:35.000Z', topic: 'İşgüzar məktubların növləri və yazılma qaydaları.', note: 'Rəsmi məktubların blank rekvizitləri, müraciət formaları, lakoniklik və cavab müddəti standartları.' },
+    { id: '9717', num: 17, size: '1.1 MB', date: '2026-09-29T21:21:13.000Z', topic: 'Biznes sahəsində işgüzar ünsiyyət, kommersiya yazışmaları, e-mail və sosial şəbəkə etiketi.', note: 'Korporativ e-poçt strukturu (Subject, Salutation, Body, Call to action, Signature) və rəqəmsal işgüzar etiket (Netiquette).' },
+    { id: '9719', num: 18, size: '1.0 MB', date: '2026-09-29T21:24:13.000Z', topic: 'Yazılı mesajların əsas növləri: ticarət yazışmaları və qeyri-kommersiya məktubları.', note: 'Sorğu, təklif (oferta), iddia (reklamasiya), təşəkkür, dəvət və zəmanət məktublarının tərtibi.' },
+    { id: '9720', num: 19, size: '1.1 MB', date: '2026-09-29T21:24:52.000Z', topic: 'Elektron işgüzar rabitə, poçt yazışmaları və yazılı işgüzar ünsiyyətdə reklam.', note: 'Rəqəmsal kommunikasiya kanalları, işgüzar təkliflərin təqdimatı və reklam mətninin informasiya yükü.' },
+    { id: '9722', num: 20, size: '1.2 MB', date: '2026-09-29T21:26:52.000Z', topic: 'Reklam biznes əlaqələrinin üzvi hissəsi kimi. Dil mediası və reklam mətnlərinin hazırlanması.', note: 'AIDA modeli (Attention, Interest, Desire, Action), sloqan yaradılması və reklam dilində ədəbi norma.' },
+    { id: '9721', num: 21, size: '1.0 MB', date: '2026-09-29T21:25:32.000Z', topic: 'Akademik məqsədlər üçün dil: elmi iş (referat, tezis, məqalə, kurs işi) yazmaq qaydaları.', note: 'Elmi üslubun terminoloji dəqiqliyi, akademik yazı strukturu (annotasiya, açar sözlər, giriş, metod, nəticə, ədəbiyyat).' },
+    { id: '9723', num: 22, size: '1.0 MB', date: '2026-09-29T21:27:27.000Z', topic: 'Elmi-tədqiqat mövzusu üzrə icmal məqalələrin və akademik prezentasiyaların hazırlanması.', note: 'Mənbələrlə iş, sitatgətirmə və istinad standartları, antiplagiat tələbləri və elmi təqdimat slaydlarının dizaynı.' },
+    { id: '9724', num: 23, size: '0.9 MB', date: '2026-09-29T21:27:59.000Z', topic: 'Fənn üzrə keçirilən proqram materiallarının təkrarı və yekunlaşdırılması.', note: 'Şifahi və yazılı işgüzar kommunikasiya, sənəd nümunələri və akademik yazı qaydaları üzrə yekun icmal.' },
+  ].map((item) => ({
+    id: `koica_aze_${item.id}`,
+    title: `Təqdimat ${item.num} (Məşğələ ${item.num}): ${item.topic}`,
+    courseId: 'aze',
+    type: 'file' as const,
+    description: `KOICA LMS #${item.id} · Orijinal fayl: Məşğələ ${item.num}.pdf · Müəl. Nərminə İsayevanın rəsmi dərs təqdimatı`,
+    fileName: `mesgele-${String(item.num).padStart(2, '0')}.pdf`,
+    fileSize: `${item.size} · PDF + Qaydalar`,
+    fileMime: 'application/pdf',
+    linkUrl: `https://pub-40bab608394d42c2883a3de1b69e3d1f.r2.dev/aztu/aze/mesgele-${String(item.num).padStart(2, '0')}.pdf`,
+    authorId: 'system_aztu',
+    authorName: 'Nərminə İsayeva',
+    createdAt: item.date,
+    isBuiltIn: true,
+    studyNotes: [
+      {
+        heading: `Məşğələ ${item.num} — Əsas Mövzu və Qaydalar (KOICA LMS #${item.id})`,
+        body: item.note,
+        formulaOrCode: `Mövzu ${item.num}: ${item.topic}\nMənbə: KOICA LMS #${item.id} (Məşğələ ${item.num}.pdf — Nərminə İsayeva)`,
+      },
+    ],
+  })),
 
   // ==========================================================================
-  // 6. XARİCİ DİLDƏ İŞGÜZAR VƏ AKADEMİK KOMMUNİKASİYA (LMS ID: 5043 · XDİAK)
-  // Müəllim: Müəl. Dilarə Həmidova (Cloudflare R2 PDF + 0-dan İzahlı Akademik İngilis Dili Qaydaları)
+  // 6. XARİCİ DİLDƏ İŞGÜZAR VƏ AKADEMİK KOMMUNİKASİYA (LMS ID: 5277 · XDİAK)
+  // Müəllim: Müəl. Dilarə Həmidova (KOICA LMS #5277 Rəsmi Sillabus + Akademik İngilis Dili Qaydaları)
   // ==========================================================================
   {
     id: 'uni_eng_xdiak',
-    title: 'XDİAK — Academic & Technical Communication in English for Computer Engineering',
+    title: 'XDİAK (KOICA #5277) — Rəsmi 15 Mövzuluq Sillabus və Akademik İngilis Dili Qaydaları',
     courseId: 'eng',
     type: 'file',
     description:
-      'Universitet Səviyyəli Akademik və İşgüzar İngilis Dili Konspekti · Sadə dillə izahlı Formal vs Informal lüğət, IMRaD məqalə şablonu və Rəsmi E-mail yazılışı (Cloudflare R2 PDF + Qaydalar)',
+      'KOICA LMS #5277 (itt (26) -e 4_üf-71801y(e) · 60 saat / 30 dərs) rəsmi məşğələ proqramı + Formal vs Informal lüğət, IMRaD məqalə şablonu və Rəsmi E-mail yazılışı (Cloudflare R2 PDF + Qaydalar)',
     fileName: 'xdiak-academic-english-cs.pdf',
     fileSize: '0.1 MB · PDF + 0-dan İzahlı Qaydalar',
     fileMime: 'application/pdf',
     linkUrl: 'https://pub-40bab608394d42c2883a3de1b69e3d1f.r2.dev/aztu/eng/xdiak-academic-english-cs.pdf',
     authorId: 'system_aztu',
     authorName: 'Müəl. Dilarə Həmidova',
-    createdAt: '2026-09-20T11:00:00.000Z',
+    createdAt: '2026-09-29T18:00:00.000Z',
     isBuiltIn: true,
     studyNotes: [
+      {
+        heading: '0. KOICA LMS (#5277) Rəsmi Məşğələ Planı (15 Mövzu · 60 Saat / 30 Dərs)',
+        intuition:
+          'Müəl. Dilarə Həmidova tərəfindən KOICA LMS-ə (#5277 · itt (26) -e 4_üf-71801y(e)) əlavə edilmiş rəsmi 15 məşğələ mövzusu 5 əsas bölmədən (Unit 1–5) və 3 klassik ədəbiyyat təhlilindən (Literature Insight 1–3) ibarətdir.',
+        body: 'KOICA LMS-də təsdiqlənmiş rəsmi mövzu ardıcıllığı:',
+        formulaOrCode:
+          '1. My life — Unit 1 A, Unit 1 B\n2. My life — Unit 1 C, Unit 1 D\n3. My life — Unit 1 E · Time out — Unit 2 A\n4. Time out — Unit 2 B, Unit 2 C\n5. Time out — Unit 2 D, Unit 2 E\n6. No place like home — Unit 3 A, Unit 3 B\n7. No place like home — Unit 3 C, Unit 3 D\n8. No place like home — Unit 3 E, Review Unit 3\n9. It’s a wild world — Unit 4 A, Unit 4 B\n10. It’s a wild world — Unit 4 C, Unit 4 D\n11. It’s a wild world — Unit 4 E, Cumulative review Units 1–4\n12. You are what you eat — Unit 5 A, Unit 5 B\n13. You are what you eat — Unit 5 C, Unit 5 D\n14. You are what you eat — Unit 5 E · Literature Insight 1: The Adventures of Tom Sawyer (Mark Twain)\n15. Literature Insight 2: The Wizard of Oz (L. Frank Baum) · Literature Insight 3: Macbeth (William Shakespeare) · Revision',
+      },
       {
         heading: '1. Akademik İngilis Dili Nədir? Gündəlik Sözləri Elmi Sözlərlə Necə Əvəz Edirik?',
         intuition:
@@ -1648,5 +1701,19 @@ export const BUILT_IN_MATERIALS: Material[] = [
   },
 ];
 
-// KOICA LMS-də hazırda aktiv tapşırıq yoxdur (tasks: [])
-export const BUILT_IN_DEADLINES: Deadline[] = [];
+// KOICA LMS-də aktiv tapşırıqlar (#1274 — ADİAK Sərbəst iş)
+export const BUILT_IN_DEADLINES: Deadline[] = [
+  {
+    id: 'koica_task_1274',
+    title: 'Sərbəst iş — Azərbaycan dilində işgüzar və akademik kommunikasiya (KOICA #1274)',
+    courseId: 'aze',
+    description: 'KOICA LMS #1274 · Müəl. Nərminə İsayeva · Başlama: 21.09.2026 · Son tarix: 15.12.2026 (44 rəsmi mövzudan biri üzrə sərbəst iş təqdimatı)',
+    dueDate: '2026-12-15',
+    dueTime: '23:59',
+    points: 10,
+    isCompleted: false,
+    authorId: 'system_aztu',
+    authorName: 'Nərminə İsayeva',
+    createdAt: '2026-09-21T00:00:00.000Z',
+  },
+];

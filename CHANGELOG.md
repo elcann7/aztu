@@ -4,6 +4,19 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.17.0] — 2026-09-30
+
+### KOICA LMS Canlı Yeniləmə: ADİAK 22 Təqdimat PDF-i + Sərbəst İş (#1274), XDİAK (#5277 · 60 saat) və Fizika Lab Müəllimi
+- **ADİAK (`5042` — `Üf-71706y`)**:
+  - Müəl. Nərminə İsayevanın dünən axşam (`2026-09-29`) KOICA LMS-ə yüklədiyi **22 yeni rəsmi təqdimat PDF-i (`#9701`–`#9724` · `Məşğələ 1.pdf` – `Məşğələ 23.pdf`)** KOICA-dan çəkilərək Cloudflare R2-yə (`aztu/aze/mesgele-01.pdf` .. `mesgele-23.pdf`) yükləndi və [`courseMaterialsData.ts`](./src/data/courseMaterialsData.ts) daxilinə qaydaları ilə birlikdə əlavə edildi.
+  - KOICA LMS-də açılmış ilk rəsmi tapşırıq — **Sərbəst iş (`#1274`, son tarix: `15.12.2026`, 10 bal)** [`courseMaterialsData.ts`](./src/data/courseMaterialsData.ts) (`BUILT_IN_DEADLINES`) və [`mockData.ts`](./src/data/mockData.ts) (`ASSIGNMENTS`) daxilinə əlavə olundu.
+- **XDİAK — İngilis dili (`5277` — `itt (26) -e 4_üf-71801y(e)`)**:
+  - Fənn rəsmi olaraq KOICA LMS-ə əlavə edildiyi üçün fənn kodu `Üf-71801y(e)`, dərs yükü **60 saat (həftədə 4 saat, 30 dərs, maksimum 7 qaib haqqı)** və Müəl. Dilarə Həmidovanın **15 rəsmi məşğələ mövzusu** (`Unit 1 A–E` .. `Unit 5 A–E` + `Literature Insights 1–3`) [`academicTracker.ts`](./src/services/academicTracker.ts), [`mockData.ts`](./src/data/mockData.ts) və [`courseMaterialsData.ts`](./src/data/courseMaterialsData.ts) fayllarına sinxronlaşdırıldı.
+- **Fizika (`5038` — `İf-20403y`) və Davamiyyət Yeniləməsi**:
+  - KOICA LMS-də təyin edilmiş laboratoriya müəllimi **Müəl. Səyyarə Sadıqova (`Qrup #5155`)** və bütün fənlər üzrə yeni iştirak sayları (`Riyazi analiz: 5/38`, `ADİAK: 4/23`, `Proqramlaşdırma: 3/38`, `Xətti cəbr: 2/23`, `Fizika: 1/15`, `XDİAK: 0/30` — hamısı `0 qaib`, `100%`, `10 bal`) yeniləndi.
+
+---
+
 ## [1.16.0] — 2026-09-28 (canlı keçid gözləyir)
 
 ### Giriş və qrup məlumatlarının serverdə qorunması, ilkin paketin kiçildilməsi
