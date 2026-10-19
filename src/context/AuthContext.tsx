@@ -108,10 +108,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         let totalCount = accounts.length;
 
-        // Sync count with Supabase cloud database
+        // Sync count with Supabase cloud database (with safe 1500ms timeout)
         if (isSupabaseConfigured() && supabase) {
           try {
-            const { count, error } = await supabase.from('profiles').select('*', { count: 'exact', head: true });
+            const timeoutPromise = new Promise<{ count: null; error: Error }>((resolve) =>
+              setTimeout(() => resolve({ count: null, error: new Error('Supabase count timeout') }), 1500)
+            );
+            const queryPromise = supabase.from('profiles').select('*', { count: 'exact', head: true });
+            const { count, error } = await Promise.race([queryPromise, timeoutPromise]);
             if (!error && typeof count === 'number') {
               totalCount = Math.max(totalCount, count);
             }

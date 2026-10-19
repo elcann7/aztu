@@ -25,11 +25,17 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasındakı bütü
 
 ---
 
-## 1. Əsas Təqdimat (Landing Page)
-- **Vizual Kimlik**: AzTU brendi, 6326A2 qrup simvolikası, sakit və müasir interfeys.
-- **Hero Bölməsi**: Platformanın məqsədini izah edən geniş başlıq və "İş sahəsinə daxil ol" çağırışı.
-- **Məhsulun İlkin Baxışı**: Platformanın daxili görünüşünü nümayiş etdirən interaktiv maket.
-- **Xüsusiyyət Dərinliyi**: Mühazirə qeydləri, deadline izləməsi və materiallar bölmələrinə dair izahlı kartlar.
+## 1. Əsas Təqdimat (Landing Page & Linear Editorial Feature Spotlights)
+- **Vizual Kimlik**: 100% autentik `linear.app` monoxrom qaranlıq dizayn sistemi (`#08090a`, `#0d0e10`, `--inner-bevel`, sıx `-0.035em` typography və monoxrom elementlər).
+- **Hero Bölməsi**: Tələbə yönümlü güclü təqdimat başlığı (*"Universitet təhsili üçün vahid sistem."*), oval həb CTA düyməsi və `6326A2` naviqasiyası.
+- **Məhsulun İlkin Baxışı (`WorkspacePreview`)**: Linear 3-sütunlu tətbiq pəncərəsi (Sol panel, Mərkəzi Issue sahəsi, Sağ Properties paneli və perspektiv döşəmə refleksi).
+- **İzometrik Arxitektura Sxemləri (`FIG 0.1`, `FIG 0.2`, `FIG 0.3`)**: *"Yeni nəsil akademik iş mühiti."* başlığı altında R2 Arxiv Şəbəkəsi, Boloniya Davamiyyət Prosessoru və Kolloqvium İntuisiyasını nümayiş etdirən 3D izometrik SVG diaqramları.
+- **Linear Feature Spotlights (`FeatureDeepDives`)**:
+  - **Spotlight 1 (Semestr Planı və Dərs Axını · Cycles)**: İki sütunlu editorial başlıq, 32% tamamlanmış semestr tsikli proqres xətti və aktiv dərs indikatorları (`MAT-101`, `PRG-201`, `XAR-301`, `İndi Davam Edir`).
+  - **Spotlight 2 (Kolloqvium İntuisiyası & İsbatlar · Code Inspector)**: Müəllim təsdiqi nişanı, `teorem_veyerstras.tex` fayl kartı, geniş LaTeX riyazi formula bloku və 3 nömrələnmiş təsdiq addımı (`Ardıcıllığın Monotonluğu`, `Yuxarıdan Məhdudluq`, `Veyerştras Teoremi`).
+  - **Spotlight 3 (Ağıllı Davamiyyət & Forma-1 Monitoru · 3-Pillar Analytics)**: Boloniya 25% həddi üçün 3 geniş metrika vitrini (`13 saat qalan icazəli saat`, `10/10 Forma-1 balı`, `Uyğundur imtahan hüququ`).
+  - **Spotlight 4 (Sinxron R2 Arxiv Şəbəkəsi · Linear Issue Table)**: Cloudflare R2-də saxlanılan 33 rəsmi dərs vəsaitinin kod, ad, müəllim, həcm və birbaşa açılış sütunları ilə nümayişi.
+  - **Monumental Pre-Footer Callout**: *"AzTU 6326A2 üçün quruldu. Bu gün daxil olun."* vizual dəvəti və ağ oval fəaliyyət düyməsi.
 
 ---
 

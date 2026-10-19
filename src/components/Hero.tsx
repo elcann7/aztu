@@ -5,37 +5,36 @@ import { ArrowRight } from 'lucide-react';
 export const Hero: React.FC = () => {
   return (
     <section className="hero-section">
-      {/* 21st.dev / Remotion Ambient Lighting & Dot Grid */}
+      {/* Linear Ambient Star & Radial Glow Horizon */}
       <div className="ambient-glow-mesh" aria-hidden="true" />
-      <div className="ambient-bg-grid" aria-hidden="true" />
+      <div className="hero-top-horizon" aria-hidden="true" />
 
-      <div className="container-narrow hero-container">
-        {/* Subtle pill tag with live semester indicator */}
+      <div className="container hero-container">
+        {/* Linear Style Announcement Badge */}
         <div className="hero-badge reveal-up">
           <span className="badge-live-pulse" />
-          <span className="badge-uni">AzTU</span>
-          <span className="badge-dot" />
-          <span className="badge-group">Qrup 6326A2</span>
+          <span className="badge-text">AzTU 6326A2 · Payız Semestri 2026</span>
+          <span className="badge-arrow">Yeniliklər →</span>
         </div>
 
-        {/* Hero Headline (Specified exactly by user) */}
+        {/* Linear Two-Tone Editorial Headline */}
         <h1 className="hero-title reveal-up reveal-stagger-1">
-          Qrupunuz üçün bir iş sahəsi.
+          Universitet təhsili üçün vahid sistem.
         </h1>
 
-        {/* Supporting text (Specified exactly by user) */}
+        {/* Supporting Editorial Paragraph */}
         <p className="hero-subtitle reveal-up reveal-stagger-2">
-          Mühazirələr, tapşırıqlar, qeydlər və materiallar — bir yerdə.
+          AzTU 6326A2 qrupunun bütün mühazirələri, laboratoriyaları, tapşırıqları və kolloqvium hazırlığı — mühəndislik dəqiqliyi ilə bir məkanda.
         </p>
 
-        {/* Action Buttons */}
+        {/* Linear Actions */}
         <div className="hero-actions reveal-up reveal-stagger-3">
-          <a href="#workspace" className="btn-primary hero-btn-primary">
-            <span>İş sahəsinə baxış</span>
-            <ArrowRight size={14} />
+          <a href="#workspace" className="hero-btn-pill-primary">
+            <span>İş sahəsinə keçid</span>
+            <ArrowRight size={13} />
           </a>
-          <a href="#features" className="btn-secondary hero-btn-secondary">
-            <span>İmkanlar</span>
+          <a href="#schematics" className="hero-btn-link-secondary">
+            <span>Arxitektura ilə tanış olun →</span>
           </a>
         </div>
       </div>

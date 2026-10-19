@@ -31,6 +31,8 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`index.html`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/index.html) | HTML | Əsas HTML sənədi, Google Identity Services script teqi |
 | [`package.json`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/package.json) | JSON | Asılılıqlar və build skriptləri (`npm run dev`, `npm run build`) |
 | [`vite.config.ts`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/vite.config.ts) | TS | Vite konfiqurasiyası və React plagini |
+| [`start-math-lab.cmd`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/start-math-lab.cmd) | CMD | **Limit & Törəmə İnteraktiv Laboratoriyasını** 1 kliklə başladan işəsalma skripti |
+| [`math-lab/`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/math-lab/) | Web App | **Ali Riyaziyyat İnteraktiv Visual Laboratoriyası**: 60fps Canvas $\varepsilon-\delta$, $\varepsilon-N$, Törəmə animasiyası, Lövhə ustası, Düsturlar və Quiz |
 
 ---
 
@@ -139,5 +141,16 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | `src/data/mathLessons.ts` | Riyazi analiz üzrə 8 mühazirənin 0-dan izahlı qaydaları, simvol lüğəti, testləri, isbatları və AI konteksti |
 | `src/data/physicsContent.ts` | LMS-in 8 fizika mühazirəsi və 8 laboratoriyasının `BUILT_IN_MATERIALS` əsaslı 0-dan izahlı məzmunu və R2 PDF linkləri |
 | Cloudflare R2 `aztu/{physics,math,algebra,programming,adiak,english}/*.pdf` | Novcept-in R2 bucket-ində (`pub-40bab608394d42c2883a3de1b69e3d1f.r2.dev`) yerləşən 55 rəsmi PDF dərslik, mühazirə, laboratoriya və konspekt |
-| `api/lecture-chat.ts` | Gemini 3.1 Flash-Lite üçün server funksiyası; mövzu seçimi və sorğu limitləri |
+| [`src/styles/tokens.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/styles/tokens.css) | **Linear + Raycast + Brilliant Obsidian Dizayn Sistemi**: `--bg-app: #08090c`, `--bg-canvas: #0c0e13`, `--inner-bevel`, `--accent-primary: #5e6ad2`, `--accent-coral: #ff6363` |
 | [`src/styles/global.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/styles/global.css) | Qlobal CSS dəyişənləri (rənglər, şriftlər, spacing, radiuslar, animasiyalar) |
+
+---
+
+### 9. Əsas Təqdimat və Bento Grid Komponentləri (`src/components/`)
+| Fayl | Təsviri |
+| :--- | :--- |
+| [`src/components/Header.tsx`](./src/components/Header.tsx) & [`Header.css`](./src/components/Header.css) | **Linear Naviqasiya Başlığı**: Həndəsi loqo markı, naviqasiya keçidləri, `\|` şaquli ayırıcı və 13px oval həb düyməsi (`border-radius: 9999px`) |
+| [`src/components/Hero.tsx`](./src/components/Hero.tsx) & [`Hero.css`](./src/components/Hero.css) | **Linear Editorial Hero**: İki tonlu başlıq (*"Universitet təhsili üçün vahid sistem."*), ulduz/horizon işıqlanması, canlı semestr həbi və pill hərəkət düymələri |
+| [`src/components/WorkspacePreview.tsx`](./src/components/WorkspacePreview.tsx) & [`WorkspacePreview.css`](./src/components/WorkspacePreview.css) | **Linear 3-Sütunlu Masaüstü Vitrini**: Sol tərəfdə iş sahəsi və fənlər menyusu, mərkəzdə `MAT-101` tapşırığı, LaTeX formula qutusu, PDF və fəaliyyət axını, sağda Linear Properties Paneli (`Vəziyyət`, `Prioritet`, `Müəllim`, `Auditoriya`, `Forma-1`, `Qaib Limiti`) və altda perspektivli döşəmə refleksi |
+| [`src/components/FeatureDeepDives.tsx`](./src/components/FeatureDeepDives.tsx) & [`FeatureDeepDives.css`](./src/components/FeatureDeepDives.css) | **Fakültə Zolağı + Linear İzometrik Sxemləri (`FIG 0.1`, `FIG 0.2`, `FIG 0.3`) + Linear Editorial Feature Spotlights**: 3D izometrik arxitektura illüstrasiyaları, Semestr Planı və Dərs Axını tsikli, Kolloqvium İntuisiyası & İsbatlar pəncərəsi, 3-Sütunlu Davamiyyət & Forma-1 Monitoru, Cloudflare R2 Arxiv Cədvəli və Monumental Pre-Footer Kartı |
+| [`src/components/Footer.tsx`](./src/components/Footer.tsx) & [`Footer.css`](./src/components/Footer.css) | Səhifə sonluğu, qrup məlumatı və naviqasiya linkləri |

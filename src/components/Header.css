@@ -4,20 +4,17 @@
   left: 0;
   right: 0;
   z-index: 100;
-  height: var(--header-height);
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-subtle);
-  transition: background-color var(--duration-normal) var(--ease-out-quint),
-              border-color var(--duration-normal) var(--ease-out-quint),
-              box-shadow var(--duration-normal) var(--ease-out-quint);
+  height: 56px;
+  background: rgba(8, 9, 10, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all var(--duration-hover) var(--ease-out-snappy);
 }
 
 .header-scrolled {
-  background: rgba(255, 255, 255, 0.98);
-  border-bottom-color: var(--border-default);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  background: rgba(8, 9, 10, 0.95);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
 }
 
 .header-container {
@@ -25,82 +22,111 @@
   align-items: center;
   justify-content: space-between;
   height: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
 }
 
 /* Brand */
 .header-brand {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 10px;
   text-decoration: none;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 }
 
-.brand-mark {
+.brand-mark-linear {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
-  background: #111418;
-  color: #ffffff;
-  border-radius: var(--radius-xs);
-  transition: transform var(--duration-fast) var(--ease-out-snappy);
+  width: 20px;
+  height: 20px;
+  color: #f7f8f8;
+  transition: opacity var(--duration-hover) var(--ease-out-snappy);
 }
 
-.header-brand:hover .brand-mark {
-  transform: translateY(-1px);
+.header-brand:hover .brand-mark-linear {
+  opacity: 0.8;
 }
 
 .brand-name {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: var(--text-base);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.9rem;
   letter-spacing: -0.02em;
-  color: var(--text-primary);
+  color: #f7f8f8;
 }
 
 /* Simplified Nav */
 .header-nav {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: 4px;
 }
 
 .nav-link {
-  color: var(--text-secondary);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  padding: 0.35rem 0.75rem;
-  border-radius: var(--radius-xs);
-  transition: color var(--duration-hover) var(--ease-out-snappy),
-              background-color var(--duration-hover) var(--ease-out-snappy);
+  color: #8a8f98;
+  font-size: 0.8125rem;
+  font-weight: 450;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all var(--duration-hover) var(--ease-out-snappy);
+  text-decoration: none;
 }
 
 .nav-link:hover {
-  color: var(--text-primary);
-  background-color: var(--bg-surface-hover);
+  color: #f7f8f8;
 }
 
 /* Actions */
 .header-actions {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 12px;
 }
 
-.auth-btn-login {
-  font-size: var(--text-sm);
-  padding: 0.45rem 0.8rem;
+.auth-link-login {
+  background: transparent;
+  border: none;
+  font-size: 0.8125rem;
+  font-weight: 450;
+  color: #8a8f98;
+  padding: 6px 8px;
+  cursor: pointer;
+  transition: color var(--duration-hover) var(--ease-out-snappy);
 }
 
-.auth-btn-start {
-  font-size: var(--text-sm);
-  padding: 0.45rem 0.95rem;
+.auth-link-login:hover {
+  color: #f7f8f8;
 }
 
-@media (max-width: 640px) {
-  .header-nav {
-    display: none;
-  }
+.nav-vertical-divider {
+  display: inline-block;
+  width: 1px;
+  height: 14px;
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.auth-btn-pill {
+  background-color: #f7f8f8;
+  color: #08090a;
+  border: none;
+  border-radius: 9999px;
+  padding: 6px 14px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-hover) var(--ease-out-snappy);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.auth-btn-pill:hover {
+  background-color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+}
+
+.auth-btn-start:hover {
+  background: #ffffff;
 }

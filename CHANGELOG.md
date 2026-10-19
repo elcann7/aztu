@@ -4,6 +4,145 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.24.0] — 2026-10-20
+
+### 🚀 Qələbəlik Bento Qutusunun Ləğvi & Linear Editorial Feature Spotlights Keçidi
+- **Qələbəlik 2x2 Bento Şəbəkəsinin Tamamilə Sökülməsi (`FeatureDeepDives.tsx` & `.css`)**:
+  - İstifadəçinin rəyi əsasında (`media_1792440862707_75327499.png`) sıxılmış, qarışıq widget təəssüratı yaradan 2x2 qutu şəbəkəsi (gün tabları, axtarış paneli, test variantları və `+/-` kalkulyatoru) tamamilə ləğv edildi.
+- **Linear-ın Orijinal Editorial Feature Spotlights Arxitekturasının Qurulması**:
+  - `linear.app`-ın rəsmi dərin imkanlar səhifəsi təhlil edilərək 4 geniş, nəfəs alan və tək məqsədli tətbiq pəncərəsi yaradıldı:
+    1. **Spotlight 1 (`#schedule` · Semestr Planı və Dərs Axını)**:
+       - 2-sütunlu editorial başlıq (Sol: 44px qalın `Semestr Planı və Dərs Axını.`, Sağ: izahat mətni).
+       - Linear Cycle pəncərəsi: Göy canlı nöqtə, `Payız Semestri 2026/27 · 5-ci Tədris Həftəsi`, sağda `32% Tamamlandı (Həftə 5 / 15)`.
+       - Qradiyent proqres zolağı və Linear Issue sətirləri (`MAT-101`, `PRG-201`, `XAR-301`), `İndi Davam Edir` sarı canlı indikatoru.
+    2. **Spotlight 2 (`#colloquium` · Kolloqvium İntuisiyası & İsbatlar)**:
+       - Linear Code Inspector pəncərəsi: `teorem_veyerstras.tex` fayl başlığı, yaşıl `Dos. N.Şıxəliyev Təsdiqi` möhürü.
+       - Monoxrom LaTeX formula mühiti və 3 geniş nömrələnmiş təhlil kartı (`01 Ardıcıllığın Monotonluğu`, `02 Yuxarıdan Məhdudluq`, `03 Veyerştras Teoremi`).
+    3. **Spotlight 3 (`#attendance` · Ağıllı Davamiyyət & Forma-1 Monitoru)**:
+       - Linear 3-Sütunlu Analitika vitrini:
+         - Sütun 1: `13 saat` (`15 saatlıq 25% limitindən cəmi 2 saat qaib qeydə alınıb`, yaşıl status nişanı).
+         - Sütun 2: `10 / 10` (`Maksimum Forma-1 imtahan öncəsi balı tam qorunur`, `Maksimum Bal Qüvvədədir`).
+         - Sütun 3: `Uyğundur` (`Boloniya qaydası üzrə kəsr riski mövcud deyil`, bənövşəyi status nişanı).
+    4. **Spotlight 4 (`#vault` · Sinxron R2 Arxiv Şəbəkəsi)**:
+       - Linear Issue Table: Fənn materialları cədvəli (`KOD`, `VƏSAİTİN ADI`, `MÜƏLLİM`, `HƏCM`, `ƏMƏLİYYAT`), göy issue nişanları (`MAT-03`, `PRG-01`, `CEB-02`, `FIZ-01`, `AZE-01`) və birbaşa təhlükəsiz yükləmə/baxış düymələri.
+    5. **Monumental Pre-Footer Kartı (`#about`)**:
+       - Mərkəzləşdirilmiş monumental kart: *"AzTU 6326A2 üçün quruldu. Bu gün daxil olun."*, daxili zərif relyef və ağ oval düymə.
+- **Dizayn və Kod Yoxlanışı**:
+  - `npm run build` ilə 0 xəta təsdiqləndi.
+  - Headless Chrome vasitəsilə 5 bölmənin də real ekran görüntüləri çəkilib vizual dəqiqlik təsdiqləndi.
+
+---
+
+## [1.23.0] — 2026-10-20
+- **Linear Hero Pəncərəsi & Perspektiv Pedestal (`WorkspacePreview.tsx` & `.css`)**:
+  - Tətbiq vitrini Linear-ın 3-sütunlu rəsmi masaüstü tərtibatına çevrildi:
+    1. **Sol Sütun (Linear Sidebar)**: `AzTU · 6326A2`, `Pulse (Fəaliyyət)`, `Cədvəl`, `R2 Arxiv` və aktiv fənn siyahısı.
+    2. **Mərkəzi Issue Sahəsi**: `MAT-101 / Riyazi analiz - 1`, `I Kolloqvium: Veyerştras Teoremi, Monotonluq və Görkəmli Limitlər`, `formula.tex` LaTeX kodu, təsdiqlənmiş PDF vəsiqəsi və fəaliyyət tarixi (`Dos. Nizami Şıxəliyev`).
+    3. **Sağ Sütun (Linear Signature Properties Panel)**: Status (`● Aktiv Hazırlıq`), Prioritet (`Kolloqvium (Yüksək)`), Müəllim avatarı, Auditoriya (`1-506`), Forma-1 balı (`10 Bal`), Qaib limiti (`2/15 saat`) və kolloqvium geri sayımı.
+  - Pəncərənin altında Linear-ın perspektivli zərif döşəmə refleksi və ambient işıq dumani (`.workspace-pedestal-light` & `.workspace-pedestal-surface`) quruldu.
+- **İzometrik Arxitektura Sxemləri (`FIG 0.1`, `FIG 0.2`, `FIG 0.3` · `FeatureDeepDives.tsx` & `.css`)**:
+  - `linear.app`-dan ilhamlanaraq xüsusi SVG vektor xətləri ilə çəkilmiş 3D izometrik sxemlər əlavə edildi:
+    - `FIG 0.1: Sinxron R2 Arxiv Şəbəkəsi` (izometrik qatlı kub və lazer məlumat şüaları).
+    - `FIG 0.2: Boloniya Davamiyyət Prosessoru` (izometrik hədd kəsimi və pilləli metrika sütunları).
+    - `FIG 0.3: Kolloqvium İntuisiyası & Sınaq` (izometrik imtahan vərəqi və yaşıl təsdiq möhürü).
+  - İki tonlu editorial başlıq: *"Yeni nəsil akademik iş mühiti."* (qalın ağ) + izahat (sakit gümüşü boz).
+- **Fakültə və Tərəfdaşlıq Zolağı (Institutional Ribbon)**:
+  - Linear-ın şirkət loqoları zolağı üslubunda monoxrom rəsmi tərəfdaş zolağı: `AzTU`, `6326A2`, `ECTS Boloniya`, `Cloudflare R2`, `KOICA LMS`, `Python 3.12`.
+- **Yuxarı Naviqasiya & Başlıq (`Header.tsx`, `Hero.tsx`)**:
+  - Linear-ın həndəsi loqo markı, naviqasiya keçidləri, `|` şaquli ayırıcı və 13px oval həb düyməsi (`border-radius: 9999px`).
+  - Hero başlığı: *"Universitet təhsili üçün vahid sistem."* sıx `letter-spacing: -0.04em` ilə.
+
+---
+
+## [1.22.0] — 2026-10-19
+
+### 🔍 Linear & Raycast Canlı Ekran Müqayisəsi və Təmiz Monoxrom Standartlaşdırması
+- **Canlı Ekran Görüntülərinin Çıxarılması (`linear.app` & `raycast.com`)**:
+  - Headless Chrome və Chrome DevTools Protocol vasitəsilə `linear.app`, `raycast.com` və `localhost:5174` səhifələrinin real ekran görüntüləri (Hero, Bento, Komanda Palitrası) çəkildi və yan-yana müqayisə edildi.
+  - Vizual fərqlər sənədləşdirildi: tipografiya iyerarxiyası, pill düymələr (`border-radius: 9999px`), `inner-bevel` relyefləri və monoxrom etiketlər.
+- **Ağ Ekran və Asılı Qalma Xətasının Aradan Qaldırılması**:
+  - `AuthContext.tsx`: Universitet şəbəkəsində / IP bloklanması zamanı Supabase profil sorğusunun ilişib qalmasının qarşısını almaq üçün 1500ms `Promise.race` taymout mexanizmi əlavə edildi.
+  - `App.tsx`: İctimai Landing səhifəsinin autentifikasiya yüklənməsi ilə bloklanması dayandırıldı; yüklənmə indikatorunun fonu `#fcfcfd`-dən Linear `#08090a`-ya dəyişdirildi.
+  - `index.html`: `color-scheme` və `class` "dark" olaraq təyin edildi.
+- **Neon Elementlərin Tamamilə Silinməsi**:
+  - Parlaq sarı düstur qutuları, rəngli ikon qutuları və kəskin neon çərçivələr Linear-ın rəsmi istehsalat CSS tokenləri ilə monoxrom slate rənglərinə keçirildi.
+
+---
+
+## [1.21.0] — 2026-10-19
+
+### ⚡ Senior 12-Sütunlu Bento Grid & İnteraktiv Mikro-UI İnqilabı (Linear + Raycast + Brilliant.org)
+- **Köhnə Şablonların Ləğvi (`FeatureDeepDives.tsx` & `.css`)**:
+  - 2015-ci il üslublu, ardıcıl 5 təkrar ziqzaq (sol mətn / sağ kart) sıralaması tamamilə silindi.
+  - Əvəzində Linear, Raycast və Brilliant.org arxitekturasından deşifrə edilmiş 12-sütunlu asimmetrik **Bento Grid** sistemi quruldu.
+- **Canlı İnteraktiv Mikro-UI Modulları**:
+  1. **Bento 1 (7 Sütun · Linear Style)**: *Həftəlik Dərs Cədvəli & Auditoriyalar* — `B.e.`-dən `C.`-yə kimi 5 günlük interaktiv keçid düymələri, real dərs saatları (`09:00 - 10:20`), otaqlar (`5-205`, `6-508`), Mühazirə/Seminar/Laboratoriya nişanları və canlı növbəti dərs indikatoru.
+  2. **Bento 2 (5 Sütun · Raycast Style)**: *⌘K Komanda Palitrası Simulyatoru* — Real axtarış inputu, `⌘K`, `↵`, `ESC` qısayolları və klikləndikdə anında Raycast bildirişi verən əmrlər ("Riyazi analiz kolloqvium sualları", "Python mühazirə paketi", "Qaib limiti").
+  3. **Bento 3 (6 Sütun · Brilliant.org Style)**: *I Kolloqvium İntuisiya & Sınaq Bloku* — Çoxseçimli interaktiv test (1-ci görkəmli limit $\lim_{x \to 0} \frac{\sin 5x}{x}$, Matris determinantı $2^3 \det(A)$, Python list slicing), real-vaxt yaşıl/qırmızı animasiya, ətraflı riyazi isbat pəncərəsi və "Növbəti sual" keçidi.
+  4. **Bento 4 (6 Sütun · Canlı Kalkulyator)**: *25% Qaib Limiti & Forma-1 Monitoru* — 60 və 45 saatlıq fənlər üçün `+ / -` düymələri ilə buraxılmış saatların dəyişdirilməsi, dinamik rənglənən faiz tərəqqi şkalası (Yaşıl / Narıncı / Qırmızı Kəsr) və avtomatik hesablanan davamiyyət balı.
+  5. **Bento 5 (12 Sütun · Linear Vault)**: *Cloudflare R2 Akademik Arxiv & Müəllim Qeydləri* — Fənn filtrləri ilə 33 rəsmi material cədvəli, birbaşa "Aç" simulyasiyası və sağ tərəfdə rəsmi müəllim xəbərdarlıqları lövhəsi (Dos. Nizami Şıxəliyev, Dos. Fizuli Əzimov, Dos. Rəna Əmirova).
+  6. **Bento 6 (12 Sütun · Obsidian Glow CTA)**: *Son Zərif Qapalı Şəbəkə Kartı* — Qaranlıq radial obsidian relyefi, canlı pulsasiya və birbaşa qrup qeydiyyat/giriş düymələri.
+- **İlkin Baxışın Obsidian Uyğunlaşdırılması (`WorkspacePreview.css`)**:
+  - Bütün sərt kodlanmış ağ (`#ffffff`, `#fbfcfd`, `#f8fafc`) fonlar `var(--bg-canvas)`, `var(--bg-surface)` və `var(--bg-sidebar)` ilə əvəzləndi.
+  - macOS pəncərə nəzarət düymələri (qırmızı, sarı, yaşıl) və kart daxili kənar relyefləri (`var(--inner-bevel)`) tətbiq edildi.
+- **TypeScript & Build Yoxlanışı**: `npm run build` 0 xəta ilə uğurla icra olundu.
+
+---
+
+## [1.20.0] — 2026-10-19
+
+### 🎨 Linear + Raycast + Brilliant.org Qlobal Dizayn İnqilabı (Dark Obsidian UI)
+- **Təhlil və Deşifrə (`/reverse-engineer-anything`)**:
+  - `linear.app`, `raycast.com` və `brilliant.org` platformalarının canlı CSS fayllarından rəsmi rəng palitraları, tipoqrafika, şüşə (glassmorphism) və mikrodizayn xüsusiyyətləri çıxarıldı.
+- **Qlobal Dizayn Sistemi (`tokens.css` & `global.css`)**:
+  - Platforma tamamilə **Obsidian Dark** rejiminə keçirildi (`--bg-app: #08090c;`, `--bg-canvas: #0c0e13;`, `--bg-surface: #13161f;`, `--bg-sidebar: #0a0b10;`).
+  - **Raycast Təbii Relyefi**: Bütün kartlara, düymələrə və dialoqlara fiziki dərinlik verən `--inner-bevel: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);` və zərif 1px kənar xətlər tətbiq edildi.
+  - **Brend Vurğuları**: Linear Indigo (`#5e6ad2`), Raycast Coral (`#ff6363`) və Brilliant Gold/Emerald (`#f7c325` / `#10b981`) rəngləri inteqrasiya olundu.
+- **İdarəetmə Paneli və Naviqasiya (`Sidebar.css`, `TopBar.css`, `AppShell.css`)**:
+  - `TopBar`: Raycast komanda paneli estetikası, `backdrop-filter: blur(16px)`, `⌘K` axtarış pəncərəsi və şüşə örtük.
+  - `Sidebar`: Zərif qaranlıq naviqasiya, qradiyent brend nişanı, aktiv fənn işarələri və profil kartı.
+- **Dashboard və Bento İş Sahəsi (`DashboardView.css`)**:
+  - Bütün açıq ağ kartlar dərin obsidian səthlərə çevrildi.
+  - Dərs cədvəli: 5 günlük Raycast tipli seqmentli tablar, Mühazirə/Seminar/Laboratoriya vizual nişanları və otaq göstəriciləri.
+  - Semestr tərəqqi şkalası və kollokvium/imtahan taymeri yeniləndi.
+- **Giriş və Qeydiyyat (`LoginPage.css`, `RegisterPage.css`, `Modal.css`)**:
+  - Şüşə örtüklü Raycast dialoqları və qaranlıq kart estetikası.
+- `npm run build` uğurla tamamlandı (0 xəta).
+
+---
+
+## [1.19.1] — 2026-10-02
+
+### Riyazi Analiz-1: 0-dan Pedoqoji İzahlar və Akademik Editorial Nəşr Redizaynı
+- **Akademik Nəşriyyat / KaTeX Dizaynı**:
+  - Sayt neon və süni AI qrafiklərindən təmizlənərək klassik **Paper & Ink / LaTeX Akademik Dərslik** formatına (`Newsreader` serif şrifti, arxiv kağızı palitrası `#fbf9f4`, dərin mürəkkəb rəngləri) keçirildi.
+  - KaTeX horizontal kəsr xətləri (`\frac{...}{...}`) real dərslik xətləri ilə inteqrasiya edildi (bölmə işarəsi `/` aradan qaldırıldı).
+- **Mövzuların 6-cı Sinif İntuisiyasından 0-dan Yenidən Yazılması**:
+  - **§ 4**: İkinci görkəmli limitdən $\lim ( \frac{n+a}{n+b} )^n = e^{a-b}$ düsturunun addım-addım cəbri isbatı.
+  - **§ 5**: Törəmə tərifi $f'(x_0) = \lim_{\Delta x \to 0} \frac{\Delta y}{\Delta x}$ və $(x^2)'=2x$ həndəsi və cəbri isbatı.
+  - **§ 7**: Mürəkkəb funksiyalar (Matryoşka qutusu, şirə zavodu, velosiped zənciri analoqları, ovuc metodu və 9 ətraflı misal).
+  - **§ 10**: Ardıcıllığın limiti ($\varepsilon-N$ tərifi) — sonsuz qatar, vaqonlar ($n$), pulun azalması, müəllimin şübhə/xəta hədəfi ($\varepsilon$), sərhəd şlaqbaumu ($N$) və $\frac{2n+1}{n+3} \to 2$ misalının əllə tapılması.
+  - **§ 11**: Funksiyanın Koşi limiti ($\varepsilon-\delta$ tərifi) — Snayper və hədəf halqası ($\varepsilon$), əl titrəməsi/pəncərə ($\delta$), $0 < |x-x_0|$ fəlsəfəsi və $3x-1 \to 5$ lövhə isbatı.
+  - **§ 12B**: Koşi və Dalamber Əlamətləri ("+1 qaydası" $a_{n+1}/a_n$, konfet qutusu analoqu, Koşinin radikal kök papağı $\sqrt[n]{a_n}$, fundamental ardıcıllıq və riyazi induksiya / determinant aydınlaşdırması).
+
+---
+
+## [1.19.0] — 2026-10-02
+
+### Riyazi Analiz-1: Limit & Törəmə İnteraktiv Veb Laboratoriyası (math-lab)
+- **Lokal İnteraktiv Tədris Studiyası (`math-lab/`)**:
+  - Tələbə Elcan Səfərlinin seminar və imtahanlarda limitin Koşi isbatlarını ($\varepsilon-\delta$ və $\varepsilon-N$) və törəmə intuisiyasını tərəddüdsüz həll etməsi üçün lokal interaktiv studio (`http://localhost:3000`) istifadəyə verildi.
+  - **1 kliklə Başlatma**: Kök qovluqda [`start-math-lab.cmd`](./start-math-lab.cmd) və [`math-lab/start.cmd`](./math-lab/start.cmd) yaradıldı.
+  - **6 İnteraktiv Modul**:
+    1. **$\varepsilon-\delta$ Funksiya Limiti**: 60fps Canvas qrafikası, dinamik $\varepsilon$ və $\delta$ slayderləri, kənaraçıxma detektoru (yaşıl/qırmızı), optimal $\delta$ avtomatik seçimi.
+    2. **$\varepsilon-N$ Ardıcıllıq Limiti**: Diskret hədlər, $\forall n > N$ üçün zolaq daxilinə düşən nöqtələrin vizualizasiyası.
+    3. **Törəmə İntuisiyası ($\Delta x \to 0$)**: Kəsən xəttin fırlanaraq toxunan xəttə çevrilməsi animasiyası.
+    4. **Lövhə İsbat Ustası**: Təbaşir lövhəsi stili, ikipəncərəli (Qaralama analizi vs Rəsmi isbat) və lövhədə müəllimə deyiləcək sözlərin canlı skripti.
+    5. **Düsturlar Kitabxanası**: Bütün orta məktəb və ali riyaziyyat limit və törəmə düsturları, canlı axtarış və nümunələr.
+    6. **Özünü Yoxla**: İnteraktiv sınaq testi və izahlı nəticələr.
+
+---
+
 ## [1.18.0] — 2026-09-30
 
 ### ADİAK 44 Rəsmi Sərbəst İş Mövzusunun Dəqiqləşdirilməsi və Mövzu №23 PowerPoint Təqdimatı

@@ -19,7 +19,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 body {
@@ -90,11 +90,11 @@ kbd {
   font-size: 0.68rem;
   font-weight: 500;
   color: var(--text-secondary);
-  background: #f3f4f6;
+  background: #181b24;
   border: 1px solid var(--border-default);
-  border-bottom: 2px solid var(--border-strong);
+  box-shadow: var(--inner-bevel);
   border-radius: var(--radius-xs);
-  padding: 0.1rem 0.35rem;
+  padding: 0.12rem 0.38rem;
   line-height: 1;
   letter-spacing: 0.02em;
 }
@@ -235,9 +235,9 @@ kbd {
 }
 
 .badge-neutral {
-  background: #f1f5f9;
-  color: #334155;
-  border: 1px solid #e2e8f0;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
 }
 
 .badge-urgent {

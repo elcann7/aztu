@@ -3,390 +3,356 @@ import './WorkspacePreview.css';
 import {
   COURSES,
   FEATURED_LECTURES,
-  ASSIGNMENTS,
-  QUESTION_ANSWER,
-  GROUP_REMARKS,
 } from '../data/mockData';
 import {
+  Search,
+  Plus,
+  Star,
+  MoreHorizontal,
+  Link2,
+  ChevronDown,
   FileText,
   Clock,
-  MessageSquareQuote,
-  HelpCircle,
-  Paperclip,
-  CheckCircle2,
-  FolderOpen,
-  Vote,
-  Calendar,
-  Layers,
-  ChevronDown,
-  ChevronUp,
-  Download,
-  Check,
   Sparkles,
+  Download,
+  MapPin,
+  Award,
+  ShieldCheck,
+  Check,
+  Activity,
+  Calendar,
+  FolderOpen,
 } from 'lucide-react';
 
 export const WorkspacePreview: React.FC = () => {
   const [activeCourseId, setActiveCourseId] = useState<string>('math');
-  const [activeNavFilter, setActiveNavFilter] = useState<string>('all');
-  const [isAnswerExpanded, setIsAnswerExpanded] = useState<boolean>(false);
-  const [isTaskCompleted, setIsTaskCompleted] = useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState<'details' | 'materials' | 'tasks'>('details');
+  const [isCopied, setIsCopied] = useState<boolean>(false);
 
   const activeCourse = COURSES.find((c) => c.id === activeCourseId) || COURSES[0];
   const lecture = FEATURED_LECTURES[activeCourseId] || FEATURED_LECTURES['math'];
-  const courseAssignment = ASSIGNMENTS.find((a) => a.course === activeCourse.name);
-  const courseRemark = GROUP_REMARKS.find((r) => r.courseId === activeCourseId) || GROUP_REMARKS[0];
+
+  const handleCopyLink = () => {
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
+  };
 
   return (
     <section className="workspace-section" id="workspace">
       <div className="container">
-        {/* Main Product Workspace Desktop Preview */}
-        <div className="workspace-window reveal-window">
-          {/* Top Window Chrome with 21st.dev Top Border Sheen */}
-          <div className="window-topbar">
-            <div className="window-dots">
-              <span className="window-dot dot-close" />
-              <span className="window-dot dot-minimize" />
-              <span className="window-dot dot-maximize" />
+        {/* Outer Perspective Wrapper */}
+        <div className="workspace-mockup-wrapper">
+          {/* Main Desktop Window */}
+          <div className="workspace-window reveal-window">
+            {/* 1. Linear Header Chrome */}
+            <div className="window-topbar">
+              <div className="window-topbar-left">
+                <div className="window-app-brand">
+                  <div className="window-brand-dot" />
+                  <span className="window-brand-title">6326A2</span>
+                  <ChevronDown size={11} className="window-brand-arrow" />
+                </div>
+                <div className="window-topbar-divider" />
+                <button type="button" className="window-icon-btn" title="Axtarış (⌘K)">
+                  <Search size={13} />
+                </button>
+                <button type="button" className="window-icon-btn" title="Yeni Qeyd və ya Tapşırıq">
+                  <Plus size={13} />
+                </button>
+              </div>
+
+              {/* Center Issue Breadcrumb */}
+              <div className="window-topbar-center">
+                <span className="issue-status-dot amber" title="Aktiv Kolloqvium Hazırlığı" />
+                <span className="issue-id-badge">MAT-101</span>
+                <span className="issue-topbar-title">I Kolloqvium: Veyerştras Teoremi və Limitlər</span>
+                <button type="button" className="window-icon-btn star-btn" title="Seçilmişlərə əlavə et">
+                  <Star size={12} />
+                </button>
+                <button type="button" className="window-icon-btn" title="Daha çox">
+                  <MoreHorizontal size={12} />
+                </button>
+              </div>
+
+              {/* Right Window Controls */}
+              <div className="window-topbar-right">
+                <span className="window-counter-badge">1 / 84</span>
+                <div className="window-topbar-divider" />
+                <button
+                  type="button"
+                  onClick={handleCopyLink}
+                  className="window-icon-btn"
+                  title="Linki kopyala"
+                >
+                  {isCopied ? <Check size={12} color="#5e6ad2" /> : <Link2 size={12} />}
+                </button>
+                <div className="window-traffic-dots">
+                  <span className="window-subtle-dot" />
+                  <span className="window-subtle-dot" />
+                  <span className="window-subtle-dot" />
+                </div>
+              </div>
             </div>
 
-            <div className="window-breadcrumbs">
-              <span className="bc-brand">6326A2</span>
-              <span className="bc-sep">/</span>
-              <span className="bc-current">{activeCourse.name}</span>
-            </div>
-
-            <div className="window-status-indicator">
-              <span className="sync-pulse" />
-              <span className="sync-text">Sinxronlaşdırılıb</span>
-            </div>
-          </div>
-
-          {/* Window Interior: Sidebar + Main Content */}
-          <div className="window-body">
-            {/* SOL SIDEBAR */}
-            <aside className="workspace-sidebar">
-              {/* Group Workspace Header */}
-              <div className="sidebar-brand-row">
-                <div className="brand-badge-square">
-                  <span className="brand-code">63</span>
-                </div>
-                <div className="brand-text-col">
-                  <span className="brand-name">Qrup 6326A2</span>
-                  <span className="brand-sub">AzTU · Kompüter Müh.</span>
-                </div>
-              </div>
-
-              {/* FƏNLƏR */}
-              <div className="sidebar-group-block">
-                <div className="sidebar-label">FƏNLƏR</div>
-                <div className="sidebar-course-list">
-                  {COURSES.map((course) => {
-                    const isSelected = course.id === activeCourseId;
-                    return (
-                      <button
-                        key={course.id}
-                        type="button"
-                        onClick={() => {
-                          setActiveCourseId(course.id);
-                          setActiveNavFilter('all');
-                        }}
-                        className={`sidebar-course-btn ${isSelected ? 'is-selected' : ''}`}
-                      >
-                        <span className="sidebar-bullet" />
-                        <span className="course-btn-title">{course.name}</span>
-                        <span className="course-code-pill">{course.code}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* ƏLAVƏ NAVİQASİYA */}
-              <div className="sidebar-group-block">
-                <div className="sidebar-label">ƏLAVƏ NAVİQASİYA</div>
-                <div className="sidebar-nav-list">
-                  <button
-                    type="button"
-                    onClick={() => setActiveNavFilter(activeNavFilter === 'notes' ? 'all' : 'notes')}
-                    className={`sidebar-nav-btn ${activeNavFilter === 'notes' ? 'is-active-filter' : ''}`}
-                  >
-                    <MessageSquareQuote size={14} className="nav-btn-icon" />
-                    <span>Qrup qeydləri</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setActiveNavFilter(activeNavFilter === 'qa' ? 'all' : 'qa')}
-                    className={`sidebar-nav-btn ${activeNavFilter === 'qa' ? 'is-active-filter' : ''}`}
-                  >
-                    <HelpCircle size={14} className="nav-btn-icon" />
-                    <span>Sual-Cavab</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setActiveNavFilter(activeNavFilter === 'materials' ? 'all' : 'materials')}
-                    className={`sidebar-nav-btn ${activeNavFilter === 'materials' ? 'is-active-filter' : ''}`}
-                  >
-                    <FolderOpen size={14} className="nav-btn-icon" />
-                    <span>Materiallar</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setActiveNavFilter(activeNavFilter === 'deadlines' ? 'all' : 'deadlines')}
-                    className={`sidebar-nav-btn ${activeNavFilter === 'deadlines' ? 'is-active-filter' : ''}`}
-                  >
-                    <Calendar size={14} className="nav-btn-icon" />
-                    <span>Deadline-lar</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setActiveNavFilter(activeNavFilter === 'polls' ? 'all' : 'polls')}
-                    className={`sidebar-nav-btn ${activeNavFilter === 'polls' ? 'is-active-filter' : ''}`}
-                  >
-                    <Vote size={14} className="nav-btn-icon" />
-                    <span>Sorğular</span>
-                  </button>
-                </div>
-              </div>
-
-              {/* Bottom Mini Status */}
-              <div className="sidebar-footer-note">
-                <div className="semester-pill">
-                  <Sparkles size={11} className="semester-icon" />
-                  <span>2026/27 Payız Semestri</span>
-                </div>
-              </div>
-            </aside>
-
-            {/* MAIN CONTENT AREA */}
-            <main className="workspace-main">
-              {/* Workspace Main Header */}
-              <div className="workspace-content-header">
-                <div className="header-title-block">
-                  <h2 className="workspace-view-title">{activeCourse.name}</h2>
-                  <p className="workspace-view-subtitle">Son fəaliyyət və qrup materialları</p>
+            {/* 2. Window 3-Column Body */}
+            <div className="window-body-grid">
+              {/* SÜTUN 1: LINEAR SOL SIDEBAR */}
+              <aside className="linear-sidebar">
+                {/* Workspace Identifier */}
+                <div className="linear-workspace-pill">
+                  <div className="workspace-avatar">63</div>
+                  <div className="workspace-names">
+                    <span className="workspace-main-name">AzTU · 6326A2</span>
+                    <span className="workspace-sub-name">Kompüter Mühəndisliyi</span>
+                  </div>
                 </div>
 
-                {/* 21st.dev Style Interactive Filter Tabs */}
-                <div className="header-view-pills">
-                  <button
-                    type="button"
-                    onClick={() => setActiveNavFilter('all')}
-                    className={`view-pill ${activeNavFilter === 'all' ? 'active' : ''}`}
-                  >
-                    <Layers size={13} />
-                    <span>Hamısı</span>
-                    <span className="pill-counter">4</span>
-                  </button>
+                {/* Primary Nav Items */}
+                <div className="linear-nav-group">
+                  <div className="linear-nav-item active">
+                    <Activity size={13} className="nav-icon" />
+                    <span>Pulse (Fəaliyyət)</span>
+                  </div>
+                  <div className="linear-nav-item">
+                    <Calendar size={13} className="nav-icon" />
+                    <span>Cədvəl & Auditoriyalar</span>
+                  </div>
+                  <div className="linear-nav-item">
+                    <FolderOpen size={13} className="nav-icon" />
+                    <span>Cloudflare R2 Arxiv</span>
+                  </div>
+                </div>
 
-                  <button
-                    type="button"
-                    onClick={() => setActiveNavFilter('materials')}
-                    className={`view-pill ${activeNavFilter === 'materials' ? 'active' : ''}`}
-                  >
-                    <FileText size={13} />
-                    <span>Mühazirə</span>
-                  </button>
+                {/* Fənlər Listəsi */}
+                <div className="linear-nav-group">
+                  <div className="linear-nav-header">FƏNLƏR</div>
+                  <div className="linear-course-list">
+                    {COURSES.map((course) => {
+                      const isSelected = course.id === activeCourseId;
+                      return (
+                        <button
+                          key={course.id}
+                          type="button"
+                          onClick={() => setActiveCourseId(course.id)}
+                          className={`linear-course-row ${isSelected ? 'is-selected' : ''}`}
+                        >
+                          <span className={`course-row-dot ${isSelected ? 'active-dot' : ''}`} />
+                          <span className="course-row-name">{course.name}</span>
+                          <span className="course-row-code">{course.code}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
 
+                {/* Bottom System Meta */}
+                <div className="linear-sidebar-bottom">
+                  <div className="linear-semester-tag">
+                    <Sparkles size={11} className="semester-sparkle" />
+                    <span>Payız Semestri 2026/27</span>
+                  </div>
+                </div>
+              </aside>
+
+              {/* SÜTUN 2: MƏRKƏZİ LINEAR ISSUE SAHƏSİ */}
+              <main className="linear-issue-main">
+                {/* Issue Header */}
+                <div className="issue-main-header">
+                  <div className="issue-meta-row">
+                    <span className="issue-chip-id">MAT-101</span>
+                    <span className="issue-chip-sep">/</span>
+                    <span className="issue-chip-course">{activeCourse.name}</span>
+                    <span className="issue-chip-badge">Kolloqvium Hazırlığı</span>
+                  </div>
+
+                  <h1 className="issue-main-title">
+                    {activeCourseId === 'math'
+                      ? 'I Kolloqvium: Veyerştras Teoremi, Monotonluq və Görkəmli Limitlər'
+                      : `${activeCourse.name}: ${lecture.title}`}
+                  </h1>
+                </div>
+
+                {/* Sub-nav Tabs */}
+                <div className="issue-tab-bar">
                   <button
                     type="button"
-                    onClick={() => setActiveNavFilter('deadlines')}
-                    className={`view-pill ${activeNavFilter === 'deadlines' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('details')}
+                    className={`issue-tab-btn ${activeTab === 'details' ? 'active' : ''}`}
                   >
-                    <Clock size={13} />
+                    <span>İzahat & Tələblər</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('materials')}
+                    className={`issue-tab-btn ${activeTab === 'materials' ? 'active' : ''}`}
+                  >
+                    <span>Mühazirə Materialı</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('tasks')}
+                    className={`issue-tab-btn ${activeTab === 'tasks' ? 'active' : ''}`}
+                  >
                     <span>Tapşırıq</span>
                   </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setActiveNavFilter('notes')}
-                    className={`view-pill ${activeNavFilter === 'notes' ? 'active' : ''}`}
-                  >
-                    <MessageSquareQuote size={13} />
-                    <span>Qeyd</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setActiveNavFilter('qa')}
-                    className={`view-pill ${activeNavFilter === 'qa' ? 'active' : ''}`}
-                  >
-                    <HelpCircle size={13} />
-                    <span>Sual</span>
-                  </button>
                 </div>
-              </div>
 
-              {/* SPACIOUS, BREATHABLE, HIGH-CRAFT FEED */}
-              <div
-                key={`${activeCourseId}-${activeNavFilter}`}
-                className="workspace-feed-list"
-              >
-                {/* 1. MÜHAZİRƏ ITEM */}
-                {(activeNavFilter === 'all' || activeNavFilter === 'materials') && (
-                  <article className="feed-item lecture-feed-card interactive-card">
-                    <div className="feed-item-header">
-                      <div className="item-badge-pill badge-lecture">
-                        <FileText size={13} />
-                        <span>Mühazirə</span>
-                      </div>
-                      <div className="feed-meta-chips">
-                        <span className="meta-chip-time">{lecture.date}</span>
-                        <span className="meta-chip-sep">•</span>
-                        <span className="meta-chip-room">{lecture.room}</span>
-                      </div>
+                {/* Tab Content */}
+                <div className="issue-content-body">
+                  {/* LaTeX / Math Code Block (Linear Code Frame) */}
+                  <div className="linear-code-frame">
+                    <div className="code-frame-header">
+                      <span className="code-lang">formula.tex</span>
+                      <span className="code-copy-tag">LaTeX</span>
                     </div>
+                    <pre className="code-frame-content">
+                      <code>{`\\lim_{x \\to 0} \\frac{\\sin(5x)}{x} = 5 \\quad \\text{və} \\quad x_1 \\le x_2 \\le \\dots \\le x_n \\le M`}</code>
+                    </pre>
+                  </div>
 
-                    <div className="feed-body-row">
-                      <h3 className="feed-item-title">{lecture.title}</h3>
-                      <p className="feed-item-desc">{lecture.summary}</p>
-                    </div>
+                  {/* Editorial Description */}
+                  <div className="issue-markdown-content">
+                    <p>
+                      {activeCourseId === 'math'
+                        ? 'Veyerştras teoreminə əsasən, monoton artan və yuxarıdan məhdud olan istənilən ədədi ardıcıllığın sonlu limiti var. Bu teorem və 1-ci görkəmli limitin isbatı I Kolloqviumun nəzəri suallar siyahısına daxil edilmişdir.'
+                        : lecture.summary}
+                    </p>
+                  </div>
 
-                    <div className="feed-footer-attachment">
-                      <div className="pdf-chip">
-                        <div className="pdf-chip-icon-box">
-                          <Paperclip size={13} />
-                        </div>
-                        <div className="pdf-chip-content">
-                          <span className="pdf-chip-label">{activeCourseId === 'phys' ? 'Müəllim təqdimatının xülasəsi:' : 'Əlavə olunmuş material:'}</span>
-                          <span className="pdf-chip-name">{lecture.materials[0]?.name || 'Mühazirə 03 — Çoxluqlar.pdf'}</span>
-                        </div>
-                        <span className="pdf-chip-size">{lecture.materials[0]?.sizeOrSource || '2.4 MB'}</span>
-                        {activeCourseId === 'phys' ? (
-                          <a href="/app/courses/physics" className="pdf-chip-action" title="Fizika mövzularına bax">
-                            <span>Bax</span>
-                          </a>
-                        ) : (
-                          <button type="button" className="pdf-chip-action" title="Materialı yüklə">
-                            <Download size={13} />
-                            <span>Yüklə</span>
-                          </button>
-                        )}
+                  {/* Attachment Pill (Linear File Asset) */}
+                  <div className="linear-attachment-card">
+                    <div className="attachment-left">
+                      <div className="attachment-icon-box">
+                        <FileText size={15} />
                       </div>
-                    </div>
-                  </article>
-                )}
-
-                {/* 2. TAPŞIRIQ ITEM */}
-                {(activeNavFilter === 'all' || activeNavFilter === 'deadlines') && courseAssignment && (
-                  <article className={`feed-item task-feed-card interactive-card ${isTaskCompleted ? 'is-completed' : ''}`}>
-                    <div className="feed-item-header">
-                      <div className="item-badge-pill badge-task">
-                        <Clock size={13} />
-                        <span>Tapşırıq</span>
-                      </div>
-                      <div className="feed-header-right">
-                        <span className={`status-pill ${isTaskCompleted ? 'status-pill-success' : 'status-pill-warning'}`}>
-                          {isTaskCompleted ? 'Təhvil verildi' : courseAssignment.daysRemaining}
+                      <div className="attachment-details">
+                        <span className="attachment-name">
+                          {activeCourseId === 'math' ? 'Mühazirə 03 — Çoxluqlar və Limitlər.pdf' : `${lecture.title}.pdf`}
                         </span>
+                        <span className="attachment-meta">2.4 MB · Rəsmi Təsdiqlənmiş Vəsait</span>
+                      </div>
+                    </div>
+                    <button type="button" className="attachment-action-btn" title="Vəsaiti Endir">
+                      <Download size={13} />
+                      <span>Endir</span>
+                    </button>
+                  </div>
+
+                  {/* Activity History Timeline (Linear signature) */}
+                  <div className="linear-activity-stream">
+                    <div className="activity-section-title">Fəaliyyət Tarixçəsi</div>
+
+                    <div className="activity-row">
+                      <div className="activity-avatar-linear">NŞ</div>
+                      <div className="activity-text-col">
+                        <span className="activity-author">Dos. Nizami Şıxəliyev</span>
+                        <span className="activity-action">rəsmi mühazirə vəsaitini əlavə etdi</span>
+                        <span className="activity-time">2 saat əvvəl</span>
                       </div>
                     </div>
 
-                    <div className="feed-body-row">
-                      <h3 className="feed-item-title">{courseAssignment.title}</h3>
-                      <div className="task-deadline-bar">
-                        <div className="deadline-date-chip">
-                          <Calendar size={13} className="chip-icon" />
-                          <span>Son təhvil: {courseAssignment.deadline}, 23:59</span>
-                        </div>
-                        <div className="task-points-badge">
-                          +{courseAssignment.points} bal
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => setIsTaskCompleted(!isTaskCompleted)}
-                          className={`task-action-toggle ${isTaskCompleted ? 'is-done' : ''}`}
-                          title="Tapşırığı təhvil verilmiş kimi işarələ"
-                        >
-                          <Check size={13} />
-                          <span>{isTaskCompleted ? 'Tamamlandı' : 'Təhvil ver'}</span>
-                        </button>
+                    <div className="activity-row">
+                      <div className="activity-avatar-system">
+                        <Sparkles size={11} />
+                      </div>
+                      <div className="activity-text-col">
+                        <span className="activity-author">Sistem Botu</span>
+                        <span className="activity-action">1-ci Kolloqvium sınaq suallarını sinxronlaşdırdı</span>
+                        <span className="activity-time">4 saat əvvəl</span>
                       </div>
                     </div>
-                  </article>
-                )}
-                {activeNavFilter === 'deadlines' && activeCourseId === 'phys' && !courseAssignment && (
-                  <div className="feed-item">Fizika üzrə təsdiqlənmiş təhvil tarixi hələ paylaşılmayıb.</div>
-                )}
+                  </div>
+                </div>
+              </main>
 
-                {/* 3. QRUP QEYDİ ITEM */}
-                {(activeNavFilter === 'all' || activeNavFilter === 'notes') && (
-                  <article className="feed-item remark-feed-card interactive-card">
-                    <div className="feed-item-header">
-                      <div className="item-badge-pill badge-remark">
-                        <MessageSquareQuote size={13} />
-                        <span>Qrup qeydi</span>
-                      </div>
-                      <span className="badge badge-neutral">{courseRemark.tag}</span>
+              {/* SÜTUN 3: LINEAR SAĞ PROPERTIES PANELİ (Signature Linear Look) */}
+              <aside className="linear-properties-panel">
+                <div className="properties-title">Xassələr & Parametrlər</div>
+
+                <div className="properties-list">
+                  {/* Status */}
+                  <div className="property-item">
+                    <span className="property-label">Vəziyyət</span>
+                    <div className="property-value-pill">
+                      <span className="prop-status-dot amber" />
+                      <span>Aktiv Hazırlıq</span>
                     </div>
+                  </div>
 
-                    <div className="remark-highlight-box">
-                      <p className="remark-quote-content">
-                        {courseRemark.quote}
-                      </p>
-                      <div className="remark-author-meta">
-                        <span className="remark-author-name">{courseRemark.author}</span>
-                        <span className="meta-sep">•</span>
-                        <span className="remark-date-text">{courseRemark.date}</span>
+                  {/* Prioritet */}
+                  <div className="property-item">
+                    <span className="property-label">Prioritet</span>
+                    <div className="property-value-pill">
+                      <div className="priority-bars-linear">
+                        <span className="bar filled" />
+                        <span className="bar filled" />
+                        <span className="bar filled" />
                       </div>
+                      <span>Kolloqvium (Yüksək)</span>
                     </div>
-                  </article>
-                )}
+                  </div>
 
-                {/* 4. SUAL ITEM */}
-                {(activeNavFilter === 'all' || activeNavFilter === 'qa') && (
-                  <article className="feed-item question-feed-card interactive-card">
-                    <div className="feed-item-header">
-                      <div className="item-badge-pill badge-question">
-                        <HelpCircle size={13} />
-                        <span>Sual</span>
-                      </div>
-                      <div className="qa-verified-badge">
-                        <CheckCircle2 size={13} />
-                        <span>1 təsdiqlənmiş cavab</span>
-                      </div>
+                  {/* Müəllim */}
+                  <div className="property-item">
+                    <span className="property-label">Müəllim</span>
+                    <div className="property-value-pill">
+                      <div className="property-teacher-avatar">NŞ</div>
+                      <span>Dos. N.Şıxəliyev</span>
                     </div>
+                  </div>
 
-                    <div className="feed-body-row">
-                      <h3 className="feed-item-title">{QUESTION_ANSWER.question}</h3>
-                      <div className="qa-meta-bar">
-                        <span className="qa-author-tag">{QUESTION_ANSWER.author}</span>
-                        <span className="meta-sep">•</span>
-                        <span className="qa-time-tag">{QUESTION_ANSWER.timeAgo}</span>
-                        <span className="meta-sep">•</span>
-                        <span className="qa-answers-count">2 cavab</span>
-                        <button
-                          type="button"
-                          onClick={() => setIsAnswerExpanded(!isAnswerExpanded)}
-                          className="qa-expand-btn"
-                        >
-                          <span>{isAnswerExpanded ? 'Həlli gizlə' : 'Təsdiqlənmiş həlli oxu'}</span>
-                          {isAnswerExpanded ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
-                        </button>
-                      </div>
+                  {/* Auditoriya */}
+                  <div className="property-item">
+                    <span className="property-label">Auditoriya</span>
+                    <div className="property-value-pill">
+                      <MapPin size={12} className="prop-icon" />
+                      <span>Otaq 1-506 / 6-408</span>
                     </div>
+                  </div>
 
-                    {/* Interactive Expandable Verified Answer Box (21st.dev style) */}
-                    {isAnswerExpanded && (
-                      <div className="qa-expanded-solution">
-                        <div className="solution-header-row">
-                          <CheckCircle2 size={14} className="solution-check-icon" />
-                          <span className="solution-title">Təsdiqlənmiş elmi cavab</span>
-                          <span className="solution-verified-by">({QUESTION_ANSWER.verifiedBy} tərəfindən)</span>
-                        </div>
-                        <p className="solution-body-text">
-                          {QUESTION_ANSWER.acceptedAnswer}
-                        </p>
-                      </div>
-                    )}
-                  </article>
-                )}
-              </div>
-            </main>
+                  {/* Kolloqvium Balı */}
+                  <div className="property-item">
+                    <span className="property-label">Forma-1 Balı</span>
+                    <div className="property-value-pill highlight-score">
+                      <Award size={12} className="prop-icon" />
+                      <span>10 Bal (1-ci Kolloqvium)</span>
+                    </div>
+                  </div>
+
+                  {/* Qaib Vəziyyəti */}
+                  <div className="property-item">
+                    <span className="property-label">Qaib Limiti</span>
+                    <div className="property-value-pill safe-attendance">
+                      <ShieldCheck size={12} className="prop-icon" />
+                      <span>2 / 15 saat (Təhlükəsiz)</span>
+                    </div>
+                  </div>
+
+                  {/* Fənn Kodu */}
+                  <div className="property-item">
+                    <span className="property-label">Fənn Kodu</span>
+                    <div className="property-value-code">
+                      <span>{activeCourse.code}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Sub-card: Kolloqvium Countdown */}
+                <div className="properties-callout-card">
+                  <div className="callout-clock-row">
+                    <Clock size={12} className="callout-icon" />
+                    <span>Kolloqviuma Qalan Vaxt</span>
+                  </div>
+                  <div className="callout-days-big">4 gün 16 saat</div>
+                  <span className="callout-date-sub">24 Oktyabr 2026 · Saat 09:00</span>
+                </div>
+              </aside>
+            </div>
           </div>
+
+          {/* 3. Linear Signature Perspective Pedestal & Floor Glow */}
+          <div className="workspace-pedestal-light" aria-hidden="true" />
+          <div className="workspace-pedestal-surface" aria-hidden="true" />
         </div>
       </div>
     </section>

@@ -57,7 +57,8 @@ const AppContent: React.FC = () => {
     }
   }, [currentPath, isAuthenticated, isLoading, navigate]);
 
-  if (isLoading) {
+  // Only protected /app routes wait for initial auth loading
+  if (isLoading && currentPath.startsWith('/app')) {
     return (
       <div
         style={{
@@ -65,15 +66,15 @@ const AppContent: React.FC = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#fcfcfd',
+          backgroundColor: '#08090a',
         }}
       >
         <div
           style={{
             width: 24,
             height: 24,
-            border: '2px solid #e2e5e9',
-            borderTopColor: '#111418',
+            border: '2px solid rgba(255, 255, 255, 0.1)',
+            borderTopColor: '#5e6ad2',
             borderRadius: '50%',
             animation: 'spin 0.6s linear infinite',
           }}
