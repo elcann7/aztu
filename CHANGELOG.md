@@ -4,6 +4,35 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.25.0] — 2026-10-23
+
+### 🎲 unprompted.cool Üslublu Kolloqvium Püşkatma və İmtahan Sınaq Sistemi
+- **unprompted.cool Mexaniki Püşkatma Çarxı & Web Audio API SFX (`ColloquiumDrawView.tsx` & `.css`, `soundEffects.ts`)**:
+  - Brauzerin daxili `AudioContext` mühərriki ilə heç bir xarici `.mp3`/`.wav` faylından asılı olmadan 100% oflayn və sıfır gecikməli sintetik mexaniki çıqqıltı səsləri (`playTickSound`), fırlanma yavaşıması, slot kilidlənmə zərbəsi (`playReelLockSound`), bilet tamamlanma akkordu (`playTicketCompleteSound`) və fanfar (`playSubmitFanfare`) yaradıldı.
+  - Səs səviyyəsinin tənzimlənməsi / söndürülməsi üçün yuxarı paneldə dinamik SFX düyməsi əlavə edildi.
+  - 3 ardıcıl slotlu çarx animasiyası:
+    - **Slot 1**: Açıq Nəzəri Mövzu (4.0 Bal)
+    - **Slot 2**: Praktiki Misal / Məsələ 1 (3.0 Bal)
+    - **Slot 3**: Praktiki Misal / Məsələ 2 (3.0 Bal)
+  - `unprompted.cool` üslubunda mərkəzi parlaq və kəhrəba işıqlı **"Bilet Çək (Püşk At)"** düyməsi.
+- **Rəsmi Kolloqvium Sual Bazası (`src/data/colloquiumQuestions.ts`)**:
+  - AzTU rəsmi KOICA LMS və müəllim sillabuslarına uyğun sual bankı:
+    - **Riyazi analiz-1**: Veyerştras Teoremi, Heyne və Koşi limitləri, Ekvivalent sonsuz kiçilənlər, İkinci görkəmli limit.
+    - **Xətti cəbr**: Determinant xassələri, Kramer qaydası, Tərs matris qurulması.
+    - **Fizika-1**: Nyutonun ikinci qanunu, İmpulsun saxlanması, Mail müstəvi dinamikası, Qeyri-elastiki toqquşma.
+    - **Proqramlaşdırma-1 (Python)**: Yaddaş modeli (Mutable/Immutable), Diaqonal cəmi, O(N log N) unikal sıralama.
+  - Gələcəkdə yeni rəsmi sualların birbaşa və asanlıqla bazaya əlavə edilməsi üçün modular TypeScript interfeysləri (`ColloquiumQuestion`, `ColloquiumTicket`).
+- **İmtahan Taymeri və Hibrid Qiymətləndirmə**:
+  - **İkili Rejim**: ⏱️ *Real Kolloqvium (45 dəqiqəlik canlı geri sayım)* və ya 🧘 *Sərbəst Məşq (Limitsiz vaxt)*.
+  - Tələbə cavabları yazdıqdan sonra "Bileti Tamamla və Rəsmi Meyarları Gör" düyməsi ilə:
+    - Rəsmi dərslik isbatı və addım-addım həll vərəqi açılır.
+    - Müəllim meyarlarına görə (10 bal sistemi: 4 + 3 + 3) tələbə öz balını təyin edə və zəif nöqtələrini dərhal görə bilir.
+- **Naviqasiya İnteqrasiyası**:
+  - `Sidebar.tsx`: "ALƏTLƏR VƏ BAZA" bölməsinə "Kolloqvium Sınağı" (`/app/colloquium`) keçidi əlavə edildi.
+  - `AppShell.tsx`: Yüngül React `lazy` yüklənməsi ilə `/app/colloquium` və `/app/colloquium-draw` marşrutlarına bağlandı.
+
+---
+
 ## [1.24.0] — 2026-10-20
 
 ### 🚀 Qələbəlik Bento Qutusunun Ləğvi & Linear Editorial Feature Spotlights Keçidi

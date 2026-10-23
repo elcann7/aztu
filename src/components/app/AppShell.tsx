@@ -9,6 +9,7 @@ const MaterialsView = lazy(() => import('./views/MaterialsView').then((module) =
 const DeadlinesView = lazy(() => import('./views/DeadlinesView').then((module) => ({ default: module.DeadlinesView })));
 const PythonSandboxView = lazy(() => import('./views/PythonSandboxView').then((module) => ({ default: module.PythonSandboxView })));
 const CalculatorView = lazy(() => import('./views/CalculatorView').then((module) => ({ default: module.CalculatorView })));
+const ColloquiumDrawView = lazy(() => import('./views/ColloquiumDrawView').then((module) => ({ default: module.ColloquiumDrawView })));
 import { ProfileModal } from './modals/ProfileModal';
 import { Modal } from '../common/Modal';
 import { GlobalSearch } from './GlobalSearch';
@@ -41,6 +42,9 @@ export const AppShell: React.FC = () => {
   if (currentPath === '/app/calculator') {
     pageTitle = 'Qaib və Bal Kalkulyatoru';
     activeContent = <CalculatorView />;
+  } else if (currentPath === '/app/colloquium' || currentPath === '/app/colloquium-draw') {
+    pageTitle = 'Kolloqvium Püşkatma və Sınaq';
+    activeContent = <ColloquiumDrawView />;
   } else if (currentPath === '/app/sandbox') {
     pageTitle = 'Python Sandbox';
     activeContent = <PythonSandboxView />;

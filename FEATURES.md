@@ -21,6 +21,7 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasındakı bütü
 | [9. Akademik Materiallar](#9-akademik-materiallar-file-browser) | Dərsliklər, laboratoriya faylları və slaydlar | `/app/materials` |
 | [10. Deadline İzləyicisi](#10-deadline-izləyicisi-tapşırıqlar) | İmtahan və laboratoriya tarixləri | `/app/deadlines` |
 | [11. Python Sandbox](#11-python-sandbox-laboratoriya-mühiti) | Brauzerdaxili Python redaktoru və icraçı | `/app/sandbox` |
+| [12. Kolloqvium Püşkatma və Sınaq](#12-kolloqvium-püşkatma-və-sınaq-generatoru) | unprompted.cool üslublu çarx, SFX, 1 nəzəriyyə + 2 misal | `/app/colloquium` |
 | Riyazi analiz mühazirələri | Qaydalar, test, isbat, AI və üç interaktiv laboratoriya | `/app/courses/math-analysis` |
 
 ---
@@ -263,5 +264,18 @@ Hər bir fənn portalında:
   6. ✏️ **Sıfırdan Həll Olunmuş Nümunə**: Konkret rəqəmlərlə və ya işlək kodla tam həll edilmiş misal.
   7. ⚠️ **İmtahanda və Kollokviumda Diqqət Et!**: Tələbələrin ən çox etdiyi səhvlər və xəbərdarlıqlar.
 - **Səhifədaxili R2 PDF Oxuyucusu (`PhysicsPdfViewer.tsx`)**: KOICA LMS-dən çəkilmiş və tərtib edilmiş bütün **33 PDF faylı** (`aztu/physics/`, `aztu/math/`, `aztu/algebra/`, `aztu/programming/`, `aztu/adiak/`, `aztu/english/`) Cloudflare R2 CDN üzərindən birbaşa saytın öz içində səhifə-səhifə oxunur.
+
+---
+
+## 19. unprompted.cool Üslublu Kolloqvium Püşkatma və İmtahan Sınaq Sistemi (`ColloquiumDrawView.tsx`)
+- **Marşrut**: `/app/colloquium` və ya Sol Menyu -> "Kolloqvium Sınağı".
+- **unprompted.cool Mexaniki Çarx & Web Audio SFX**:
+  - `AudioContext` əsaslı sintetik mexaniki çıqqıltı səsləri (`playTickSound`), çarx yavaşıması, bilet kilidlənmə səsi və təhvil fanfarı.
+  - 3 ardıcıl slot: **Slot 1 (Açıq Nəzəriyyə · 4 Bal)**, **Slot 2 (Praktiki Misal 1 · 3 Bal)**, **Slot 3 (Praktiki Misal 2 · 3 Bal)**.
+- **İkili Rejim**: ⏱️ Real Kolloqvium (45 dəqiqəlik canlı geri sayım) və ya 🧘 Sərbəst Məşq (Limitsiz vaxt).
+- **Hibrid Qiymətləndirmə**:
+  - Tələbə izahını və hesablama addımlarını yazır, "Bileti Tamamla və Rəsmi Meyarları Gör" düyməsi ilə dərslikdəki dəqiq isbatlar və addım-addım həllər açılır.
+  - 10 ballıq Boloniya qiymətləndirmə rubrikası (4+3+3 bal).
+- **Modular Sual Bazası (`colloquiumQuestions.ts`)**: Riyazi analiz, Xətti cəbr, Fizika və Python üzrə rəsmi sillabus sualları; yeni suallar göndərildikdə asanlıqla genişləndirilir.
 
 

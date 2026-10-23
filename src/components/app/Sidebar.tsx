@@ -9,6 +9,7 @@ import {
   Terminal,
   FolderOpen,
   Calendar,
+  Sparkles,
   LogOut,
   X,
 } from 'lucide-react';
@@ -38,6 +39,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenProfile
   ];
 
   const toolSections = [
+    { name: 'Kolloqvium Sınağı', path: '/app/colloquium', icon: Sparkles },
     { name: 'Qaib və Bal Hesabla', path: '/app/calculator', icon: Calculator },
     { name: 'Materiallar və PDF', path: '/app/materials', icon: FolderOpen },
     { name: 'Kollokvium & Deadline', path: '/app/deadlines', icon: Calendar },
