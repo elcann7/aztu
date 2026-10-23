@@ -6,6 +6,7 @@ import {
   FileText,
   ShieldCheck,
 } from 'lucide-react';
+import { TeXFormula } from './common/TeXFormula';
 
 interface VaultMaterial {
   id: string;
@@ -322,11 +323,12 @@ export const FeatureDeepDives: React.FC = () => {
             </div>
 
             <div className="theorem-content-body">
-              {/* LaTeX Code Box */}
+              {/* LaTeX Rendered Math Box */}
               <div className="theorem-code-box">
-                <pre>
-                  <code>{`\\lim_{x \\to 0} \\frac{\\sin(5x)}{x} = 5 \\quad \\text{və} \\quad \\forall n \\in \\mathbb{N}: \\, x_n \\le x_{n+1} \\le M \\implies \\exists \\lim_{n \\to \\infty} x_n = \\sup X`}</code>
-                </pre>
+                <TeXFormula
+                  formula={`\\lim_{x \\to 0} \\frac{\\sin(5x)}{x} = 5 \\quad \\text{və} \\quad \\forall n \\in \\mathbb{N}: \\, x_n \\le x_{n+1} \\le M \\implies \\exists \\lim_{n \\to \\infty} x_n = \\sup X`}
+                  displayMode
+                />
               </div>
 
               {/* 3 Step Cards */}

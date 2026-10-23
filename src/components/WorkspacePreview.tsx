@@ -4,6 +4,7 @@ import {
   COURSES,
   FEATURED_LECTURES,
 } from '../data/mockData';
+import { TeXFormula } from './common/TeXFormula';
 import {
   Search,
   Plus,
@@ -203,11 +204,14 @@ export const WorkspacePreview: React.FC = () => {
                   <div className="linear-code-frame">
                     <div className="code-frame-header">
                       <span className="code-lang">formula.tex</span>
-                      <span className="code-copy-tag">LaTeX</span>
+                      <span className="code-copy-tag">KaTeX Math</span>
                     </div>
-                    <pre className="code-frame-content">
-                      <code>{`\\lim_{x \\to 0} \\frac{\\sin(5x)}{x} = 5 \\quad \\text{və} \\quad x_1 \\le x_2 \\le \\dots \\le x_n \\le M`}</code>
-                    </pre>
+                    <div className="code-frame-content" style={{ padding: '0.85rem 1rem', display: 'flex', justifyContent: 'center' }}>
+                      <TeXFormula
+                        formula={`\\lim_{x \\to 0} \\frac{\\sin(5x)}{x} = 5 \\quad \\text{və} \\quad x_1 \\le x_2 \\le \\dots \\le x_n \\le M`}
+                        displayMode
+                      />
+                    </div>
                   </div>
 
                   {/* Editorial Description */}

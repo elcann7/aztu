@@ -111,11 +111,13 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 
 ---
 
-### 7. Dialoqlar və Modallar (`src/components/app/modals/` və `common/`)
+### 7. Dialoqlar və Ümumi Komponentlər (`src/components/app/modals/` və `common/`)
 | Fayl | Təsviri |
 | :--- | :--- |
 | [`src/components/common/Modal.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/common/Modal.tsx) | **Baza Portal Modalı**: `ReactDOM.createPortal(..., document.body)` ilə birbaşa `<body>`-yə mount olunan təməl dialoq |
 | [`src/components/common/Modal.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/common/Modal.css) | Təhlükəsiz flex mərkəzləmə (`margin: auto`), `z-index: 99999` tam ekran örtüyü və scroll idarəsi |
+| [`src/components/common/TeXFormula.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/common/TeXFormula.tsx) | **Qlobal KaTeX Riyazi Render Mühərriki**: `toTeX()`, `TeXFormula`, `TeXFormulaBlock`, `TeXInline`, `TeXMathText` |
+| [`src/components/common/TeXFormula.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/common/TeXFormula.css) | KaTeX riyazi kartları, sətir və etiket düzümü, kopyalama düyməsi və tünd tema stilləri |
 | [`src/components/app/modals/ProfileModal.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/modals/ProfileModal.tsx) | **Tələbə Profili Modalı**: Şəkil yükləmə, emoji avatarlar, kilidlənmiş ad/soyad/qrup, tələbə məlumatları, sabit alt panel |
 | [`src/components/app/modals/ProfileModal.css`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/modals/ProfileModal.css) | Tələbə profilinin stilləri, avatar seçicisi və sabitləşdirilmiş alt düymələr paneli |
 | [`src/components/app/modals/CreateNoteModal.tsx`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/src/components/app/modals/CreateNoteModal.tsx) | Yeni qrup qeydi əlavə etmə dialoqu |

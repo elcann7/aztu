@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import './ColloquiumDrawView.css';
-import katex from 'katex';
-import 'katex/dist/katex.min.css';
+import { TeXFormula } from '../../common/TeXFormula';
 import {
   Sparkles,
   Timer,
@@ -16,7 +15,7 @@ import {
   Zap,
   RotateCcw,
 } from 'lucide-react';
-import type { ColloquiumTicket } from '../../../data/colloquiumQuestions';
+import type { ColloquiumQuestion, ColloquiumTicket } from '../../../data/colloquiumQuestions';
 import {
   COLLOQUIUM_QUESTIONS,
   COURSE_NAMES,
@@ -36,33 +35,6 @@ type StageState = 'idle' | 'spinning' | 'solving' | 'reviewed';
 
 const DRUM_ITEM_HEIGHT = 54;
 const TOTAL_DRUM_STEPS = 18;
-
-// KaTeX Math Renderer Component
-const TeXFormula: React.FC<{ tex?: string }> = ({ tex }) => {
-  if (!tex) return null;
-
-  const html = useMemo(() => {
-    try {
-      return katex.renderToString(tex, {
-        throwOnError: false,
-        displayMode: true,
-      });
-    } catch {
-      return null;
-    }
-  }, [tex]);
-
-  if (!html) {
-    return <code className="tex-code-snippet">{tex}</code>;
-  }
-
-  return (
-    <div
-      className="tex-rendered-math"
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
-  );
-};
 
 export const ColloquiumDrawView: React.FC = () => {
   const [selectedCourse, setSelectedCourse] = useState<string>('math-analysis');
@@ -118,16 +90,16 @@ export const ColloquiumDrawView: React.FC = () => {
   const timeoutsRef = useRef<number[]>([]);
 
   // Pools for current course
-  const courseQuestions = useMemo(() => {
-    return COLLOQUIUM_QUESTIONS.filter((q) => q.courseSlug === selectedCourse);
+  const courseQuestions = useMemo<ColloquiumQuestion[]>(() => {
+    return COLLOQUIUM_QUESTIONS.filter((q: ColloquiumQuestion) => q.courseSlug === selectedCourse);
   }, [selectedCourse]);
 
-  const theoryTopics = useMemo(() => {
-    return courseQuestions.filter((q) => q.type === 'open_theory').map((q) => q.topic);
+  const theoryTopics = useMemo<string[]>(() => {
+    return courseQuestions.filter((q: ColloquiumQuestion) => q.type === 'open_theory').map((q: ColloquiumQuestion) => q.topic);
   }, [courseQuestions]);
 
-  const problemTopics = useMemo(() => {
-    return courseQuestions.filter((q) => q.type === 'practical_problem').map((q) => q.topic);
+  const problemTopics = useMemo<string[]>(() => {
+    return courseQuestions.filter((q: ColloquiumQuestion) => q.type === 'practical_problem').map((q: ColloquiumQuestion) => q.topic);
   }, [courseQuestions]);
 
   // Initialize drums when course changes

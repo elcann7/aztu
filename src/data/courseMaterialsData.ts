@@ -1468,12 +1468,29 @@ export const BUILT_IN_MATERIALS: Material[] = [
           '1 - cos(x) ifadəsini x ilə əvəz ETMƏ! 1 - cos(x) həmişə x² / 2 ilə əvəz olunur!',
       },
       {
-        heading: '4. Funksiyanın Kəsilməzliyi və Kəsilmə Nöqtələrinin Növləri (I və II növ)',
+        heading: '4. Nöqtədə Kəsilməzliyin 3 Ekvivalent Tərifi və Kəsilmə Nöqtələri (I və II növ)',
         intuition:
           'Kəsilməz funksiya o deməkdir ki, onun qrafikini qələmi kağızdan ayırmadan çəkmək olur! Əgər hansısa x₀ nöqtəsində qrafik qırılırsa (məsələn, məxrəc sıfıra çevrilirsə), həmin nöqtəyə Kəsilmə Nöqtəsi deyilir. Biz həmin nöqtəyə soldan (x₀ - 0) və sağdan (x₀ + 0) yaxınlaşaraq limit tapırıq.',
-        body: 'Əgər həm sol limit, həm də sağ limit sonlu ədədlərdirsə, bu I NÖV kəsilmədir (sol = sağ olarsa "aradan qaldırıla bilən", sol ≠ sağ olarsa "sonlu sıçrayışlı"). Əgər limitlərdən heç olmasa biri ±∞ çıxırsa və ya yoxdursa, bu II NÖV kəsilmədir.',
+        body: 'f(x) funksiyası x₀ nöqtəsində kəsilməzdir, əgər: 1) x₀ nöqtəsində təyin olunub; 2) sonlu sol və sağ limitləri bərabərdir; 3) həmin limit f(x₀)-a bərabərdir. Ekvivalent olaraq, arqumentin sonsuz kiçik Δx → 0 artımına funksiyanın sonsuz kiçik Δy → 0 artımı uyğun gəlir.',
         formulaOrCode:
-          'Kəsilməzlik şərti: lim(x→x₀-0) f(x) = lim(x→x₀+0) f(x) = f(x₀)\n\nSıçrayış: Δ = | f(x₀ + 0) - f(x₀ - 0) |\n• Sol və sağ limit sonlu və bərabərdir   ⇒ I növ (aradan qaldırıla bilən)\n• Sol və sağ limit sonlu, amma fərqlidir ⇒ I növ (sıçrayışlı)\n• Limitlərdən biri ∞-dur və ya yoxdur    ⇒ II növ kəsilmə',
+          'f \\in C(x_0)   \\iff   \\lim(x \\to x_0^-) f(x) = \\lim(x \\to x_0^+) f(x) = f(x_0)\nArdıcıl:     x_n \\to x_0 \\implies f(x_n) \\to f(x_0)   (Heyne tərifi)\nArtımlarla:  \\lim(\\Delta x \\to 0) \\Delta y = 0   (\\Delta y = f(x_0 + \\Delta x) - f(x_0))\nSıçrayış:    d = | f(x_0 + 0) - f(x_0 - 0) |   (I növ sıçrayış ölçüsü)',
+        symbols: [
+          'C(x_0) — x₀ nöqtəsində kəsilməz funksiyalar çoxluğu (sinfi)',
+          '\\Delta x = x - x_0 — arqument artımı (nöqtədən nə qədər uzaqlaşdığımız)',
+          '\\Delta y = f(x_0 + \\Delta x) - f(x_0) — funksiya artımı',
+          'L_1 = f(x_0 - 0) — x₀ nöqtəsində sol limit',
+          'L_2 = f(x_0 + 0) — x₀ nöqtəsində sağ limit',
+        ],
+        steps: [
+          'Sol limiti L₁ = f(x₀ − 0) və sağ limiti L₂ = f(x₀ + 0) hesabla.',
+          'Funksiyanın nöqtədəki qiymətini f(x₀) tap.',
+          'Əgər L₁ = L₂ = f(x₀) (sonlu ədəd) olarsa, funksiya kəsilməzdir!',
+          'L₁ və L₂ sonlu, amma fərqlidirsə → I növ sıçrayışlı; limitlərdən biri sonsuzdursa → II növ kəsilmə.',
+        ],
+        example:
+          'f(x) = (sin x)/x funksiyası x = 0 nöqtəsində: L₁ = L₂ = 1, lakin f(0) təyin olunmayıb. Bu, I növ aradan qaldırıla bilən kəsilmədir (f(0) = 1 qəbul etdikdə kəsilməz olur).',
+        warning:
+          'Kəsr funksiyalar yalnız məxrəci sıfıra çevirən nöqtələrdə kəsilir! Əgər məxrəc sıfır olmursa, funksiya bütün ədəd oxunda kəsilməzdir.',
       },
     ],
   },

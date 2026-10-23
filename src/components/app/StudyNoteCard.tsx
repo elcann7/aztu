@@ -1,5 +1,11 @@
 import React from 'react';
 import type { MaterialStudySection } from '../../services/db';
+import {
+  TeXFormulaBlock,
+  TeXInline,
+  TeXMathText,
+  isPythonCode,
+} from '../common/TeXFormula';
 import './StudyNoteCard.css';
 
 interface StudyNotesListProps {
@@ -62,7 +68,7 @@ export const StudyNotesList: React.FC<StudyNotesListProps> = ({ sections }) => {
                 <span className="study-note-block-label">
                   📐 Əsas Düstur / Qayda / Sintaksis
                 </span>
-                <pre className="study-note-formula-pre">{sec.formulaOrCode}</pre>
+                <TeXFormulaBlock content={sec.formulaOrCode} />
               </div>
             )}
 
@@ -76,8 +82,12 @@ export const StudyNotesList: React.FC<StudyNotesListProps> = ({ sections }) => {
                     const { key, desc } = splitSymbolEntry(sym);
                     return (
                       <li key={sym} className="study-note-symbol-item">
-                        <code className="study-note-symbol-key">{key}</code>
-                        <span className="study-note-symbol-desc">{desc}</span>
+                        <code className="study-note-symbol-key">
+                          <TeXInline math={key} />
+                        </code>
+                        <span className="study-note-symbol-desc">
+                          <TeXMathText text={desc} />
+                        </span>
                       </li>
                     );
                   })}
@@ -94,7 +104,9 @@ export const StudyNotesList: React.FC<StudyNotesListProps> = ({ sections }) => {
                   {sec.steps.map((step, sIdx) => (
                     <li key={step} className="study-note-step-item">
                       <span className="study-note-step-num">{sIdx + 1}</span>
-                      <span>{step}</span>
+                      <span className="study-note-step-text">
+                        <TeXMathText text={step} />
+                      </span>
                     </li>
                   ))}
                 </ol>
@@ -106,7 +118,13 @@ export const StudyNotesList: React.FC<StudyNotesListProps> = ({ sections }) => {
                 <span className="study-note-block-label">
                   ✏️ Sıfırdan Həll Olunmuş Nümunə (Rəqəmlərlə / Kodla)
                 </span>
-                <pre className="study-note-example-content">{sec.example}</pre>
+                {isPythonCode(sec.example) ? (
+                  <pre className="study-note-example-content">{sec.example}</pre>
+                ) : (
+                  <pre className="study-note-example-content">
+                    <TeXMathText text={sec.example} />
+                  </pre>
+                )}
               </div>
             )}
 

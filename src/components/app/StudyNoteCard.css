@@ -200,15 +200,20 @@
 }
 
 .study-note-symbol-key {
-  font-family: var(--font-mono, monospace);
-  font-size: 0.76rem;
-  font-weight: 700;
+  font-size: 0.82rem;
+  font-weight: 600;
   color: var(--text-primary);
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-default);
-  border-radius: 4px;
-  padding: 0.1rem 0.4rem;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: 5px;
+  padding: 0.15rem 0.45rem;
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.study-note-symbol-key .katex {
+  font-size: 0.95em;
 }
 
 .study-note-symbol-desc {

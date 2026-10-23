@@ -4,6 +4,26 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.29.0] — 2026-10-23
+
+### 📐 Qlobal KaTeX Riyazi Render Mühərriki & Xam LaTeX Stringlərinin Aradan Qaldırılması
+- **Vahid KaTeX Riyazi Render Mühərriki (`src/components/common/TeXFormula.tsx` & `.css`)**:
+  - İstifadəçinin rəyi və ekran görüntüsü (`media_1792783659951_01ddb2a6.png`) əsasında saytın müxtəlif yerlərində (fənn mühazirələri, qaydalar, düstur lüğəti, addım-addım həllər) qalan xam LaTeX kodlarının görünməsi problemi kökündən həll edildi.
+  - `toTeX()` və `toTeXInline()` avtomatik normalizatoru vasitəsilə həm xam LaTeX simvolları (`\lim`, `\in`, `\Delta`), həm də Unikod riyazi işarələri (`∈`, `⊆`, `⇔`, `⇒`, `→`, `lim(x→x₀−0)`, `Δ`, `²`, `x₀`, `L₁`) dərslik səviyyəsində təmiz KaTeX formulalarına çevrildi.
+  - `isPythonCode()` detektoru vasitəsilə proqramlaşdırma dərslərindəki Python kod blokları düsturlardan ayrıldı, sintaksis və kopyalama düyməsi ilə təmin edildi.
+  - `TeXFormulaBlock`, `TeXInline` və `TeXMathText` komponentləri vasitəsilə düstur kartları, simvol cədvəli açarları və həll addımları vahid tipografik standarta gətirildi.
+- **Tələbə Dərs Kartlarının Yenilənməsi (`src/components/app/StudyNoteCard.tsx` & `.css`)**:
+  - Mavi rəngli əsas düstur blokunda (`study-note-formula-wrapper`) xam `<pre>` mətni əvəzinə sətir-sətir ayrılmış, etiketli və şərhləri səliqəli KaTeX riyazi bloku tətbiq edildi.
+  - Düstur lüğətindəki simvol açarları (`study-note-symbol-key`) KaTeX inline renderi ilə əvəzləndi (`C(x₀)`, `\Delta x = x - x₀`, `\Delta y = f(x₀ + \Delta x) - f(x₀)`).
+  - Addım-addım həll siyahısında (`study-note-steps-box`) və nümunələrdə inline riyazi ifadələr (`L₁ = f(x₀ - 0)`, `L₂ = f(x₀ + 0)`) avtomatik müəyyən edilərək vizual render olundu.
+- **Əsas Səhifə və İş Mühiti Teorem Renderləri (`FeatureDeepDives.tsx`, `WorkspacePreview.tsx`)**:
+  - Əsas səhifədəki Veyerştras və I görkəmli limit teorem qutusunda (sətir 328) xam LaTeX kodu KaTeX ekran rejimi ilə əvəzləndi.
+  - Linear iş mühiti önizləməsindəki `formula.tex` qutusunda xam kod əvəzinə gözoxşayan KaTeX riyazi qrafikası aktivləşdirildi.
+- **Püşkatma Modulunun İnteqrasiyası (`ColloquiumDrawView.tsx`)**:
+  - Təkrarlanan yerli KaTeX render funksiyası aradan qaldırılaraq ümumi `TeXFormula` moduluna bağlandı, yüngülləşdirildi və tip xətaları aradan qaldırıldı.
+
+---
+
 ## [1.28.0] — 2026-10-23
 
 ### 🔐 Canlı İstehsalat (Production) Giriş və Qeydiyyatın Bərpası & Supabase İkitərəfli Sinxronizasiya
