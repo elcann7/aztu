@@ -4,6 +4,26 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.30.0] — 2026-10-24
+
+### ⚡ Dərslikvari Dərs Öyrənmənin Yığışdırılması & Yüksək Faydalı İş Mühitinə Keçid
+- **Artıq "Dərs Öyrənmə" Balastının Yığışdırılması (`CourseShellView.tsx`, `MaterialsView.tsx`)**:
+  - İstifadəçinin strateji təklifi əsasında (*"insanlar bura girib dərs öyrənməz"*) süni dərslikvari dərslər (`MathLearningView`, `PhysicsLearningView` və kütləvi `StudyNotesList` qayda blokları) fənn portallarından tamamilə çıxarıldı.
+  - Fənn açıldıqda tələbə artıq yüzlərlə sətirlik nəzəriyyə divarı ilə deyil, birbaşa **Materiallar və Rəsmi PDF-lər** ilə qarşılaşır.
+  - Bütün 6 fənn üçün vahid və aydın 6-tablı struktur quruldu:
+    1. 📁 **Materiallar (`materials`)**: Rəsmi Cloudflare R2 PDF mühazirələri, kitablar və slaydlar.
+    2. 📖 **15 Həftəlik Plan (`syllabus`)**: Hər həftənin rəsmi tədris mövzuları və kollokvium hədəfləri.
+    3. ⏰ **Tapşırıqlar (`assignments`)**: Laboratoriya və sərbəst iş deadline-ları.
+    4. 📅 **Cədvəl & Məlumat (`overview`)**: Həftəlik dərs saatları, auditoriya/korpus otaqları və müəllim heyəti.
+    5. 📝 **Qrup Qeydləri (`notes`)**: Dərs zamanı müəllimin şifahi tapşırıqları.
+    6. 💬 **Sual-Cavab (`qa`)**: Akademik problemlərin qrupdaxili müzakirəsi.
+- **Performans və Yüngülləşmə**:
+  - `CourseShellView` JavaScript paket ölçüsü **161.04 kB-dan 34.68 kB-a (təxminən 5 dəfə)** endirildi.
+  - CSS ölçüsü **29.82 kB-dan 11.58 kB-a** azaldıldı.
+  - Material kartlarında sənədi oxumaq düyməsi (`PDF Oxu`) birbaşa təmiz PDF Viewer açır, əvvəlki süni konspektlər aradan qaldırıldı.
+
+---
+
 ## [1.29.0] — 2026-10-23
 
 ### 📐 Qlobal KaTeX Riyazi Render Mühərriki & Xam LaTeX Stringlərinin Aradan Qaldırılması

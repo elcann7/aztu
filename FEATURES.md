@@ -105,7 +105,7 @@ Hər bir fənn portalında:
 - Fənnin kodu, kredit sayı, kafedrası və rəsmi müəllim heyəti.
 - **Fənn Dərs Cədvəli və Auditoriyalar**: Dərsin keçirildiyi günlər, saatlar, növü və otaqlar.
 - **15 Həftəlik Tədris Proqramı və Sillabus**: Hər həftənin konkret mövzusu, tarixləri, kollokviumlar və imtahan hədəfləri.
-- **Materiallar**: Mühazirə slaydları, kitablar və fayllar (Cloudflare R2 PDF oxuyucusu, KaTeX ilə gözoxşayan riyazi düstur və simvol lüğəti mühərriki ilə təchiz olunmuş 7 bloklu `StudyNoteCard` bələdçisi).
+- **Materiallar**: Mühazirə slaydları, dərsliklər və laboratoriya faylları (Cloudflare R2 daxili PDF oxuyucusu və birbaşa sənəd endirmə imkanı).
 - **Qrup Qeydləri**: Fənnə aid müəllim tövsiyələri və qeydlər.
 - **Tapşırıqlar**: Fənn üzrə laboratoriya və sərbəst iş tapşırıqlarının izlənməsi.
 - **Sual-Cavab**: Tələbələr arasında sual mübadiləsi.

@@ -5,7 +5,6 @@ import { useAuth } from '../../../context/AuthContext';
 import { formatAzDate } from '../../../services/db';
 import { CreateMaterialModal } from '../modals/CreateMaterialModal';
 import { PhysicsPdfViewer } from '../PhysicsPdfViewer';
-import { StudyNotesList } from '../StudyNoteCard';
 import { useBookmarks } from '../../../hooks/useBookmarks';
 import { useSearchFocus } from '../../../hooks/useSearchFocus';
 import {
@@ -209,8 +208,7 @@ export const MaterialsView: React.FC = () => {
               const course = courses.find(c => c.id === mat.courseId);
               const isOwner = user?.id === mat.authorId && !mat.isBuiltIn;
               const isPdfReadable = Boolean(mat.linkUrl && mat.linkUrl.toLowerCase().endsWith('.pdf'));
-              const isNotesReadable = Boolean(mat.studyNotes && mat.studyNotes.length > 0);
-              const canReadInline = isPdfReadable || isNotesReadable;
+              const canReadInline = isPdfReadable;
               const isReaderOpen = openReaderId === mat.id;
               const formattedDate = formatAzDate(mat.createdAt, 'short');
 
@@ -273,7 +271,7 @@ export const MaterialsView: React.FC = () => {
                         onClick={() => setOpenReaderId(isReaderOpen ? null : mat.id)}
                       >
                         <BookOpen size={13} />
-                        <span>{isReaderOpen ? 'Bağla' : isNotesReadable ? 'Qaydalar & PDF Oxu' : 'PDF Oxu'}</span>
+                        <span>{isReaderOpen ? 'Bağla' : 'PDF Oxu'}</span>
                       </button>
                     )}
 
@@ -327,10 +325,6 @@ export const MaterialsView: React.FC = () => {
                         Bağla ✕
                       </button>
                     </div>
-
-                    {isNotesReadable && mat.studyNotes && (
-                      <StudyNotesList sections={mat.studyNotes} materialTitle={mat.title} />
-                    )}
 
                     {isPdfReadable && mat.linkUrl && (
                       <PhysicsPdfViewer url={mat.linkUrl} title={mat.title} />
