@@ -69,7 +69,8 @@
   color: var(--text-muted);
   cursor: pointer;
   border: 1px solid var(--border-default);
-  background: #ffffff;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
 }
 
 /* Nav Body */

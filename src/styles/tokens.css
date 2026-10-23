@@ -8,47 +8,47 @@
   /* Color Scheme */
   color-scheme: dark;
 
-  /* Linear Exact Dark Theme Colors (Extracted from static.linear.app) */
-  --color-bg-primary: #08090a;
-  --color-bg-secondary: #141516;
-  --color-bg-tertiary: #191a1b;
-  --color-bg-quaternary: #232326;
-  --color-bg-panel: #0f1011;
-  --color-bg-translucent: rgba(255, 255, 255, 0.04);
-  --color-bg-translucent-hover: rgba(255, 255, 255, 0.08);
+  /* Balanced, Soft Dark Theme Colors (Not pitch-black #000000) */
+  --color-bg-primary: #0f1117;
+  --color-bg-secondary: #181b26;
+  --color-bg-tertiary: #1f2330;
+  --color-bg-quaternary: #282d3e;
+  --color-bg-panel: #13151e;
+  --color-bg-translucent: rgba(255, 255, 255, 0.05);
+  --color-bg-translucent-hover: rgba(255, 255, 255, 0.09);
 
-  /* Linear Semantic Mappings */
-  --bg-app: #08090a;
-  --bg-canvas: #0c0d0e;
-  --bg-subtle: #111214;
-  --bg-surface: #141516;
-  --bg-surface-hover: #1c1d1f;
-  --bg-surface-active: #222326;
-  --bg-sidebar: #0b0c0d;
-  --bg-elevated: #161719;
+  /* Semantic Mappings */
+  --bg-app: #0f1117;
+  --bg-canvas: #12141d;
+  --bg-subtle: #141722;
+  --bg-surface: #181b26;
+  --bg-surface-hover: #222634;
+  --bg-surface-active: #2a2f42;
+  --bg-sidebar: #13151e;
+  --bg-elevated: #1e2230;
 
-  /* Linear Subtle Borders */
-  --color-border-primary: rgba(255, 255, 255, 0.08);
-  --color-border-secondary: rgba(255, 255, 255, 0.05);
-  --color-border-tertiary: #2e3035;
-  --color-border-translucent: rgba(255, 255, 255, 0.06);
+  /* Refined Subtle Borders */
+  --color-border-primary: rgba(255, 255, 255, 0.10);
+  --color-border-secondary: rgba(255, 255, 255, 0.06);
+  --color-border-tertiary: rgba(255, 255, 255, 0.14);
+  --color-border-translucent: rgba(255, 255, 255, 0.07);
 
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-default: rgba(255, 255, 255, 0.09);
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-default: rgba(255, 255, 255, 0.10);
   --border-hover: rgba(255, 255, 255, 0.18);
   --border-strong: rgba(255, 255, 255, 0.28);
 
-  /* Linear Typography Hierarchy */
-  --color-text-primary: #f7f8f8;
-  --color-text-secondary: #d0d6e0;
-  --color-text-tertiary: #8a8f98;
-  --color-text-quaternary: #62666d;
+  /* Typography Hierarchy */
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+  --color-text-tertiary: #94a3b8;
+  --color-text-quaternary: #64748b;
 
-  --text-primary: #f7f8f8;
-  --text-secondary: #8a8f98;
-  --text-muted: #62666d;
-  --text-disabled: #41434a;
-  --text-inverse: #08090a;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-disabled: #475569;
+  --text-inverse: #0f1117;
 
   /* Linear Brand / Accent */
   --color-brand-bg: #5e6ad2;

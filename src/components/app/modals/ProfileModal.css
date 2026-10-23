@@ -6,9 +6,9 @@
   bottom: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(15, 23, 42, 0.55);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(10, 12, 18, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,9 +24,10 @@
   max-width: 540px;
   max-height: calc(100vh - 3rem);
   margin: auto;
-  background: #ffffff;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg, 12px);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -52,8 +53,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid var(--border-subtle);
-  background: #fafafa;
+  border-bottom: 1px solid var(--border-default);
+  background: var(--bg-subtle);
 }
 
 .profile-header-info {
@@ -66,11 +67,12 @@
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  background: #111418;
-  color: #ffffff;
+  background: var(--accent-subtle);
+  color: var(--accent-primary);
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid var(--border-default);
 }
 
 .profile-header-titles h2 {
@@ -82,7 +84,7 @@
 
 .profile-header-titles p {
   font-size: 0.75rem;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   margin: 2px 0 0;
 }
 
@@ -110,8 +112,8 @@
   align-items: center;
   gap: 1.25rem;
   padding: 1rem;
-  background: #f8fafc;
-  border: 1px solid var(--border-subtle);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-default);
   border-radius: 10px;
 }
 
@@ -120,7 +122,7 @@
   width: 76px;
   height: 76px;
   border-radius: 50%;
-  background: #2563eb;
+  background: var(--accent-primary);
   color: #ffffff;
   font-size: 1.6rem;
   font-weight: 700;
@@ -129,8 +131,8 @@
   justify-content: center;
   flex-shrink: 0;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
-  border: 2px solid #ffffff;
+  box-shadow: 0 4px 14px rgba(94, 106, 210, 0.35);
+  border: 2px solid var(--border-strong);
 }
 
 .profile-avatar-img {
@@ -157,7 +159,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background: #111418;
+  background: var(--accent-primary);
   color: #ffffff;
   padding: 0.45rem 0.85rem;
   border-radius: 6px;
@@ -168,16 +170,16 @@
 }
 
 .btn-upload-photo:hover {
-  background: #27272a;
+  background: var(--color-accent-hover);
 }
 
 .btn-remove-photo {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  background: #ffffff;
-  color: #ef4444;
-  border: 1px solid #fecaca;
+  background: var(--bg-subtle);
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.3);
   padding: 0.42rem 0.75rem;
   border-radius: 6px;
   font-size: 0.78rem;
@@ -187,7 +189,7 @@
 }
 
 .btn-remove-photo:hover {
-  background: #fef2f2;
+  background: rgba(248, 113, 113, 0.12);
 }
 
 .avatar-presets-label {
@@ -207,7 +209,7 @@
   height: 28px;
   border-radius: 50%;
   border: 1px solid var(--border-default);
-  background: #ffffff;
+  background: var(--bg-surface);
   font-size: 0.95rem;
   display: flex;
   align-items: center;
@@ -218,6 +220,7 @@
 
 .preset-avatar-btn:hover {
   transform: scale(1.15);
+  border-color: var(--border-hover);
 }
 
 /* Sections */
@@ -237,17 +240,18 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
   padding-bottom: 0.35rem;
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-default);
 }
 
 .locked-indicator {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  color: #b45309;
+  color: #fbbf24;
   font-size: 0.68rem;
   font-weight: 600;
-  background: #fef3c7;
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid rgba(251, 191, 36, 0.25);
   padding: 0.15rem 0.45rem;
   border-radius: 4px;
   text-transform: none;
@@ -261,9 +265,9 @@
 }
 
 .locked-input {
-  background: #f4f4f5 !important;
-  color: #52525b !important;
-  border-color: #e4e4e7 !important;
+  background: var(--bg-subtle) !important;
+  color: var(--text-muted) !important;
+  border-color: var(--border-default) !important;
   cursor: not-allowed !important;
   padding-right: 2rem !important;
 }
@@ -271,13 +275,13 @@
 .lock-badge-icon {
   position: absolute;
   right: 0.75rem;
-  color: #71717a;
+  color: var(--text-muted);
   pointer-events: none;
 }
 
 .field-lock-hint {
   font-size: 0.68rem;
-  color: #71717a;
+  color: var(--text-muted);
   margin-top: 0.2rem;
 }
 
@@ -300,14 +304,14 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.5rem;
-  background: #fafafa;
-  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-subtle);
+  border-top: 1px solid var(--border-default);
 }
 
 .save-status-msg {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #16a34a;
+  color: #34d399;
   display: flex;
   align-items: center;
   gap: 0.35rem;
@@ -320,7 +324,7 @@
 }
 
 .btn-profile-save {
-  background: #111418;
+  background: var(--accent-primary);
   color: #ffffff;
   border: none;
   padding: 0.55rem 1.25rem;
@@ -335,7 +339,7 @@
 }
 
 .btn-profile-save:hover {
-  background: #27272a;
+  background: var(--color-accent-hover);
 }
 
 .btn-profile-save:disabled {

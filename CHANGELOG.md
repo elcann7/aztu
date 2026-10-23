@@ -4,6 +4,33 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.26.0] — 2026-10-23
+
+### 🎨 Qara-Ağ Ziddiyyətinin Aradan Qaldırılması & Yumşaq Slate Tünd Tema Harmoniyası
+- **Mütləq Qara Void `#000000` / `#08090a`-ın Yumşaq Kömür-Slate Rəngləri ilə Əvəzlənməsi (`src/styles/tokens.css`)**:
+  - İstifadəçinin rəyi əsasında ("qara cox qaradir sanki 0000 secilibdir") gözü yoran və dərinliyi olmayan OLED qara rəng aradan qaldırıldı.
+  - Linear və GitHub Dark standartlarına uyğun yumşaq, dərin və rahat slate-charcoal palitrası tətbiq edildi:
+    - `--bg-app: #0f1117` (Əsas fon)
+    - `--bg-surface: #181b26` (Kart və pəncərə səthləri)
+    - `--bg-subtle: #141722` (Alt bloklar və daxili qutular)
+    - `--bg-sidebar: #13151e` (Yan menyu paneli)
+    - `--border-default: rgba(255, 255, 255, 0.10)` (Zərif monoxrom haşiyələr)
+- **Tətbiqdaxili Bütün Ağ Kağız Kartlarının Tamamilə Tünd Temaya Uyğunlaşdırılması**:
+  - İstifadəçinin şikayət etdiyi "qara agg bir birine girib" xətası həll edildi: tətbiqdaxili görünüşlərdəki hardcoded `#ffffff` və `#f8fafc` fonları və `#0f172a` tünd mətnləri təmizlənərək vahid tokenlərə bağlandı:
+    - `CalculatorView.css`: Bütün 6 fənn kartı, KPI xülasə qutusu, qaib izləyicisi və çevirici qutuları zərif tünd slate kartlarına çevrildi.
+    - `ViewsCommon.css`: Qrup qeydləri xronologiyası, sual-cavab lövhəsi, rəy qutuları, sorğular, material cədvəli və deadline təqvimi harmonizə edildi (46 ədəd ağ fon təmizləndi).
+    - `CourseShellView.css`: 15 həftəlik sillabus yol xəritəsi, dərs cədvəli otaq kartları, material sıraları və qiymət həbləri tünd dizayn sisteminə keçirildi.
+    - `StudyNoteCard.css`: "0-dan öyrədən" dərslik kartları, düstur blokları, həll addımları və simvol lüğəti tündləşdirildi.
+    - `MathLearning.css` & `PhysicsLearning.css`: Ali riyaziyyat və fizika dərsləri, teorem sübutları, interaktiv testlər və laboratoriya nəzəriyyəsi kartları vahid dizayna keçirildi.
+    - `PythonSandboxView.css`: Kod redaktoru, çıxış terminalı, alətlər paneli və təklif həbləri harmonizə edildi.
+    - `ProfileModal.css`: Tələbə profili pəncərəsi, avatar seçimləri və kilidli sahələr (Locked Identity toxunulmaz saxlanılaraq) tünd dizayna uyğunlaşdırıldı.
+    - `GlobalSearch.css` & `DiscussionPanel.css`: Qlobal axtarış nəticələri və müzakirə şərhləri tünd səthlərə keçirildi.
+    - `Sidebar.css` & `LoginPage.css`: Mobil menyu düyməsi və Google ilk qeydiyyat təhlükəsizlik modalı zərif tünd kartlara çevrildi.
+- **Vizual Təsdiq və Yoxlama**:
+  - Bütün əsas səhifələr (Kalkulyator, Kolloqvium sınağı, Materiallar bazası, Deadline-lar və Riyazi analiz fənn portalı) Playwright ilə test edilərək ekran görüntüləri ilə təsdiqləndi. Ağ kart parıltısı və göz yoruculuğu tamamilə aradan qaldırıldı.
+
+---
+
 ## [1.25.0] — 2026-10-23
 
 ### 🎲 unprompted.cool Üslublu Kolloqvium Püşkatma və İmtahan Sınaq Sistemi

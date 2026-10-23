@@ -26,7 +26,7 @@
   font-size: 0.68rem;
   font-weight: 600;
   color: var(--text-primary);
-  background: #f1f5f9;
+  background: var(--bg-subtle);
   border: 1px solid var(--border-default);
   padding: 0.15rem 0.5rem;
   border-radius: var(--radius-xs);
@@ -35,9 +35,9 @@
 .course-credits-badge {
   font-size: 0.68rem;
   font-weight: 500;
-  color: #166534;
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.12);
+  border: 1px solid rgba(52, 211, 153, 0.3);
   padding: 0.15rem 0.5rem;
   border-radius: var(--radius-xs);
 }
@@ -105,49 +105,57 @@
 }
 
 .course-subtab-btn.is-active {
-  background: #111418;
+  background: var(--accent-primary);
   color: #ffffff;
-  border-color: #111418;
+  border-color: var(--accent-primary);
+  font-weight: 600;
 }
 
-.course-shell-physics { gap: var(--space-4); padding-top: var(--space-4); }
-.course-shell-physics .course-header-card { padding-bottom: var(--space-3); }
-.course-shell-physics .course-subtabs-bar { margin-top: 0; border-top: 0; padding-top: 0; }
-.physics-group-hub { display: grid; gap: .75rem; }
-.physics-group-hub h2 { margin: 0; font-size: 1.2rem; }
-.physics-group-hub p { margin: 0 0 .4rem; color: var(--text-secondary); font-size: .85rem; }
-.physics-group-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
-.physics-group-grid button { display: flex; align-items: center; gap: .6rem; min-width: 0; padding: 1rem; border: 1px solid var(--border-default); border-radius: 10px; background: #fff; color: var(--text-primary); font: inherit; font-size: .85rem; cursor: pointer; text-align: left; }
-.physics-group-grid button:hover { border-color: #93c5fd; }
-.physics-group-grid button span { flex: 1; }
-.physics-group-grid button small { color: var(--text-muted); }
-.physics-group-back { align-self: flex-start; border: 0; background: none; color: #1d4ed8; font: inherit; font-size: .8rem; font-weight: 600; cursor: pointer; }
-.physics-course-about { padding: 1.25rem; border: 1px solid var(--border-default); border-radius: 12px; background: #fff; }
-.physics-course-about h2 { margin: 0 0 1rem; font-size: 1.2rem; }
-.physics-course-about dl { display: grid; gap: .8rem; margin: 0 0 1.2rem; }
-.physics-course-about dl div { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: .7rem; }
-.physics-course-about dt { color: var(--text-muted); font-size: .8rem; }
-.physics-course-about dd { margin: 0; font-size: .85rem; font-weight: 600; text-align: right; }
-.physics-course-about details summary { cursor: pointer; color: #1d4ed8; font-size: .8rem; font-weight: 600; }
-.physics-course-about details p { color: var(--text-secondary); font-size: .8rem; line-height: 1.5; }
-@media (max-width: 520px) { .physics-group-grid { grid-template-columns: 1fr; } }
-
-/* Placeholder box */
-.course-content-placeholder {
-  border: 1px dashed var(--border-default);
-  border-radius: var(--radius-md);
-  background: #fbfcfd;
-  padding: var(--space-12) var(--space-8);
+/* Tab Panes */
+.course-tab-pane {
   display: flex;
-  justify-content: center;
-  text-align: center;
+  flex-direction: column;
+  gap: var(--space-4);
+  animation: viewFadeIn var(--duration-normal) var(--ease-out-snappy) forwards;
 }
 
-.placeholder-inner-box {
-  max-width: 460px;
+/* Sections inside tabs */
+.course-section-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.course-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.course-section-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.course-section-desc {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin-top: -0.25rem;
+}
+
+/* Tab Empty / Placeholder Box */
+.tab-empty-placeholder {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-12) var(--space-6);
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
   gap: var(--space-2);
 }
 
@@ -155,7 +163,7 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: #ffffff;
+  background: var(--bg-subtle);
   border: 1px solid var(--border-default);
   display: flex;
   align-items: center;
@@ -180,8 +188,8 @@
   margin-top: var(--space-3);
   font-size: 0.7rem;
   color: var(--text-muted);
-  background: #ffffff;
-  border: 1px solid var(--border-subtle);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-default);
   padding: 0.35rem 0.75rem;
   border-radius: var(--radius-xs);
 }
@@ -213,7 +221,7 @@
 }
 
 .course-schedule-slot-card:hover {
-  background: #fafbfc;
+  background: var(--bg-surface-hover);
 }
 
 .slot-day-time {
@@ -252,7 +260,7 @@
 .slot-type-name {
   font-size: 0.76rem;
   font-weight: 600;
-  color: #334155;
+  color: var(--text-primary);
 }
 
 .slot-lecturer-name {
@@ -264,9 +272,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  color: #0f172a;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
   padding: 0.35rem 0.65rem;
   border-radius: 6px;
   font-size: 0.75rem;
@@ -296,22 +304,22 @@
 }
 
 .syllabus-week-row:hover {
-  background: #fafbfc;
+  background: var(--bg-surface-hover);
 }
 
 .syllabus-week-row.is-current {
-  background: #f8fafc;
-  border-left: 3px solid #0f172a;
+  background: var(--bg-subtle);
+  border-left: 3px solid var(--accent-primary);
 }
 
 .syllabus-week-row.is-colloquium {
-  background: #fffbeb;
-  border-left: 3px solid #d97706;
+  background: rgba(251, 191, 36, 0.08);
+  border-left: 3px solid #fbbf24;
 }
 
 .syllabus-week-row.is-exam {
-  background: #f1f5f9;
-  border-left: 3px solid #475569;
+  background: var(--bg-subtle);
+  border-left: 3px solid var(--border-strong);
 }
 
 .syllabus-week-meta {
@@ -368,29 +376,29 @@
 }
 
 .syllabus-status-pill.completed {
-  background: #ecfdf5;
-  color: #047857;
-  border: 1px solid #a7f3d0;
+  background: rgba(52, 211, 153, 0.12);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.3);
 }
 
 .syllabus-status-pill.current {
-  background: #0f172a;
+  background: var(--accent-primary);
   color: #ffffff;
 }
 
 .syllabus-status-pill.colloquium {
-  background: #fef3c7;
-  color: #b45309;
-  border: 1px solid #fde68a;
+  background: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.3);
 }
 
 .syllabus-status-pill.exam {
-  background: #f1f5f9;
-  color: #1e293b;
-  border: 1px solid #cbd5e1;
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
 }
 
-/* Syllabus Milestones Summary Box (top of Syllabus tab) */
+/* Syllabus Milestones Summary Box */
 .syllabus-milestones-summary {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -398,8 +406,8 @@
 }
 
 .syllabus-milestone-box {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
   border-radius: 8px;
   padding: 0.75rem 0.85rem;
   display: flex;
@@ -408,35 +416,35 @@
 }
 
 .syllabus-milestone-box.exam {
-  border-color: #cbd5e1;
-  background: #f8fafc;
+  border-color: var(--border-default);
+  background: var(--bg-subtle);
 }
 
 .milestone-box-tag {
   font-size: 0.65rem;
   font-weight: 600;
   text-transform: uppercase;
-  color: #64748b;
+  color: var(--text-muted);
   letter-spacing: 0.02em;
 }
 
 .milestone-box-name {
   font-size: 0.8125rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-primary);
 }
 
 .milestone-box-date {
   font-size: 0.7rem;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 /* ==========================================================================
    COURSE MATERIALS, DEADLINES & OVERVIEW CARDS
    ========================================================================== */
 .dash-poll-box {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
   border-radius: 10px;
   padding: 0.9rem 1rem;
   display: flex;
@@ -446,13 +454,13 @@
 }
 
 .dash-poll-box:hover {
-  border-color: #cbd5e1;
-  background: #f8fafc;
+  border-color: var(--border-hover);
+  background: var(--bg-surface-hover);
 }
 
 .view-table-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
   border-radius: 12px;
   overflow: hidden;
   display: flex;
@@ -465,8 +473,8 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 1rem 1.25rem;
-  border-bottom: 1px solid #f1f5f9;
-  background: #ffffff;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
   transition: background-color 150ms ease;
 }
 
@@ -475,7 +483,7 @@
 }
 
 .material-card-row:hover {
-  background: #f8fafc;
+  background: var(--bg-surface-hover);
 }
 
 .format-badge-box {
@@ -487,21 +495,21 @@
   justify-content: center;
   flex-shrink: 0;
   margin-top: 0.1rem;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  color: #334155;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
 }
 
 .format-badge-box.is-file {
-  background: #f1f5f9;
-  border-color: #cbd5e1;
-  color: #0f172a;
+  background: var(--bg-surface);
+  border-color: var(--border-default);
+  color: var(--text-primary);
 }
 
 .format-badge-box.is-link {
-  background: #eff6ff;
-  border-color: #bfdbfe;
-  color: #1d4ed8;
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(59, 130, 246, 0.3);
+  color: #60a5fa;
 }
 
 .material-detail-col {
@@ -525,9 +533,9 @@
   font-family: var(--font-mono, monospace);
   font-size: 0.68rem;
   font-weight: 600;
-  color: #334155;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
+  color: var(--text-secondary);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-default);
   padding: 0.12rem 0.48rem;
   border-radius: 5px;
 }
@@ -535,9 +543,9 @@
 .material-size-pill {
   font-family: var(--font-mono, monospace);
   font-size: 0.68rem;
-  color: #64748b;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  color: var(--text-muted);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-default);
   padding: 0.12rem 0.45rem;
   border-radius: 5px;
 }
@@ -546,18 +554,18 @@
   margin: 0;
   font-size: 0.9rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-primary);
   line-height: 1.35;
 }
 
 .material-item-name:hover {
-  color: #1e293b;
+  color: var(--color-accent);
 }
 
 .material-item-desc {
   margin: 0;
   font-size: 0.79rem;
-  color: #475569;
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 
@@ -567,12 +575,12 @@
   flex-wrap: wrap;
   gap: 0.4rem;
   font-size: 0.72rem;
-  color: #64748b;
+  color: var(--text-muted);
   margin-top: 0.15rem;
 }
 
 .dot-sep {
-  color: #cbd5e1;
+  color: var(--border-strong);
 }
 
 .material-actions-col {
@@ -591,35 +599,35 @@
   border-radius: 7px;
   font-size: 0.76rem;
   font-weight: 600;
-  color: #0f172a;
-  background: #f8fafc;
-  border: 1px solid #cbd5e1;
+  color: var(--text-primary);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-default);
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
-  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
+  transition: all 140ms ease;
 }
 
 .row-action-btn:hover {
-  background: #f1f5f9;
-  border-color: #94a3b8;
+  background: var(--bg-surface-hover);
+  border-color: var(--border-hover);
 }
 
 .row-action-btn.is-active {
-  background: #0f172a;
-  border-color: #0f172a;
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
   color: #ffffff;
 }
 
 .row-action-btn.primary-action {
-  background: #0f172a;
-  border-color: #0f172a;
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
   color: #ffffff;
 }
 
 .row-action-btn.primary-action:hover {
-  background: #1e293b;
-  border-color: #1e293b;
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
 }
 
 .row-action-delete {
@@ -629,14 +637,14 @@
   width: 30px;
   height: 30px;
   border-radius: 6px;
-  border: 1px solid #fecaca;
-  background: #fef2f2;
-  color: #b91c1c;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  background: rgba(248, 113, 113, 0.12);
+  color: #f87171;
   cursor: pointer;
 }
 
 .row-action-delete:hover {
-  background: #fee2e2;
+  background: rgba(248, 113, 113, 0.2);
 }
 
 /* Deadline Rows inside CourseShellView */
@@ -645,8 +653,8 @@
   align-items: center;
   gap: 0.85rem;
   padding: 0.9rem 1.15rem;
-  border-bottom: 1px solid #f1f5f9;
-  background: #ffffff;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
 }
 
 .deadline-card-row:last-child {
@@ -654,16 +662,15 @@
 }
 
 .deadline-card-row.is-done {
-  background: #f8fafc;
-  opacity: 0.75;
+  opacity: 0.6;
 }
 
 .deadline-checkbox-btn {
   width: 18px;
   height: 18px;
   border-radius: 5px;
-  border: 1.5px solid #cbd5e1;
-  background: #ffffff;
+  border: 1.5px solid var(--border-strong);
+  background: var(--bg-subtle);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -674,17 +681,17 @@
 }
 
 .deadline-checkbox-btn.checked {
-  background: #0f172a;
-  border-color: #0f172a;
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
 }
 
 .score-pill {
   font-family: var(--font-mono, monospace);
   font-size: 0.68rem;
   font-weight: 600;
-  color: #166534;
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.12);
+  border: 1px solid rgba(52, 211, 153, 0.3);
   padding: 0.1rem 0.45rem;
   border-radius: 4px;
 }
@@ -698,15 +705,15 @@
 }
 
 .status-pill-neutral {
-  background: #f8fafc;
-  color: #475569;
-  border: 1px solid #e2e8f0;
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  border: 1px solid var(--border-default);
 }
 
 .status-pill-warning {
-  background: #fef2f2;
-  color: #b91c1c;
-  border: 1px solid #fecaca;
+  background: rgba(248, 113, 113, 0.12);
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.3);
 }
 
 @media (max-width: 768px) {
@@ -744,4 +751,3 @@
     grid-template-columns: 1fr;
   }
 }
-

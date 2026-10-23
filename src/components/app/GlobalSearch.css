@@ -1,12 +1,13 @@
 .global-search { display: grid; gap: 0.75rem; }
 .global-search-filters { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-.global-search-filters button { border: 1px solid var(--border-default); background: #fff; border-radius: 999px; padding: 0.35rem 0.65rem; cursor: pointer; }
-.global-search-filters button.is-active { background: #111418; color: #fff; border-color: #111418; }
+.global-search-filters button { border: 1px solid var(--border-default); background: var(--bg-subtle); color: var(--text-secondary); border-radius: 999px; padding: 0.35rem 0.65rem; cursor: pointer; transition: all 150ms ease; }
+.global-search-filters button:hover { background: var(--bg-surface-hover); color: var(--text-primary); }
+.global-search-filters button.is-active { background: var(--accent-primary); color: #fff; border-color: var(--accent-primary); }
 .global-search-results { max-height: min(55vh, 430px); overflow-y: auto; display: grid; gap: 0.4rem; }
 .global-search-results > p { margin: 0.8rem 0; color: var(--text-muted); }
-.global-search-results > button { text-align: left; display: grid; gap: 0.15rem; border: 1px solid var(--border-default); background: #fff; border-radius: 8px; padding: 0.7rem; cursor: pointer; }
-.global-search-results > button:hover, .global-search-results > button:focus-visible { border-color: #64748b; background: #f8fafc; }
-.global-search-results strong { font-size: 0.85rem; font-weight: 600; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.global-search-results > button { text-align: left; display: grid; gap: 0.15rem; border: 1px solid var(--border-default); background: var(--bg-surface); color: var(--text-primary); border-radius: 8px; padding: 0.7rem; cursor: pointer; transition: all 150ms ease; }
+.global-search-results > button:hover, .global-search-results > button:focus-visible { border-color: var(--border-hover); background: var(--bg-surface-hover); }
+.global-search-results strong { font-size: 0.85rem; font-weight: 600; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--text-primary); }
 .global-search-results small { color: var(--text-muted); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.global-search-kind { color: #475569; font-size: 0.65rem; text-transform: uppercase; font-weight: 700; }
-.global-search-saved { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; }
+.global-search-kind { color: var(--text-muted); font-size: 0.65rem; text-transform: uppercase; font-weight: 700; }
+.global-search-saved { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: var(--text-secondary); }
