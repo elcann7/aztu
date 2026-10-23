@@ -4,6 +4,24 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.28.0] — 2026-10-23
+
+### 🔐 Canlı İstehsalat (Production) Giriş və Qeydiyyatın Bərpası & Supabase İkitərəfli Sinxronizasiya
+- **Fail-Safe Timeout Wrapper (`withTimeout`) İnteqrasiyası (`AuthContext.tsx`)**:
+  - İstifadəçinin rəyi əsasında canlı saytda qeydiyyatların yazılmaması və Google/Gmail girişində yaranan donma/bug problemi aradan qaldırıldı.
+  - Supabase-ə edilən bütün şəbəkə sorğuları (`select`, `count`, `upsert`, `update`) təhlükəsiz timeout (1500-2500ms) ilə mühafizə olundu. Supabase layihəsi fasilədə (paused) olsa və ya şəbəkə geciksə belə sistem çöküb dayanmır, dərhal lokal yaddaş ehtiyatına keçir.
+- **İkitərəfli Sinxronizasiya (Two-Way Cloud & Local Storage Sync)**:
+  - İstənilən cihazda və ya brauzerdə qeydiyyatdan keçmiş tələbələr `initializeAuth` zamanı avtomatik olaraq Supabase `profiles` və lokal yaddaş arasında qarşılıqlı sinxronlaşdırılır.
+  - Qeydiyyat və giriş zamanı istifadəçi məlumatları həm yerli keşə, həm də Supabase `profiles` cədvəlinə yazılır.
+- **Google GIS və Giriş Düyməsinin Dayanıqlılığı (`LoginPage.tsx`, `RegisterPage.tsx`)**:
+  - Google iframe düyməsinin gecikməsi və ya One-Tap bildirişinin brauzer tərəfindən rədd edilməsi halında `isGsiRendered` vəziyyəti ilə hər zaman aktiv, kliklənən rəsmi Google düyməsi və 6326A2 modalı təmin edildi.
+  - Google avatar şəkli (`pictureUrl`) qeydiyyat zamanı profilə qüsursuz köçürülür.
+- **Supabase İcazələri və Sxem Təminatı (`supabase/migrations/20261023_allow_profile_auth_sync.sql`)**:
+  - Anon və authenticated rollarına `profiles` cədvəlini oxumaq və 6326A2 kodu ilə qeydiyyatdan keçmək üçün RLS siyasətləri formalaşdırıldı.
+  - `check_max_students_limit` trigger-i vasitəsilə 30 tələbəlik təməl təhlükəsizlik kvotası bazada qorunub saxlanıldı.
+
+---
+
 ## [1.27.0] — 2026-10-23
 
 ### 🎰 Mexaniki unprompted.cool Baraban Animasiyası, KaTeX Riyazi Render və 80 Sual Bazası

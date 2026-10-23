@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Limit və Törəmə: Orta Məktəbdən Ali Riyaziyyata — AzTU 6326A2 Fundamental Dərslik</title>
+  
+  <!-- Klassik Nəşriyyat Şriftləri -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX Riyazi Mühərriki (Həqiqi Kəsr Xətti və Düstur Tərtibatı) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="layout-container">
+
+    <!-- ========================================================
+         SOL PANEL: MÜNDƏRİCAT VƏ SÜRƏTLİ KEÇİD
+         ======================================================== -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <span class="brand-badge">AzTU 6326A2 · Elmi Dərslik</span>
+        <div class="sidebar-title">Riyazi Analiz-1 Qaydaları</div>
+        <div class="sidebar-subtitle">Orta Məktəb &rarr; Ali Riyaziyyat Keçidi</div>
+      </div>
+
+      <div class="search-box">
+        <input type="text" id="quickSearch" class="search-input" placeholder="Mövzu və ya qayda axtarışı...">
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Giriş</div>
+        <a href="#intro" class="nav-item active">&sect; 0. Tədris Xəritəsi</a>
+
+        <div class="nav-section-title">I Hissə: Orta Məktəb Limiti</div>
+        <a href="#sec-limit-intro" class="nav-item">&sect; 1. Limit Nədir və Niyə Lazımdır?</a>
+        <a href="#sec-limit-0-0" class="nav-item">&sect; 2. [0/0] Qeyri-müəyyənliyi (3 Yol)</a>
+        <a href="#sec-limit-inf-inf" class="nav-item">&sect; 3. [&infin;/&infin;] Baş Əmsallar Qaydası</a>
+        <a href="#sec-limit-famous" class="nav-item">&sect; 4. I və II Görkəmli Limitlər (e)</a>
+
+        <div class="nav-section-title">II Hissə: Orta Məktəb Törəməsi</div>
+        <a href="#sec-deriv-intro" class="nav-item">&sect; 5. Törəmənin İntuisiyası & Həndəsi Məna</a>
+        <a href="#sec-deriv-rules" class="nav-item">&sect; 6. Əsas 4 Törəmə Qaydası (Hasil, Nisbət)</a>
+        <a href="#sec-deriv-chain" class="nav-item">&sect; 7. Mürəkkəb Funksiyanın Törəməsi</a>
+        <a href="#sec-deriv-table" class="nav-item">&sect; 8. Əsas Törəmə Cədvəli (Konspekt)</a>
+
+        <div class="nav-section-title">III Hissə: Ali Riyaziyyatda Limit</div>
+        <a href="#sec-higher-quantifiers" class="nav-item">&sect; 9. Kvantorlar Dili (&forall;, &exist;)</a>
+        <a href="#sec-higher-seq" class="nav-item">&sect; 10. Ardıcıllığın Limiti (&epsilon; &ndash; N Tərifi)</a>
+        <a href="#sec-higher-cauchy" class="nav-item">&sect; 11. Funksiya Limiti (Koşi &epsilon; &ndash; &delta;)</a>
+        <a href="#sec-higher-continuity" class="nav-item">&sect; 12. Birtərəfli Limitlər & Kəsilməzlik</a>
+        <a href="#sec-cauchy-dalembert" class="nav-item">&sect; 12B. Koşi və Dalamber Əlamətləri ("+1 Qaydası")</a>
+
+        <div class="nav-section-title">IV Hissə: Lövhə İsbat Şablonları</div>
+        <a href="#sec-blackboard-linear" class="nav-item">&sect; 13. Şablon 1: Xətti Funksiyalar (&delta; = &epsilon;/k)</a>
+        <a href="#sec-blackboard-quad" class="nav-item">&sect; 14. Şablon 2: Kvadratik [min(1, &epsilon;/5)]</a>
+        <a href="#sec-blackboard-seq" class="nav-item">&sect; 15. Şablon 3: Kəsr Ardıcıllıqlar (N Tapılması)</a>
+
+        <div class="nav-section-title">V Hissə: Ali Riyaziyyatda Törəmə</div>
+        <a href="#sec-higher-diff" class="nav-item">&sect; 16. Diferensial & Lopital Qaydası</a>
+
+        <div class="nav-section-title">Xülasə</div>
+        <a href="#sec-traps-cheatsheet" class="nav-item">&sect; 17. İmtahan Tələləri & Şparqalka</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span>Səfərli Elcan</span>
+        <button id="themeToggleBtn" class="theme-toggle-btn">Qrafit Rejimi</button>
+      </div>
+    </aside>
+
+    <!-- ========================================================
+         ƏSAS MƏTN SAHƏSİ (DƏRSLİK VƏ İZAHLAR)
+         ======================================================== -->
+    <main class="main-wrapper">
+
+      <!-- GİRİŞ -->
+      <section id="intro" class="doc-section">
+        <div class="doc-badge">TƏDRİS VƏ İMTAHAN BƏLƏDÇİSİ</div>
+        <h1 class="doc-title">Limit və Törəmə: Orta Məktəbdən Ali Riyaziyyata</h1>
+        <p class="doc-p">
+          Bu dərslik AzTU Riyazi Analiz-1 fənni (Dos. Nizami Şıxəliyev və Müəl. Şamil Talıblı) üzrə 
+          orta məktəbdə unudulmuş bütün baza qaydalarını xatırlamaq, ardından universitet səviyyəsindəki 
+          ciddi nəzəriyyəyə (Koşi $\varepsilon-\delta$, ardıcıllıqlar üçün $\varepsilon-N$, diferensial və Lopital) 
+          rahat və sarsıntısız keçid etmək üçün tərtib olunmuşdur.
+        </p>
+
+        <div class="callout callout-rule">
+          <div class="callout-title">Əsas Tədris Xətti: İki Fərqli Dünyanın Əlaqəsi</div>
+          <p>
+            <strong>1. Orta Məktəbdə:</strong> Biz hesablayırdıq. Limit tapanda $x \to 2$ yaxınlaşmasına intuitiv baxırdıq, törəmə tapanda isə sadəcə cədvəldən düsturu tətbiq edirdik.<br>
+            <strong>2. Universitetdə (Ali Riyaziyyatda):</strong> Biz isbat edirik. "Yaxınlaşır" sözünün yerinə dəqiq ölçü kəmiyyətləri ($\varepsilon$, $\delta$, $N$) gəlir. 
+            Burada məqsəd təkcə cavabı tapmaq deyil, <em>niyə bu cavabın yeganə doğru olduğunu Koşi mənada riyazi qanunla sübut etməkdir</em>.
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           I HİSSƏ: ORTA MƏKTƏB LİMİTİ
+           ======================================================== -->
+      <section id="sec-limit-intro" class="doc-section">
+        <div class="doc-badge">I HİSSƏ · BÖLMƏ 1</div>
+        <h2 class="doc-h2">&sect; 1. Limit Nədir və Niyə Birbaşa Hesablaya Bilmirik?</h2>
+        <p class="doc-p">
+          Bir çox tələbə düşünür: <em>"Əgər $x$ 2-yə yaxınlaşırsa, niyə $x$-in yerinə birbaşa 2 qoyub qurtarmırıq?"</em><br>
+          Gəl bu suala çox məşhur bir misalla cavab verək:
+        </p>
+
+        <div class="formula-display">
+          $$f(x) = \frac{x^2 - 4}{x - 2}$$
+        </div>
+
+        <p class="doc-p">
+          Əgər sən birbaşa <strong>$x = 2$</strong> qoysan:
+          surət $2^2 - 4 = 0$ olar, məxrəc isə $2 - 2 = 0$ olar. Sən $\left[\frac{0}{0}\right]$ alarsan. 
+          Riyaziyyatda sıfıra bölmə yoxdur, $\frac{0}{0}$ isə qeyri-müəyyənlikdir — yəni <strong>funksiya $x = 2$ nöqtəsində ümumiyyətlə mövcud deyil (təyin olunmayıb)!</strong>
+        </p>
+
+        <p class="doc-p">
+          Amma gəl 2-yə sonsuz yaxınlaşan ədədləri qoyub baxaq:
+        </p>
+        <ul style="margin-left: 25px; margin-bottom: 1.25rem; font-family: var(--font-serif); font-size: 1.05rem;">
+          <li>$x = 1.9$ olduqda: $f(1.9) = \frac{3.61 - 4}{1.9 - 2} = \frac{-0.39}{-0.1} = \mathbf{3.9}$</li>
+          <li>$x = 1.99$ olduqda: $f(1.99) = \mathbf{3.99}$</li>
+          <li>$x = 1.999$ olduqda: $f(1.999) = \mathbf{3.999}$</li>
+          <li>$x = 2.001$ olduqda: $f(2.001) = \mathbf{4.001}$</li>
+        </ul>
+
+        <div class="callout callout-tip">
+          <div class="callout-title">İntuisiya: Limit Nə Deməkdir?</div>
+          Funksiya 2 nöqtəsində ölüdür (dəlik var), amma 2-nin ətrafında onun can atdığı tək bir hədəf var: <strong>4</strong>!<br>
+          Bax <strong>Limit</strong> — nöqtəyə toxunmadan, onun ətrafında funksiyanın hara hədəfləndiyini tapmaq sənətidir:
+          <div class="formula-display" style="margin-top: 10px;">
+            $$\lim_{x \to 2} \frac{x^2 - 4}{x - 2} = 4$$
+          </div>
+        </div>
+
+        <h3 class="doc-h3">Limitlərin Əsas Əməl Xassələri</h3>
+        <p class="doc-p">Sonlu limitlər üçün aşağıdakı 5 baza qayda həmişə doğrudur:</p>
+        <div class="table-wrapper">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Xassə</th>
+                <th>Dəqiq Riyazi Düstur</th>
+                <th>Qaydanın İzahı</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Sabit vuruq</strong></td>
+                <td>$$\lim_{x \to a} [c \cdot f(x)] = c \cdot \lim_{x \to a} f(x)$$</td>
+                <td>Sabit ədəd limit işarəsinin qabağına çıxarılır.</td>
+              </tr>
+              <tr>
+                <td><strong>Cəm və Fərq</strong></td>
+                <td>$$\lim_{x \to a} [f(x) \pm g(x)] = \lim_{x \to a} f(x) \pm \lim_{x \to a} g(x)$$</td>
+                <td>Ayrı-ayrılıqda limitlər toplanır və ya çıxılır.</td>
+              </tr>
+              <tr>
+                <td><strong>Hasil</strong></td>
+                <td>$$\lim_{x \to a} [f(x) \cdot g(x)] = \lim_{x \to a} f(x) \cdot \lim_{x \to a} g(x)$$</td>
+                <td>Limitlərin hasili hasilin limitinə bərabərdir.</td>
+              </tr>
+              <tr>
+                <td><strong>Nisbət (Bölmə)</strong></td>
+                <td>$$\lim_{x \to a} \frac{f(x)}{g(x)} = \frac{\lim_{x \to a} f(x)}{\lim_{x \to a} g(x)}$$</td>
+                <td>Məxrəcin limiti sıfırdan fərqli olduqda keçərlidir ($\lim g(x) \neq 0$).</td>
+              </tr>
+              <tr>
+                <td><strong>Qüvvət</strong></td>
+                <td>$$\lim_{x \to a} [f(x)]^n = \left[\lim_{x \to a} f(x)\right]^n$$</td>
+                <td>Əvvəlcə daxilin limiti tapılır, sonra dərəcəyə yüksəldilir.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           BÖLMƏ 2: [0/0] QEYRİ-MÜƏYYƏNLİYİ
+           ======================================================== -->
+      <section id="sec-limit-0-0" class="doc-section">
+        <div class="doc-badge">I HİSSƏ · BÖLMƏ 2</div>
+        <h2 class="doc-h2">&sect; 2. [0/0] Qeyri-müəyyənliyi və Onu Açmağın 3 Qızıl Yolu</h2>
+        <p class="doc-p">
+          İstənilən limit məsələsində <strong>Addım 0</strong>: $x$-in yerinə verilən ədədi qoy. 
+          Əgər məxrəc sıfır olmursa, birbaşa alınan ədəd cavabdır!
+          Əgər $\left[\frac{0}{0}\right]$ alınarsa, dərhal aşağıdakı 3 yoldan birini seç:
+        </p>
+
+        <h3 class="doc-h3">Yol 1: Çoxhədlilər &rarr; Vuruqlara Ayırma və $(x - x_0)$ İxtisarı</h3>
+        <p class="doc-p">
+          Surət və ya məxrəcdə çoxhədli varsa, sıfır yaradan yeganə günahkar <strong>$(x - x_0)$</strong> vuruğudur. 
+          Məqsəd onu tapıb hər iki tərəfdən kəsr xətti üzərində ixtisar etməkdir.
+        </p>
+
+        <div class="example-card">
+          <div class="example-header">
+            <span>MİSAL 1: $\lim_{x \to 3} \frac{x^2 - 5x + 6}{x^2 - 9}$</span>
+            <span style="color: var(--ink-burgundy);">Metod: Vuruqlara ayırma</span>
+          </div>
+          <div class="example-body">
+            <div class="example-step">
+              <strong>1. Yoxlama:</strong> $x = 3$ qoyduqda $\frac{3^2 - 5(3) + 6}{3^2 - 9} = \left[\frac{0}{0}\right]$ qeyri-müəyyənliyi yaranır.
+            </div>
+            <div class="example-step">
+              <strong>2. Vuruqlara ayırırıq:</strong><br>
+              Surət (Viyet ilə): $x^2 - 5x + 6 = (x - 2)(x - 3)$<br>
+              Məxrəc (Müxtəsər vurma ilə): $x^2 - 9 = (x - 3)(x + 3)$
+            </div>
+            <div class="example-step">
+              <strong>3. Kəsr xətti üzərində ixtisar edirik:</strong> Sıfır yaradan $(x - 3)$ vuruğu tam silinir:
+              <div class="formula-display">
+                $$\lim_{x \to 3} \frac{(x - 2)(x - 3)}{(x - 3)(x + 3)} = \lim_{x \to 3} \frac{x - 2}{x + 3}$$
+              </div>
+            </div>
+            <div class="example-step">
+              <strong>4. Nəticə:</strong> İndi $x = 3$ qoysaq: $\frac{3 - 2}{3 + 3} = \mathbf{\frac{1}{6}}$.
+            </div>
+          </div>
+        </div>
+
+        <h3 class="doc-h3">Yol 2: Kökaltı İfadə &rarr; Qoşmasına Vurub-Bölmə</h3>
+        <p class="doc-p">
+          Əgər kəsrdə kvadrat kök ($\sqrt{\phantom{x}}$) varsa və $\left[\frac{0}{0}\right]$ verirsə, kökü azad etmək üçün 
+          <strong>$(a - b)(a + b) = a^2 - b^2$</strong> düsturundan istifadə edilir.
+        </p>
+
+        <div class="example-card">
+          <div class="example-header">
+            <span>MİSAL 2: $\lim_{x \to 0} \frac{\sqrt{1 + x} - 1}{x}$</span>
+            <span style="color: var(--ink-forest);">Metod: Qoşmaya vurma</span>
+          </div>
+          <div class="example-body">
+            <div class="example-step">
+              <strong>1. Qoşmanı təyin edirik:</strong> $(\sqrt{1 + x} - 1)$-in qoşması <strong>$(\sqrt{1 + x} + 1)$</strong>-dir.
+            </div>
+            <div class="example-step">
+              <strong>2. Həm surəti, həm məxrəci qoşmaya vururuq:</strong>
+              <div class="formula-display">
+                $$\lim_{x \to 0} \frac{(\sqrt{1 + x} - 1)(\sqrt{1 + x} + 1)}{x \cdot (\sqrt{1 + x} + 1)}$$
+              </div>
+              Surət müxtəsər vurma ilə açılır: $(\sqrt{1+x})^2 - 1^2 = 1 + x - 1 = \mathbf{x}$.
+            </div>
+            <div class="example-step">
+              <strong>3. $x$-ləri kəsr xətti üzərində ixtisar edirik:</strong>
+              <div class="formula-display">
+                $$\lim_{x \to 0} \frac{x}{x \cdot (\sqrt{1 + x} + 1)} = \lim_{x \to 0} \frac{1}{\sqrt{1 + x} + 1}$$
+              </div>
+            </div>
+            <div class="example-step">
+              <strong>4. Nəticə:</strong> $x = 0$ qoyduqda: $\frac{1}{\sqrt{1 + 0} + 1} = \frac{1}{1 + 1} = \mathbf{\frac{1}{2}}$.
+            </div>
+          </div>
+        </div>
+
+        <h3 class="doc-h3">Yol 3: Triqonometriya &rarr; I Görkəmli Limit və Ekvivalentliklər</h3>
+        <p class="doc-p">
+          Triqonometrik $\left[\frac{0}{0}\right]$ limitlərinin təməl düsturu <strong>I Görkəmli Limitdir</strong>:
+        </p>
+        <div class="formula-display">
+          $$\lim_{x \to 0} \frac{\sin x}{x} = 1$$
+        </div>
+        <p class="doc-p">
+          <strong>İmtahan üçün Sürətli Ekvivalentliklər ($x \to 0$ olduqda vurma və bölmədə dərhal əvəz et!):</strong>
+        </p>
+        <div class="formula-display">
+          $$\sin(kx) \approx kx, \quad \operatorname{tg}(kx) \approx kx, \quad \arcsin(kx) \approx kx, \quad \operatorname{arctg}(kx) \approx kx$$
+          $$1 - \cos(kx) \approx \frac{(kx)^2}{2}, \quad e^{kx} - 1 \approx kx, \quad \ln(1 + kx) \approx kx$$
+        </div>
+        <p class="doc-p">
+          <em>Məsələn:</em> $\lim_{x \to 0} \frac{\sin(5x)}{\operatorname{tg}(2x)} = \lim_{x \to 0} \frac{5x}{2x} = \mathbf{\frac{5}{2}}$!
+        </p>
+      </section>
+
+      <!-- ========================================================
+           BÖLMƏ 3: [∞/∞] QEYRİ-MÜƏYYƏNLİYİ
+           ======================================================== -->
+      <section id="sec-limit-inf-inf" class="doc-section">
+        <div class="doc-badge">I HİSSƏ · BÖLMƏ 3</div>
+        <h2 class="doc-h2">&sect; 3. [&infin;/&infin;] Qeyri-müəyyənliyi: Ən Böyük Dərəcələr Qaydası</h2>
+        <p class="doc-p">
+          Arqument sonsuzluğa getdikdə (<strong>$x \to \infty$</strong> və ya ardıcıllıqlarda <strong>$n \to \infty$</strong>), 
+          çoxhədlilərdəki kiçik dərəcəli hədlər nəhəng $n^2$ və ya $n^3$-un yanında heç bir təsirə malik deyil.
+        </p>
+
+        <div class="callout callout-rule">
+          <div class="callout-title">Qızıl Qayda: Kəsrdə yalnız ən yüksək dərəcələrə bax!</div>
+          <div class="formula-display">
+            $$\lim_{n \to \infty} \frac{a_p \cdot n^p + a_{p-1} n^{p-1} + \dots}{b_m \cdot n^m + b_{m-1} n^{m-1} + \dots} = \begin{cases} 
+            \mathbf{\frac{a_p}{b_m}}, & p = m \text{ (dərəcələr bərabərdirsə: baş əmsalların nisbəti)} \\[8pt]
+            \mathbf{0}, & p < m \text{ (məxrəcin dərəcəsi böyükdürsə)} \\[8pt]
+            \mathbf{\infty}, & p > m \text{ (surətin dərəcəsi böyükdürsə)} 
+            \end{cases}$$
+          </div>
+        </div>
+
+        <div class="example-card">
+          <div class="example-header">
+            <span>SÜRƏTLİ HƏLL NÜMUNƏLƏRİ</span>
+          </div>
+          <div class="example-body">
+            <p><strong>Nümunə A:</strong> $\lim_{n \to \infty} \frac{6n^2 - 5n + 1}{2n^2 + 4n - 3} = \frac{6}{2} = \mathbf{3}$ (hər ikisində ən böyük $n^2$-dir).</p>
+            <p><strong>Nümunə B:</strong> $\lim_{n \to \infty} \frac{3n + 7}{5n^3 - 2} = \mathbf{0}$ (məxrəcdə $n^3$ surətdən böyükdür).</p>
+            <p><strong>Nümunə C:</strong> $\lim_{n \to \infty} \frac{4n^3 - 1}{2n^2 + 5} = \mathbf{\infty}$ (surətdə $n^3$ üstündür).</p>
+            <p><strong>Nümunə D (Kök altı):</strong> $\lim_{n \to \infty} \frac{\sqrt{9n^2 + 4n}}{2n + 1} = \frac{\sqrt{9n^2}}{2n} = \frac{3n}{2n} = \mathbf{\frac{3}{2}}$.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           BÖLMƏ 4: II GÖRKƏMLİ LİMİT
+           ======================================================== -->
+      <section id="sec-limit-famous" class="doc-section">
+        <div class="doc-badge">I HİSSƏ · BÖLMƏ 4</div>
+        <h2 class="doc-h2">&sect; 4. [1^&infin;] Qeyri-müəyyənliyi və II Görkəmli Limit (e Ədədi)</h2>
+        <p class="doc-p">
+          Əgər mötərizənin içi 1-ə yaxınlaşırsa və qüvvəti sonsuzluğa gedirsə ($\left[1^\infty\right]$), 
+          bu Eyler ədədini (<strong>$e \approx 2.71828$</strong>) doğurur:
+        </p>
+
+        <div class="formula-display">
+          $$\lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n = e \qquad \text{və ya} \qquad \lim_{x \to 0} (1 + x)^{\frac{1}{x}} = e$$
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-title">İmtahanda 5 Saniyəyə Cavab Tapmaq Düsturu</div>
+          <div class="formula-display">
+            $$\lim_{n \to \infty} \left(1 + \frac{k}{n}\right)^{m \cdot n} = e^{k \cdot m}$$
+          </div>
+          <strong>Misal:</strong> $\lim_{n \to \infty} \left(1 + \frac{3}{n}\right)^{4n} = e^{3 \cdot 4} = \mathbf{e^{12}}$.<br><br>
+          <strong>Kəsrlər üçün ümumi forma:</strong>
+          <div class="formula-display">
+            $$\lim_{n \to \infty} \left(\frac{n + a}{n + b}\right)^n = e^{a - b}$$
+          </div>
+          <em>Məsələn:</em> $\lim_{n \to \infty} \left(\frac{n + 5}{n + 2}\right)^n = e^{5 - 2} = \mathbf{e^3}$!
+        </div>
+      </section>
+
+      <!-- ========================================================
+           II HİSSƏ: ORTA MƏKTƏB TÖRƏMƏSİ
+           ======================================================== -->
+      <section id="sec-deriv-intro" class="doc-section">
+        <div class="doc-badge">II HİSSƏ · BÖLMƏ 5</div>
+        <h2 class="doc-h2">&sect; 5. Törəmə Nədir? İntuisiya və Həndəsi Məna</h2>
+        <p class="doc-p">
+          Törəmə — <strong>funksiyanın verilmiş nöqtədəki ANİ DƏYİŞMƏ SÜRƏTİDİR</strong>.
+        </p>
+        <p class="doc-p">
+          <strong>Fiziki analogiya:</strong> Avtomobillə Bakıdan Gəncəyə 300 km yolu 3 saata getsən, sənin <em>orta sürətin</em> $v_{\text{orta}} = \frac{300}{3} = 100\text{ km/saat}$ olar. 
+          Amma yolun 54-cü dəqiqəsində spidometrə baxsan, o 130 km/saat göstərə bilər. 
+          Bax spidometrin göstərdiyi həmin anlıq sürət — koordinatın zamana görə <strong>törəməsidir</strong>:
+        </p>
+        <div class="formula-display">
+          $$v(t) = s'(t) = \frac{ds}{dt}$$
+        </div>
+
+        <h3 class="doc-h3">Törəmənin Limiti Tərifi</h3>
+        <div class="formula-display">
+          $$f'(x_0) = \lim_{\Delta x \to 0} \frac{\Delta y}{\Delta x} = \lim_{\Delta x \to 0} \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x}$$
+        </div>
+
+        <h3 class="doc-h3">Həndəsi Mənası: Toxunanın Bucaq Əmsalı</h3>
+        <p class="doc-p">
+          Funksiyanın qrafikinə $(x_0, f(x_0))$ nöqtəsində çəkilmiş <strong>toxunan xəttin bucaq əmsalı (mailliyi)</strong> 
+          həmin nöqtədəki törəməyə bərabərdir:
+        </p>
+        <div class="formula-display">
+          $$k = \operatorname{tg} \alpha = f'(x_0)$$
+        </div>
+        <p class="doc-p">
+          <strong>Toxunan Xəttin Tənliyi:</strong>
+        </p>
+        <div class="formula-display">
+          $$y = f(x_0) + f'(x_0) \cdot (x - x_0)$$
+        </div>
+      </section>
+
+      <!-- ========================================================
+           BÖLMƏ 6: TÖRƏMƏNİN 4 ƏSAS QAYDASI
+           ======================================================== -->
+      <section id="sec-deriv-rules" class="doc-section">
+        <div class="doc-badge">II HİSSƏ · BÖLMƏ 6</div>
+        <h2 class="doc-h2">&sect; 6. Törəmənin Əsas 4 Hesablama Qaydası</h2>
+        <p class="doc-p">
+          $u = u(x)$ və $v = v(x)$ funksiyaları və $c$ sabiti üçün aşağıdakı 4 qanun dəyişməzdir:
+        </p>
+
+        <div class="table-wrapper">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Əməl</th>
+                <th>Dəqiq Riyazi Düstur</th>
+                <th>Tətbiq Nümunəsi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Sabit Vuruq</strong></td>
+                <td>$$(c \cdot u)' = c \cdot u'$$</td>
+                <td>$(5x^3)' = 5 \cdot (x^3)' = 5 \cdot 3x^2 = \mathbf{15x^2}$</td>
+              </tr>
+              <tr>
+                <td><strong>2. Cəm və Fərq</strong></td>
+                <td>$$(u \pm v)' = u' \pm v'$$</td>
+                <td>$(x^4 - 2x + 7)' = 4x^3 - 2 + 0 = \mathbf{4x^3 - 2}$</td>
+              </tr>
+              <tr>
+                <td><strong>3. Hasilin Törəməsi</strong></td>
+                <td>$$(u \cdot v)' = u'v + uv'$$</td>
+                <td>$(x^2 \cdot \sin x)' = (x^2)' \sin x + x^2 (\sin x)' = \mathbf{2x \sin x + x^2 \cos x}$</td>
+              </tr>
+              <tr>
+                <td><strong>4. Nisbətin (Kəsrin) Törəməsi</strong></td>
+                <td>$$\left(\frac{u}{v}\right)' = \frac{u'v - uv'}{v^2}$$</td>
+                <td>$\left(\frac{x}{x+1}\right)' = \frac{1 \cdot (x+1) - x \cdot 1}{(x+1)^2} = \mathbf{\frac{1}{(x + 1)^2}}$</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-trap">
+          <div class="callout-title">TƏLƏ: Kəsrin və Hasilin törəməsini sadəcə ayrı-ayrı almaq QƏTİ QADAĞANDIR!</div>
+          $$(u \cdot v)' \neq u' \cdot v' \qquad \text{və} \qquad \left(\frac{u}{v}\right)' \neq \frac{u'}{v'}$$
+          Kəsrin törəməsində həmişə məxrəcin kvadratı məxrəcdə qalmalıdır!
+        </div>
+      </section>
+
+      <!-- ========================================================
+           BÖLMƏ 7: MÜRƏKKƏB FUNKSİYA VƏ ZƏNCİR QAYDASI (0-DAN İZAH)
+           ======================================================== -->
+      <section id="sec-deriv-chain" class="doc-section">
+        <div class="doc-badge">II HİSSƏ · BÖLMƏ 7 (0-DAN TƏDRİS)</div>
+        <h2 class="doc-h2">&sect; 7. Mürəkkəb Funksiya Nədir və Törəməsi Necə Alınır?</h2>
+        
+        <p class="doc-p">
+          Çox vaxt dərsliklərdə sadəcə <em>"çölün törəməsini içinin törəməsinə vur"</em> yazıb keçirlər və tələbə heç nə anlamır. 
+          Gəl bu mövzunu <strong>tam 0-dan — əlifba səviyyəsindən</strong> addım-addım açaq.
+        </p>
+
+        <!-- 1. ARQUMENT NƏDİR? -->
+        <h3 class="doc-h3">1. Ən Sadə Dildə: Funksiya və "Arqument" Nədir?</h3>
+        <p class="doc-p">
+          Təsəvvür et ki, qarşında bir <strong>şirəçəkən maşın (zavod)</strong> var:
+        </p>
+        <ul style="margin-left: 25px; margin-bottom: 1.25rem; font-size: 1.05rem; line-height: 1.8;">
+          <li>Sən maşına nə atırsansa (portağal, alma, kök) — bu daxil olan xammala riyaziyyatda <strong>ARQUMENT ($x$)</strong> deyilir.</li>
+          <li>Maşının həmin xammalı emal edib sənə verdiyi hazır şirəyə isə <strong>FUNKSİYA ($y$ və ya $f(x)$)</strong> deyilir.</li>
+        </ul>
+
+        <div class="callout callout-tip">
+          <div class="callout-title">Sadə Funksiya Nədir?</div>
+          Sadə funksiyada maşına birbaşa <strong>tək bir $x$ hərfi</strong> daxil olur:<br>
+          • $f(x) = x^2$ &rarr; maşın tək $x$-i alır və onun kvadratını çıxarır ($3 \to 9$). Burada arqument sadəcə $x$-dir.<br>
+          • $f(x) = \sin(x)$ &rarr; maşın tək $x$-i alır və onun sinusunu tapır. Burada da arqument sadəcə $x$-dir.
+        </div>
+
+        <!-- 2. MÜRƏKKƏB FUNKSİYA NƏDİR? -->
+        <h3 class="doc-h3">2. Bəs "Mürəkkəb Funksiya" Nədir? (Qutunun İçində Qutu)</h3>
+        <p class="doc-p">
+          İndi təsəvvür et ki, maşına təkcə $x$ atmırıq. Əvvəlcə $x$-i başqa bir kiçik dəzgaha salıb dəyişirik, 
+          sonra alınan nəticəni əsas böyük maşına atırıq!
+        </p>
+
+        <p class="doc-p">
+          Buna el arasında <strong>"Matryoşka" (iç-içə gəlinciklər)</strong> deyilir:
+        </p>
+        <div class="formula-display">
+          $$y = (3x + 1)^5$$
+        </div>
+        <p class="doc-p">
+          Bax bu funksiyanı analiz edək:
+        </p>
+        <ul style="margin-left: 25px; margin-bottom: 1.25rem; font-size: 1.05rem; line-height: 1.9;">
+          <li><strong>1. Çöldəki Böyük Qutu (Xarici Funksiya):</strong> 5-ci dərəcəli qüvvətdir: $(\dots)^5$.</li>
+          <li><strong>2. İçdəki Qutu (Daxili Funksiya / Arqument):</strong> Mötərizənin içinə qoyulmuş ifadədir: $u = 3x + 1$.</li>
+        </ul>
+        <p class="doc-p">
+          Görürsən? Əgər $x^5$ olsaydı, bu <em>sadə funksiya</em> olardı (çünki arqument tək $x$-dir). 
+          Amma mötərizənin içində tək $x$ yox, bütöv bir <strong>$3x + 1$ ifadəsi</strong> oturduğu üçün bu artıq <strong>MÜRƏKKƏB FUNKSİYADIR</strong>!
+        </p>
+
+        <!-- 3. NİYƏ VURURUQ? -->
+        <h3 class="doc-h3">3. Niyə Çölün Törəməsini İçinin Törəməsinə Vurmalıyıq? (Real Həyati İntuisiya)</h3>
+        <p class="doc-p">
+          Təsəvvür et bir velosiped sürürsən:
+        </p>
+        <ul style="margin-left: 25px; margin-bottom: 1.25rem; font-size: 1.05rem; line-height: 1.9;">
+          <li>Sənin ayağın pedalı fırladır &rarr; arqument $x$.</li>
+          <li>Pedal zəncir çarxını fırladır ($u = 3x$). Yəni sən pedalı 1 dəfə fırladanda, çarx <strong>3 dəfə</strong> fırlanır (çarxın pedala görə sürəti $u' = 3$).</li>
+          <li>Böyük təkər də həmin çarxa bağlıdır ($y$). Təkər çarxın hər dövründə <strong>2 metr</strong> irəli gedir ($y' = 2$).</li>
+        </ul>
+
+        <div class="callout callout-rule">
+          <div class="callout-title">Sual: Sən pedalı 1 dəfə fırladanda velosiped neçə metr irəli gedəcək?</div>
+          Cavab: Çarx 3 dəfə fırlanır, hər fırlanmada da 2 metr gedir &rarr; $3 \times 2 = \mathbf{6\text{ metr}}$!<br>
+          Görürsən? İki ayrı sürət bir-birinə <strong>VURULDU</strong>!<br>
+          Bax riyaziyyatda <strong>Zəncir Qaydası (Chain Rule)</strong> məhz buna deyilir:
+          $$\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}$$
+          <strong>Yekun Sürət = (Çölün dəyişmə sürəti) &times; (İçinin dəyişmə sürəti)!</strong>
+        </div>
+
+        <!-- 4. ƏLİNİ QOYMA METODU -->
+        <h3 class="doc-h3">4. "Əlini Qoyma" (The Palm Method) Qızıl Həll Alqoritmi</h3>
+        <p class="doc-p">
+          İstənilən mürəkkəb funksiyanı görəndə heç bir formulu əzbərləmədən bu 3 addımı et:
+        </p>
+        <div class="board-template-card" style="background: var(--bg-card); border-color: var(--border-rule);">
+          <p><strong>ADDIM 1:</strong> Əlini mötərizənin / kökün içinin üstünə qoy (içini gizlət, ona sanki tək bir $u$ kimi bax).</p>
+          <p><strong>ADDIM 2:</strong> Çölün bildiyin adi cədvəl törəməsini al. <em>(Amma içinə toxunma, əlini çəkəndə içəridə nə vardısa olduğu kimi saxla!)</em></p>
+          <p><strong>ADDIM 3:</strong> Vurma işarəsi $(\cdot)$ qoy və əlini qoyduğun <strong>həmin içinin törəməsini</strong> alıb yanına vur!</p>
+        </div>
+
+        <!-- 5. 9 ƏTRAFLI NÜMUNƏ -->
+        <h3 class="doc-h3">5. Asandan Çətinə 9 Praktiki Nümunə (Addım-addım Həllər)</h3>
+
+        <!-- NÜMUNƏ 1-2: QÜVVƏT -->
+        <div class="example-card">
+          <div class="example-header">
+            <span>I Qrup: Mötərizə Üstü Qüvvət Funksiyaları</span>
+          </div>
+          <div class="example-body">
+            <p><strong>Nümunə 1: $y = (5x - 2)^3$ funksiyasının törəməsini tapın.</strong></p>
+            <div class="example-step">
+              • Çöl: $(\dots)^3$ qüvvətidir. Adi $x^3$-un törəməsi $3x^2$ olduğu üçün çölün törəməsi: $3(5x - 2)^2$ olar.<br>
+              • İçəri: $u = 5x - 2$. İçinin törəməsi: $(5x - 2)' = 5$.<br>
+              • İndi bir-birinə vururuq:
+              $$y' = 3(5x - 2)^2 \cdot (5x - 2)' = 3(5x - 2)^2 \cdot 5 = \mathbf{15(5x - 2)^2}$$
+            </div>
+
+            <p style="margin-top: 1.5rem;"><strong>Nümunə 2: $y = (x^2 + 4x)^5$ funksiyasının törəməsini tapın.</strong></p>
+            <div class="example-step">
+              • Çölün törəməsi: 5 qabağa düşür, dərəcə 4 olur &rarr; $5(x^2 + 4x)^4$.<br>
+              • İçinin törəməsi: $(x^2 + 4x)' = 2x + 4$.<br>
+              • Vururuq:
+              $$y' = 5(x^2 + 4x)^4 \cdot (x^2 + 4x)' = \mathbf{5(2x + 4)(x^2 + 4x)^4}$$
+            </div>
+          </div>
+        </div>
+
+        <!-- NÜMUNƏ 3-4: KÖK -->
+        <div class="example-card">
+          <div class="example-header">
+            <span>II Qrup: Kökaltı İfadələrin Törəməsi</span>
+          </div>
+          <div class="example-body">
+            <p>Cədvəldən bilirik ki, sadə $\sqrt{x}$-in törəməsi $\frac{1}{2\sqrt{x}}$-dir. Mürəkkəb kökdə isə surətə içinin törəməsi vurulur!</p>
+
+            <p style="margin-top: 1rem;"><strong>Nümunə 3: $y = \sqrt{3x + 7}$ funksiyasının törəməsini tapın.</strong></p>
+            <div class="example-step">
+              • Çöl: Kökdür &rarr; $\frac{1}{2\sqrt{3x + 7}}$.<br>
+              • İçəri: $3x + 7$. İçinin törəməsi: $(3x + 7)' = 3$.<br>
+              • Vururuq:
+              $$y' = \frac{1}{2\sqrt{3x + 7}} \cdot (3x + 7)' = \frac{1}{2\sqrt{3x + 7}} \cdot 3 = \mathbf{\frac{3}{2\sqrt{3x + 7}}}$$
+            </div>
+
+            <p style="margin-top: 1.5rem;"><strong>Nümunə 4: $y = \sqrt{x^2 + 9}$ funksiyasının törəməsini tapın.</strong></p>
+            <div class="example-step">
+              • Çölün törəməsi: $\frac{1}{2\sqrt{x^2 + 9}}$.<br>
+              • İçinin törəməsi: $(x^2 + 9)' = 2x$.<br>
+              • Vururuq:
+              $$y' = \frac{1}{2\sqrt{x^2 + 9}} \cdot 2x = \frac{2x}{2\sqrt{x^2 + 9}} = \mathbf{\frac{x}{\sqrt{x^2 + 9}}}$$
+              *(2-lər kəsr xətti üzərində ixtisar getdi!)*
+            </div>
+          </div>
+        </div>
+
+        <!-- NÜMUNƏ 5-6: TRİQONOMETRİYA -->
+        <div class="example-card">
+          <div class="example-header">
+            <span>III Qrup: Triqonometrik Mürəkkəb Funksiyalar</span>
+          </div>
+          <div class="example-body">
+            <p><strong>Nümunə 5: $y = \sin(4x)$ funksiyasının törəməsini tapın.</strong></p>
+            <div class="example-step">
+              • Çöl: Sinusdur. Sinusun törəməsi kosinusdur &rarr; $\cos(4x)$ (içəri toxunulmaz qalır!).<br>
+              • İçəri: $4x$. İçinin törəməsi: $(4x)' = 4$.<br>
+              • Vururuq:
+              $$y' = \cos(4x) \cdot (4x)' = \cos(4x) \cdot 4 = \mathbf{4\cos(4x)}$$
+            </div>
+
+            <p style="margin-top: 1.5rem;"><strong>Nümunə 6: $y = \cos(x^3 - 2x)$ funksiyasının törəməsini tapın.</strong></p>
+            <div class="example-step">
+              • Çöl: Kosinusdur. Kosinusun törəməsi <strong>mənfi sinusdur</strong> &rarr; $-\sin(x^3 - 2x)$.<br>
+              • İçəri: $x^3 - 2x$. İçinin törəməsi: $(x^3 - 2x)' = 3x^2 - 2$.<br>
+              • Vururuq:
+              $$y' = -\sin(x^3 - 2x) \cdot (3x^2 - 2) = \mathbf{-(3x^2 - 2)\sin(x^3 - 2x)}$$
+            </div>
+          </div>
+        </div>
+
+        <!-- NÜMUNƏ 7-8: EKSPONENT VƏ LOQARİFM -->
+        <div class="example-card">
+          <div class="example-header">
+            <span>IV Qrup: Üstlü ($e^u$) və Loqarifmik ($\ln u$) Funksiyalar</span>
+          </div>
+          <div class="example-body">
+            <p><strong>Nümunə 7: $y = e^{3x^2}$ funksiyasının törəməsini tapın.</strong></p>
+            <div class="example-step">
+              • Çöl: $e^{(\dots)}$ funksiyasının törəməsi elə özüdür &rarr; $e^{3x^2}$.<br>
+              • İçəri (qüvvətdəki ifadə): $3x^2$. İçinin törəməsi: $(3x^2)' = 6x$.<br>
+              • Vururuq:
+              $$y' = e^{3x^2} \cdot (3x^2)' = e^{3x^2} \cdot 6x = \mathbf{6x \cdot e^{3x^2}}$$
+            </div>
+
+            <p style="margin-top: 1.5rem;"><strong>Nümunə 8: $y = \ln(5x - 3)$ funksiyasının törəməsini tapın.</strong></p>
+            <div class="example-step">
+              • Çöl: $\ln(\dots)$ törəməsi $1 / (\dots)$ kəsridir &rarr; $\frac{1}{5x - 3}$.<br>
+              • İçəri: $5x - 3$. İçinin törəməsi: $(5x - 3)' = 5$.<br>
+              • Vururuq:
+              $$y' = \frac{1}{5x - 3} \cdot (5x - 3)' = \frac{1}{5x - 3} \cdot 5 = \mathbf{\frac{5}{5x - 3}}$$
+            </div>
+          </div>
+        </div>
+
+        <!-- NÜMUNƏ 9: ÜÇQAT ZƏNCİR -->
+        <div class="example-card" style="border: 2px solid var(--ink-burgundy);">
+          <div class="example-header" style="background: rgba(133, 34, 36, 0.08); color: var(--ink-burgundy);">
+            <span>V Qrup (İmtahan Səviyyəsi): Üçqat Matryoşka Zənciri</span>
+          </div>
+          <div class="example-body">
+            <p><strong>Nümunə 9: $y = \sin^4(3x)$ funksiyasının törəməsini tapın.</strong></p>
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 10px;">
+              Diqqət et: Bu ifadə əslində $\left(\sin(3x)\right)^4$ deməkdir! Burada iç-içə <strong>3 dənə qutu</strong> var:
+            </p>
+            <div class="example-step">
+              1. Ən çöldəki qutu: 4-cü dərəcə qüvvət $(\dots)^4$ &rarr; törəməsi $4\sin^3(3x)$ olar.<br>
+              2. Ortadakı qutu: Sinus $\sin(\dots)$ &rarr; törəməsi $\cos(3x)$ olar.<br>
+              3. Ən daxildəki qutu: $3x$ &rarr; törəməsi $3$ olar.<br><br>
+              İndi hər üçünü ard-arda zəncir kimi bir-birinə vururuq:
+              $$y' = \underbrace{4\sin^3(3x)}_{\text{Qüvvətin törəməsi}} \cdot \underbrace{\cos(3x)}_{\text{Sinusun törəməsi}} \cdot \underbrace{3}_{\text{Arqumentin törəməsi}}$$
+              Ədədləri vursaq ($4 \times 3 = 12$):
+              $$y' = \mathbf{12 \sin^3(3x) \cos(3x)} \quad \blacksquare$$
+            </div>
+          </div>
+        </div>
+
+        <!-- TƏLƏLƏR -->
+        <div class="callout callout-trap">
+          <div class="callout-title">Tələbələrin Etdiyi Ən Böyük 2 Səhv (Bunları Əsla Etmə!):</div>
+          1. <strong>Törəməni arqumentin içinə soxmaq səhvi:</strong><br>
+          Məsələn, $(\sin(5x))'$ tapanda 5-i içəridəki $x$-ə vurub $\cos(25x)$ yazırlar. <strong>QƏTİYYƏN OLMAZ!</strong> 
+          Arqument toxunulmazdır, vurulan ədəd qabağa çıxır: $5\cos(5x)$.<br><br>
+          2. <strong>İçinin törəməsini unutmaq səhvi:</strong><br>
+          $(e^{4x})'$ görəndə sadəcə $e^{4x}$ yazıb dayanırlar. 4-ə vurmağı unudurlar! 
+          Həmişə zehnində təkrar et: <em>"İçində tək $x$ yoxdursa, mütləq içinin də törəməsinə vurmalıyam!"</em>
+        </div>
+
+      </section>
+
+      <!-- ========================================================
+           BÖLMƏ 8: ƏSAS TÖRƏMƏ CƏDVƏLİ
+           ======================================================== -->
+      <section id="sec-deriv-table" class="doc-section">
+        <div class="doc-badge">II HİSSƏ · BÖLMƏ 8</div>
+        <h2 class="doc-h2">&sect; 8. Əsas Törəmələr Cədvəli (Əzbər Bilinməli)</h2>
+        <div class="table-wrapper">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Funksiya $f(x)$</th>
+                <th>Törəməsi $f'(x)$</th>
+                <th>Yadda Saxlama Qeydi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>$$c \text{ (sabit)}$$</td>
+                <td>$$0$$</td>
+                <td>Sabitin sürəti sıfırdır: $(5)' = 0, \; (\pi)' = 0$</td>
+              </tr>
+              <tr>
+                <td>$$x$$</td>
+                <td>$$1$$</td>
+                <td>$(kx + b)' = k$</td>
+              </tr>
+              <tr>
+                <td>$$x^n$$</td>
+                <td>$$n \cdot x^{n-1}$$</td>
+                <td>Qüvvət qabağa düşür, dərəcə 1 vahid azalır: $(x^4)' = 4x^3$</td>
+              </tr>
+              <tr>
+                <td>$$\sqrt{x}$$</td>
+                <td>$$\frac{1}{2\sqrt{x}}$$</td>
+                <td>Kəsr xətti ilə: surətdə 1, məxrəcdə $2\sqrt{x}$</td>
+              </tr>
+              <tr>
+                <td>$$\frac{1}{x}$$</td>
+                <td>$$-\frac{1}{x^2}$$</td>
+                <td>$(x^{-1})' = -1 \cdot x^{-2}$</td>
+              </tr>
+              <tr>
+                <td>$$\sin x$$</td>
+                <td>$$\cos x$$</td>
+                <td>Müsbət kosinusa keçir</td>
+              </tr>
+              <tr>
+                <td>$$\cos x$$</td>
+                <td>$$-\sin x$$</td>
+                <td><strong style="color: var(--ink-burgundy);">DİQQƏT:</strong> Mənfi işarəsi var!</td>
+              </tr>
+              <tr>
+                <td>$$\operatorname{tg} x$$</td>
+                <td>$$\frac{1}{\cos^2 x}$$</td>
+                <td>Həmçinin $1 + \operatorname{tg}^2 x$ şəklinə bərabərdir</td>
+              </tr>
+              <tr>
+                <td>$$\operatorname{ctg} x$$</td>
+                <td>$$-\frac{1}{\sin^2 x}$$</td>
+                <td>Mənfi işarəsi var: $-(1 + \operatorname{ctg}^2 x)$</td>
+              </tr>
+              <tr>
+                <td>$$e^x$$</td>
+                <td>$$e^x$$</td>
+                <td>Öz törəməsinə bərabər olan yeganə unikal funksiya!</td>
+              </tr>
+              <tr>
+                <td>$$a^x$$</td>
+                <td>$$a^x \cdot \ln a$$</td>
+                <td>Məsələn: $(2^x)' = 2^x \cdot \ln 2$</td>
+              </tr>
+              <tr>
+                <td>$$\ln x$$</td>
+                <td>$$\frac{1}{x}$$</td>
+                <td>Natural loqarifmin törəməsi</td>
+              </tr>
+              <tr>
+                <td>$$\arcsin x$$</td>
+                <td>$$\frac{1}{\sqrt{1 - x^2}}$$</td>
+                <td>Ali riyaziyyat inteqral və diferensial üçün əsas</td>
+              </tr>
+              <tr>
+                <td>$$\operatorname{arctg} x$$</td>
+                <td>$$\frac{1}{1 + x^2}$$</td>
+                <td>Ən çox istifadə olunan tərs triqonometrik</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           III HİSSƏ: ALİ RİYAZİYYATDA LİMİT NƏZƏRİYYƏSİ
+           ======================================================== -->
+      <section id="sec-higher-quantifiers" class="doc-section">
+        <div class="doc-badge">III HİSSƏ · BÖLMƏ 9</div>
+        <h2 class="doc-h2">&sect; 9. Kvantorlar Dili (&forall;, &exist;) və Dəqiq Riyazi Məntiq</h2>
+        <p class="doc-p">
+          Universitetdə müəllimlər lövhəyə söz yazmırlar, riyazi simvollarla yazırlar. 
+          Bu simvolları bilsən, ən mürəkkəb teoremi saniyələr içində oxuyarsan:
+        </p>
+
+        <div class="table-wrapper">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Simvol</th>
+                <th>Adı</th>
+                <th>Mənası və Oxunuşu</th>
+                <th>Mnemonic / Yadda saxlama</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>$$\forall$$</td>
+                <td>Ümumilik kvantoru</td>
+                <td>"Hər bir", "İxtiyari", "Bütün"</td>
+                <td>Tərs <strong>A</strong> hərfi (ingiliscə <em>All</em> - hamısı)</td>
+              </tr>
+              <tr>
+                <td>$$\exists$$</td>
+                <td>Varlıq kvantoru</td>
+                <td>"Var", "Mövcuddur", "Elə bir ... tapılar ki"</td>
+                <td>Tərs <strong>E</strong> hərfi (ingiliscə <em>Exists</em> - var)</td>
+              </tr>
+              <tr>
+                <td>$$\in$$</td>
+                <td>Daxillik</td>
+                <td>"Elementidir", "İçindədir" (məs: $n \in \mathbb{N}$)</td>
+                <td>Natural ədədlər çoxluğuna daxildir</td>
+              </tr>
+              <tr>
+                <td>$$:$$ və ya $$|$$</td>
+                <td>Şərt ayırıcısı</td>
+                <td>"Elə ki...", "Şərtilə ki..."</td>
+                <td>Davamında gələn bərabərsizliyi bildirir</td>
+              </tr>
+              <tr>
+                <td>$$\implies$$</td>
+                <td>İmplikasiya</td>
+                <td>"Buradan çıxır ki...", "Nəticədə..."</td>
+                <td>Səbəb-nəticə əlaqəsi</td>
+              </tr>
+              <tr>
+                <td>$$|x - a|$$</td>
+                <td>Modul məsafəsi</td>
+                <td>$x$ ədədi ilə $a$ ədədi arasındakı <strong>məsafə</strong></td>
+                <td>Məsafə mənfi ola bilməz</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           BÖLMƏ 10: ARDICILLIĞIN LİMİTİ (&epsilon; - N) (0-DAN DƏRİN İZAH)
+           ======================================================== -->
+      <section id="sec-higher-seq" class="doc-section">
+        <div class="doc-badge">III HİSSƏ · BÖLMƏ 10 (0-DAN TƏDRİS)</div>
+        <h2 class="doc-h2">&sect; 10. Ardıcıllığın Limiti: &epsilon; &ndash; N Tərifi Nədir?</h2>
+        
+        <p class="doc-p">
+          Əgər bu tərif sənə indiyə qədər qorxulu gəlibsə, günah səndə deyil — günah onu sənə izah etməyən dərsliklərdədir. 
+          Gəl bu mövzunu <strong>6-cı sinif şagirdinin belə dərhal anlayacağı bir hekayə ilə</strong> sıfırdan açaq.
+        </p>
+
+        <!-- 1. ARDICILLIQ NƏDİR? -->
+        <h3 class="doc-h3">1. Ardıcıllıq Nədir? (Qatarın Vaqonları)</h3>
+        <p class="doc-p">
+          Ardıcıllıq — sonsuz uzunluqda bir <strong>qatardır</strong>:
+        </p>
+        <ul style="margin-left: 25px; margin-bottom: 1.25rem; font-size: 1.05rem; line-height: 1.9;">
+          <li><strong>Balaca $n$ ($n = 1, 2, 3, 4, \dots$):</strong> Vaqonun nömrəsidir (1-ci vaqon, 2-ci vaqon, 100-cü vaqon...). Bu nömrələr heç vaxt mənfi və ya kəsr olmur, ancaq natural ədədlərdir.</li>
+          <li><strong>$x_n$:</strong> Həmin vaqonun içindəki yük və ya cibindəki puldur.</li>
+        </ul>
+
+        <div class="callout callout-tip">
+          <div class="callout-title">Gündəlik Həyat Nümunəsi: Cibindəki Pulun Azalması</div>
+          Təsəvvür et ki, bir qayda var: hər gün cibindəki pulu nömrəyə bölürsən ($x_n = \frac{1}{n}\text{ manat}$):<br>
+          • 1-ci gün ($n = 1$): cibində $x_1 = \frac{1}{1} = \mathbf{1\text{ manat}}$ (100 qəpik) var.<br>
+          • 2-ci gün ($n = 2$): cibində $x_2 = \frac{1}{2} = \mathbf{50\text{ qəpik}}$ qaldı.<br>
+          • 10-cu gün ($n = 10$): cibində $x_{10} = \frac{1}{10} = \mathbf{10\text{ qəpik}}$ qaldı.<br>
+          • 100-cü gün ($n = 100$): cibində $x_{100} = \frac{1}{100} = \mathbf{1\text{ qəpik}}$ qaldı.<br>
+          • 1000-ci gün ($n = 1000$): cibində $x_{1000} = \mathbf{0.1\text{ qəpik}}$ qaldı.<br><br>
+          Hər kəs aydın görür ki, günlər keçdikcə cibindəki pul <strong>0-a (sıfıra)</strong> yaxınlaşır! 
+          Bax bu yaxınlaşılan son hədəfə riyaziyyatda <strong>LİMİT $a$</strong> deyilir ($a = 0$).
+        </div>
+
+        <!-- 2. EPSILON NƏDİR? -->
+        <h3 class="doc-h3">2. Bəs &epsilon; (Epsilon) Nədir? Hardan Çıxdı Bu Yunan Hərfi?</h3>
+        <p class="doc-p">
+          İndi təsəvvür et ki, sən müəllimə deyirsən: <em>"Müəllim, bu pullar sıfıra yaxınlaşır!"</em><br>
+          Müəllim şübhə ilə sənə baxır və deyir: 
+          <em>"Yaxşı, sən deyirsən sıfıra yaxınlaşır. Bəs nə qədər yaxınlaşır? Mən sənə bir xəta hədəfi qoyuram: 
+          <strong>$\varepsilon = 1\text{ qəpik}$ ($0.01$)</strong>! Mənə elə bir gün göstərə bilərsənmi ki, həmin gündən sonrakı BÜTÜN günlərdə cibindəki pul 1 qəpikdən də az olsun?"</em>
+        </p>
+
+        <div class="callout callout-rule">
+          <div class="callout-title">&epsilon; (Epsilon) Nədir?</div>
+          <strong>$\varepsilon$ (Epsilon) — MÜƏLLİMİN SƏNƏ QOYDUĞU ŞÜBHƏ / XƏTA SƏRHƏDİDİR (TOLERANCE)!</strong><br>
+          Epsilon həmişə müsbət ədəddir ($\varepsilon > 0$) və müəllim onu istədiyi qədər mikroskopik kiçik seçə bilər ($0.01$, $0.0001$, $0.0000001$ və s.).
+        </div>
+
+        <!-- 3. BÖYÜK N NƏDİR? -->
+        <h3 class="doc-h3">3. Bəs Böyük $N$ Nədir? Balaca $n$ ilə Fərqi Nədir?</h3>
+        <p class="doc-p">
+          Sən müəllimin verdiyi bu suala cavab axtarmaq üçün siyahıya baxırsan:
+        </p>
+        <ul style="margin-left: 25px; margin-bottom: 1.25rem; font-size: 1.05rem; line-height: 1.9;">
+          <li>99-cu gün: cibində $1.01\text{ qəpik}$ var (hələ də 1 qəpikdən çoxdur!).</li>
+          <li>100-cü gün: cibində $1\text{ qəpik}$ var.</li>
+          <li><strong>101-ci gün:</strong> cibində $0.99\text{ qəpik}$ var (artıq 1 qəpikdən AZDIR!).</li>
+          <li><strong>102-ci gün:</strong> cibində $0.98\text{ qəpik}$ var (1 qəpikdən azdır!).</li>
+          <li>103-cü, 500-cü, 1 000 000-cu gün... <strong>BUNDAN SONRAKI BÜTÜN GÜNLƏR 1 QƏPİKDƏN AZDIR!</strong></li>
+        </ul>
+
+        <p class="doc-p">
+          Sən qürurla müəllimə deyirsən: 
+          <strong>"Müəllim, şlaqbaum nömrəsi $N = 100$-dür! Çünki 100-cü gündən sonrakı ($n > 100$) BÜTÜN günlərdə cibimdəki pul sizin dediyiniz $\varepsilon = 1\text{ qəpikdən}$ azdır!"</strong>
+        </p>
+
+        <div class="callout callout-board">
+          <div class="callout-title">Böyük N Nədir?</div>
+          <strong>Böyük $N$ — SƏNİN VURDUĞUN SƏRHƏD ŞLAQBAUMUDUR (DÖNÜŞ NÖMRƏSİDİR)!</strong><br>
+          Bu elə bir nömrədir ki, ondan sonrakı bütün vaqonlar ($n > N$) müəllimin istədiyi xətanın daxilində qalır.
+        </div>
+
+        <!-- 4. MODULUN MƏNASI -->
+        <h3 class="doc-h3">4. Niyə Modul Var? $|x_n - a| < \varepsilon$ Bərabərsizliyinin Mənası</h3>
+        <p class="doc-p">
+          Riyaziyyatda <strong>Modul</strong> sadəcə iki nöqtə arasındakı <strong>MƏSAFƏDİR (xətkeşdir)</strong>. 
+          Məsafə mənfi ola bilməz (məsələn, səninlə divar arasındakı məsafə -2 metr ola bilməz, ancaq 2 metrdir).
+        </p>
+        <div class="formula-display">
+          $$|x_n - a| < \varepsilon$$
+        </div>
+        <p class="doc-p">
+          Bu bərabərsizlik sözlə sadəcə bunu deyir:<br>
+          <em>"$n$-ci vaqondakı ədədin son hədəflə ($a$ ilə) arasındakı məsafə müəllimin qoyduğu xətadan ($\varepsilon$-dan) KİÇİK OLSUN!"</em>
+        </p>
+
+        <!-- 5. TƏRİFİN TƏRCÜMƏSİ -->
+        <h3 class="doc-h3">5. Rəsmi Tərifin Sözbəsöz Tərcüməsi</h3>
+        <p class="doc-p">İndi gəl o qorxulu görünən rəsmi tərifi yenidən oxuyaq:</p>
+        <div class="formula-display">
+          $$\lim_{n \to \infty} x_n = a \iff \forall \varepsilon > 0, \; \exists N = N(\varepsilon) \in \mathbb{N} : \forall n > N \implies |x_n - a| < \varepsilon$$
+        </div>
+
+        <div class="table-wrapper">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Riyazi Simvol</th>
+                <th>Azərbaycan Dilində Dəqiq Tərcüməsi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>$$\forall \varepsilon > 0$$</td>
+                <td>Müəllim nə qədər kiçik $\varepsilon$ xətası atır-atsın...</td>
+              </tr>
+              <tr>
+                <td>$$\exists N = N(\varepsilon) \in \mathbb{N}$$</td>
+                <td>...biz həmin xətaya cavab olaraq elə bir natural şlaqbaum nömrəsi $N$ tapa bilərik ki...</td>
+              </tr>
+              <tr>
+                <td>$$: \forall n > N$$</td>
+                <td>...həmin $N$-dən sonrakı BÜTÜN vaqonlar üçün ($n > N$)...</td>
+              </tr>
+              <tr>
+                <td>$$\implies |x_n - a| < \varepsilon$$</td>
+                <td>...həddin hədəfdən aralığı müəllimin xətasından kiçik qalsın!</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 6. N-İ NECƏ TAPIRIQ? -->
+        <h3 class="doc-h3">6. Növbəti Addım: Seminarda Nömrəni ($N$) Əllə Necə Tapırıq?</h3>
+        <p class="doc-p">
+          İndi ən əsas məsələ: Müəllim lövhədə sənə konkret ardıcıllıq verəndə $N$-i necə tapacaqsan? 
+          Bunun tək bir qızıl alqoritmi var: <strong>Həmişə bərabərsizliyi qur və $n$-i tək burax!</strong>
+        </p>
+
+        <div class="example-card">
+          <div class="example-header">
+            <span>MİSAL: İsbat edin ki, $\lim_{n \to \infty} \frac{2n + 1}{n + 3} = 2$</span>
+          </div>
+          <div class="example-body">
+            <div class="example-step">
+              <strong>1. Məsafəni quraq ($|x_n - a| < \varepsilon$):</strong>
+              $$\left| \frac{2n + 1}{n + 3} - 2 \right| < \varepsilon$$
+            </div>
+            <div class="example-step">
+              <strong>2. Ortaq məxrəcə gətirək:</strong>
+              $$\left| \frac{2n + 1 - 2(n + 3)}{n + 3} \right| = \left| \frac{2n + 1 - 2n - 6}{n + 3} \right| = \left| \frac{-5}{n + 3} \right| < \varepsilon$$
+              Modul mənfini müsbət edir, $n$ natural olduğundan məxrəc də müsbətdir:
+              $$\frac{5}{n + 3} < \varepsilon$$
+            </div>
+            <div class="example-step">
+              <strong>3. İndi $n$-i tək buraxaq (məktəb bərabərsizliyi kimi):</strong>
+              $$\frac{5}{n + 3} < \varepsilon \iff n + 3 > \frac{5}{\varepsilon} \iff n > \frac{5}{\varepsilon} - 3$$
+            </div>
+            <div class="example-step">
+              <strong>4. $N$ tapıldı!</strong><br>
+              Bizə lazımdır ki, $n > N$ olduqda bu şərt ödənilsin. Deməli şlaqbaum nömrəsi həmin ifadənin tam hissəsidir:
+              $$\mathbf{N = \left[ \frac{5}{\varepsilon} - 3 \right]}$$
+              <em>Yoxlama:</em> Əgər müəllim sənə $\varepsilon = 0.1$ versə:
+              $$N = \left[ \frac{5}{0.1} - 3 \right] = [50 - 3] = \mathbf{47}$$
+              Yəni 47-ci vaqondan sonrakı bütün hədlər ($n \ge 48$) hədəfə $0.1$-dən daha yaxındır!
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. LİMİT NƏ VAXT YOXDUR? -->
+        <h3 class="doc-h3">7. Bəs Limit Nə Vaxt YOXDUR?</h3>
+        <p class="doc-p">
+          Bunu başa düşmək üçün əks nümunəyə baxaq: $x_n = (-1)^n$ ardıcıllığı:
+          $$-1, \quad +1, \quad -1, \quad +1, \quad -1, \quad +1, \dots$$
+          Bu ardıcıllıq heç bir sabit ədədə yaxınlaşmır, daim -1 ilə +1 arasında tullanır. 
+          Əgər müəllim sənə $\varepsilon = 0.5$ xətası versə, sən heç vaxt elə bir $N$ nömrəsi tapa bilməzsən ki, 
+          ondan sonrakı bütün vaqonlar bir yerdə dayansın — çünki vaqonlar hər addımda 2 vahid o yana-bu yana tullanır! 
+          <strong>Bax buna görə bu ardıcıllığın limiti YOXDUR deyirik!</strong>
+        </p>
+
+      </section>
+
+      <!-- ========================================================
+           BÖLMƏ 11: FUNKSİYANIN KOŞİ LİMİTİ (&epsilon; - &delta;) (0-DAN DƏRİN İZAH)
+           ======================================================== -->
+      <section id="sec-higher-cauchy" class="doc-section">
+        <div class="doc-badge">III HİSSƏ · BÖLMƏ 11 (0-DAN TƏDRİS)</div>
+        <h2 class="doc-h2">&sect; 11. Funksiyanın Limiti: Koşi mənada &epsilon; &ndash; &delta; Tərifi</h2>
+        
+        <p class="doc-p">
+          Bölmə 10-da ardıcıllıqda vaqonları ($n = 1, 2, 3 \dots$) saydıq və sərhəd vaqon nömrəsini ($N$) tapdıq. 
+          Bəs <strong>funksiyada</strong> nə dəyişir? Funksiyada vaqon yoxdur — $x$ ədədi kəsilməz bir xətt üzərində axır və hansısa $x_0$ nöqtəsinə (məsələn $x \to 2$) yaxınlaşır. 
+          Burada artıq nömrə ($N$) yox, <strong>MƏSAFƏ BUFERİ ($\delta$)</strong> axtarırıq!
+        </p>
+
+        <!-- 1. SNAYPER VƏ HƏDƏF HEKAYƏSİ -->
+        <h3 class="doc-h3">1. Snayper və Lazer Pəncərəsi Bənzətməsi</h3>
+        <p class="doc-p">
+          Təsəvvür et ki, sən hədəfə atəş açırsan (funksiyanın $y = f(x)$ qiymətini hesablayırsan):
+        </p>
+        <ul style="margin-left: 25px; margin-bottom: 1.25rem; font-size: 1.05rem; line-height: 1.9;">
+          <li><strong>Hədəf mərkəzi $L$:</strong> Atmaq istədiyin əsas nöqtə (Limit).</li>
+          <li><strong>Müəllimin tələbi &epsilon; (Epsilon):</strong> Müəllim gəlir və hədəfin ətrafına balaca bir halqa çəkir ($L-\varepsilon$ ilə $L+\varepsilon$ arası). Deyir: <em>"Mən sənə $\varepsilon = 2\text{ mm}$ xəta icazəsi verirəm. Güllən mütləq bu halqanın içinə dəyməlidir ($|f(x) - L| < \varepsilon$)!"</em></li>
+          <li><strong>Sənin titrəmə icazən &delta; (Delta):</strong> Sən tüfəngi saxlayanda əlin bir az titrəyə bilər ($x_0$ nöqtəsindən bir az sağa və ya sola çıxa bilərsən). Bax bu $x$ oxu üzərindəki icazə verilən əl titrəməsinə <strong>$\delta$ (Delta)</strong> deyilir ($|x - x_0| < \delta$).</li>
+        </ul>
+
+        <div class="callout callout-tip">
+          <div class="callout-title">Tərifin Bütün Fəlsəfəsi Cəmi 1 Cümlədir:</div>
+          <em>"Müəllim hədəfi nə qədər daraldırsa-daraltsın ($\forall \varepsilon > 0$), mən öz tüfəngimin tuşlayıcısını elə bir $\delta$ dəqiqliyinə sala bilərəmmi ki ($\exists \delta > 0$), 
+          əlim $\delta$-dan az titrədikdə ($|x - x_0| < \delta$) atdığım güllə həmişə müəllimin halqasının içinə düşsün ($|f(x) - L| < \varepsilon$)?"</em><br>
+          Əgər hər bir $\varepsilon$ üçün belə bir $\delta$ tapa biliriksə, deməli <strong>LİMİT DOĞRUDAN DA $L$-DİR!</strong>
+        </div>
+
+        <!-- 2. RƏSMİ KOŞİ DÜSTURU -->
+        <h3 class="doc-h3">2. Rəsmi Düsturun Kəlməbəkəlmə Açılışı</h3>
+        <div class="formula-display">
+          $$\lim_{x \to x_0} f(x) = L \iff \forall \varepsilon > 0, \; \exists \delta = \delta(\varepsilon) > 0 : 0 < |x - x_0| < \delta \implies |f(x) - L| < \varepsilon$$
+        </div>
+
+        <div class="table-wrapper">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Hissə</th>
+                <th>Adı</th>
+                <th>Nə Deməkdir? (Sadə dildə)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>$$\forall \varepsilon > 0$$</td>
+                <td>İxtiyari epsilon</td>
+                <td>Müəllim hədəf ətrafında nə qədər mikroskopik xəta zonası qoysa da...</td>
+              </tr>
+              <tr>
+                <td>$$\exists \delta > 0$$</td>
+                <td>Delta mövcuddur</td>
+                <td>...biz ona uyğun $x_0$ ətrafında elə bir qoruyucu pəncərə ($\delta$) tapırıq ki...</td>
+              </tr>
+              <tr>
+                <td>$$0 < |x - x_0|$$</td>
+                <td>Nöqtənin özü deyil!</td>
+                <td>$x \neq x_0$ olmalıdır. Çünki nöqtənin tam özündə nə baş verdiyi limiti qətiyyən maraqlandırmır!</td>
+              </tr>
+              <tr>
+                <td>$$|x - x_0| < \delta$$</td>
+                <td>Delta pəncərəsi</td>
+                <td>$x$ ədədi $x_0$-dan $\delta$ məsafəsindən daha yaxında olsun.</td>
+              </tr>
+              <tr>
+                <td>$$\implies |f(x) - L| < \varepsilon$$</td>
+                <td>Hədəf vuruldu</td>
+                <td>Funksiyanın qiyməti müəllimin istədiyi $\varepsilon$ xətasından kənara çıxa bilməz!</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 3. NİYƏ 0 < |x - x0|? -->
+        <div class="callout callout-trap">
+          <div class="callout-title">Müəllimin Sevimli İmtahan Tələsi: "Niyə 0 < |x - x₀| yazırsan?"</div>
+          Lövhədə müəllim soruşanda dərhal cavab ver:<br>
+          <em>"Müəllim, çünki $|x - x_0| = 0$ olsaydı, bu $x = x_0$ nöqtəsinin tam özü demək olardı. 
+          Lakin limit nəzəriyyəsində funksiyanın həmin nöqtədəki qiyməti — hətta orada funksiya təyin olunmayıbsa və qrafikdə boşluq (deşik) varsa belə — <strong>qətiyyən vacib deyil</strong>! 
+          Biz ancaq həmin nöqtənin <strong>ətrafındakı</strong> davranışı araşdırırıq. Ona görə nöqtənin özünü kənarlaşdırmaq üçün qarşısına $0 <$ yazırıq."</em>
+        </div>
+
+        <!-- 4. LÖVHƏDƏ DELTA NECƏ TAPILIR? -->
+        <h3 class="doc-h3">3. Lövhədə $\delta$-nı Əllə Necə Tapırıq? (Qızıl Mexanizm)</h3>
+        <p class="doc-p">
+          Bütün xətti funksiyalarda ($f(x) = kx + b$) $\delta$-nı tapmaq üçün tək bir qanun var: 
+          <strong>Həmişə $|f(x) - L|$ ifadəsini aç, $x$-in qabağındakı ədədi mötərizə xaricinə çıxar və $|x - x_0|$ yarat!</strong>
+        </p>
+
+        <div class="example-card">
+          <div class="example-header">
+            <span>MİSAL: İsbat edin ki, $\lim_{x \to 2} (3x - 1) = 5$</span>
+          </div>
+          <div class="example-body">
+            <div class="example-step">
+              <strong>1. Funksiya ilə Hədəf arasındakı məsafəni yazaq:</strong>
+              $$|f(x) - L| = |(3x - 1) - 5| = |3x - 6|$$
+            </div>
+            <div class="example-step">
+              <strong>2. 3 ədədini modulun xaricinə çıxaraq:</strong>
+              $$|3x - 6| = 3|x - 2|$$
+              Diqqət et: Ortaya nə çıxdı? $|x - 2|$ çıxdı! Bu elə bizim arqumentin hədəfə məsafəsidir!
+            </div>
+            <div class="example-step">
+              <strong>3. Bu ifadəni müəllimin $\varepsilon$-dan kiçik edək:</strong>
+              $$3|x - 2| < \varepsilon \iff |x - 2| < \frac{\varepsilon}{3}$$
+            </div>
+            <div class="example-step">
+              <strong>4. $\delta$ tapıldı!</strong><br>
+              Bizə lazımdır ki, $|x - 2| < \delta$ olanda bu şərt ödənsin. Deməli sadəcə elan edirik:
+              $$\mathbf{\delta = \frac{\varepsilon}{3}}$$
+              <em>Bitti!</em> Əgər müəllim $\varepsilon = 0.03$ versə, sən $\delta = 0.01$ götürəcəksən. Şərt mükəmməl ödənilir! $\blacksquare$
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ========================================================
+           BÖLMƏ 12: BİRTƏRƏFLİ LİMİTLƏR VƏ KƏSİLMƏZLİK
+           ======================================================== -->
+      <section id="sec-higher-continuity" class="doc-section">
+        <div class="doc-badge">III HİSSƏ · BÖLMƏ 12</div>
+        <h2 class="doc-h2">&sect; 12. Birtərəfli Limitlər və Kəsilməzlik Təsnifatı</h2>
+        <p class="doc-p">
+          Nöqtəyə yalnız soldan yaxınlaşsaq: $x \to x_0^-$ (sol limit: $f(x_0 - 0)$).<br>
+          Nöqtəyə yalnız sağdan yaxınlaşsaq: $x \to x_0^+$ (sağ limit: $f(x_0 + 0)$).
+        </p>
+
+        <div class="callout callout-rule">
+          <div class="callout-title">Limit Nə Vaxt Mövcuddur?</div>
+          Ümumi limit yalnız və yalnız <strong>Sol Limit = Sağ Limit</strong> olduqda mövcuddur:
+          $$\lim_{x \to x_0^-} f(x) = \lim_{x \to x_0^+} f(x) = L \iff \lim_{x \to x_0} f(x) = L$$
+          Əgər sol və sağ limitlər bir-birindən fərqlidirsə, <em>ümumi limit YOXDUR</em>!
+        </div>
+
+        <h3 class="doc-h3">Kəsilməzlik Nədir?</h3>
+        <p class="doc-p">
+          Əgər funksiyanın limiti onun həmin nöqtədəki həqiqi qiymətinə bərabərdirsə:
+          <strong>$\lim_{x \to x_0} f(x) = f(x_0)$</strong>, onda funksiya $x_0$ nöqtəsində <strong>kəsilməzdir</strong> (qələmi kağızdan qaldırmadan çəkilə bilir).
+        </p>
+
+        <h3 class="doc-h3">Kəsilmə Nöqtələrinin 3 Növü (İmtahan sualı):</h3>
+        <ul style="margin-left: 25px; line-height: 1.9; color: var(--text-main); font-size: 1.05rem;">
+          <li>
+            <strong>1. Aradan qaldırıla bilən kəsilmə:</strong> Sol limit = Sağ limit (limit var), amma funksiya orada ya təyin olunmayıb (dəlikdir), ya da nöqtə kənardadır. 
+            <em>Nümunə:</em> $f(x) = \frac{x^2 - 4}{x - 2}$.
+          </li>
+          <li>
+            <strong>2. I Növ (Sıçrayışlı) kəsilmə:</strong> Həm sol, həm sağ limitlər sonlu ədəddir, lakin bir-birinə bərabər deyil! Arada sıçrayış var: $h = |f(x_0^+) - f(x_0^-)|$.
+            <em>Nümunə:</em> İşarə funksiyası $\operatorname{sign}(x)$.
+          </li>
+          <li>
+            <strong>3. II Növ kəsilmə:</strong> Ən azı bir birtərəfli limit sonsuzluqdur ($\pm\infty$) və ya ümumiyyətlə mövcud deyil.
+            <em>Nümunə:</em> $f(x) = \frac{1}{x}$ ($x=0$ nöqtəsində) və ya $f(x) = \sin\left(\frac{1}{x}\right)$.
+          </li>
+        </ul>
+      </section>
+
+      <!-- ========================================================
+           BÖLMƏ 12B: KOŞİ VƏ DALAMBER ƏLAMƏTLƏRİ (1-Cİ SİNİF SƏVİYYƏSİ)
+           ======================================================== -->
+      <section id="sec-cauchy-dalembert" class="doc-section">
+        <div class="doc-badge">III HİSSƏ · BÖLMƏ 12B (XÜSUSİ DƏRS)</div>
+        <h2 class="doc-h2">&sect; 12B. Koşi və Dalamber Əlamətləri: O "+1 Etdiyimiz" Üsul Nədir?</h2>
+        
+        <p class="doc-p">
+          Çox vaxt tələbələr bu iki mövzunu qarışdırırlar: 
+          <em>"Müəllim, D ilə başlayan nəsə bir üsul var idi, determinant deyəsən, orada $n$-in üstünə $+1$ gəlirdik..."</em><br>
+          Gəl bu sirri dərhal açaq: <strong>O üsul determinant yox, DALAMBER ƏLAMƏTİDİR (D'Alembert)!</strong> 
+          Və onun əkiz qardaşı isə <strong>KOŞİ ƏLAMƏTİDİR</strong>.
+        </p>
+
+        <!-- 1. DALAMBER VƏ "+1" HEKAYƏSİ -->
+        <h3 class="doc-h3">1. O "+1 Etdiyimiz" Üsul: Dalamber Əlaməti (D'Alembert)</h3>
+        <p class="doc-p">
+          Təsəvvür et ki, sənin bir qutun var və qutuda hər gün konfetlərin sayı dəyişir:
+        </p>
+        <ul style="margin-left: 25px; margin-bottom: 1.25rem; font-size: 1.05rem; line-height: 1.9;">
+          <li><strong>Bugünkü konfetlərin sayı:</strong> $a_n$</li>
+          <li><strong>Sabahkı günün konfetləri:</strong> $a_{n+1}$ (bax buna görə $n$-in yerinə <strong>$+1$</strong> yazırıq!).</li>
+        </ul>
+        <p class="doc-p">
+          Sən bilmək istəyirsən: Günlər keçdikcə bu qutudakı konfetlər get-gedə tükənib <strong>sıfıra yığılacaq</strong>, yoxsa qutu partlayıb <strong>sonsuzluğa dağılacaq</strong>?<br>
+          Bunun üçün cəmi bircə sadə hərəkət edirsən: <strong>Sabahkı payı Bugünkü paya bölürsən!</strong>
+        </p>
+
+        <div class="formula-display">
+          $$\lim_{n \to \infty} \frac{a_{n+1}}{a_n} = l$$
+        </div>
+
+        <div class="callout callout-rule">
+          <div class="callout-title">Dalamberin 3 Qızıl Nəticəsi:</div>
+          <ol style="margin-left: 20px; line-height: 1.8;">
+            <li><strong>Əgər $l < 1$ olarsa (məsələn $\frac{1}{2}$):</strong> Sabahkı pay bugünkünün yarısıdır! Yəni hər gün azalır, axırda məhv olub 0-a gedir &rarr; <strong>YIĞILIR!</strong></li>
+            <li><strong>Əgər $l > 1$ olarsa (məsələn $2$):</strong> Sabahkı pay hər gün 2 dəfə şişir! Qutu partlayır &rarr; <strong>DAĞILIR (sonsuzluğa uçur)!</strong></li>
+            <li><strong>Əgər $l = 1$ olarsa:</strong> Dalamber aciz qalır, cavab verə bilmir (başqa üsul lazımdır).</li>
+          </ol>
+        </div>
+
+        <!-- DALAMBER CANLI MİSAL -->
+        <div class="example-card">
+          <div class="example-header">
+            <span>MİSAL (Lövhədə 10 saniyəlik həll): $a_n = \frac{1}{2^n}$ yığılırmı?</span>
+          </div>
+          <div class="example-body">
+            <div class="example-step">
+              <strong>1. Bugünkü hədd:</strong> $a_n = \frac{1}{2^n}$<br>
+              <strong>2. Sabahkı hədd ($n$-in yerinə $n+1$ qoyuruq!):</strong> $a_{n+1} = \frac{1}{2^{n+1}} = \frac{1}{2^n \cdot 2}$
+            </div>
+            <div class="example-step">
+              <strong>3. Sabahkını bugünkünə bölək:</strong>
+              $$\frac{a_{n+1}}{a_n} = \frac{\frac{1}{2^{n+1}}}{\frac{1}{2^n}} = \frac{2^n}{2^{n+1}} = \frac{2^n}{2^n \cdot 2} = \mathbf{\frac{1}{2}}$$
+            </div>
+            <div class="example-step">
+              <strong>4. Qərar:</strong> $l = \frac{1}{2} < 1$ olduğundan ardıcıllıq 0-a yaxınlaşır, yəni <strong>YIĞILIR!</strong> $\blacksquare$
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. KOŞİNİN KÖK ƏLAMƏTİ -->
+        <h3 class="doc-h3">2. Koşinin Kök (Radikal) Əlaməti: "Papaq Geyindirmək"</h3>
+        <p class="doc-p">
+          Bəs ifadənin başında bütöv bir <strong>$n$ qüvvəti</strong> oturanda nə edirik? Məsələn: $\left(\frac{2n+1}{3n+5}\right)^n$.<br>
+          Burada $+1$ etsək, kəsrlər böyüyüb dəhşətli dərəcədə qəlizləşər! 
+          Bax buna görə Koşi deyir: <em>"Zəhmət çəkməyin, ifadənin başına **$n$-ci dərəcədən kök papaq** qoyun!"</em>
+        </p>
+
+        <div class="formula-display">
+          $$\lim_{n \to \infty} \sqrt[n]{a_n} = l$$
+        </div>
+
+        <p class="doc-p">
+          Bu kök papaq yuxarıdakı $n$ qüvvətini bir saniyədə yeyib məhv edir! 
+          Qaydalar yenə eynidir:
+        </p>
+        <ul style="margin-left: 25px; margin-bottom: 1.25rem; font-size: 1.05rem; line-height: 1.9;">
+          <li>$l < 1 \implies$ <strong>YIĞILIR</strong></li>
+          <li>$l > 1 \implies$ <strong>DAĞILIR</strong></li>
+          <li>$l = 1 \implies$ <strong>ŞÜBHƏLİDİR</strong> (təyin olunmur)</li>
+        </ul>
+
+        <div class="example-card">
+          <div class="example-header">
+            <span>MİSAL: $a_n = \left(\frac{2n + 1}{3n + 5}\right)^n$ yığılırmı?</span>
+          </div>
+          <div class="example-body">
+            <div class="example-step">
+              Qüvvətdə $n$ görürük. Dərhal Koşinin kök papağını geyindiririk:
+              $$\sqrt[n]{a_n} = \sqrt[n]{\left(\frac{2n + 1}{3n + 5}\right)^n} = \frac{2n + 1}{3n + 5}$$
+              İndi $n \to \infty$ üçün limit alırıq (böyük dərəcələrin əmsalları nisbəti):
+              $$\lim_{n \to \infty} \frac{2n + 1}{3n + 5} = \frac{2}{3}$$
+              $\frac{2}{3} < 1$ olduğuna görə ardıcıllıq <strong>YIĞILIR!</strong> $\blacksquare$
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. KOŞİ KRİTERİYASI (FUNDAMENTAL ARDICILLIQ) -->
+        <h3 class="doc-h3">3. Koşi Kriteriyası (Fundamental Ardıcıllıq Nədir?)</h3>
+        <p class="doc-p">
+          Təsəvvür et ki, uşaqlar cərgədə durublar. Sıranın başında uşaqlar sərbəst dayanıblar, aralarında məsafə çoxdur. 
+          Amma sıranın sonuna doğru getdikcə uşaqlar bir-birinə o qədər qısılırlar ki, aralarında milçək belə uça bilmir!
+        </p>
+        <div class="formula-display">
+          $$\forall \varepsilon > 0, \; \exists N \in \mathbb{N} : \forall n, m > N \implies |x_n - x_m| < \varepsilon$$
+        </div>
+        <div class="callout callout-board">
+          <div class="callout-title">Sadə dildə mənası:</div>
+          Əgər ardıcıllığın hədləri böyük nömrələrdə ($n, m > N$) bir-birinə yapışırsa, 
+          deməli bu ardıcıllıq mütləq bir nöqtəyə (limitə) yığılır! 
+          Bax bu xassəyə <strong>Fundamental Ardıcıllıq (Koşi Ardıcıllığı)</strong> deyilir.
+        </div>
+
+        <!-- 4. AYDINLAŞDIRMA: DETERMINANT VƏ İNDUKİSYA -->
+        <div class="callout callout-tip">
+          <div class="callout-title">Bəs birdən həqiqətən "Determinant" və ya "İnduksiya" nəzərdə tuturdunsa?</div>
+          • <strong>Riyazi İnduksiya ($k+1$):</strong> Dominolar oyunu! 1-ci dominonu yıxırsan ($n=1$), $k$-cı domino yıxılsa, növbəti dominonun ($k+1$) da yıxılacağını sübut edirsən.<br>
+          • <strong>Xətti Cəbrdə Determinant:</strong> $2 \times 2$ kəpənək qaydası: $\begin{vmatrix} a & b \\ c & d \end{vmatrix} = a \cdot d - b \cdot c$ (əsas diaqonalın hasilindən əks diaqonalın hasilini çıxırıq).
+        </div>
+
+      </section>
+
+      <!-- ========================================================
+           IV HİSSƏ: LÖVHƏ İSBAT ŞABLONLARI
+           ======================================================== -->
+      <section id="sec-blackboard-linear" class="doc-section">
+        <div class="doc-badge">IV HİSSƏ · ŞABLON 1</div>
+        <h2 class="doc-h2">&sect; 13. Lövhə Şablonu 1: Xətti Funksiyalar (f(x) = kx + b)</h2>
+        <p class="doc-p">
+          Bu, seminarda müəllimlərin lövhəyə çıxardığı ən birinci və ən asan sualdır. 
+          Gəl bunu lövhədə necə həll edəcəyini iki hissəli kəsr xətləri ilə şablonlaşdıraq:
+        </p>
+
+        <div class="board-template-card">
+          <div class="board-template-header">
+            <span>MİSAL: İsbat edin ki, $\lim_{x \to 3} (4x - 5) = 7$</span>
+            <span style="font-size: 0.9rem; color: var(--ink-amber);">Qızıl sirr: $\delta = \frac{\varepsilon}{|k|} = \frac{\varepsilon}{4}$</span>
+          </div>
+
+          <div class="board-split-columns">
+            <!-- Sağ: Qaralama -->
+            <div class="board-col-box">
+              <div class="board-col-title">1. Qaralama Analizi (Beyində və ya sağ küncdə)</div>
+              <p>Məqsədimiz: $|f(x) - L| < \varepsilon$</p>
+              <p>$$|(4x - 5) - 7| < \varepsilon$$</p>
+              <p>$$|4x - 12| < \varepsilon$$</p>
+              <p>$$4|x - 3| < \varepsilon$$</p>
+              <p>$$|x - 3| < \frac{\varepsilon}{4}$$</p>
+              <p style="color: var(--ink-forest); font-weight: 700;">$\implies \delta = \frac{\varepsilon}{4}$ seçmək lazımdır!</p>
+            </div>
+
+            <!-- Sol: Rəsmi Lövhə -->
+            <div class="board-col-box">
+              <div class="board-col-title">2. Lövhəyə Yazılan Rəsmi İsbat (Təmiz)</div>
+              <p><strong>Götürək:</strong> İxtiyari $\varepsilon > 0$ üçün $\delta = \frac{\varepsilon}{4}$ qəbul edək.</p>
+              <p><strong>Yoxlayaq:</strong> $0 < |x - 3| < \delta$ şərtini ödəyən istənilən $x$ üçün:</p>
+              <p>$$|(4x - 5) - 7| = |4x - 12| = 4|x - 3| < 4\delta = 4 \cdot \frac{\varepsilon}{4} = \varepsilon$$</p>
+              <p><strong>Nəticə:</strong> Koşi tərifinə görə limit 7-dir. $\blacksquare$</p>
+            </div>
+          </div>
+
+          <div class="speech-line">
+            <strong>Müəllimə deyəcəyin cümlə:</strong> "Müəllim, Koşi tərifinə əsasən $|f(x) - 7|$ ifadəsini sadələşdirib $4|x - 3|$ alırıq. Buradan görünür ki, istənilən $\varepsilon$ üçün $\delta = \frac{\varepsilon}{4}$ seçdikdə tərif dəqiq ödənir."
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           BÖLMƏ 14: ŞABLON 2 (KVADRATİK FUNKSİYA)
+           ======================================================== -->
+      <section id="sec-blackboard-quad" class="doc-section">
+        <div class="doc-badge">IV HİSSƏ · ŞABLON 2</div>
+        <h2 class="doc-h2">&sect; 14. Lövhə Şablonu 2: Kvadratik Funksiyalar və "İkiqat Minimum" Hiyləsi</h2>
+        <p class="doc-p">
+          Bax tələbələrin ən çox ilişdiyi yer buradır. Çünki kvadratik funksiyada əlavə dəyişən vuruq yaranır!
+        </p>
+
+        <div class="board-template-card">
+          <div class="board-template-header">
+            <span>MİSAL: İsbat edin ki, $\lim_{x \to 2} x^2 = 4$</span>
+            <span style="font-size: 0.9rem; color: var(--ink-amber);">Hiylə: $\delta = \min\left(1, \; \frac{\varepsilon}{5}\right)$</span>
+          </div>
+
+          <div class="board-split-columns">
+            <div class="board-col-box">
+              <div class="board-col-title">1. Qaralama Analizi</div>
+              <p>$$|x^2 - 4| = |x - 2| \cdot |x + 2| < \varepsilon$$</p>
+              <p><strong style="color: var(--ink-burgundy);">Problem:</strong> $|x + 2|$ vuruğu $x$-dən asılıdır, sabit deyil!</p>
+              <p><strong>Həll:</strong> Əvvəlcədən $\delta \le 1$ şərti qoyaq:</p>
+              <p>$$|x - 2| < 1 \implies 1 < x < 3 \implies |x + 2| < 5$$</p>
+              <p>Onda: $|x^2 - 4| < 5 \cdot |x - 2| < \varepsilon$</p>
+              <p>$$|x - 2| < \frac{\varepsilon}{5}$$</p>
+              <p style="color: var(--ink-forest); font-weight: 700;">$\implies \delta = \min\left(1, \; \frac{\varepsilon}{5}\right)$ götürürük!</p>
+            </div>
+
+            <div class="board-col-box">
+              <div class="board-col-title">2. Lövhəyə Yazılan Rəsmi İsbat</div>
+              <p><strong>Götürək:</strong> İxtiyari $\varepsilon > 0$ üçün $\delta = \min\left(1, \; \frac{\varepsilon}{5}\right)$ seçək.</p>
+              <p><strong>Yoxlayaq:</strong> $0 < |x - 2| < \delta$ olduqda:</p>
+              <p>1) $\delta \le 1$ olduğundan $|x + 2| < 5$;</p>
+              <p>2) $\delta \le \frac{\varepsilon}{5}$ olduğundan $|x - 2| < \frac{\varepsilon}{5}$.</p>
+              <p>Onda:</p>
+              <p>$$|x^2 - 4| = |x - 2| \cdot |x + 2| < \frac{\varepsilon}{5} \cdot 5 = \varepsilon$$</p>
+              <p><strong>Nəticə:</strong> İsbat tamamlandı. $\blacksquare$</p>
+            </div>
+          </div>
+
+          <div class="speech-line">
+            <strong>Müəllimə deyəcəyin cümlə:</strong> "Müəllim, $|x+2|$ vuruğunu məhdudlaşdırmaq üçün əvvəlcədən $\delta \le 1$ qəbul edirik. Onda $x \in (1, 3)$ olur və $|x+2| < 5$ qiymətləndirməsini alırıq. Buradan $\delta = \min\left(1, \; \frac{\varepsilon}{5}\right)$ seçimi tam yetərlidir."
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           BÖLMƏ 15: ŞABLON 3 (ARDICILLIQ)
+           ======================================================== -->
+      <section id="sec-blackboard-seq" class="doc-section">
+        <div class="doc-badge">IV HİSSƏ · ŞABLON 3</div>
+        <h2 class="doc-h2">&sect; 15. Lövhə Şablonu 3: Kəsr Ardıcıllıqlar (N-in Tapılması)</h2>
+        <div class="board-template-card">
+          <div class="board-template-header">
+            <span>MİSAL: İsbat edin ki, $\lim_{n \to \infty} \frac{2n + 1}{n + 3} = 2$</span>
+            <span style="font-size: 0.9rem; color: var(--ink-amber);">$N = \left[\frac{5}{\varepsilon} - 3\right]$</span>
+          </div>
+
+          <div class="board-split-columns">
+            <div class="board-col-box">
+              <div class="board-col-title">1. Qaralama Analizi</div>
+              <p>$$|x_n - 2| = \left|\frac{2n + 1}{n + 3} - 2\right| < \varepsilon$$</p>
+              <p>$$\left|\frac{2n + 1 - 2(n + 3)}{n + 3}\right| = \left|\frac{-5}{n + 3}\right| = \frac{5}{n + 3} < \varepsilon$$</p>
+              <p>$$n + 3 > \frac{5}{\varepsilon}$$</p>
+              <p>$$n > \frac{5}{\varepsilon} - 3$$</p>
+              <p style="color: var(--ink-forest); font-weight: 700;">$\implies N = \left[\frac{5}{\varepsilon} - 3\right]$ (tam hissə)</p>
+            </div>
+
+            <div class="board-col-box">
+              <div class="board-col-title">2. Lövhəyə Yazılan Rəsmi İsbat</div>
+              <p><strong>Götürək:</strong> İxtiyari $\varepsilon > 0$ üçün $N = \max\left(1, \; \left[\frac{5}{\varepsilon} - 3\right]\right)$ seçək.</p>
+              <p><strong>Yoxlayaq:</strong> $\forall n > N$ üçün:</p>
+              <p>$$n > \frac{5}{\varepsilon} - 3 \implies n + 3 > \frac{5}{\varepsilon} \implies \frac{5}{n + 3} < \varepsilon$$</p>
+              <p>Buradan:</p>
+              <p>$$\left|\frac{2n + 1}{n + 3} - 2\right| = \frac{5}{n + 3} < \varepsilon$$</p>
+              <p><strong>Nəticə:</strong> Tərifə görə limit 2-dir. $\blacksquare$</p>
+            </div>
+          </div>
+
+          <div class="speech-line">
+            <strong>Müəllimə deyəcəyin cümlə:</strong> "Müəllim, ardıcıllıq limitinin tərifinə əsasən fərqi ortaq məxrəcə gətiririk və $\frac{5}{n+3} < \varepsilon$ bərabərsizliyindən nömrəni $n > \frac{5}{\varepsilon} - 3$ olaraq tapırıq. $N$ natural ədəd olduğundan onun tam hissəsini götürürük."
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           V HİSSƏ: ALİ RİYAZİYYATDA TÖRƏMƏ VƏ LOPİTAL
+           ======================================================== -->
+      <section id="sec-higher-diff" class="doc-section">
+        <div class="doc-badge">V HİSSƏ · BÖLMƏ 16</div>
+        <h2 class="doc-h2">&sect; 16. Ali Riyaziyyatda Diferensial və Lopital Qaydası</h2>
+
+        <h3 class="doc-h3">Diferensial Nədir? ($dy$)</h3>
+        <p class="doc-p">
+          Orta məktəbdə biz törəməni $y'$ kimi yazırdıq. Universitetdə isə Leybnits işarəsi işlədilir: <strong>$\frac{dy}{dx}$</strong>.<br>
+          Buradan <strong>Diferensial</strong>: funksiyanın törəməsinin arqumentin artımına ($dx$) hasilidir:
+        </p>
+        <div class="formula-display">
+          $$dy = f'(x) \cdot dx \iff \frac{dy}{dx} = f'(x)$$
+        </div>
+        <p class="doc-p">
+          <em>Məsələn:</em> $y = x^3$ olarsa, diferensialı <strong>$dy = 3x^2 \, dx$</strong> olar!
+        </p>
+
+        <h3 class="doc-h3">Lopital Qaydası (L'Hôpital's Rule)</h3>
+        <p class="doc-p">
+          Universitetdə $\left[\frac{0}{0}\right]$ və ya $\left[\frac{\infty}{\infty}\right]$ limitlərini vuruqlara ayırmadan, saniyələr içində həll etməyin ən güclü silahı Lopital qaydasıdır:
+        </p>
+        <div class="formula-display">
+          $$\lim_{x \to a} \frac{f(x)}{g(x)} = \lim_{x \to a} \frac{f'(x)}{g'(x)}$$
+        </div>
+
+        <div class="callout callout-trap">
+          <div class="callout-title">LOPİTALIN 2 QIZIL ŞƏRTİ (Bunlar olmadan tətbiq etsən 0 bal alarsan!):</div>
+          1. <strong>Mütləq $\left[\frac{0}{0}\right]$ və ya $\left[\frac{\infty}{\infty}\right]$ olmalıdır!</strong> Əgər qeyri-müəyyənlik yoxdursa, Lopital tamamilə səhv cavab verir!<br>
+          2. <strong>Kəsrin törəməsi kimi YOX!</strong> Surətin ayrıca törəməsi alınır, məxrəcin ayrıca törəməsi alınır və kəsr xətti ilə bir-birinə bölünür!
+        </div>
+
+        <div class="example-card">
+          <div class="example-header">
+            <span>MİSAL: $\lim_{x \to 0} \frac{e^{3x} - 1}{\sin(2x)}$</span>
+          </div>
+          <div class="example-body">
+            <p>1) $x = 0$ qoyduqda: $\frac{1 - 1}{0} = \left[\frac{0}{0}\right]$ yaranır (Lopital icazəlidir!).</p>
+            <p>2) Surətin törəməsi: $(e^{3x} - 1)' = \mathbf{3e^{3x}}$.</p>
+            <p>3) Məxrəcin törəməsi: $(\sin 2x)' = \mathbf{2\cos 2x}$.</p>
+            <p>4) Limiti yenidən hesablayırıq:
+              <div class="formula-display">
+                $$\lim_{x \to 0} \frac{e^{3x} - 1}{\sin(2x)} = \lim_{x \to 0} \frac{3e^{3x}}{2\cos(2x)} = \frac{3 \cdot e^0}{2 \cdot \cos 0} = \mathbf{\frac{3}{2}}$$
+              </div>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           VI HİSSƏ: TƏLƏLƏR VƏ ŞPARQALKA
+           ======================================================== -->
+      <section id="sec-traps-cheatsheet" class="doc-section">
+        <div class="doc-badge">VI HİSSƏ · XÜLASƏ</div>
+        <h2 class="doc-h2">&sect; 17. Seminarda Müəllimlərin Tələləri və İmtahan Şparqalkası</h2>
+
+        <div class="callout callout-trap">
+          <div class="callout-title">Tələ 1: $\lim_{x \to 0} \sin\left(\frac{1}{x}\right)$ limiti neçədir?</div>
+          <strong>CAVAB: LİMİT YOXDUR!</strong><br>
+          Çünki $x \to 0$ olduqda $\frac{1}{x} \to \infty$ olur və sinus $[-1, 1]$ aralığında sonsuz sürətlə rəqs edir, heç bir sabit ədədə yaxınlaşmır!
+        </div>
+
+        <div class="callout callout-trap">
+          <div class="callout-title">Tələ 2: $\lim_{x \to 0} x \cdot \sin\left(\frac{1}{x}\right)$ limiti neçədir?</div>
+          <strong>CAVAB: 0-DIR!</strong><br>
+          Çünki $\sin\left(\frac{1}{x}\right)$ məhdud funksiyadır ($-1 \le \sin \le 1$), sıfıra yaxınlaşan $x$ isə sonsuz kiçiləndir. <em>"Sonsuz kiçilən vur məhdud kəmiyyət = 0"</em> teoreminə görə cavab dəqiq 0-dır!
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-title">Seminara Çıxmazdan Əvvəl Zehnində Təkrar Etməli Olduğun 3 Cümlə</div>
+          1. <strong>Xətti funksiyada:</strong> $\delta = \frac{\varepsilon}{|k|}$ götürülür.<br>
+          2. <strong>Kvadratik funksiyada:</strong> $\delta = \min\left(1, \; \frac{\varepsilon}{c}\right)$ hiyləsi işlədilir.<br>
+          3. <strong>Ardıcıllıqda:</strong> $n > \text{ifadə}(\varepsilon)$ tapılır və $N = [\text{ifadə}]$ tam hissəsi seçilir.
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

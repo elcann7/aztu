@@ -18,10 +18,12 @@ export const LoginPage: React.FC = () => {
   const [customClientId, setCustomClientId] = useState<string>(() => {
     return localStorage.getItem('aztu_google_client_id') || GOOGLE_CLIENT_ID || '';
   });
+  const [isGsiRendered, setIsGsiRendered] = useState(false);
   const [showGoogleModal, setShowGoogleModal] = useState(false);
   const [showClientIdConfig, setShowClientIdConfig] = useState(false);
   const [googleEmail, setGoogleEmail] = useState('');
   const [googleName, setGoogleName] = useState('');
+  const [googlePicture, setGooglePicture] = useState<string | undefined>(undefined);
   const [googleGroupCode, setGoogleGroupCode] = useState('6326A2');
   const [googleError, setGoogleError] = useState<string | null>(null);
   const [isGoogleSubmitting, setIsGoogleSubmitting] = useState(false);
@@ -46,12 +48,14 @@ export const LoginPage: React.FC = () => {
               return;
             }
 
+            setGooglePicture(payload.picture);
             const res = await loginWithGoogle(payload.email, payload.name, undefined, payload.picture);
             if (res.success) {
               navigate('/app');
             } else if (res.requiresGroupCode) {
               setGoogleEmail(payload.email);
               setGoogleName(payload.name);
+              setGooglePicture(payload.picture);
               setShowGoogleModal(true);
             } else {
               setError(res.error || 'Google ilə daxil olmaq mümkün olmadı.');
@@ -72,6 +76,7 @@ export const LoginPage: React.FC = () => {
             width: '350',
             logo_alignment: 'left',
           });
+          setIsGsiRendered(true);
         }
       } catch (err) {
         console.error('GIS initialization error:', err);
@@ -100,7 +105,16 @@ export const LoginPage: React.FC = () => {
     }
 
     if (window.google?.accounts?.id) {
-      window.google.accounts.id.prompt();
+      try {
+        window.google.accounts.id.prompt((notification: unknown) => {
+          const n = notification as { isNotDisplayed?: () => boolean; isSkippedMoment?: () => boolean };
+          if (n?.isNotDisplayed?.() || n?.isSkippedMoment?.()) {
+            setShowGoogleModal(true);
+          }
+        });
+      } catch {
+        setShowGoogleModal(true);
+      }
     } else {
       setShowGoogleModal(true);
     }
@@ -137,7 +151,7 @@ export const LoginPage: React.FC = () => {
     setGoogleError(null);
     setIsGoogleSubmitting(true);
 
-    const res = await loginWithGoogle(googleEmail, googleName, googleGroupCode);
+    const res = await loginWithGoogle(googleEmail, googleName, googleGroupCode, googlePicture);
     setIsGoogleSubmitting(false);
 
     if (res.success) {
@@ -183,9 +197,9 @@ export const LoginPage: React.FC = () => {
           <div
             ref={googleBtnContainerRef}
             className="google-gis-rendered"
-            style={{ display: customClientId ? 'flex' : 'none', justifyContent: 'center' }}
+            style={{ display: isGsiRendered ? 'flex' : 'none', justifyContent: 'center' }}
           />
-          {!customClientId && (
+          {!isGsiRendered && (
             <button
               type="button"
               onClick={handleGoogleBtnClick}

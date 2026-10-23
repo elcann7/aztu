@@ -25,6 +25,7 @@ Bu sənəd **AzTU 6326A2** layihəsindəki hər bir faylın, qovluğun, komponen
 | [`vercel.json`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/vercel.json) | JSON | Vercel `/api` funksiyalarını saxlayan və qalan SPA marşrutlarını `index.html`-ə yönləndirən qaydalar |
 | `supabase/migrations/20260928152552_secure_group_access.sql` | SQL | Supabase Auth üzvlüyü, kvota, RLS və özəl Storage keçidi; canlı bazaya tətbiq gözləyir |
 | `supabase/migrations/20260928173419_legacy_rpc_hardening.sql` | SQL | Köhnə imtiyazlı funksiyaların birbaşa API icrasını bağlayan və canlı bazada tətbiq edilmiş təhlükəsizlik düzəlişi |
+| [`supabase/migrations/20261023_allow_profile_auth_sync.sql`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/supabase/migrations/20261023_allow_profile_auth_sync.sql) | SQL | **Tələbə Giriş və Profil Sinxronizasiyası**: 6326A2 anon/auth RLS oxuma və qeydiyyat siyasətləri |
 | `api/auth.ts` | TypeScript | Təsdiqli e-poçtla server qeydiyyatı, köhnə profilin e-poçt sahibi ilə bağlanması, Google üzvlüyü və kvota sayı |
 | `tsconfig.api.json` | JSON | Vercel API funksiyasının ayrıca TypeScript yoxlaması |
 | [`.env`](file:///c:/Users/Tech%20Evo%20Computers/Desktop/Layihələr/AzTu/.env) | Env | `VITE_GOOGLE_CLIENT_ID` Google OAuth Client ID |

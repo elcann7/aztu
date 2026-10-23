@@ -1,0 +1,530 @@
+/* ==========================================================================
+   AZTU 6326A2 — RİYAZİ ANALİZ-1 AKADEMİK NƏŞRİYYAT VƏ OXU PORTALI
+   Dizayn Fəlsəfəsi: "Anti-AI Slop" — Klassik Kağız, Mürəkkəb və Kitab Dizaynı.
+   Sıfır neon, sıfır generik göy parıltılar, sıfır ucuz SaaS düymələri.
+   Əsl universitet dərslikləri və elmi nəşrlər (LaTeX, Tufte, Cambridge) üslubu.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* Əsas: İsti Arxiv Kağızı və Dərin Kitab Mürəkkəbi (Default: Paper Edition) */
+  --bg-page: #fbf9f4;
+  --bg-sidebar: #f3efe6;
+  --bg-card: #ffffff;
+  --bg-card-subtle: #f6f3eb;
+  --bg-math: #f5f1e7;
+  
+  --border-rule: #dfd9cc;
+  --border-dark: #b8b09f;
+
+  --text-main: #211f1c;
+  --text-muted: #615c54;
+  --text-faint: #8a8479;
+
+  /* Akademik Klassik Mürəkkəb Rəngləri (Neon YOXDUR) */
+  --ink-burgundy: #852224;  /* Fəsil başlıqları və teoremlər üçün tünd şərab */
+  --ink-forest: #244f33;    /* Uğurlu isbatlar üçün tünd meşə yaşılı */
+  --ink-amber: #945f12;     /* Xəbərdarlıq və diqqət üçün qızıl palıd */
+  --ink-slate: #233b5d;     /* Əlaqələr və sitatlar üçün tünd dəniz */
+
+  --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-ui: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+/* Gecə Rejimi: İsti Qrafit və Qəhvəyi Qaranlıq (Göy/Neon DEYİL) */
+[data-theme="dark"] {
+  --bg-page: #171614;
+  --bg-sidebar: #1d1c1a;
+  --bg-card: #22211e;
+  --bg-card-subtle: #292824;
+  --bg-math: #1c1b18;
+
+  --border-rule: #36342f;
+  --border-dark: #4d4a43;
+
+  --text-main: #ece7de;
+  --text-muted: #a6a094;
+  --text-faint: #756f64;
+
+  --ink-burgundy: #df6d70;
+  --ink-forest: #71b886;
+  --ink-amber: #dfa857;
+  --ink-slate: #88b0e0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  font-family: var(--font-serif);
+  font-size: 1.12rem;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ========================================================
+   LAYOUT STRUKTURU
+   ======================================================== */
+.layout-container {
+  display: flex;
+  width: 100%;
+}
+
+/* Sol Menyü — Kitab Kataloqu Üslubu */
+.sidebar {
+  width: 320px;
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border-rule);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  font-family: var(--font-ui);
+}
+
+.sidebar-header {
+  padding: 1.5rem 1.25rem 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-rule);
+}
+
+.brand-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--ink-burgundy);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.sidebar-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.3;
+}
+
+.sidebar-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.search-box {
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--border-rule);
+}
+
+.search-input {
+  width: 100%;
+  padding: 7px 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-rule);
+  border-radius: 4px;
+  color: var(--text-main);
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.search-input:focus {
+  border-color: var(--ink-burgundy);
+}
+
+.sidebar-nav {
+  padding: 0.75rem 0;
+  flex: 1;
+}
+
+.nav-section-title {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 12px 1.25rem 4px 1.25rem;
+}
+
+.nav-item {
+  display: block;
+  padding: 6px 1.25rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  border-left: 2px solid transparent;
+  transition: all 0.1s ease;
+}
+
+.nav-item:hover {
+  color: var(--text-main);
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.nav-item.active {
+  color: var(--ink-burgundy);
+  border-left-color: var(--ink-burgundy);
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.sidebar-footer {
+  padding: 0.85rem 1.25rem;
+  border-top: 1px solid var(--border-rule);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.theme-toggle-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-rule);
+  color: var(--text-main);
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--text-muted);
+}
+
+/* ========================================================
+   ƏSAS OXU SAHƏSİ (BOOK ESSAY / ACADEMIC PAPER)
+   ======================================================== */
+.main-wrapper {
+  flex: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 3.5rem 3.5rem 8rem 3.5rem;
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .layout-container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .main-wrapper {
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* Fəsillər */
+.doc-section {
+  margin-bottom: 5rem;
+  scroll-margin-top: 2rem;
+}
+
+.doc-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-burgundy);
+  margin-bottom: 6px;
+  display: inline-block;
+}
+
+h1.doc-title {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  color: var(--text-main);
+}
+
+h2.doc-h2 {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border-rule);
+  color: var(--text-main);
+}
+
+h3.doc-h3 {
+  font-family: var(--font-ui);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-main);
+}
+
+p.doc-p {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--text-main);
+  margin-bottom: 1.25rem;
+  text-align: justify;
+}
+
+/* ========================================================
+   AKADEMİK BLOKLAR (CALLOUTS / TEOREMLƏR)
+   Sıfır neon parıltı — Təmiz nəşriyyat haşiyələri
+   ======================================================== */
+.callout {
+  margin: 1.75rem 0;
+  padding: 1.25rem 1.5rem;
+  border-radius: 4px;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-rule);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.callout-title {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 8px;
+}
+
+.callout-rule {
+  border-left: 3px solid var(--ink-slate);
+}
+.callout-rule .callout-title { color: var(--ink-slate); }
+
+.callout-trap {
+  border-left: 3px solid var(--ink-burgundy);
+  background: rgba(133, 34, 36, 0.04);
+}
+.callout-trap .callout-title { color: var(--ink-burgundy); }
+
+.callout-tip {
+  border-left: 3px solid var(--ink-forest);
+  background: rgba(36, 79, 51, 0.04);
+}
+.callout-tip .callout-title { color: var(--ink-forest); }
+
+.callout-board {
+  border-left: 3px solid var(--ink-amber);
+}
+.callout-board .callout-title { color: var(--ink-amber); }
+
+/* Riyazi Düsturlar Paneli (Real LaTeX görünüşü) */
+.formula-display {
+  background: var(--bg-math);
+  border: 1px solid var(--border-rule);
+  border-radius: 4px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  text-align: center;
+  overflow-x: auto;
+  line-height: 1.9;
+}
+
+/* KaTeX Dəqiq Kəsr Xətti və Düstur Şrifti */
+.katex {
+  font-size: 1.12em !important;
+  color: var(--text-main);
+}
+
+.katex .frac-line {
+  border-bottom-width: 1.8px !important;
+  border-bottom-color: currentColor !important;
+}
+
+.katex-display {
+  margin: 0.6rem 0 !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px 0;
+}
+
+.formula-display strong {
+  color: var(--ink-burgundy);
+  font-weight: 600;
+}
+
+/* Nümunə Qutuları (Example Card) */
+.example-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-rule);
+  border-radius: 4px;
+  margin: 1.75rem 0;
+}
+
+.example-header {
+  padding: 9px 15px;
+  background: var(--bg-card-subtle);
+  border-bottom: 1px solid var(--border-rule);
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-main);
+}
+
+.example-body {
+  padding: 1.25rem;
+  font-size: 1.04rem;
+  line-height: 1.7;
+}
+
+.example-step {
+  margin-bottom: 12px;
+  padding-left: 12px;
+  border-left: 2px solid var(--border-dark);
+}
+
+/* ========================================================
+   LÖVHƏ İSBAT ŞABLONU (AKADEMİK 2 SÜTUNLU PROTOKOL)
+   Sıfır neon — Ciddi təbaşir/qaralama cədvəli
+   ======================================================== */
+.board-template-card {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-dark);
+  border-radius: 4px;
+  padding: 1.5rem;
+  margin: 2.25rem 0;
+}
+
+.board-template-header {
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink-burgundy);
+  border-bottom: 1px solid var(--border-rule);
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.board-split-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .board-split-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.board-col-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-rule);
+  border-radius: 3px;
+  padding: 12px 14px;
+  font-family: var(--font-serif);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.board-col-title {
+  font-family: var(--font-ui);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-faint);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  border-bottom: 1px solid var(--border-rule);
+  padding-bottom: 4px;
+}
+
+.speech-line {
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: rgba(148, 95, 18, 0.06);
+  border: 1px solid var(--border-rule);
+  border-radius: 3px;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-main);
+}
+
+.speech-line strong {
+  color: var(--ink-amber);
+}
+
+/* ========================================================
+   CƏDVƏLLƏR (MƏTBUAT VƏ KİTAB STANDARTINDA)
+   ======================================================== */
+.table-wrapper {
+  overflow-x: auto;
+  margin: 1.75rem 0;
+  border: 1px solid var(--border-rule);
+  border-radius: 4px;
+}
+
+table.doc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+table.doc-table th {
+  background: var(--bg-card-subtle);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-rule);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: var(--text-main);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+table.doc-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-rule);
+  color: var(--text-main);
+  font-family: var(--font-serif);
+  font-size: 0.98rem;
+}
+
+table.doc-table tr:last-child td {
+  border-bottom: none;
+}
+
+table.doc-table code {
+  font-family: var(--font-mono);
+  background: var(--bg-math);
+  padding: 2px 5px;
+  border-radius: 3px;
+  color: var(--ink-burgundy);
+  font-size: 0.88rem;
+  border: 1px solid var(--border-rule);
+}

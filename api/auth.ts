@@ -44,9 +44,10 @@ async function profileByEmail(email: string) {
 
 export async function GET() {
   try {
-    return reply({ count: await getCount(), maxLimit: 30 });
+    const count = await getCount();
+    return reply({ count, maxLimit: 30, ok: true });
   } catch {
-    return reply({ error: 'Qrup məlumatı hazırda əlçatan deyil.' }, 503);
+    return reply({ count: 0, maxLimit: 30, ok: false, warning: 'Supabase offline və ya fasilədədir.' }, 200);
   }
 }
 
