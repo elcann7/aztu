@@ -301,16 +301,79 @@
   justify-content: center;
 }
 
-.reel-topic-text {
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 1.35;
-  color: #f7f8f8;
-  letter-spacing: -0.02em;
-  margin-bottom: 6px;
-  min-height: 46px;
+.slot-drum-viewport {
+  position: relative;
+  height: 54px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 8px;
+}
+
+.slot-drum-viewport::before,
+.slot-drum-viewport::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 12px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.slot-drum-viewport::before {
+  top: 0;
+  background: linear-gradient(to bottom, #181b26 0%, transparent 100%);
+}
+
+.slot-drum-viewport::after {
+  bottom: 0;
+  background: linear-gradient(to top, #181b26 0%, transparent 100%);
+}
+
+.slot-drum-strip {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+
+.slot-drum-item {
+  height: 54px;
   display: flex;
   align-items: center;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  padding: 0 12px;
+  flex-shrink: 0;
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slot-reel-card.is-spinning .slot-drum-viewport {
+  border-color: rgba(224, 137, 72, 0.5);
+  background: rgba(224, 137, 72, 0.05);
+}
+
+.slot-reel-card.is-locked .slot-drum-viewport {
+  background: rgba(94, 106, 210, 0.1);
+  border-color: rgba(94, 106, 210, 0.4);
+}
+
+.slot-reel-card.is-locked .slot-drum-item {
+  color: #ffffff;
+  animation: reelSnap 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes reelSnap {
+  0% { transform: translateY(-4px); }
+  50% { transform: translateY(2px); }
+  100% { transform: translateY(0); }
 }
 
 .reel-sub-caption {
@@ -530,19 +593,39 @@
 .formula-preview-box {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 12px 16px;
+  gap: 8px;
+  padding: 14px 18px;
   background: var(--bg-subtle);
   border: 1px solid var(--border-default);
-  border-radius: 8px;
+  border-radius: 10px;
   margin-bottom: 16px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .formula-label {
-  font-size: 10px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 700;
   letter-spacing: 0.08em;
-  color: #62666d;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+}
+
+.tex-rendered-math {
+  display: block;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 6px 0;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.tex-rendered-math .katex {
+  font-size: 1.15rem;
+  color: #f1f5f9;
+}
+
+.tex-rendered-math .katex-display {
+  margin: 0.35em 0;
 }
 
 .tex-code-snippet {

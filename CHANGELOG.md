@@ -4,6 +4,29 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.27.0] — 2026-10-23
+
+### 🎰 Mexaniki unprompted.cool Baraban Animasiyası, KaTeX Riyazi Render və 80 Sual Bazası
+- **KaTeX Rəsmi Riyazi Formatlama İnteqrasiyası (`ColloquiumDrawView.tsx` & `.css`, `katex`)**:
+  - İstifadəçinin rəyi əsasında (`media_1792782192280_52536892.png`) xam LaTeX kod stringlərinin (`\lim_{x \to x_0} ... \forall \varepsilon ...`) birbaşa görünməsi problemi tamamilə aradan qaldırıldı.
+  - `katex` mühərriki və `katex/dist/katex.min.css` inteqrasiya edilərək bütün düsturlar, limitlər, matrislər və qanunlar üçün `TeXFormula` komponenti yaradıldı. İfadələr universitet dərslikləri səviyyəsində, mərkəzləşdirilmiş və oxunaqlı riyazi simvollarla render edilir.
+- **unprompted.cool Üslublu Həqiqi Mexaniki Baraban (Slot Drum) Animasiyası**:
+  - Əvvəlki statik mətn dəyişməsi və 2 saniyəlik donma/gecikmə tamamilə aradan qaldırıldı.
+  - Hər 3 slot üçün şaquli baraban pəncərəsi (`.slot-drum-viewport`, `.slot-drum-strip`) və daxili 18 pilləli mövzu zolağı quruldu.
+  - Fırlanma zamanı sürətli şaquli hərəkət, ritmik mexaniki çıqqıltılar (`playTickSound`) və ritmik ardıcıl kilidlənmə tətbiq edildi:
+    - 1-ci Slot (Nəzəriyyə): 1.0s-də mexaniki zərbə ilə kilidlənir (`playReelLockSound`).
+    - 2-ci Slot (Misal 1): 1.4s-də kilidlənir (`playReelLockSound`).
+    - 3-cü Slot (Misal 2): 1.8s-də tamamlanma akkordu ilə kilidlənir (`playTicketCompleteSound`).
+    - 2.15s-də gecikmədən dərhal sualların həlli mərhələsinə keçid edilir.
+- **80 Ədədlik Geniş Sual və Mövzu Bankı (`src/data/colloquiumQuestions.ts`)**:
+  - Püşkatmanın zəngin və müxtəlif görünməsi üçün 4 fənnin hər biri üzrə sual bazası 10 nəzəriyyə + 10 praktiki misala (fənn üzrə 20, cəmi 80 sual) çatdırıldı:
+    - **Riyazi analiz - 1**: Veyerştras Teoremi, Heyne və Koşi limitləri, Görkəmli limitlər, Ekvivalent kiçilənlər, Kəsilməzlik və qırılmalar, Bolsano-Koşi, Roll və Laqranj, Lopital qaydası və s.
+    - **Xətti cəbr və analitik həndəsə**: Kramer qaydası, Tərs matris, Determinant xassələri, Vektor hasilləri, Qauss üsulu, Matris ranqı və s.
+    - **Fizika - 1**: Nyuton qanunları və impuls, Şteyner teoremi, Termodinamikanın I qanunu və izo-proseslər, Mail müstəvi dinamikası, Qeyri-elastiki toqquşma və s.
+    - **Proqramlaşdırmanın əsasları - 1 (Python)**: Yaddaş modeli (Mutable/Immutable), Big-O asimptotik mürəkkəblik, Rekursiya və Call Stack, Diaqonal cəmi, İkili axtarış və s.
+
+---
+
 ## [1.26.0] — 2026-10-23
 
 ### 🎨 Qara-Ağ Ziddiyyətinin Aradan Qaldırılması & Yumşaq Slate Tünd Tema Harmoniyası
