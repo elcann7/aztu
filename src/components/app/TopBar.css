@@ -145,6 +145,33 @@
   .topbar-share-btn span { display: none; }
 }
 
+@media (max-width: 480px) {
+  .app-topbar {
+    padding: 0 12px;
+  }
+
+  .topbar-left {
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .topbar-page-title {
+    max-width: 140px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .topbar-right {
+    gap: 6px;
+  }
+
+  .topbar-search-box .search-shortcut {
+    display: none;
+  }
+}
+
 /* TopBar Profile Avatar Button */
 .topbar-profile-btn {
   width: 32px;

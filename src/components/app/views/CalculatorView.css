@@ -670,3 +670,42 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+@media (max-width: 480px) {
+  .calc-summary-banner {
+    padding: 16px 14px;
+    border-radius: 10px;
+  }
+
+  .calc-preset-actions {
+    width: 100%;
+  }
+
+  .calc-preset-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .calc-converter-bar {
+    padding: 12px 14px;
+  }
+
+  .calc-conv-inputs {
+    width: 100%;
+  }
+
+  .calc-course-card {
+    padding: 16px 14px;
+  }
+
+  .calc-absence-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .calc-absence-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

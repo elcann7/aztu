@@ -786,3 +786,68 @@
     display: none;
   }
 }
+
+@media (max-width: 768px) {
+  .window-topbar-center {
+    display: none;
+  }
+
+  .linear-issue-main {
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .workspace-pedestal-light {
+    width: 100%;
+    max-width: 480px;
+  }
+}
+
+@media (max-width: 480px) {
+  .workspace-section {
+    padding-bottom: var(--space-12);
+  }
+
+  .workspace-window {
+    border-radius: 8px;
+  }
+
+  .window-topbar {
+    padding: 0 10px;
+    height: 36px;
+  }
+
+  .linear-issue-main {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .issue-main-title {
+    font-size: 1.05rem;
+  }
+
+  .issue-meta-row {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .issue-chip-badge {
+    margin-left: 0;
+  }
+
+  .code-frame-content {
+    padding: 10px 12px;
+    font-size: 0.72rem;
+  }
+
+  .linear-attachment-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .attachment-action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

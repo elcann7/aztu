@@ -81,6 +81,7 @@
   padding: 0.35rem 0 0.55rem;
   border-bottom: 1px solid var(--border-default);
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
 }
@@ -795,7 +796,34 @@
 }
 
 @media (max-width: 480px) {
+  .course-meta-top {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .course-main-title {
+    font-size: 1.35rem;
+    line-height: 1.25;
+  }
+
+  .course-instructor-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
   .syllabus-milestones-summary {
     grid-template-columns: 1fr;
+  }
+
+  .material-actions-col {
+    width: 100%;
+    gap: 6px;
+  }
+
+  .row-action-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 0.45rem 0.6rem;
   }
 }

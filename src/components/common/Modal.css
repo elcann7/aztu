@@ -125,3 +125,32 @@
   border-radius: var(--radius-xs);
   margin-bottom: var(--space-2);
 }
+
+@media (max-width: 480px) {
+  .modal-backdrop-layer {
+    padding: 0.5rem;
+  }
+
+  .modal-window-card {
+    max-height: calc(100vh - 1rem);
+    border-radius: 12px;
+  }
+
+  .modal-top-bar {
+    padding: 12px 14px;
+  }
+
+  .modal-body-content {
+    padding: 14px;
+  }
+
+  .modal-form-actions {
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .modal-form-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+}

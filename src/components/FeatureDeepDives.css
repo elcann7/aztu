@@ -720,3 +720,81 @@
     display: none;
   }
 }
+
+@media (max-width: 640px) {
+  .linear-schematics-section,
+  .linear-spotlight-section {
+    padding: 48px 0;
+  }
+
+  .linear-prefooter-section {
+    padding: 48px 0 60px;
+  }
+
+  .linear-prefooter-card {
+    padding: 36px 18px;
+    border-radius: 12px;
+  }
+
+  .prefooter-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .btn-pill-white,
+  .btn-link-ghost {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .theorem-content-body {
+    padding: 16px 14px;
+  }
+
+  .linear-schedule-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px 14px;
+  }
+
+  .row-left-status {
+    width: auto;
+  }
+
+  .row-center-info {
+    width: 100%;
+    gap: 8px;
+  }
+
+  .row-right-meta {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+    padding-top: 4px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.05);
+  }
+
+  .vault-table-header {
+    display: none;
+  }
+
+  .vault-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .col-name-box {
+    width: 100%;
+  }
+
+  .vault-open-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 8px;
+  }
+}

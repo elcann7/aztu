@@ -236,11 +236,24 @@
 }
 
 @media (max-width: 480px) {
+  .auth-page-wrapper {
+    padding: 1rem;
+    justify-content: flex-start;
+    padding-top: 1.5rem;
+  }
+
+  .auth-top-nav {
+    position: static;
+    align-self: flex-start;
+    margin-bottom: 1rem;
+  }
+
   .auth-card-container {
-    padding: var(--space-6) var(--space-5);
-    border-color: transparent;
-    box-shadow: none;
-    background: transparent;
+    padding: 1.5rem 1.25rem;
+    border: 1px solid var(--border-default);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    background: var(--bg-surface);
+    border-radius: 12px;
   }
 }
 

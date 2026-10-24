@@ -346,3 +346,59 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+@media (max-width: 480px) {
+  .profile-backdrop-layer {
+    padding: 0.5rem;
+  }
+
+  .profile-modal-card {
+    max-height: calc(100vh - 1rem);
+  }
+
+  .profile-modal-header {
+    padding: 1rem;
+  }
+
+  .profile-modal-scrollable-body {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .profile-avatar-section {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .profile-avatar-actions {
+    align-items: center;
+    width: 100%;
+  }
+
+  .avatar-btn-row {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .avatar-presets-list {
+    justify-content: center;
+  }
+
+  .profile-modal-footer {
+    flex-direction: column;
+    gap: 10px;
+    padding: 0.85rem 1rem;
+  }
+
+  .profile-footer-buttons {
+    width: 100%;
+    gap: 8px;
+  }
+
+  .btn-profile-save {
+    flex: 1;
+    justify-content: center;
+  }
+}

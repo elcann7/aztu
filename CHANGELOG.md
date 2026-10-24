@@ -4,6 +4,29 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.32.0] — 2026-10-24
+
+### 📱 Tam Həcmli Responsivlik və Mobil/Planşet Uyğunlaşdırması
+- **Landing Page Naviqasiyası və Mobil Drawer (`Header.tsx`, `Header.css`)**:
+  - Mobil ekranlarda (<768px) sıxılan və üfüqi daşmaya səbəb olan naviqasiya linkləri və giriş düymələri zərif şüşə effektli mobil menyu (hamburger drawer) ilə əvəz olundu.
+  - Açılan menyuda təmiz sensor toxunuş sahələri və rahat "Daxil ol" və "Başla" hərəkət düymələri quruldu.
+- **Hero və Mockup Pəncərə Uyğunlaşdırması (`Hero.css`, `WorkspacePreview.css`)**:
+  - Hero bölməsində hərəkət düymələri kiçik ekranlarda (<640px) bütöv enli və rahat toxunuşlu şəkildə şaquli düzüldü.
+  - Linear Workspace pəncərəsinin yuxarı panelindəki çörək qırıntıları (breadcrumbs) <768px-də gizlədildi, kod blokları və fayl kartları dar ekranlarda daşma olmadan sığdırıldı.
+- **Xüsusiyyətlər və Arxiv Mobil Düzümü (`FeatureDeepDives.css`, `Footer.css`)**:
+  - Arxiv (Vault) cədvəli mobil telefonlarda kart rejiminə çevrildi, mühazirə və laboratoriya fayllarını endirmək düymələri sensor dostu edildi.
+  - Dərs cədvəli sətirləri mobil cihazlarda oxunaqlı şaquli kart bloklarına transformasiya olundu.
+  - Prefooter və footer keçidləri kiçik ekranlarda səliqəli yerləşdirildi.
+- **Dashboard və Alətlər Bento İnteqrasiyası (`DashboardView.css`, `CourseShellView.css`)**:
+  - Qaib xülasə paneli kiçik ekranlarda (<520px) 2 sütunlu zərif qridə keçirildi, düymələrin və kurs kartlarının sıxılması aradan qaldırıldı.
+  - Fənn tablarında iOS/Android momentum sürüşməsi (`-webkit-overflow-scrolling: touch`) təmin edildi.
+  - Material kartları və əməliyyat düymələri ("PDF Oxu", "Endir") kiçik ekranlarda bütöv genişliyə uyğunlaşdırıldı.
+- **Kolloqvium Sınağı və Modallar (`ColloquiumDrawView.css`, `Modal.css`, `ProfileModal.css`, `LoginPage.css`)**:
+  - Püşk çarxı slotları və unprompted spin düyməsi mobil ekranlarda tam enli, təbii sınaq rejiminə uyğunlaşdırıldı.
+  - Bütün modallar və tələbə profili pəncərəsi mobil ekran hündürlüyünə uyğun elastik karkasa salındı, düymələr asan basıla bilən ölçülərə gətirildi.
+
+---
+
 ## [1.31.0] — 2026-10-24
 
 ### 🎨 Şəkildəki Dizayn Xətalarının Həlli (Fənn Tabları Scrollbar & Dashboard Alətləri)
