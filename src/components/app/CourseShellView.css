@@ -76,39 +76,87 @@
 .course-subtabs-bar {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  margin-top: var(--space-3);
-  border-top: 1px solid var(--border-subtle);
-  padding-top: var(--space-3);
+  gap: 0.35rem;
+  margin-top: var(--space-4);
+  padding: 0.35rem 0 0.55rem;
+  border-bottom: 1px solid var(--border-default);
   overflow-x: auto;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.course-subtabs-bar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 .course-subtab-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.35rem 0.75rem;
-  border-radius: var(--radius-xs);
-  font-size: 0.76rem;
+  gap: 0.45rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 7px;
+  font-size: 0.8rem;
   font-weight: 500;
-  color: var(--text-secondary);
+  color: #94a3b8;
   border: 1px solid transparent;
   background: transparent;
   cursor: pointer;
-  transition: all var(--duration-hover) var(--ease-out-snappy);
   white-space: nowrap;
+  transition: all 150ms ease;
+  position: relative;
 }
 
 .course-subtab-btn:hover {
-  background: var(--bg-surface-hover);
-  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+  color: #f1f5f9;
 }
 
 .course-subtab-btn.is-active {
-  background: var(--accent-primary);
-  color: #ffffff;
-  border-color: var(--accent-primary);
+  background: rgba(99, 102, 241, 0.12);
+  color: #a5b4fc;
+  border-color: rgba(99, 102, 241, 0.35);
   font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+.course-subtab-btn.is-active::after {
+  content: '';
+  position: absolute;
+  bottom: -0.6rem;
+  left: 0.75rem;
+  right: 0.75rem;
+  height: 2px;
+  background: #6366f1;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.75);
+}
+
+.course-tab-icon {
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.course-tab-label-text {
+  line-height: 1;
+}
+
+.course-tab-count-pill {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.08rem 0.45rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.07);
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  line-height: 1.2;
+}
+
+.course-subtab-btn.is-active .course-tab-count-pill {
+  background: rgba(99, 102, 241, 0.25);
+  color: #e0e7ff;
+  border-color: rgba(99, 102, 241, 0.4);
 }
 
 /* Tab Panes */

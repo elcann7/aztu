@@ -176,6 +176,10 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
+            const match = tab.label.match(/^(.*?)\s*\((\d+)\)$/);
+            const title = match ? match[1] : tab.label;
+            const count = match ? match[2] : null;
+
             return (
               <button
                 key={tab.id}
@@ -183,8 +187,11 @@ export const CourseShellView: React.FC<CourseShellViewProps> = ({ courseSlug }) 
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`course-subtab-btn ${isActive ? 'is-active' : ''}`}
               >
-                <Icon size={13} />
-                <span>{tab.label}</span>
+                <Icon size={14} className="course-tab-icon" />
+                <span className="course-tab-label-text">{title}</span>
+                {count !== null && (
+                  <span className="course-tab-count-pill">{count}</span>
+                )}
               </button>
             );
           })}

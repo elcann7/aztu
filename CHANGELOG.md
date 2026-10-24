@@ -4,6 +4,24 @@ Bu sənəd **AzTU 6326A2 Vahid Akademik İş Sahəsi** platformasının versiya 
 
 ---
 
+## [1.31.0] — 2026-10-24
+
+### 🎨 Şəkildəki Dizayn Xətalarının Həlli (Fənn Tabları Scrollbar & Dashboard Alətləri)
+- **Fənn Tablarının Üfüqi Scrollbar Qüsurunun Ləğvi (`CourseShellView.css` & `.tsx`)**:
+  - İstifadəçinin 1-ci ekran görüntüsündəki (`media_1792847611242_9574e1a1.png`) fənn naviqasiya tablarının altındakı eybəcər Windows boz horizontal scrollbar-ı (`scrollbar-width: none !important`, `::-webkit-scrollbar { display: none !important }`) birdəfəlik ləğv edildi.
+  - Kobud bənövşəyi blok əvəzinə Linear üslublu zərif aktiv indikator və hər tab üçün say kapsulu (`.course-tab-count-pill`) tətbiq edildi.
+- **Qlobal Zərif Tünd Scrollbar Standartı (`src/styles/global.css`)**:
+  - `@supports not` məhdudiyyəti aradan qaldırılaraq bütün sistem üçün zərif, şəffaf və nazik (6px) tünd tema scrollbar-ı təyin edildi.
+- **Dashboard Bento Kartlarının Yenilənməsi (`DashboardView.tsx` & `.css`)**:
+  - İstifadəçinin 2-ci ekran görüntüsündəki (`media_1792847611248_a3b60a1d.png`) köhnəlmiş "İnteraktiv Laboratoriya" (artıq ləğv edilmiş dərslərə istinadlar) kartı müasir **"Akademik Alətlər və Hazırlıq Mərkəzi"** ilə əvəzləndi:
+    - 🎰 **Kolloqvium Sınağı və Püşk Çarxı** (`/app/colloquium`) — 80 sual bazalı püşk aləti.
+    - 🧮 **Qaib & Giriş Balı Kalkulyatoru** (`/app/calculator`) — Boloniya 25% həddi monitoru.
+    - 🐍 **Python 3.12 Brauzer Sandbox-u** (`/app/sandbox`) — Proqramlaşdırma kodlaşdırma mühiti.
+  - Bütün bento kart başlıqlarındakı qara görünməyən ikonlar (`color="#0f172a"`) parlaq və oxunaqlı rəngli kapsullarla əvəzləndi.
+  - "Akademik Materiallar" kartının başlığındakı `Bütün resurslar` linkinin kəsilməsi və material başlıqlarının sətir düzümü tənzimləndi.
+
+---
+
 ## [1.30.0] — 2026-10-24
 
 ### ⚡ Dərslikvari Dərs Öyrənmənin Yığışdırılması & Yüksək Faydalı İş Mühitinə Keçid

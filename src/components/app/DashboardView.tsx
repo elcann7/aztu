@@ -10,7 +10,6 @@ import {
   Link2,
   Download,
   Calculator,
-  BookOpen,
   ArrowRight,
   Plus,
   Terminal,
@@ -356,7 +355,7 @@ export const DashboardView: React.FC = () => {
           <div className="bento-card">
             <div className="bento-card-header">
               <div className="bento-title-wrap">
-                <Calculator size={15} color="#0f172a" />
+                <Calculator size={15} className="bento-header-icon" />
                 <h3 className="bento-card-title">6326A2 Qaib Limit və GPA İzləyicisi</h3>
               </div>
               <button
@@ -451,7 +450,7 @@ export const DashboardView: React.FC = () => {
           <div className="bento-card">
             <div className="bento-card-header">
               <div className="bento-title-wrap">
-                <Calendar size={15} color="#0f172a" />
+                <Calendar size={15} className="bento-header-icon" />
                 <h3 className="bento-card-title">Yaxınlaşan Kollokvium və Tapşırıqlar</h3>
               </div>
               <button
@@ -520,59 +519,71 @@ export const DashboardView: React.FC = () => {
 
         {/* Right Column: Interactive Labs & Materials */}
         <div className="bento-column">
-          {/* Card 3: İnteraktiv Laboratoriyalar və Dərs Bələdçiləri */}
+          {/* Card 3: Akademik Alətlər və Hazırlıq Mərkəzi */}
           <div className="bento-card">
             <div className="bento-card-header">
               <div className="bento-title-wrap">
-                <Terminal size={15} color="#0f172a" />
-                <h3 className="bento-card-title">İnteraktiv Laboratoriya və Hazırlıq Mərkəzi</h3>
+                <Sparkles size={15} className="bento-header-icon" />
+                <h3 className="bento-card-title">Akademik Alətlər və Hazırlıq Mərkəzi</h3>
               </div>
             </div>
 
             <div className="bento-lab-list">
               <div
-                className="bento-lab-item"
+                className="bento-tool-item"
+                onClick={() => navigate('/app/colloquium')}
+              >
+                <div className="bento-tool-icon-wrap is-purple">
+                  <Sparkles size={15} />
+                </div>
+                <div className="bento-tool-main">
+                  <div className="bento-tool-header-row">
+                    <span className="bento-tool-title">Kolloqvium Sınağı və Püşk Çarxı</span>
+                    <span className="bento-tool-badge is-purple">80 Sual Bazası</span>
+                  </div>
+                  <span className="bento-tool-desc">
+                    unprompted.cool mexaniki animasiyası və SFX səsləri ilə 1 nəzəriyyə və 2 praktiki misal püşkü.
+                  </span>
+                </div>
+                <ArrowRight size={14} className="bento-tool-arrow" />
+              </div>
+
+              <div
+                className="bento-tool-item"
+                onClick={() => navigate('/app/calculator')}
+              >
+                <div className="bento-tool-icon-wrap is-blue">
+                  <Calculator size={15} />
+                </div>
+                <div className="bento-tool-main">
+                  <div className="bento-tool-header-row">
+                    <span className="bento-tool-title">Qaib və İmtahana Giriş Balı</span>
+                    <span className="bento-tool-badge is-blue">Boloniya 25%</span>
+                  </div>
+                  <span className="bento-tool-desc">
+                    Davamiyyət Forma-1 balı, seminar və laboratoriya nəticələri əsasında kəsir riski hesablanması.
+                  </span>
+                </div>
+                <ArrowRight size={14} className="bento-tool-arrow" />
+              </div>
+
+              <div
+                className="bento-tool-item"
                 onClick={() => navigate('/app/sandbox')}
               >
-                <div className="bento-lab-main">
-                  <span className="bento-lab-title">
-                    İf-61125y · Python 3.12 + Pandas Brauzer Sandbox-u
-                  </span>
-                  <span className="bento-lab-desc">
-                    Müəl. Ayxan Həsənov və Müəl. Şəbnəm İsgəndərlinin dərsləri üzrə hazır seminar və laboratoriya şablonları.
+                <div className="bento-tool-icon-wrap is-emerald">
+                  <Terminal size={15} />
+                </div>
+                <div className="bento-tool-main">
+                  <div className="bento-tool-header-row">
+                    <span className="bento-tool-title">Python 3.12 Brauzer Sandbox-u</span>
+                    <span className="bento-tool-badge is-emerald">Proqramlaşdırma-1</span>
+                  </div>
+                  <span className="bento-tool-desc">
+                    İnteraktiv kod icrası, NumPy/Pandas mühiti və seminar/laboratoriya şablonları.
                   </span>
                 </div>
-                <ArrowRight size={14} color="#64748b" />
-              </div>
-
-              <div
-                className="bento-lab-item"
-                onClick={() => navigate('/app/courses/math-analysis')}
-              >
-                <div className="bento-lab-main">
-                  <span className="bento-lab-title">
-                    İf-61115y · Riyazi Analiz Mühazirələr, Test və ε-Ətrafı Lab
-                  </span>
-                  <span className="bento-lab-desc">
-                    Çoxluqlar, həqiqi ədədlər, supremum/infimum simulyatoru, özünü yoxlama testləri və AI köməkçi.
-                  </span>
-                </div>
-                <ArrowRight size={14} color="#64748b" />
-              </div>
-
-              <div
-                className="bento-lab-item"
-                onClick={() => navigate('/app/courses/physics')}
-              >
-                <div className="bento-lab-main">
-                  <span className="bento-lab-title">
-                    İf-20403y · Fizika 8 Mühazirə + 7 Laboratoriya PDF Bələdçisi
-                  </span>
-                  <span className="bento-lab-desc">
-                    Dos. Sürəyya Məmmədovanın təqdimatları, laboratoriya hesablamaları və daxili PDF oxuyucu.
-                  </span>
-                </div>
-                <BookOpen size={14} color="#64748b" />
+                <ArrowRight size={14} className="bento-tool-arrow" />
               </div>
             </div>
           </div>
@@ -581,7 +592,7 @@ export const DashboardView: React.FC = () => {
           <div className="bento-card">
             <div className="bento-card-header">
               <div className="bento-title-wrap">
-                <FileText size={15} color="#0f172a" />
+                <FileText size={15} className="bento-header-icon" />
                 <h3 className="bento-card-title">Akademik Materiallar və Dərsliklər</h3>
               </div>
               <button
