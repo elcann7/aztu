@@ -176,6 +176,6 @@ Layihənin hər bir hissəsini dərindən anlamaq və işləmək üçün aşağ�
 
 ## 👥 Müəlliflər və Təşəkkürlər
 
-- **Tərtibatçı**: Elcan Nəcəfov & 6326A2 İT Komandası
+- **Tərtibatçı**: Elcan Seferli & 6326A2 İT Komandası
 - **Akademik Dəstək**: Azərbaycan Texniki Universiteti (AzTU)
 - **Lisenziya**: MIT Lisenziyası — 6326A2 Qrup tələbələri üçün azad istifadə.
